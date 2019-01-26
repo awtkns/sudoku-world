@@ -11,18 +11,28 @@ public class SudokuGridView extends View {
 
     int mViewWidth;
     int mViewHeight;
+    int mSquareSize;
+    float mCellSize;
 
     Paint mPaint;
+    Paint mBoldPaint;
 
     public SudokuGridView(Context context) {
         this(context, null);
-        init();
     }
 
     public SudokuGridView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
 
         init();
+    }
+
+    private void init() {
+        mPaint = new Paint(R.color.colorPrimary);
+        mPaint.setStrokeWidth(5);
+
+        mBoldPaint = new Paint(R.color.colorPrimary);
+        mBoldPaint.setStrokeWidth(15);
     }
 
     @Override
@@ -33,17 +43,32 @@ public class SudokuGridView extends View {
         //https://developer.android.com/training/custom-views/custom-drawing#layouteevent
         mViewWidth = w;
         mViewHeight = h;
+        mSquareSize = Math.min(mViewWidth, mViewHeight);
+        mCellSize = ((float) mSquareSize) / 9;
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        canvas.drawCircle(0, 0, mViewWidth, mPaint);
+        //Horizontal Lines
+        for(int i = 0; i <= 9; i++) {
+            if (i % 3 == 0) {
+                canvas.drawLine(0, i * mCellSize, mSquareSize, i * mCellSize, mBoldPaint);
+            } else {
+                canvas.drawLine(0, i * mCellSize, mSquareSize, i * mCellSize, mPaint);
+            }
+        }
+
+        //Vertical Lines
+        for(int i = 0; i <= 9; i++) {
+            if (i % 3 == 0) {
+                canvas.drawLine(i * mCellSize, 0, i * mCellSize, mSquareSize, mBoldPaint);
+            } else {
+                canvas.drawLine(i * mCellSize, 0, i * mCellSize, mSquareSize, mPaint);
+            }
+        }
     }
 
-    private void init() {
-        mPaint = new Paint(R.color.colorPrimary);
 
-    }
 }
