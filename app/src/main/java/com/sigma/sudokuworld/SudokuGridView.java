@@ -11,8 +11,11 @@ public class SudokuGridView extends View {
 
     int mViewWidth;
     int mViewHeight;
+
+    int mXOrigin;
+    int mYOrigin;
     int mSquareSize;
-    float mCellSize;
+    int mCellSize;
 
     Paint mPaint;
     Paint mBoldPaint;
@@ -39,36 +42,58 @@ public class SudokuGridView extends View {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
 
-        //TODO: Account for padding:
-        //https://developer.android.com/training/custom-views/custom-drawing#layouteevent
         mViewWidth = w;
         mViewHeight = h;
-        mSquareSize = Math.min(mViewWidth, mViewHeight);
-        mCellSize = ((float) mSquareSize) / 9;
+
+        mXOrigin = getPaddingLeft();
+        mYOrigin = getPaddingTop();
+
+        int xPad = getPaddingLeft() + getPaddingRight();
+        int yPad = getPaddingTop() + getPaddingBottom();
+        int maxPad = Math.max(xPad, yPad);
+
+        mSquareSize = Math.min(w - maxPad, h - maxPad);
+        mCellSize = mSquareSize / 9;
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+        drawGrid(canvas);
+    }
+
+    private void drawGrid(Canvas canvas) {
+
         //Horizontal Lines
         for(int i = 0; i <= 9; i++) {
             if (i % 3 == 0) {
-                canvas.drawLine(0, i * mCellSize, mSquareSize, i * mCellSize, mBoldPaint);
+                canvas.drawLine(
+                        mXOrigin,mYOrigin + (i * mCellSize),
+                        mSquareSize + mXOrigin, mYOrigin + (i * mCellSize),
+                        mBoldPaint);
             } else {
-                canvas.drawLine(0, i * mCellSize, mSquareSize, i * mCellSize, mPaint);
+                canvas.drawLine(
+                        mXOrigin,mYOrigin + (i * mCellSize),
+                        mSquareSize + mXOrigin, mYOrigin + (i * mCellSize),
+                        mPaint);
             }
         }
 
         //Vertical Lines
         for(int i = 0; i <= 9; i++) {
             if (i % 3 == 0) {
-                canvas.drawLine(i * mCellSize, 0, i * mCellSize, mSquareSize, mBoldPaint);
+                canvas.drawLine(
+                        mXOrigin + (i * mCellSize), mYOrigin,
+                        mXOrigin + (i * mCellSize), mSquareSize + mYOrigin,
+                        mBoldPaint);
             } else {
-                canvas.drawLine(i * mCellSize, 0, i * mCellSize, mSquareSize, mPaint);
+                canvas.drawLine(
+                        mXOrigin + (i * mCellSize), mYOrigin,
+                        mXOrigin + (i * mCellSize), mSquareSize + mYOrigin,
+                        mPaint);
             }
         }
     }
-
 
 }
