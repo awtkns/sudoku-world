@@ -56,7 +56,7 @@ public class SudokuGridView extends View {
         mTextPaint = new Paint();
     }
 
-    private OnTouchListener onTouchListener = new OnTouchListener() {
+    OnTouchListener onTouchListener = new OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             boolean wasEventHandled = false;
