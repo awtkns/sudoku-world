@@ -1,16 +1,21 @@
 package com.sigma.sudokuworld;
 
-public class GameModel {
+import android.util.Log;
 
-    public static final int SUDOKU_SIZE = 9;
+class GameModel {
+
+    static final int SUDOKU_ROOT_SIZE = 2;
+    static final int SUDOKU_SIZE = SUDOKU_ROOT_SIZE * SUDOKU_ROOT_SIZE;
+
     private int[] cellValues;
     private int numFilledCells = 0;
 
-    public GameModel(){
+    GameModel(){
         cellValues = new int[SUDOKU_SIZE * SUDOKU_SIZE];
     }
 
-    public void setValue(int x, int y, int number) {
+    void setValue(int x, int y, int number) {
+        Log.d("Set value", String.format("X: %d Y: %d N: %d", x, y, number));
          if (cellValues[(y * SUDOKU_SIZE) + x] == 0 && number != 0)
              numFilledCells++;
          else if (cellValues[(y * SUDOKU_SIZE) + x] != 0 && number == 0)
@@ -19,11 +24,11 @@ public class GameModel {
         cellValues[(y * SUDOKU_SIZE) + x] = number;
     }
 
-    public int getValue(int x, int y) {
+    int getValue(int x, int y) {
         return cellValues[(y * SUDOKU_SIZE) + x];
     }
 
-    public int[] getFilledCells() {
+    int[] getFilledCells() {
         int[] filledCells = new int[numFilledCells];
         int i = 0;
 
@@ -41,11 +46,11 @@ public class GameModel {
         }
     }
 
-    public static int cellNumToXPosition(int cellNumber) {
+    static int cellNumToXPosition(int cellNumber) {
         return cellNumber % SUDOKU_SIZE;
     }
 
-    public static int cellNumToYPosition(int cellNumber) {
+    static int cellNumToYPosition(int cellNumber) {
         return cellNumber / SUDOKU_SIZE;
     }
 }

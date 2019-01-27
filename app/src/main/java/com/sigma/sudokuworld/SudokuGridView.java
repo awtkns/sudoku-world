@@ -14,15 +14,19 @@ public class SudokuGridView extends View {
 
     int mViewWidth;
     int mViewHeight;
-
     int mXOrigin;
     int mYOrigin;
     int mSquareSize;
     int mCellSize;
 
-    Paint mPaint;
+    Rect mGridBoundingRect;
+
+    Paint mGridPaint;
     Paint mBoldPaint;
     Paint mCellFilledPaint;
+    Paint mTextPaint;
+
+    Float mTextPaintTextHeight;
 
     GameModel mGameModel;
 
@@ -36,14 +40,56 @@ public class SudokuGridView extends View {
 
         mGameModel = new GameModel();
 
-        mPaint = new Paint();
-        mPaint.setStrokeWidth(5);
+        mGridPaint = new Paint();
+        mGridPaint.setColor(getResources().getColor(R.color.gridColour));
+        mGridPaint.setStrokeWidth(5);
 
         mBoldPaint = new Paint();
+        mBoldPaint.setColor(getResources().getColor(R.color.gridColour));
         mBoldPaint.setStrokeWidth(15);
 
-        mCellFilledPaint = new Paint(Color.YELLOW);
+        mCellFilledPaint = new Paint();
+        mCellFilledPaint.setColor(Color.YELLOW);
+        mCellFilledPaint.setAlpha(100);
         mCellFilledPaint.setStyle(Paint.Style.FILL);
+
+        mTextPaint = new Paint();
+    }
+
+    private OnTouchListener onTouchListener = new OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            boolean wasEventHandled = false;
+
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                int x = (int) event.getX();
+                int y = (int) event.getY();
+
+                if (mGridBoundingRect.contains(x, y)) {
+                    x -= mXOrigin;
+                    y -= mYOrigin;
+                    x /= mCellSize;
+                    y /= mCellSize;
+
+                    if (mGameModel.getValue(x, y) == 0) {
+                        mGameModel.setValue(x, y, 1);
+                    } else {
+                        mGameModel.setValue(x, y, 0);
+                    }
+
+                    invalidate();
+                    performClick();
+                    wasEventHandled = true;
+                }
+            }
+
+            return wasEventHandled;
+        }
+    };
+
+    @Override   //This is for accessibility
+    public boolean performClick() {
+        return super.performClick();
     }
 
     @Override
@@ -61,86 +107,82 @@ public class SudokuGridView extends View {
         int maxPad = Math.max(xPad, yPad);
 
         mSquareSize = Math.min(w - maxPad, h - maxPad);
-        mCellSize = mSquareSize / 9;
+        mCellSize = mSquareSize / GameModel.SUDOKU_SIZE;
+        mGridBoundingRect = new Rect(
+                mXOrigin,
+                mYOrigin,
+                mXOrigin + mSquareSize,
+                mYOrigin + mSquareSize
+        );
+
+        mTextPaint.setTextSize(mCellSize / 2f);
+        Paint.FontMetrics fontMetrics = mTextPaint.getFontMetrics();
+        mTextPaintTextHeight = fontMetrics.descent - fontMetrics.ascent;
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+        drawCellFill(canvas);
         drawGrid(canvas);
     }
 
     private void drawGrid(Canvas canvas) {
 
-        int[] filledCells = mGameModel.getFilledCells();
-        for (int i = 0; i < filledCells.length; i++) {
-            int cx = GameModel.cellNumToXPosition(filledCells[i]);
-            int cy = GameModel.cellNumToYPosition(filledCells[i]);
+        //Horizontal Lines
+        for(int i = 0; i <= GameModel.SUDOKU_SIZE; i++) {
+            if (i % GameModel.SUDOKU_ROOT_SIZE == 0) {
+                canvas.drawLine(
+                        mXOrigin,mYOrigin + (i * mCellSize),
+                        mSquareSize + mXOrigin, mYOrigin + (i * mCellSize),
+                        mBoldPaint);
+            } else {
+                canvas.drawLine(
+                        mXOrigin,mYOrigin + (i * mCellSize),
+                        mSquareSize + mXOrigin, mYOrigin + (i * mCellSize),
+                        mGridPaint);
+            }
+        }
 
-            Rect cell = new Rect(
+        //Vertical Lines
+        for(int i = 0; i <= GameModel.SUDOKU_SIZE; i++) {
+            if (i % GameModel.SUDOKU_ROOT_SIZE == 0) {
+                canvas.drawLine(
+                        mXOrigin + (i * mCellSize), mYOrigin,
+                        mXOrigin + (i * mCellSize), mSquareSize + mYOrigin,
+                        mBoldPaint);
+            } else {
+                canvas.drawLine(
+                        mXOrigin + (i * mCellSize), mYOrigin,
+                        mXOrigin + (i * mCellSize), mSquareSize + mYOrigin,
+                        mGridPaint);
+            }
+        }
+    }
+
+    private void drawCellFill(Canvas canvas) {
+        int[] filledCells = mGameModel.getFilledCells();
+
+        for (int cell: filledCells) {
+            int cx = GameModel.cellNumToXPosition(cell);
+            int cy = GameModel.cellNumToYPosition(cell);
+
+            Rect cellRect = new Rect(
                     mXOrigin + (cx * mCellSize),
                     mYOrigin + (cy * mCellSize),
                     mXOrigin + ((cx + 1) * mCellSize),
                     mYOrigin + ((cy + 1) * mCellSize)
             );
-            canvas.drawRect(cell, mCellFilledPaint);
-        }
+            canvas.drawRect(cellRect, mCellFilledPaint);
 
-        //Horizontal Lines
-        for(int i = 0; i <= 9; i++) {
-            if (i % 3 == 0) {
-                canvas.drawLine(
-                        mXOrigin,mYOrigin + (i * mCellSize),
-                        mSquareSize + mXOrigin, mYOrigin + (i * mCellSize),
-                        mBoldPaint);
-            } else {
-                canvas.drawLine(
-                        mXOrigin,mYOrigin + (i * mCellSize),
-                        mSquareSize + mXOrigin, mYOrigin + (i * mCellSize),
-                        mPaint);
-            }
-        }
-
-        //Vertical Lines
-        for(int i = 0; i <= 9; i++) {
-            if (i % 3 == 0) {
-                canvas.drawLine(
-                        mXOrigin + (i * mCellSize), mYOrigin,
-                        mXOrigin + (i * mCellSize), mSquareSize + mYOrigin,
-                        mBoldPaint);
-            } else {
-                canvas.drawLine(
-                        mXOrigin + (i * mCellSize), mYOrigin,
-                        mXOrigin + (i * mCellSize), mSquareSize + mYOrigin,
-                        mPaint);
-            }
+            String text = Integer.toString(cell);
+            float textWidth = mTextPaint.measureText(text);
+            canvas.drawText(text,
+                    mXOrigin + (cx * mCellSize) + (mCellSize / 2f) - (textWidth / 2),
+                    mYOrigin + (cy * mCellSize) + (mCellSize / 2f) + (mTextPaintTextHeight / 2),
+                    mTextPaint);
         }
     }
 
-    private OnTouchListener onTouchListener = new OnTouchListener() {
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                int x = (int) event.getX();
-                int y = (int) event.getY();
-                x -= mXOrigin;
-                y -= mYOrigin;
-                x /= mCellSize;
-                y /= mCellSize;
-
-                mGameModel.setValue(x, y, 1);
-
-                invalidate();
-                performClick();
-            }
-
-            return true;
-        }
-    };
-
-    @Override
-    public boolean performClick() {
-        return super.performClick();
-    }
 }
