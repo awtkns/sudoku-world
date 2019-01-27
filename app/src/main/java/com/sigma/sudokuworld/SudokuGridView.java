@@ -2,9 +2,12 @@ package com.sigma.sudokuworld;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 
 public class SudokuGridView extends View {
@@ -19,6 +22,9 @@ public class SudokuGridView extends View {
 
     Paint mPaint;
     Paint mBoldPaint;
+    Paint mCellFilledPaint;
+
+    GameModel mGameModel;
 
     public SudokuGridView(Context context) {
         this(context, null);
@@ -26,16 +32,18 @@ public class SudokuGridView extends View {
 
     public SudokuGridView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        this.setOnTouchListener(onTouchListener);
 
-        init();
-    }
+        mGameModel = new GameModel();
 
-    private void init() {
-        mPaint = new Paint(R.color.colorPrimary);
+        mPaint = new Paint();
         mPaint.setStrokeWidth(5);
 
-        mBoldPaint = new Paint(R.color.colorPrimary);
+        mBoldPaint = new Paint();
         mBoldPaint.setStrokeWidth(15);
+
+        mCellFilledPaint = new Paint(Color.YELLOW);
+        mCellFilledPaint.setStyle(Paint.Style.FILL);
     }
 
     @Override
@@ -64,6 +72,20 @@ public class SudokuGridView extends View {
     }
 
     private void drawGrid(Canvas canvas) {
+
+        int[] filledCells = mGameModel.getFilledCells();
+        for (int i = 0; i < filledCells.length; i++) {
+            int cx = GameModel.cellNumToXPosition(filledCells[i]);
+            int cy = GameModel.cellNumToYPosition(filledCells[i]);
+
+            Rect cell = new Rect(
+                    mXOrigin + (cx * mCellSize),
+                    mYOrigin + (cy * mCellSize),
+                    mXOrigin + ((cx + 1) * mCellSize),
+                    mYOrigin + ((cy + 1) * mCellSize)
+            );
+            canvas.drawRect(cell, mCellFilledPaint);
+        }
 
         //Horizontal Lines
         for(int i = 0; i <= 9; i++) {
@@ -96,4 +118,29 @@ public class SudokuGridView extends View {
         }
     }
 
+    private OnTouchListener onTouchListener = new OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                int x = (int) event.getX();
+                int y = (int) event.getY();
+                x -= mXOrigin;
+                y -= mYOrigin;
+                x /= mCellSize;
+                y /= mCellSize;
+
+                mGameModel.setValue(x, y, 1);
+
+                invalidate();
+                performClick();
+            }
+
+            return true;
+        }
+    };
+
+    @Override
+    public boolean performClick() {
+        return super.performClick();
+    }
 }
