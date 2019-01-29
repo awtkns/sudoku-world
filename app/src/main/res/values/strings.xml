@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SudokuWorld</string>
+    <string name="play_button">Play</string>
 </resources>
