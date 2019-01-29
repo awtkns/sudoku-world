@@ -28,7 +28,7 @@ public class SudokuActivity extends AppCompatActivity {
         mNativeWords = i.getStringArrayExtra("native");
         mForeignWords = i.getStringArrayExtra("foreign");
 
-        mGameModel = new GameModel(2, vals);
+        mGameModel = new GameModel(3, vals);
 
         mSudokuGridView = findViewById(R.id.sudokugrid_view);
         mSudokuGridView.setOnTouchListener(onSudokuGridTouchListener);
