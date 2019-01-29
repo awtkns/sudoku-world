@@ -1,5 +1,6 @@
 package com.sigma.sudokuworld;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,21 +8,32 @@ import android.view.MotionEvent;
 import android.view.View;
 
 
-public class MainActivity extends AppCompatActivity {
+public class SudokuActivity extends AppCompatActivity {
 
     GameModel mGameModel;
     SudokuGridView mSudokuGridView;
+    String[] mNativeWords;
+    String[] mForeignWords;
+    int[] vals = {3, 0, 4, 0,
+                  0, 2, 7, 0,
+                  2, 0, 3, 0,
+                  0, 0, 0, 4};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_sudoku);
 
-        mGameModel = new GameModel(2);
+        Intent i = getIntent();
+        mNativeWords = i.getStringArrayExtra("native");
+        mForeignWords = i.getStringArrayExtra("foreign");
+
+        mGameModel = new GameModel(2, vals);
 
         mSudokuGridView = findViewById(R.id.sudokugrid_view);
         mSudokuGridView.setOnTouchListener(onSudokuGridTouchListener);
         mSudokuGridView.setSudokuRootSize(mGameModel.SUDOKU_ROOT_SIZE);
+        setInitialNumbers();
     }
 
     SudokuGridView.OnTouchListener onSudokuGridTouchListener = new SudokuGridView.OnTouchListener() {
@@ -36,7 +48,9 @@ public class MainActivity extends AppCompatActivity {
                 if (mSudokuGridView.getGridBounds().contains(x, y)) {
                     int cellNum = mSudokuGridView.getCellNumberFromCoordinates(x, y);
 
-                    if (mSudokuGridView.getCellLabel(cellNum).equals("")) {
+                    if (mGameModel.isLockedCell(cellNum)) {
+                        //Locked cell
+                    } else if (mSudokuGridView.getCellLabel(cellNum).equals("")) {
                         mSudokuGridView.setCellLabel(cellNum, "1");
                     } else mSudokuGridView.setCellLabel(cellNum, "");
 
@@ -49,4 +63,19 @@ public class MainActivity extends AppCompatActivity {
             return wasEventHandled;
         }
     };
+
+    private void setInitialNumbers() {
+        for (int i = 0; i < mGameModel.SUDOKU_NUMBER_OF_CELLS; i++) {
+            int val = mGameModel.getCellValue(i);
+
+            if (val != 0) {
+                try {
+                    mSudokuGridView.setCellLabel(i, mNativeWords[val - 1]);
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    Log.w("SudokuActivity", "Attempting to mapped val to no word");
+                    mSudokuGridView.setCellLabel(i, Integer.toString(mGameModel.getCellValue(i)));
+                }
+            }
+        }
+    }
 }
