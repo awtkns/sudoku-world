@@ -3,6 +3,7 @@ package com.sigma.sudokuworld;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -14,7 +15,7 @@ public class SudokuActivity extends AppCompatActivity {
     String[] mNativeWords;
     String[] mForeignWords;
     int[] vals = {3, 0, 4, 0,
-                  0, 2, 0, 0,
+                  0, 2, 7, 0,
                   2, 0, 3, 0,
                   0, 0, 0, 4};
 
@@ -48,9 +49,8 @@ public class SudokuActivity extends AppCompatActivity {
                     int cellNum = mSudokuGridView.getCellNumberFromCoordinates(x, y);
 
                     if (mGameModel.isLockedCell(cellNum)) {
-
-                    }
-                    else if (mSudokuGridView.getCellLabel(cellNum).equals("")) {
+                        //Locked cell
+                    } else if (mSudokuGridView.getCellLabel(cellNum).equals("")) {
                         mSudokuGridView.setCellLabel(cellNum, "1");
                     } else mSudokuGridView.setCellLabel(cellNum, "");
 
@@ -69,7 +69,12 @@ public class SudokuActivity extends AppCompatActivity {
             int val = mGameModel.getCellValue(i);
 
             if (val != 0) {
-                mSudokuGridView.setCellLabel(i, mNativeWords[val - 1]);
+                try {
+                    mSudokuGridView.setCellLabel(i, mNativeWords[val - 1]);
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    Log.w("SudokuActivity", "Attempting to mapped val to no word");
+                    mSudokuGridView.setCellLabel(i, Integer.toString(mGameModel.getCellValue(i)));
+                }
             }
         }
     }
