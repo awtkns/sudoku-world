@@ -45,6 +45,11 @@ class GameModel {
     }
 
     public void setCellValue(int cellNumber, int val) {
+        if (cellValues[cellNumber] == 0 && val != 0)
+            numFilledCells++;
+        else if (cellValues[cellNumber] != 0 && val == 0)
+            numFilledCells--;
+
         cellValues[cellNumber] = val;
     }
 
