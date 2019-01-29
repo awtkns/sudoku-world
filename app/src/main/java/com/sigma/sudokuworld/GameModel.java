@@ -35,6 +35,8 @@ class GameModel {
                     lockedCells[i] = false;
                 }
             }
+        } else {
+            Arrays.fill(lockedCells, false);
         }
 
         isGameWon = false;
