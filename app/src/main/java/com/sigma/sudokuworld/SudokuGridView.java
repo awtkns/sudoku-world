@@ -13,6 +13,8 @@ import java.util.Arrays;
 
 public class SudokuGridView extends View {
 
+    static final char LOCKED_FLAG = '~';
+
     int mSudokuRootSize;
     int mSudokuSize;
 
@@ -28,6 +30,7 @@ public class SudokuGridView extends View {
     Paint mGridPaint;
     Paint mBoldPaint;
     Paint mCellFilledPaint;
+    Paint mLockedCellFillPaint;
     Paint mTextPaint;
 
     Float mTextPaintTextHeight;
@@ -55,6 +58,11 @@ public class SudokuGridView extends View {
         mCellFilledPaint.setColor(Color.YELLOW);
         mCellFilledPaint.setAlpha(100);
         mCellFilledPaint.setStyle(Paint.Style.FILL);
+
+        mLockedCellFillPaint = new Paint();
+        mLockedCellFillPaint.setColor(Color.BLACK);
+        mLockedCellFillPaint.setAlpha(50);
+        mLockedCellFillPaint.setStyle(Paint.Style.FILL);
 
         mTextPaint = new Paint();
     }
@@ -145,7 +153,8 @@ public class SudokuGridView extends View {
             int cx = i % mSudokuSize;
             int cy = i / mSudokuSize;
 
-            if (!mCellLabels[i].equals("")) {
+            String label = mCellLabels[i];
+            if (!label.equals("")) {
 
                 Rect cellRect = new Rect(
                         mXOrigin + (cx * mCellSize),
@@ -154,13 +163,26 @@ public class SudokuGridView extends View {
                         mYOrigin + ((cy + 1) * mCellSize)
                 );
 
-                canvas.drawRect(cellRect, mCellFilledPaint);
+                if (label.charAt(0) == LOCKED_FLAG) {
+                    canvas.drawRect(cellRect, mLockedCellFillPaint);
+                    label = label.substring(1);
+                } else {
+                    canvas.drawRect(cellRect, mCellFilledPaint);
+                }
 
-                float textWidth = mTextPaint.measureText(mCellLabels[i]);
-                canvas.drawText(mCellLabels[i],
+                float textWidth = mTextPaint.measureText(label);
+                float defaultTextSize = mTextPaint.getTextSize();
+                while (textWidth > mCellSize) {
+                    mTextPaint.setTextSize(mTextPaint.getTextSize() - 1);
+                    textWidth = mTextPaint.measureText(label);
+                }
+
+                canvas.drawText(label,
                         mXOrigin + (cx * mCellSize) + (mCellSize / 2f) - (textWidth / 2),
                         mYOrigin + (cy * mCellSize) + (mCellSize / 2f) + (mTextPaintTextHeight / 2),
                         mTextPaint);
+
+                mTextPaint.setTextSize(defaultTextSize);
             }
         }
     }

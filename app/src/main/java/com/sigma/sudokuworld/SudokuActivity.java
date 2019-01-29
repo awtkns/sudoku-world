@@ -14,10 +14,6 @@ public class SudokuActivity extends AppCompatActivity {
     SudokuGridView mSudokuGridView;
     String[] mNativeWords;
     String[] mForeignWords;
-    int[] vals = {3, 0, 4, 0,
-                  0, 2, 7, 0,
-                  2, 0, 3, 0,
-                  0, 0, 0, 4};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,12 +24,13 @@ public class SudokuActivity extends AppCompatActivity {
         mNativeWords = i.getStringArrayExtra("native");
         mForeignWords = i.getStringArrayExtra("foreign");
 
-        mGameModel = new GameModel(3, vals);
+        mGameModel = new GameModel(3, i.getIntArrayExtra("puzzle"));
 
         mSudokuGridView = findViewById(R.id.sudokugrid_view);
         mSudokuGridView.setOnTouchListener(onSudokuGridTouchListener);
         mSudokuGridView.setSudokuRootSize(mGameModel.SUDOKU_ROOT_SIZE);
-        setInitialNumbers();
+
+        updateAllViewLabels();
     }
 
     SudokuGridView.OnTouchListener onSudokuGridTouchListener = new SudokuGridView.OnTouchListener() {
@@ -51,7 +48,7 @@ public class SudokuActivity extends AppCompatActivity {
                     if (mGameModel.isLockedCell(cellNum)) {
                         //Locked cell
                     } else if (mSudokuGridView.getCellLabel(cellNum).equals("")) {
-                        mSudokuGridView.setCellLabel(cellNum, "1");
+                        mSudokuGridView.setCellLabel(cellNum, "f");
                     } else mSudokuGridView.setCellLabel(cellNum, "");
 
                     mSudokuGridView.invalidate();
@@ -64,18 +61,20 @@ public class SudokuActivity extends AppCompatActivity {
         }
     };
 
-    private void setInitialNumbers() {
+    private void updateAllViewLabels() {
         for (int i = 0; i < mGameModel.SUDOKU_NUMBER_OF_CELLS; i++) {
             int val = mGameModel.getCellValue(i);
 
             if (val != 0) {
                 try {
-                    mSudokuGridView.setCellLabel(i, mNativeWords[val - 1]);
+                    mSudokuGridView.setCellLabel(i, SudokuGridView.LOCKED_FLAG + mNativeWords[val - 1]);
                 } catch (ArrayIndexOutOfBoundsException e) {
                     Log.w("SudokuActivity", "Attempting to mapped val to no word");
                     mSudokuGridView.setCellLabel(i, Integer.toString(mGameModel.getCellValue(i)));
                 }
             }
         }
+
+        mSudokuGridView.invalidate();
     }
 }
