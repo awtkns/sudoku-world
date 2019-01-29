@@ -19,30 +19,12 @@ class GameModel {
         isGameWon = false;
     }
 
-    void setValue(int x, int y, int number) {
-         if (cellValues[(y * SUDOKU_SIZE) + x] == 0 && number != 0)
-             numFilledCells++;
-         else if (cellValues[(y * SUDOKU_SIZE) + x] != 0 && number == 0)
-             numFilledCells--;
-
-        cellValues[(y * SUDOKU_SIZE) + x] = number;
-        isGameWon = checkWinConditions();
+    public int getCellValue(int cellNumber) {
+        return cellValues[cellNumber];
     }
 
-    int getValue(int x, int y) {
-        return cellValues[(y * SUDOKU_SIZE) + x];
-    }
-
-    int[] getFilledCells() {
-        int[] filledCells = new int[numFilledCells];
-        int i = 0;
-
-        for (int j = 0; j < cellValues.length; j++) {
-            if (cellValues[j] != 0)
-                filledCells[i++] = j;
-        }
-
-        return filledCells;
+    public void setCellValue(int cellNumber, int val) {
+        cellValues[cellNumber] = val;
     }
 
     private boolean checkWinConditions() {
