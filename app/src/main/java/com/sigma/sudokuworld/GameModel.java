@@ -2,23 +2,19 @@ package com.sigma.sudokuworld;
 
 class GameModel {
 
-    static final int SUDOKU_ROOT_SIZE = 2;
-    static final int SUDOKU_SIZE = SUDOKU_ROOT_SIZE * SUDOKU_ROOT_SIZE;
-    private static final int SUDOKU_NUMBER_OF_CELLS = SUDOKU_SIZE * SUDOKU_SIZE;
+    final int SUDOKU_ROOT_SIZE;
+    private final int SUDOKU_SIZE;
+    private final int SUDOKU_NUMBER_OF_CELLS;
 
     private int[] cellValues;
     private int numFilledCells = 0;
     private boolean isGameWon;
 
-    static int cellNumToXPosition(int cellNumber) {
-        return cellNumber % SUDOKU_SIZE;
-    }
+    GameModel(int sudokuRootSize){
+        SUDOKU_ROOT_SIZE = sudokuRootSize;
+        SUDOKU_SIZE = SUDOKU_ROOT_SIZE * SUDOKU_ROOT_SIZE;
+        SUDOKU_NUMBER_OF_CELLS = SUDOKU_SIZE * SUDOKU_SIZE;
 
-    static int cellNumToYPosition(int cellNumber) {
-        return cellNumber / SUDOKU_SIZE;
-    }
-
-    GameModel(){
         cellValues = new int[SUDOKU_NUMBER_OF_CELLS];
         isGameWon = false;
     }
@@ -47,12 +43,6 @@ class GameModel {
         }
 
         return filledCells;
-    }
-
-    private void sampleValues() {
-        for (int i : cellValues) {
-            cellValues[i] = i + 1;
-        }
     }
 
     private boolean checkWinConditions() {

@@ -7,10 +7,14 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
 import android.view.View;
 
+import java.util.Arrays;
+
 public class SudokuGridView extends View {
+
+    int mSudokuRootSize;
+    int mSudokuSize;
 
     int mViewWidth;
     int mViewHeight;
@@ -28,7 +32,7 @@ public class SudokuGridView extends View {
 
     Float mTextPaintTextHeight;
 
-    GameModel mGameModel;
+    String[] mCellLabels;
 
     public SudokuGridView(Context context) {
         this(context, null);
@@ -36,9 +40,8 @@ public class SudokuGridView extends View {
 
     public SudokuGridView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        this.setOnTouchListener(onTouchListener);
 
-        mGameModel = new GameModel();
+        mCellLabels = new String[0];
 
         mGridPaint = new Paint();
         mGridPaint.setColor(getResources().getColor(R.color.gridColour));
@@ -56,36 +59,12 @@ public class SudokuGridView extends View {
         mTextPaint = new Paint();
     }
 
-    OnTouchListener onTouchListener = new OnTouchListener() {
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            boolean wasEventHandled = false;
-
-            if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                int x = (int) event.getX();
-                int y = (int) event.getY();
-
-                if (mGridBoundingRect.contains(x, y)) {
-                    x -= mXOrigin;
-                    y -= mYOrigin;
-                    x /= mCellSize;
-                    y /= mCellSize;
-
-                    if (mGameModel.getValue(x, y) == 0) {
-                        mGameModel.setValue(x, y, 1);
-                    } else {
-                        mGameModel.setValue(x, y, 0);
-                    }
-
-                    invalidate();
-                    performClick();
-                    wasEventHandled = true;
-                }
-            }
-
-            return wasEventHandled;
-        }
-    };
+    public void setSudokuRootSize(int rootSize) {
+        mSudokuRootSize = rootSize;
+        mSudokuSize = mSudokuRootSize * mSudokuRootSize;
+        mCellLabels = new String[mSudokuSize * mSudokuSize];
+        Arrays.fill(mCellLabels, "");
+    }
 
     @Override   //This is for accessibility
     public boolean performClick() {
@@ -107,7 +86,7 @@ public class SudokuGridView extends View {
         int maxPad = Math.max(xPad, yPad);
 
         mSquareSize = Math.min(w - maxPad, h - maxPad);
-        mCellSize = mSquareSize / GameModel.SUDOKU_SIZE;
+        mCellSize = mSquareSize / mSudokuSize;
         mGridBoundingRect = new Rect(
                 mXOrigin,
                 mYOrigin,
@@ -131,8 +110,8 @@ public class SudokuGridView extends View {
     private void drawGrid(Canvas canvas) {
 
         //Horizontal Lines
-        for(int i = 0; i <= GameModel.SUDOKU_SIZE; i++) {
-            if (i % GameModel.SUDOKU_ROOT_SIZE == 0) {
+        for(int i = 0; i <= mSudokuSize; i++) {
+            if (i % mSudokuRootSize == 0) {
                 canvas.drawLine(
                         mXOrigin,mYOrigin + (i * mCellSize),
                         mSquareSize + mXOrigin, mYOrigin + (i * mCellSize),
@@ -146,8 +125,8 @@ public class SudokuGridView extends View {
         }
 
         //Vertical Lines
-        for(int i = 0; i <= GameModel.SUDOKU_SIZE; i++) {
-            if (i % GameModel.SUDOKU_ROOT_SIZE == 0) {
+        for(int i = 0; i <= mSudokuSize; i++) {
+            if (i % mSudokuRootSize == 0) {
                 canvas.drawLine(
                         mXOrigin + (i * mCellSize), mYOrigin,
                         mXOrigin + (i * mCellSize), mSquareSize + mYOrigin,
@@ -162,27 +141,47 @@ public class SudokuGridView extends View {
     }
 
     private void drawCellFill(Canvas canvas) {
-        int[] filledCells = mGameModel.getFilledCells();
+        for (int i = 0; i < mCellLabels.length; i++) {
+            int cx = i % mSudokuSize;
+            int cy = i / mSudokuSize;
 
-        for (int cell: filledCells) {
-            int cx = GameModel.cellNumToXPosition(cell);
-            int cy = GameModel.cellNumToYPosition(cell);
+            if (!mCellLabels[i].equals("")) {
 
-            Rect cellRect = new Rect(
-                    mXOrigin + (cx * mCellSize),
-                    mYOrigin + (cy * mCellSize),
-                    mXOrigin + ((cx + 1) * mCellSize),
-                    mYOrigin + ((cy + 1) * mCellSize)
-            );
-            canvas.drawRect(cellRect, mCellFilledPaint);
+                Rect cellRect = new Rect(
+                        mXOrigin + (cx * mCellSize),
+                        mYOrigin + (cy * mCellSize),
+                        mXOrigin + ((cx + 1) * mCellSize),
+                        mYOrigin + ((cy + 1) * mCellSize)
+                );
 
-            String text = Integer.toString(cell);
-            float textWidth = mTextPaint.measureText(text);
-            canvas.drawText(text,
-                    mXOrigin + (cx * mCellSize) + (mCellSize / 2f) - (textWidth / 2),
-                    mYOrigin + (cy * mCellSize) + (mCellSize / 2f) + (mTextPaintTextHeight / 2),
-                    mTextPaint);
+                canvas.drawRect(cellRect, mCellFilledPaint);
+
+                float textWidth = mTextPaint.measureText(mCellLabels[i]);
+                canvas.drawText(mCellLabels[i],
+                        mXOrigin + (cx * mCellSize) + (mCellSize / 2f) - (textWidth / 2),
+                        mYOrigin + (cy * mCellSize) + (mCellSize / 2f) + (mTextPaintTextHeight / 2),
+                        mTextPaint);
+            }
         }
     }
 
+    public Rect getGridBounds() {
+        return mGridBoundingRect;
+    }
+
+    public int getCellNumberFromCoordinates(int x, int y) {
+        x -= mXOrigin;
+        y -= mYOrigin;
+        x /= mCellSize;
+        y /= mCellSize;
+        return (y * mSudokuSize) + x;
+    }
+
+    public void setCellLabel(int cellNumber, String string) {
+        mCellLabels[cellNumber] = string;
+    }
+
+    public String getCellLabel(int cellNumber) {
+        return mCellLabels[cellNumber];
+    }
 }
