@@ -6,12 +6,20 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 public class SudokuActivity extends AppCompatActivity {
 
     GameModel mGameModel;
     SudokuGridView mSudokuGridView;
+    LinearLayout mEditLayout;
+    TextView mTextInputView;
+    Button mClearButton;
+    Button mEnterButton;
+
+
     String[] mNativeWords;
     String[] mForeignWords;
 
@@ -30,6 +38,18 @@ public class SudokuActivity extends AppCompatActivity {
         mSudokuGridView.setOnTouchListener(onSudokuGridTouchListener);
         mSudokuGridView.setSudokuRootSize(mGameModel.SUDOKU_ROOT_SIZE);
 
+        mEditLayout = findViewById(R.id.inputLayout);
+        mEditLayout.setVisibility(View.GONE);
+
+        mTextInputView = findViewById(R.id.textInputView);
+
+        mClearButton = findViewById(R.id.clearButton);
+        mClearButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+        mClearButton.setOnClickListener(onClearButtonClickLister);
+
+        mEnterButton = findViewById(R.id.enterButton);
+        mEnterButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
         updateAllViewLabels();
     }
 
@@ -46,10 +66,12 @@ public class SudokuActivity extends AppCompatActivity {
                     int cellNum = mSudokuGridView.getCellNumberFromCoordinates(x, y);
 
                     if (mGameModel.isLockedCell(cellNum)) {
-                        //Locked cell
-                    } else if (mSudokuGridView.getCellLabel(cellNum).equals("")) {
-                        mSudokuGridView.setCellLabel(cellNum, "f");
-                    } else mSudokuGridView.setCellLabel(cellNum, "");
+                        mEditLayout.setVisibility(View.GONE);
+                        mSudokuGridView.clearHighlightedCell();
+                    } else {
+                        mEditLayout.setVisibility(View.VISIBLE);
+                        mSudokuGridView.setHighlightedCell(cellNum);
+                    }
 
                     mSudokuGridView.invalidate();
                     mSudokuGridView.performClick();
@@ -58,6 +80,15 @@ public class SudokuActivity extends AppCompatActivity {
             }
 
             return wasEventHandled;
+        }
+    };
+
+    View.OnClickListener onClearButtonClickLister = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            mSudokuGridView.clearHighlightedCell();
+            mEditLayout.setVisibility(View.GONE);
+            mSudokuGridView.invalidate();
         }
     };
 

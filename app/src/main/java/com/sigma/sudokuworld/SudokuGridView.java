@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import java.util.Arrays;
@@ -36,6 +37,7 @@ public class SudokuGridView extends View {
     Float mTextPaintTextHeight;
 
     String[] mCellLabels;
+    int mHighlightedCell = -1;
 
     public SudokuGridView(Context context) {
         this(context, null);
@@ -108,6 +110,14 @@ public class SudokuGridView extends View {
     }
 
     @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+        int size = Math.min(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.getSize(heightMeasureSpec));
+        setMeasuredDimension(size, size);
+    }
+
+    @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
@@ -153,9 +163,7 @@ public class SudokuGridView extends View {
             int cx = i % mSudokuSize;
             int cy = i / mSudokuSize;
 
-            String label = mCellLabels[i];
-            if (!label.equals("")) {
-
+             if (i == mHighlightedCell) {
                 Rect cellRect = new Rect(
                         mXOrigin + (cx * mCellSize),
                         mYOrigin + (cy * mCellSize),
@@ -163,11 +171,24 @@ public class SudokuGridView extends View {
                         mYOrigin + ((cy + 1) * mCellSize)
                 );
 
+                canvas.drawRect(cellRect, mCellFilledPaint);
+            }
+
+            String label = mCellLabels[i];
+            if (!label.equals("")) {
+
+                //Locked colour
                 if (label.charAt(0) == LOCKED_FLAG) {
+
+                    Rect cellRect = new Rect(
+                            mXOrigin + (cx * mCellSize),
+                            mYOrigin + (cy * mCellSize),
+                            mXOrigin + ((cx + 1) * mCellSize),
+                            mYOrigin + ((cy + 1) * mCellSize)
+                    );
+
                     canvas.drawRect(cellRect, mLockedCellFillPaint);
                     label = label.substring(1);
-                } else {
-                    canvas.drawRect(cellRect, mCellFilledPaint);
                 }
 
                 float textWidth = mTextPaint.measureText(label);
@@ -205,5 +226,17 @@ public class SudokuGridView extends View {
 
     public String getCellLabel(int cellNumber) {
         return mCellLabels[cellNumber];
+    }
+
+    public int getHighlightedCell() {
+        return mHighlightedCell;
+    }
+
+    public void setHighlightedCell(int cellNumber) {
+        mHighlightedCell = cellNumber;
+    }
+
+    public void clearHighlightedCell() {
+        mHighlightedCell = -1;
     }
 }
