@@ -28,15 +28,15 @@ public class SudokuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sudoku);
 
+        //Unpacking information from intent
         Intent i = getIntent();
         mNativeWords = i.getStringArrayExtra("native");
         mForeignWords = i.getStringArrayExtra("foreign");
+        mGameModel = new GameModel(i.getIntArrayExtra("puzzle"));
 
-        mGameModel = new GameModel(3, i.getIntArrayExtra("puzzle"));
-
+        //Initializing sudoku grid
         mSudokuGridView = findViewById(R.id.sudokugrid_view);
         mSudokuGridView.setOnTouchListener(onSudokuGridTouchListener);
-        mSudokuGridView.setSudokuRootSize(mGameModel.SUDOKU_ROOT_SIZE);
 
         mEditLayout = findViewById(R.id.inputLayout);
         mEditLayout.setVisibility(View.GONE);
@@ -53,6 +53,7 @@ public class SudokuActivity extends AppCompatActivity {
         updateAllViewLabels();
     }
 
+    //When soduku grid is touched
     SudokuGridView.OnTouchListener onSudokuGridTouchListener = new SudokuGridView.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
@@ -62,17 +63,24 @@ public class SudokuActivity extends AppCompatActivity {
                 int x = (int) event.getX();
                 int y = (int) event.getY();
 
+                //If touch in the bound of the grid
                 if (mSudokuGridView.getGridBounds().contains(x, y)) {
+
+                    //Clear previous highlighted cell
+                    mSudokuGridView.clearHighlightedCell();
+
+                    //Cell that was touched
                     int cellNum = mSudokuGridView.getCellNumberFromCoordinates(x, y);
 
+                    //The the cell is locked (ei: not one where you can change the number)
                     if (mGameModel.isLockedCell(cellNum)) {
-                        mEditLayout.setVisibility(View.GONE);
-                        mSudokuGridView.clearHighlightedCell();
+                        mEditLayout.setVisibility(View.GONE);           //Hide word input
                     } else {
-                        mEditLayout.setVisibility(View.VISIBLE);
-                        mSudokuGridView.setHighlightedCell(cellNum);
+                        mEditLayout.setVisibility(View.VISIBLE);        //Show word input
+                        mSudokuGridView.setHighlightedCell(cellNum);    //Set new highlighted cell
                     }
 
+                    //Force redraw view
                     mSudokuGridView.invalidate();
                     mSudokuGridView.performClick();
                     wasEventHandled = true;

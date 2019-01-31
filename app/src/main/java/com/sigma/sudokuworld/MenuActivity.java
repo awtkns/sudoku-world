@@ -25,10 +25,14 @@ public class MenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
 
         mPlayButton = findViewById(R.id.playButton);
+
+        //On play button click go to sudoku activity
         mPlayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MenuActivity.this, SudokuActivity.class);
+
+                //Adding information for the sudoku activity
                 intent.putExtra("native", readWordlistFromCSV(WordType.NATIVE));
                 intent.putExtra("foreign", readWordlistFromCSV(WordType.FOREIGN));
                 intent.putExtra("puzzle", readPuzzleDataFromCSV());
@@ -37,6 +41,13 @@ public class MenuActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Reads puzzle data from csv file "simplepuzzles.csv"
+     * Stores data in an array.
+     * Array index = cell number
+     * Stores 0 for empty cell
+     * @return array
+     */
     private int[] readPuzzleDataFromCSV() {
         InputStream inputStream = getResources().openRawResource(R.raw.simplepuzzles);
         InputStreamReader inputStreamReader = new InputStreamReader(inputStream, Charset.forName("UTF-8"));
@@ -47,10 +58,10 @@ public class MenuActivity extends AppCompatActivity {
         try {
             String puzzleStr;
             puzzleStr = bufferedReader.readLine();
-            puzzleStr = puzzleStr.replace(",","");
+            puzzleStr = puzzleStr.replace(",","");  //input sanitation
 
             vals = new int[puzzleStr.length()];
-            for (int i = 0; i < puzzleStr.length(); i++){
+            for (int i = 0; i < puzzleStr.length(); i++){   //read puzzle data
                 char ch =puzzleStr.charAt(i);
                 if (ch != '.') {
                        vals[i] = Character.getNumericValue(ch);
@@ -68,6 +79,11 @@ public class MenuActivity extends AppCompatActivity {
         NATIVE, FOREIGN
     }
 
+    /**
+     * Reads CSV file containing 9 word pairs
+     * @param wordType get the native or foreign list
+     * @return string array of words in either the native or foreign lang
+     */
     private String[] readWordlistFromCSV(WordType wordType) {
         InputStream inputStream = getResources().openRawResource(R.raw.wordlist);
         InputStreamReader inputStreamReader = new InputStreamReader(inputStream, Charset.forName("UTF-8"));

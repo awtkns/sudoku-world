@@ -4,42 +4,36 @@ import java.util.Arrays;
 
 class GameModel {
 
-    final int SUDOKU_ROOT_SIZE;
-    final int SUDOKU_SIZE;
+    final int SUDOKU_SIZE = 9;
     final int SUDOKU_NUMBER_OF_CELLS;
 
+    //The cell values for all cells in the game
     private int[] cellValues;
+
+    //True if the cell value cant be changed (ie: cell that was generated for the start of game)
     private Boolean[] lockedCells;
-    private int numFilledCells = 0;
-    private boolean isGameWon;
 
-    GameModel(int sudokuRootSize) {
-        this(sudokuRootSize, new int[0]);
-    }
 
-    GameModel(int sudokuRootSize, int[] initialValues){
-        SUDOKU_ROOT_SIZE = sudokuRootSize;
-        SUDOKU_SIZE = SUDOKU_ROOT_SIZE * SUDOKU_ROOT_SIZE;
+    GameModel() {
         SUDOKU_NUMBER_OF_CELLS = SUDOKU_SIZE * SUDOKU_SIZE;
 
         cellValues = new int[SUDOKU_NUMBER_OF_CELLS];
         lockedCells = new Boolean[SUDOKU_NUMBER_OF_CELLS];
+        Arrays.fill(lockedCells, false);
+    }
+
+    GameModel(int[] initialValues){
+        this();
+
+        //Seting up intial cells
         if (initialValues.length == SUDOKU_NUMBER_OF_CELLS) {
             for (int i = 0; i < SUDOKU_NUMBER_OF_CELLS; i++) {
                 if (initialValues[i] != 0) {
                     cellValues[i] = initialValues[i];
                     lockedCells[i] = true;
-                    numFilledCells++;
-                } else {
-                    cellValues[i] = 0;
-                    lockedCells[i] = false;
                 }
             }
-        } else {
-            Arrays.fill(lockedCells, false);
         }
-
-        isGameWon = false;
     }
 
     public int getCellValue(int cellNumber) {
@@ -47,25 +41,17 @@ class GameModel {
     }
 
     public void setCellValue(int cellNumber, int val) {
-        if (cellValues[cellNumber] == 0 && val != 0)
-            numFilledCells++;
-        else if (cellValues[cellNumber] != 0 && val == 0)
-            numFilledCells--;
-
         cellValues[cellNumber] = val;
     }
 
     private boolean checkWinConditions() {
-        if (numFilledCells != SUDOKU_NUMBER_OF_CELLS)
-            return false;
-
         //Check win conditions for row, col, and square here
 
-        return true;
+        return false;
     }
 
     public boolean isGameWon() {
-        return isGameWon;
+        return checkWinConditions();
     }
 
     public boolean isLockedCell(int cellNumber) {

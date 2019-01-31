@@ -15,9 +15,8 @@ import java.util.Arrays;
 public class SudokuGridView extends View {
 
     static final char LOCKED_FLAG = '~';
-
-    int mSudokuRootSize;
-    int mSudokuSize;
+    private static final int SUDOKU_SIZE = 9;
+    private static final int SUDOKU_ROOT_SIZE = 3;
 
     int mViewWidth;
     int mViewHeight;
@@ -46,7 +45,8 @@ public class SudokuGridView extends View {
     public SudokuGridView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
 
-        mCellLabels = new String[0];
+        mCellLabels = new String[SUDOKU_SIZE*SUDOKU_SIZE];
+        Arrays.fill(mCellLabels, "");
 
         mGridPaint = new Paint();
         mGridPaint.setColor(getResources().getColor(R.color.gridColour));
@@ -69,18 +69,15 @@ public class SudokuGridView extends View {
         mTextPaint = new Paint();
     }
 
-    public void setSudokuRootSize(int rootSize) {
-        mSudokuRootSize = rootSize;
-        mSudokuSize = mSudokuRootSize * mSudokuRootSize;
-        mCellLabels = new String[mSudokuSize * mSudokuSize];
-        Arrays.fill(mCellLabels, "");
-    }
-
     @Override   //This is for accessibility
     public boolean performClick() {
         return super.performClick();
     }
 
+    /**
+     *  Calculates the correct size for all objects to be drawn within the view.
+     *  Gets called when the view size changes.
+     */
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
@@ -96,7 +93,7 @@ public class SudokuGridView extends View {
         int maxPad = Math.max(xPad, yPad);
 
         mSquareSize = Math.min(w - maxPad, h - maxPad);
-        mCellSize = mSquareSize / mSudokuSize;
+        mCellSize = mSquareSize / SUDOKU_SIZE;
         mGridBoundingRect = new Rect(
                 mXOrigin,
                 mYOrigin,
@@ -109,6 +106,10 @@ public class SudokuGridView extends View {
         mTextPaintTextHeight = fontMetrics.descent - fontMetrics.ascent;
     }
 
+    /**
+     * Tell the layout manager the perfered size for the view.
+     * Makes the view square.
+     */
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -125,11 +126,17 @@ public class SudokuGridView extends View {
         drawGrid(canvas);
     }
 
+    /**
+     * Draws the the sudoku grid
+     * @param canvas canvas
+     */
     private void drawGrid(Canvas canvas) {
 
         //Horizontal Lines
-        for(int i = 0; i <= mSudokuSize; i++) {
-            if (i % mSudokuRootSize == 0) {
+        for(int i = 0; i <= SUDOKU_SIZE; i++) {
+
+            //Either bolded or unbolded
+            if (i % SUDOKU_ROOT_SIZE == 0) {
                 canvas.drawLine(
                         mXOrigin,mYOrigin + (i * mCellSize),
                         mSquareSize + mXOrigin, mYOrigin + (i * mCellSize),
@@ -143,8 +150,10 @@ public class SudokuGridView extends View {
         }
 
         //Vertical Lines
-        for(int i = 0; i <= mSudokuSize; i++) {
-            if (i % mSudokuRootSize == 0) {
+        for(int i = 0; i <= SUDOKU_SIZE; i++) {
+
+            //Either bolded or unbolded
+            if (i % SUDOKU_ROOT_SIZE == 0) {
                 canvas.drawLine(
                         mXOrigin + (i * mCellSize), mYOrigin,
                         mXOrigin + (i * mCellSize), mSquareSize + mYOrigin,
@@ -158,11 +167,16 @@ public class SudokuGridView extends View {
         }
     }
 
+    /**
+     * Draws the content within the cell
+     * @param canvas canvas
+     */
     private void drawCellFill(Canvas canvas) {
         for (int i = 0; i < mCellLabels.length; i++) {
-            int cx = i % mSudokuSize;
-            int cy = i / mSudokuSize;
+            int cx = i % SUDOKU_SIZE;   //x cell pos
+            int cy = i / SUDOKU_SIZE;   //y cell pos
 
+            //If its the cell thats currently highlighted draw the highlight
              if (i == mHighlightedCell) {
                 Rect cellRect = new Rect(
                         mXOrigin + (cx * mCellSize),
@@ -174,10 +188,11 @@ public class SudokuGridView extends View {
                 canvas.drawRect(cellRect, mCellFilledPaint);
             }
 
+            //If the cell has a label
             String label = mCellLabels[i];
             if (!label.equals("")) {
 
-                //Locked colour
+                //Draws the cell fill for squares that cant be edited
                 if (label.charAt(0) == LOCKED_FLAG) {
 
                     Rect cellRect = new Rect(
@@ -191,7 +206,10 @@ public class SudokuGridView extends View {
                     label = label.substring(1);
                 }
 
+                //Measure the width of the label and draw it in the cell
                 float textWidth = mTextPaint.measureText(label);
+
+                //Text too big for cell decrease size
                 float defaultTextSize = mTextPaint.getTextSize();
                 while (textWidth > mCellSize) {
                     mTextPaint.setTextSize(mTextPaint.getTextSize() - 1);
@@ -203,6 +221,7 @@ public class SudokuGridView extends View {
                         mYOrigin + (cy * mCellSize) + (mCellSize / 2f) + (mTextPaintTextHeight / 2),
                         mTextPaint);
 
+                //Reset text paint size
                 mTextPaint.setTextSize(defaultTextSize);
             }
         }
@@ -212,12 +231,19 @@ public class SudokuGridView extends View {
         return mGridBoundingRect;
     }
 
+    /**
+     * Retuns the cellnumber that is closest to the coordinate.
+     * Used to find out what cell was touched
+     * @param x cord
+     * @param y cord
+     * @return cell number
+     */
     public int getCellNumberFromCoordinates(int x, int y) {
         x -= mXOrigin;
         y -= mYOrigin;
         x /= mCellSize;
         y /= mCellSize;
-        return (y * mSudokuSize) + x;
+        return (y * SUDOKU_SIZE) + x;
     }
 
     public void setCellLabel(int cellNumber, String string) {
