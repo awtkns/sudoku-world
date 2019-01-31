@@ -12,16 +12,12 @@ import android.widget.TextView;
 
 public class SudokuActivity extends AppCompatActivity {
 
-    GameModel mGameModel;
+    VocabSudokuModel mVocabGame;
     SudokuGridView mSudokuGridView;
     LinearLayout mEditLayout;
     TextView mTextInputView;
     Button mClearButton;
     Button mEnterButton;
-
-
-    String[] mNativeWords;
-    String[] mForeignWords;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +26,11 @@ public class SudokuActivity extends AppCompatActivity {
 
         //Unpacking information from intent
         Intent i = getIntent();
-        mNativeWords = i.getStringArrayExtra("native");
-        mForeignWords = i.getStringArrayExtra("foreign");
-        mGameModel = new GameModel(i.getIntArrayExtra("puzzle"));
+        mVocabGame = new VocabSudokuModel(
+                i.getStringArrayExtra("native"),
+                i.getStringArrayExtra("foreign"),
+                i.getIntArrayExtra("puzzle")
+        );
 
         //Initializing sudoku grid
         mSudokuGridView = findViewById(R.id.sudokugrid_view);
@@ -73,7 +71,7 @@ public class SudokuActivity extends AppCompatActivity {
                     int cellNum = mSudokuGridView.getCellNumberFromCoordinates(x, y);
 
                     //The the cell is locked (ei: not one where you can change the number)
-                    if (mGameModel.isLockedCell(cellNum)) {
+                    if (mVocabGame.isLockedCell(cellNum)) {
                         mEditLayout.setVisibility(View.GONE);           //Hide word input
                     } else {
                         mEditLayout.setVisibility(View.VISIBLE);        //Show word input
@@ -101,17 +99,8 @@ public class SudokuActivity extends AppCompatActivity {
     };
 
     private void updateAllViewLabels() {
-        for (int i = 0; i < mGameModel.SUDOKU_NUMBER_OF_CELLS; i++) {
-            int val = mGameModel.getCellValue(i);
-
-            if (val != 0) {
-                try {
-                    mSudokuGridView.setCellLabel(i, SudokuGridView.LOCKED_FLAG + mNativeWords[val - 1]);
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    Log.w("SudokuActivity", "Attempting to mapped val to no word");
-                    mSudokuGridView.setCellLabel(i, Integer.toString(mGameModel.getCellValue(i)));
-                }
-            }
+        for (int i = 0; i < 81; i++) {
+            mSudokuGridView.setCellLabel(i, SudokuGridView.LOCKED_FLAG + mVocabGame.getCellString(i));
         }
 
         mSudokuGridView.invalidate();
