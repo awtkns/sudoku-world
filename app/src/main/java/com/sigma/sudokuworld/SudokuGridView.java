@@ -1,20 +1,22 @@
 package com.sigma.sudokuworld;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 import java.util.Arrays;
 
 public class SudokuGridView extends View {
 
+    //Flag that prepends a str to tell the view to draw the cell as 'locked' (ie: not intractable)
     static final char LOCKED_FLAG = '~';
+
     private static final int SUDOKU_SIZE = 9;
     private static final int SUDOKU_ROOT_SIZE = 3;
 
@@ -35,8 +37,8 @@ public class SudokuGridView extends View {
 
     Float mTextPaintTextHeight;
 
-    String[] mCellLabels;
-    int mHighlightedCell = -1;
+    String[] mCellLabels;       //Labels for every cell in grid
+    int mHighlightedCell = -1;  //Points to cell to draw highlight in. -1 = no cell
 
     public SudokuGridView(Context context) {
         this(context, null);
@@ -48,25 +50,35 @@ public class SudokuGridView extends View {
         mCellLabels = new String[SUDOKU_SIZE*SUDOKU_SIZE];
         Arrays.fill(mCellLabels, "");
 
-        mGridPaint = new Paint();
-        mGridPaint.setColor(getResources().getColor(R.color.gridColour));
-        mGridPaint.setStrokeWidth(5);
+        mGridPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mBoldPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mCellFilledPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mLockedCellFillPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
-        mBoldPaint = new Paint();
-        mBoldPaint.setColor(getResources().getColor(R.color.gridColour));
-        mBoldPaint.setStrokeWidth(15);
+        //Get styling from activity_sudoku.xml
+        TypedArray a = context.getTheme().obtainStyledAttributes(
+                attrs,
+                R.styleable.SudokuGridView,
+                0, 0);
 
-        mCellFilledPaint = new Paint();
-        mCellFilledPaint.setColor(Color.YELLOW);
-        mCellFilledPaint.setAlpha(100);
+        //Apply styling from xml file, if not styling set default values
+        try {
+            mGridPaint.setStrokeWidth(a.getDimension(R.styleable.SudokuGridView_gridPaintStrokeWidth, 5));
+            mGridPaint.setColor(a.getColor(R.styleable.SudokuGridView_gridPaintColor, Color.BLACK));
+            mBoldPaint.setStrokeWidth(a.getDimension(R.styleable.SudokuGridView_boldGridPaintStrokeWidth, 10));
+            mBoldPaint.setColor(a.getColor(R.styleable.SudokuGridView_boldGridPaintColor, Color.BLACK));
+            mCellFilledPaint.setColor(a.getColor(R.styleable.SudokuGridView_highlightedCellColour, Color.YELLOW));
+            mLockedCellFillPaint.setColor(a.getColor(R.styleable.SudokuGridView_lockedCellColour, Color.GRAY));
+        } finally {
+            a.recycle();
+        }
+
+        //More paint styling
+        mGridPaint.setStrokeCap(Paint.Cap.BUTT);
+        mBoldPaint.setStrokeCap(Paint.Cap.ROUND);
         mCellFilledPaint.setStyle(Paint.Style.FILL);
-
-        mLockedCellFillPaint = new Paint();
-        mLockedCellFillPaint.setColor(Color.BLACK);
-        mLockedCellFillPaint.setAlpha(50);
         mLockedCellFillPaint.setStyle(Paint.Style.FILL);
-
-        mTextPaint = new Paint();
     }
 
     @Override   //This is for accessibility
@@ -94,6 +106,8 @@ public class SudokuGridView extends View {
 
         mSquareSize = Math.min(w - maxPad, h - maxPad);
         mCellSize = mSquareSize / SUDOKU_SIZE;
+        mSquareSize = mCellSize * SUDOKU_SIZE; //Guard against for floating point errors
+
         mGridBoundingRect = new Rect(
                 mXOrigin,
                 mYOrigin,
@@ -135,7 +149,7 @@ public class SudokuGridView extends View {
         //Horizontal Lines
         for(int i = 0; i <= SUDOKU_SIZE; i++) {
 
-            //Either bolded or unbolded
+            //Either bold or not bold
             if (i % SUDOKU_ROOT_SIZE == 0) {
                 canvas.drawLine(
                         mXOrigin,mYOrigin + (i * mCellSize),
@@ -152,7 +166,7 @@ public class SudokuGridView extends View {
         //Vertical Lines
         for(int i = 0; i <= SUDOKU_SIZE; i++) {
 
-            //Either bolded or unbolded
+            //Either bold or not bold
             if (i % SUDOKU_ROOT_SIZE == 0) {
                 canvas.drawLine(
                         mXOrigin + (i * mCellSize), mYOrigin,

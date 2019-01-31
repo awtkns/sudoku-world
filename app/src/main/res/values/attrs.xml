@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SudokuGridView">
+        <attr name="gridPaintStrokeWidth" format="dimension" />
+        <attr name="gridPaintColor" format="color" />
+        <attr name="boldGridPaintStrokeWidth" format="dimension" />
+        <attr name="boldGridPaintColor" format="color" />
+        <attr name="highlightedCellColour" format="color" />
+        <attr name="lockedCellColour" format="color" />
+    </declare-styleable>
+</resources>

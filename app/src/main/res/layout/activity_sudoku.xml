@@ -23,7 +23,16 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+
+            app:gridPaintStrokeWidth="1dp"
+            app:boldGridPaintStrokeWidth="3dp"
+
+            app:gridPaintColor="@color/colourGrid"
+            app:boldGridPaintColor="@color/colourGrid"
+            app:lockedCellColour="@color/colourLockedCell"
+            app:highlightedCellColour="@color/colorHighlight"
+            />
 
         <LinearLayout
             android:id="@+id/inputLayout"

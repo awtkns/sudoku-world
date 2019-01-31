@@ -4,19 +4,21 @@ import android.util.SparseArray;
 
 import java.util.HashMap;
 
-public class VocabSudokuModel {
+/**
+ * This class acts as an adapter allowing to the sudoku game to be played with words instead of numbers
+ */
+class VocabSudokuModel {
 
     private GameModel model;
     private SparseArray<String> nativeWordsMap;
     private SparseArray<String> foreignWordsMap;
 
-
-    public VocabSudokuModel(String[] nativeWords, String[] foreignWords) {
+    VocabSudokuModel(String[] nativeWords, String[] foreignWords) {
         model = new GameModel();
         init(nativeWords, foreignWords);
     }
 
-    public VocabSudokuModel(String[] nativeWords, String[] foreignWords, int[] startingPuzzle) {
+    VocabSudokuModel(String[] nativeWords, String[] foreignWords, int[] startingPuzzle) {
         model = new GameModel(startingPuzzle);
         init(nativeWords, foreignWords);
     }
@@ -25,26 +27,26 @@ public class VocabSudokuModel {
     private void init(String[] nWords, String[] fWords) {
         nativeWordsMap = new SparseArray<>();
         nativeWordsMap.append(0, "");
-        for(int i = 1; i <= nWords.length; i++) {
-            nativeWordsMap.append(i, nWords[i]);
+        for(int i = 0; i < nWords.length; i++) {
+            nativeWordsMap.append(i + 1, nWords[i]);
         }
 
         foreignWordsMap = new SparseArray<>();
         foreignWordsMap.append(0, "");
-        for(int i = 1; i <= fWords.length; i++) {
-            foreignWordsMap.append(i, fWords[i]);
+        for(int i = 0; i < fWords.length; i++) {
+            foreignWordsMap.append(i + 1, fWords[i]);
         }
     }
 
-    public String getCellString(int cellNumber) {
+    String getCellString(int cellNumber) {
         return nativeWordsMap.valueAt(model.getCellValue(cellNumber));
     }
 
-    public void setCellString(int cellNumber, String str) {
+    void setCellString(int cellNumber, String str) {
         model.setCellValue(cellNumber, nativeWordsMap.indexOfValue(str));
     }
 
-    public boolean isLockedCell(int cellNumber) {
+    boolean isInitialCell(int cellNumber) {
         return model.isLockedCell(cellNumber);
     }
 }

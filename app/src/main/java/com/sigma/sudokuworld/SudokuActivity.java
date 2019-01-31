@@ -3,7 +3,6 @@ package com.sigma.sudokuworld;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -51,7 +50,7 @@ public class SudokuActivity extends AppCompatActivity {
         updateAllViewLabels();
     }
 
-    //When soduku grid is touched
+    //When sudoku grid is touched
     SudokuGridView.OnTouchListener onSudokuGridTouchListener = new SudokuGridView.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
@@ -71,7 +70,7 @@ public class SudokuActivity extends AppCompatActivity {
                     int cellNum = mSudokuGridView.getCellNumberFromCoordinates(x, y);
 
                     //The the cell is locked (ei: not one where you can change the number)
-                    if (mVocabGame.isLockedCell(cellNum)) {
+                    if (mVocabGame.isInitialCell(cellNum)) {
                         mEditLayout.setVisibility(View.GONE);           //Hide word input
                     } else {
                         mEditLayout.setVisibility(View.VISIBLE);        //Show word input
@@ -99,8 +98,14 @@ public class SudokuActivity extends AppCompatActivity {
     };
 
     private void updateAllViewLabels() {
-        for (int i = 0; i < 81; i++) {
-            mSudokuGridView.setCellLabel(i, SudokuGridView.LOCKED_FLAG + mVocabGame.getCellString(i));
+        for (int cellNumber = 0; cellNumber < 81; cellNumber++) {
+            String label = mVocabGame.getCellString(cellNumber);
+
+            if (mVocabGame.isInitialCell(cellNumber)) {
+                label = SudokuGridView.LOCKED_FLAG + label;
+            }
+
+            mSudokuGridView.setCellLabel(cellNumber, label);
         }
 
         mSudokuGridView.invalidate();
