@@ -24,13 +24,13 @@ public class SudokuCell {
 
     //Randomly gets a possible candidate and removes it from the candidate list
     //If there are no possible candidates it returns 0
-    public boolean getCandidate() {
+    public boolean pickCandidate() {
         //No candidates
         if (mCandidatesList.size() == 0)
             return false;
 
         //Candidates exist so a random index between 0 and MAX is selected
-        int randomIndex = ThreadLocalRandom.current().nextInt(0, mCandidatesList.size() - 1);
+        int randomIndex = ThreadLocalRandom.current().nextInt(0, mCandidatesList.size());
         mCurrValue = mCandidatesList.get(randomIndex);
         mCandidatesList.remove(randomIndex);
         return true;
@@ -57,7 +57,9 @@ public class SudokuCell {
         }
 
     }
-
+    public void removeCandidate(int value) {
+        mCandidatesList.remove((Integer) value);
+    }
     public int getValue() {
         return mCurrValue;
     }
