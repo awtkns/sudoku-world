@@ -10,31 +10,36 @@ import java.util.HashMap;
 class VocabSudokuModel {
 
     private GameModel model;
+    private String[] foreignWords;
+    private String[] nativeWords;
     private SparseArray<String> nativeWordsMap;
     private SparseArray<String> foreignWordsMap;
 
     VocabSudokuModel(String[] nativeWords, String[] foreignWords) {
         model = new GameModel();
-        init(nativeWords, foreignWords);
+        this.nativeWords = nativeWords;
+        this.foreignWords = foreignWords;
+        init();
     }
 
     VocabSudokuModel(String[] nativeWords, String[] foreignWords, int[] startingPuzzle) {
         model = new GameModel(startingPuzzle);
-        init(nativeWords, foreignWords);
+        this.nativeWords = nativeWords;
+        this.foreignWords = foreignWords;
+        init();
     }
 
-    //LMAO
-    private void init(String[] nWords, String[] fWords) {
+    private void init() {
         nativeWordsMap = new SparseArray<>();
         nativeWordsMap.append(0, "");
-        for(int i = 0; i < nWords.length; i++) {
-            nativeWordsMap.append(i + 1, nWords[i]);
+        for(int i = 0; i < nativeWords.length; i++) {
+            nativeWordsMap.append(i + 1, nativeWords[i]);
         }
 
         foreignWordsMap = new SparseArray<>();
         foreignWordsMap.append(0, "");
-        for(int i = 0; i < fWords.length; i++) {
-            foreignWordsMap.append(i + 1, fWords[i]);
+        for(int i = 0; i < foreignWords.length; i++) {
+            foreignWordsMap.append(i + 1, foreignWords[i]);
         }
     }
 
@@ -44,6 +49,18 @@ class VocabSudokuModel {
 
     void setCellString(int cellNumber, String str) {
         model.setCellValue(cellNumber, nativeWordsMap.indexOfValue(str));
+    }
+
+    String[] getAllForeignWords() {
+        return foreignWords;
+    }
+
+    String[] getAllNativeWords() {
+        return nativeWords;
+    }
+
+    int[] getAllCellValues() {
+        return model.getAllCellValues();
     }
 
     boolean isInitialCell(int cellNumber) {

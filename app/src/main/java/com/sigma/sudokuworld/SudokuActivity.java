@@ -11,25 +11,38 @@ import android.widget.TextView;
 
 public class SudokuActivity extends AppCompatActivity {
 
-    VocabSudokuModel mVocabGame;
-    SudokuGridView mSudokuGridView;
-    LinearLayout mEditLayout;
-    TextView mTextInputView;
-    Button mClearButton;
-    Button mEnterButton;
+    private final String PUZZLE_KEY = "puzzle";
+    private final String FOREIGN_WORDS_KEY = "foreign";
+    private final String NATIVE_WORDS_KEY = "native";
+
+    private VocabSudokuModel mVocabGame;
+    private SudokuGridView mSudokuGridView;
+    private LinearLayout mEditLayout;
+    private TextView mTextInputView;
+    private Button mClearButton;
+    private Button mEnterButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sudoku);
 
-        //Unpacking information from intent
-        Intent i = getIntent();
-        mVocabGame = new VocabSudokuModel(
-                i.getStringArrayExtra("native"),
-                i.getStringArrayExtra("foreign"),
-                i.getIntArrayExtra("puzzle")
-        );
+        if (savedInstanceState != null) {
+            //Unpacking information from saved instance
+            mVocabGame = new VocabSudokuModel(
+                    savedInstanceState.getStringArray(NATIVE_WORDS_KEY),
+                    savedInstanceState.getStringArray(FOREIGN_WORDS_KEY),
+                    savedInstanceState.getIntArray(PUZZLE_KEY)
+            );
+        } else {
+            //Unpacking information from intent
+            Intent i = getIntent();
+            mVocabGame = new VocabSudokuModel(
+                    i.getStringArrayExtra(NATIVE_WORDS_KEY),
+                    i.getStringArrayExtra(FOREIGN_WORDS_KEY),
+                    i.getIntArrayExtra(PUZZLE_KEY)
+            );
+        }
 
         //Initializing sudoku grid
         mSudokuGridView = findViewById(R.id.sudokugrid_view);
@@ -48,6 +61,14 @@ public class SudokuActivity extends AppCompatActivity {
         mEnterButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
         updateAllViewLabels();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putStringArray(NATIVE_WORDS_KEY, mVocabGame.getAllNativeWords());
+        outState.putStringArray(FOREIGN_WORDS_KEY, mVocabGame.getAllForeignWords());
+        outState.putIntArray(PUZZLE_KEY, mVocabGame.getAllCellValues());
     }
 
     //When sudoku grid is touched
