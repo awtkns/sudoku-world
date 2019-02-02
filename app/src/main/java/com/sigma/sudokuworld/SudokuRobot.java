@@ -14,15 +14,28 @@ public class SudokuRobot {
         mBoardLength = sudokuSubsectionSize * sudokuSubsectionSize;
         mBoardSize = (mBoardLength) * (mBoardLength);
 
+        generateSudokuCells();
+        generateBoard();
+    }
+
+
+    
+    private void generateSudokuCells() {
         //Creates space for the two dimensional array of Sudoku cells
         mSudokuCells = new SudokuCell[mBoardLength][mBoardLength];
 
         //Loops through and puts a cell in each index of the 2D Sudoku cell array
         for (int row = 0; row < mBoardLength; row++) {
             for (int column = 0; column < mBoardLength; column++) {
-                mSudokuCells[row][column] = new SudokuCell(sudokuSubsectionSize);
+                mSudokuCells[row][column] = new SudokuCell(mSudokuSubsectionSize);
             }
         }
+    }
+
+
+
+    public void generateBoard() {
+
     }
 
 
@@ -34,6 +47,7 @@ public class SudokuRobot {
             //Loops through and grabs the value of each element in the 2D Sudoku cell array
             for (int row = 0; row < mBoardLength; row++) {
                 for(int column = 0; column < mBoardLength; column++) {
+                    mSudokuCells[row][column].getCandidate();
                     cellValues[cellValueIndex] = mSudokuCells[row][column].getValue();
                     cellValueIndex++;
                 }
