@@ -13,7 +13,6 @@ public class SudokuActivity extends AppCompatActivity {
 
     VocabSudokuModel mVocabGame;
     SudokuGridView mSudokuGridView;
-    SudokuRobot mSudokuRobot;
     LinearLayout mEditLayout;
     TextView mTextInputView;
     Button mClearButton;
@@ -26,17 +25,9 @@ public class SudokuActivity extends AppCompatActivity {
 
         //Unpacking information from intent
         Intent i = getIntent();
-        mSudokuRobot = new SudokuRobot(3);
-
-        int[] cellVals = mSudokuRobot.returnCellValues();
-        for (int j = 0; j < 81; j++) {
-            System.out.println(cellVals[j]);
-        }
-
         mVocabGame = new VocabSudokuModel(
                 i.getStringArrayExtra("native"),
-                i.getStringArrayExtra("foreign"),
-                mSudokuRobot.returnCellValues()
+                i.getStringArrayExtra("foreign")
         );
 
         //Initializing sudoku grid
