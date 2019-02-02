@@ -35,24 +35,12 @@ public class SudokuRobot {
 
 
     public void generateBoard() {
-        checkCandidates(0,0);
-        mSudokuCells[0][0].pickCandidate();
-        checkCandidates(0,1);
-        mSudokuCells[0][1].pickCandidate();
-        checkCandidates(0,2);
-        mSudokuCells[0][2].pickCandidate();
-        checkCandidates(0,3);
-        mSudokuCells[0][3].pickCandidate();
-        checkCandidates(0,4);
-        mSudokuCells[0][4].pickCandidate();
-        checkCandidates(0,5);
-        mSudokuCells[0][5].pickCandidate();
-        checkCandidates(0,6);
-        mSudokuCells[0][6].pickCandidate();
-        checkCandidates(0,7);
-        mSudokuCells[0][7].pickCandidate();
-        checkCandidates(0,8);
-        mSudokuCells[0][8].pickCandidate();
+        for (int row = 0; row < mBoardLength; row++){
+            for (int column = 0; column < mBoardLength; column++) {
+                checkCandidates(row,column);
+                mSudokuCells[row][column].pickCandidate();
+            }
+        }
 
 
 
@@ -80,8 +68,8 @@ public class SudokuRobot {
 
         //Remove pre-existing sub-section values
         //The below calculations will be coordinants for the top left index of each sub-section
-        int subSectionRow = row / mSudokuSubsectionSize;
-        int subSectionColumn = column / mSudokuSubsectionSize;
+        int subSectionRow = mSudokuSubsectionSize*(row / mSudokuSubsectionSize);
+        int subSectionColumn = mSudokuSubsectionSize*(column / mSudokuSubsectionSize);
         for ( int i = 0; i < mSudokuSubsectionSize; i++) {
             for (int j =0; j < mSudokuSubsectionSize; j++) {
                 cell.removeCandidate(mSudokuCells[subSectionRow + i][subSectionColumn + j].getValue());
