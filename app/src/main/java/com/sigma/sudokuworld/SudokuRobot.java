@@ -1,5 +1,6 @@
 package com.sigma.sudokuworld;
 import java.util.concurrent.ThreadLocalRandom;
+import java.lang.Math;
 
 
 //This object takes in the subsection size of a Sudoku and can solve boards, generate valid sudoku boards
@@ -42,7 +43,7 @@ public class SudokuRobot {
         clearBoard();
         solveBoard();
         mSolutionValues = returnCellValues();
-        generatePlayableBoard(57);
+        generatePlayableBoard(70);
 
     }
 
@@ -127,7 +128,7 @@ public class SudokuRobot {
         //Keeps track of how loops have been iterated and what cells are emptied.
         //Works by emptying a node and then checking if the solution is unique
         //If only one solution is generated, that node can be deleted
-        SudokuCell[] deletedNodeList = new SudokuCell[mBoardSize];
+        SudokuCell[] deletedNodeList = new SudokuCell[Math.min(mBoardSize, maxCycleLength)];
         int deletedNodeIndex = 0;
 
         for (int cycleCounter = 0; cycleCounter < maxCycleLength; cycleCounter++) {
@@ -136,7 +137,10 @@ public class SudokuRobot {
             int column = ThreadLocalRandom.current().nextInt(0, mBoardLength);
             SudokuCell cell = mSudokuCells[row][column];
 
+            //Make sure the cell cannot re-get its current value
             int restrictedValue = cell.getValue();
+            cell.setRestrictedValue(restrictedValue);
+
             deletedNodeList[deletedNodeIndex] = cell;
             //Reseting all cells that have been emptied
             for (int i = 0; i <= deletedNodeIndex; i++) {
@@ -144,7 +148,6 @@ public class SudokuRobot {
                 deletedNodeList[i].resetCandidateList();
             }
 
-            cell.setRestrictedValue(restrictedValue);
             //If there is no solutions now
             if(!solveBoard()) {
                 deletedNodeIndex++; }
