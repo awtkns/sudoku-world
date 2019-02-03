@@ -43,7 +43,7 @@ public class SudokuRobot {
         clearBoard();
         solveBoard();
         mSolutionValues = returnCellValues();
-        generatePlayableBoard(70);
+        generatePlayableBoard(80);
 
     }
 
