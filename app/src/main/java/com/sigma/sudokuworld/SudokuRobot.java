@@ -42,7 +42,7 @@ public class SudokuRobot {
         clearBoard();
         solveBoard();
         mSolutionValues = returnCellValues();
-        generatePlayableBoard(70);
+        generatePlayableBoard(57);
 
     }
 
@@ -63,16 +63,21 @@ public class SudokuRobot {
     }
 
 
-    public void solveBoard() {
+    public boolean solveBoard() {
         //For each cell, check what values it can take and make it take a random value
         //If it has no possible values, go to the previous cell and change its value and move on
         //Keep backtracking if all cells do not have any possible values
         //Algorithm ends when we go past the last cell
-
+        boolean isBacktracking = false;
         int index = 0;
         while (index < mBoardSize) {
             int row = index / mBoardLength;
             int column = index % mBoardLength;
+
+            //If we've backtracked to before the first node, return false
+            if (index < 0) {
+                return false;}
+
             //Cell must NOT be locked to change its value
             //If this cell has not had a value placed yet, reset its candidate list
             //This is for the situation where a node is revisited after being backtracked to
@@ -82,16 +87,29 @@ public class SudokuRobot {
             }
 
             scanCandidates(row, column);
-            //Candidate is picked so go to next cell
+
+            //Check if the cell is locked
+            //If it is move to the next cell which depends on if we're backtracking or not
             if (mSudokuCells[row][column].isLocked()){
-                index++;}
+                int j =0;
+                //Don't pick a candidate (Do nothing)
+                }
+
+            //If candidate is picked, we're no longer backtracking and we move to next cell
             else if (mSudokuCells[row][column].pickCandidate()) {
-                index++;
-            } else {
-                //Candidate is not picked, set cell value to zero and go to previous cell
-                mSudokuCells[row][column].clearValue();
-                index--;
+                isBacktracking = false;
             }
+
+            else {
+                //Candidate is not picked, set cell value to zero and start backtracking
+                mSudokuCells[row][column].clearValue();
+                isBacktracking = true;
+            }
+
+
+            //Change index based on whether or not we are backtracking
+            if (isBacktracking) { index--; }
+            else { index ++; }
         }
 
         //Lock every cell
@@ -100,43 +118,44 @@ public class SudokuRobot {
                 mSudokuCells[row][column].changeLockValue(true);
             }
         }
+
+        return true;
     }
 
 
-    public void generatePlayableBoard(int cycleLength) {
+    public void generatePlayableBoard(int maxCycleLength) {
         //Keeps track of how loops have been iterated and what cells are emptied.
         //Works by emptying a node and then checking if the solution is unique
         //If only one solution is generated, that node can be deleted
-        int currCycleLength = 0;
-        SudokuCell[] deletedNodeList = new SudokuCell[cycleLength];
+        SudokuCell[] deletedNodeList = new SudokuCell[mBoardSize];
         int deletedNodeIndex = 0;
 
-        while (currCycleLength < cycleLength) {
+        for (int cycleCounter = 0; cycleCounter < maxCycleLength; cycleCounter++) {
             //Finding a random cell to empty
             int row = ThreadLocalRandom.current().nextInt(0, mBoardLength);
             int column = ThreadLocalRandom.current().nextInt(0, mBoardLength);
             SudokuCell cell = mSudokuCells[row][column];
 
-            int cellValue = cell.getValue();
-            cell.clearValue();
-            cell.removeCandidate(cellValue);
+            int restrictedValue = cell.getValue();
             deletedNodeList[deletedNodeIndex] = cell;
             //Reseting all cells that have been emptied
-            for (int i = 0; i < deletedNodeIndex; i++) {
+            for (int i = 0; i <= deletedNodeIndex; i++) {
                 deletedNodeList[i].clearValue();
                 deletedNodeList[i].resetCandidateList();
             }
 
-            //If solution is unique move on to the next cell
-            if(isSolutionUnique()) {
+            cell.setRestrictedValue(restrictedValue);
+            //If there is no solutions now
+            if(!solveBoard()) {
                 deletedNodeIndex++; }
 
-            currCycleLength++;
+            cell.setRestrictedValue(-1);
             rePlaceBoard();
         }
 
         for (int i = 0; i < deletedNodeIndex; i++) {
             deletedNodeList[i].clearValue();
+            deletedNodeList[i].resetCandidateList();
         }
     }
 
@@ -148,25 +167,8 @@ public class SudokuRobot {
         }
     }
 
-    private boolean isSolutionUnique() {
-        for (int index = 0; index < mBoardSize; index++) {
-            int row = index / mBoardLength;
-            int column = index % mBoardLength;
 
-            //Candidate is picked so go to next cell
-            scanCandidates(row, column);
-            if (mSudokuCells[row][column].isLocked()){
-                index++;}
-            else if (mSudokuCells[row][column].pickCandidate()) {
-                index++;
-            } else {
-                return true;
-            }
-        }
-        return isSolution(returnCellValues());
-    }
-
-    public boolean isSolution(int[] userSolution) {
+    public boolean isSolved(int[] userSolution) {
         for (int i = 0; i < mBoardSize; i++) {
             if (userSolution[i] != mSolutionValues[i]) {
                 return false; }
