@@ -42,7 +42,7 @@ public class SudokuRobot {
         clearBoard();
         solveBoard();
         mSolutionValues = returnCellValues();
-        generatePlayableBoard(5);
+        generatePlayableBoard(70);
 
     }
 
@@ -103,30 +103,35 @@ public class SudokuRobot {
     }
 
 
-    public void generatePlayableBoard(int deleteCycleLength) {
-        //Keeps track of how many nodes are deleted and what the deleted nodes are
-        //Runs weak search after deleting a node and looks at how many solutions are generated
+    public void generatePlayableBoard(int cycleLength) {
+        //Keeps track of how loops have been iterated and what cells are emptied.
+        //Works by emptying a node and then checking if the solution is unique
         //If only one solution is generated, that node can be deleted
-        int deletedNodes = 0;
-        SudokuCell[] deletedNodeList = new SudokuCell[deleteCycleLength];
+        int currCycleLength = 0;
+        SudokuCell[] deletedNodeList = new SudokuCell[cycleLength];
         int deletedNodeIndex = 0;
 
-        while (deletedNodes < deleteCycleLength) {
+        while (currCycleLength < cycleLength) {
+            //Finding a random cell to empty
             int row = ThreadLocalRandom.current().nextInt(0, mBoardLength);
             int column = ThreadLocalRandom.current().nextInt(0, mBoardLength);
             SudokuCell cell = mSudokuCells[row][column];
+
             int cellValue = cell.getValue();
             cell.clearValue();
             cell.removeCandidate(cellValue);
             deletedNodeList[deletedNodeIndex] = cell;
+            //Reseting all cells that have been emptied
             for (int i = 0; i < deletedNodeIndex; i++) {
                 deletedNodeList[i].clearValue();
+                deletedNodeList[i].resetCandidateList();
             }
 
+            //If solution is unique move on to the next cell
             if(isSolutionUnique()) {
-                deletedNodeIndex++;
-            }
-            deletedNodes++;
+                deletedNodeIndex++; }
+
+            currCycleLength++;
             rePlaceBoard();
         }
 
@@ -158,9 +163,8 @@ public class SudokuRobot {
                 return true;
             }
         }
-        return !isSolution(returnCellValues());
+        return isSolution(returnCellValues());
     }
-
 
     public boolean isSolution(int[] userSolution) {
         for (int i = 0; i < mBoardSize; i++) {
