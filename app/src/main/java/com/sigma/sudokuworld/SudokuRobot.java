@@ -43,7 +43,7 @@ public class SudokuRobot {
         clearBoard();
         solveBoard();
         mSolutionValues = returnCellValues();
-        generatePlayableBoard(180);
+        generatePlayableBoard(60);
     }
 
 
@@ -147,52 +147,63 @@ public class SudokuRobot {
     }
 
 
-    public void generatePlayableBoard(int maxCycleLength) {
+    public void generatePlayableBoard(int nodesToCheck) {
         //Keeps track of how loops have been iterated and what cells are emptied.
         //Works by emptying a node and then checking if the solution is unique
         //If a solution can still be generated with that node not being able to take its previous
         //value then we cannot delete that node
-        int size = Math.min(mBoardSize, maxCycleLength);
-        SudokuCell[] deletedNodeList = new SudokuCell[size];
-        SudokuCell[] visitedCellList = new SudokuCell[size];
-        int visitedCellIndex = 0;
+        int cycleLength = Math.min(mBoardSize, nodesToCheck);
+        SudokuCell[] deletedNodeList = new SudokuCell[cycleLength];
+        SudokuCell[] cellList = new SudokuCell[mBoardSize];
+        int cellIndex = 0;
         int deletedNodeIndex = 0;
 
-        for (int cycleCounter = 0; cycleCounter < maxCycleLength; cycleCounter++) {
-            //Stop if we've gone through every node already
-            if (visitedCellIndex >= mBoardSize)
-            { break;}
-            //Finding a random cell to empty
-            int row = ThreadLocalRandom.current().nextInt(0, mBoardLength);
-            int column = ThreadLocalRandom.current().nextInt(0, mBoardLength);
-            SudokuCell cell = mSudokuCells[row][column];
-
-            //Only delete and check cell if it HASN'T been visited
-            if (!isCellVisited(size, visitedCellList, cell)){
-                //Make sure the cell cannot re-get its current value
-                visitedCellList[visitedCellIndex] = cell;
-                visitedCellIndex++;
-                int restrictedValue = cell.getCurrValue();
-                cell.setRestrictedValue(restrictedValue);
-
-                deletedNodeList[deletedNodeIndex] = cell;
-                //Reseting all cells that have been emptied
-                for (int i = 0; i <= deletedNodeIndex; i++) {
-                    deletedNodeList[i].clearCurrValue();
-                }
-
-                //If there is no solutions now
-                if(!solveBoard()) {
-                    deletedNodeIndex++;
-                }
-                else {
-                    cell.changeCurrValue(restrictedValue);
-                }
-
-                //Reset the cell's restricted value
-                cell.setRestrictedValue(-1);
+        //Copy cell list
+        for (int row = 0; row < mBoardLength; row++) {
+            for(int column = 0; column < mBoardLength; column++) {
+                cellList[cellIndex] = mSudokuCells[row][column];
+                cellIndex++;
             }
         }
+
+
+        //Randomly shuffle cell list
+        for (int i = 0; i < mBoardSize; i++) {
+            int randomIndex = ThreadLocalRandom.current().nextInt(0, mBoardSize);
+            SudokuCell tempCell = cellList[randomIndex];
+            cellList[randomIndex] = cellList[i];
+            cellList[i] = tempCell;
+        }
+
+
+        //Loop through and check each cell in cell list
+        for (cellIndex = 0; cellIndex < cycleLength; cellIndex++) {
+            //Getting the cell to check
+            SudokuCell cell = cellList[cellIndex];
+
+            //Make sure the cell cannot re-get its current value
+            int restrictedValue = cell.getCurrValue();
+            cell.setRestrictedValue(restrictedValue);
+
+            deletedNodeList[deletedNodeIndex] = cell;
+            //Reseting all cells that have been emptied
+            for (int i = 0; i <= deletedNodeIndex; i++) {
+                deletedNodeList[i].clearCurrValue();
+            }
+
+            //If there are now no solutions possible we may delete the cell
+            if(!solveBoard()) {
+                deletedNodeIndex++;
+            }
+            //We cannot delete the cell so we put its value back
+            else {
+                cell.changeCurrValue(restrictedValue);
+            }
+
+            //Reset the cell's restricted value
+            cell.setRestrictedValue(-1);
+        }
+
 
         //Solving the board places values in our deleted nodes
         //This is so that the value of the nodes will get reset
