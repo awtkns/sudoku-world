@@ -24,6 +24,7 @@ class GameModel {
 
 
         cellValues = new int[sudokuBoardSize];
+        solutionCellValues = new int[sudokuBoardSize];
         lockedCells = new Boolean[sudokuBoardSize];
         Arrays.fill(lockedCells, false);
 
