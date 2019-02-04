@@ -249,7 +249,7 @@ public class SudokuGridView extends View {
 
                 canvas.drawText(label,
                         mXOrigin + (cx * mCellSize) + (mCellSize / 2f) - (textWidth / 2),
-                        mYOrigin + (cy * mCellSize) + (mCellSize / 2f) + (mTextPaintTextHeight / 2),
+                        mYOrigin + (cy * mCellSize) + (mCellSize / 2f) + (mTextPaintTextHeight / 2) - 10,
                         mTextPaint);
 
                 //Reset text paint size
