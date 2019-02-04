@@ -33,11 +33,13 @@ public class SudokuGridView extends View {
     Paint mBoldPaint;
     Paint mCellFilledPaint;
     Paint mLockedCellFillPaint;
+    Paint mIncorrectCellFillPaint;
     Paint mTextPaint;
 
     Float mTextPaintTextHeight;
 
     String[] mCellLabels;       //Labels for every cell in grid
+    int mIncorrectCell = -1;    //Points to first incorrect cell to highlight. -1 = no cell
     int mHighlightedCell = -1;  //Points to cell to draw highlight in. -1 = no cell
 
     public SudokuGridView(Context context) {
@@ -271,12 +273,20 @@ public class SudokuGridView extends View {
     public int getHighlightedCell() {
         return mHighlightedCell;
     }
-
     public void setHighlightedCell(int cellNumber) {
         mHighlightedCell = cellNumber;
     }
-
     public void clearHighlightedCell() {
+        mHighlightedCell = -1;
+    }
+
+    public int getIncorrectCell(){
+        return mIncorrectCell;
+    }
+    public void setIncorrectCell(int cellNumber) {
+        mIncorrectCell = cellNumber;
+    }
+    public void clearIncorrectCell() {
         mHighlightedCell = -1;
     }
 }
