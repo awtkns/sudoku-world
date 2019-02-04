@@ -43,7 +43,7 @@ public class SudokuRobot {
         clearBoard();
         solveBoard();
         mSolutionValues = returnCellValues();
-        generatePlayableBoard(80);
+        generatePlayableBoard(180);
     }
 
 
@@ -155,9 +155,13 @@ public class SudokuRobot {
         int size = Math.min(mBoardSize, maxCycleLength);
         SudokuCell[] deletedNodeList = new SudokuCell[size];
         SudokuCell[] visitedCellList = new SudokuCell[size];
+        int visitedCellIndex = 0;
         int deletedNodeIndex = 0;
 
         for (int cycleCounter = 0; cycleCounter < maxCycleLength; cycleCounter++) {
+            //Stop if we've gone through every node already
+            if (visitedCellIndex >= mBoardSize)
+            { break;}
             //Finding a random cell to empty
             int row = ThreadLocalRandom.current().nextInt(0, mBoardLength);
             int column = ThreadLocalRandom.current().nextInt(0, mBoardLength);
@@ -166,6 +170,8 @@ public class SudokuRobot {
             //Only delete and check cell if it HASN'T been visited
             if (!isCellVisited(size, visitedCellList, cell)){
                 //Make sure the cell cannot re-get its current value
+                visitedCellList[visitedCellIndex] = cell;
+                visitedCellIndex++;
                 int restrictedValue = cell.getCurrValue();
                 cell.setRestrictedValue(restrictedValue);
 
