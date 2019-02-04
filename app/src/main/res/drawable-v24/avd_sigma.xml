@@ -1,185 +1,186 @@
+<!--Contains svg path data and animation data for splash screen AVD-->
 <animated-vector
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:aapt="http://schemas.android.com/aapt">
     <aapt:attr name="android:drawable">
         <vector
             android:name="sigma2grid"
-            android:width="15dp"
-            android:height="15dp"
-            android:viewportWidth="15"
-            android:viewportHeight="15"
-            >
+            android:width="11dp"
+            android:height="11dp"
+            android:viewportWidth="11"
+            android:viewportHeight="11">
 
             <!--Sigma-->
             <group android:name="sigma">
                 <path
-                    android:name="path"
-                    android:pathData="M 5 5 L 10 5"
-                    android:strokeColor="#000000"
+                    android:name="top_sigma"
+                    android:pathData="M 3 3 L 8 3"
+                    android:strokeColor="@color/colorSplashScreenAVD"
+                    android:strokeWidth="1.5"
+                    android:trimPathOffset="1"
+                    android:strokeLineCap="round"/>
+                <path
+                    android:name="right_sigma"
+                    android:pathData="M 8 8 L 3 8"
+                    android:strokeColor="@color/colorSplashScreenAVD"
                     android:strokeWidth="1.5"
                     android:strokeLineCap="round"/>
                 <path
-                    android:name="path_1"
-                    android:pathData="M 5 10 L 10 10"
-                    android:strokeColor="#000000"
-                    android:strokeWidth="1.5"
-                    android:strokeLineCap="round"/>
-                <path
-                    android:name="path_3"
-                    android:pathData="M 5 5 L 7.5 7.5"
-                    android:strokeColor="#000000"
+                    android:name="left_sigma"
+                    android:pathData="M 5.5 5.5 L 3 3"
+                    android:strokeColor="@color/colorSplashScreenAVD"
                     android:strokeWidth="1.5"/>
                 <path
-                    android:name="path_2"
-                    android:pathData="M 7.5 7.5 L 5 10"
-                    android:strokeColor="#000000"
+                    android:name="bottom_sigma"
+                    android:pathData="M 5.5 5.5 L 3 8"
+                    android:strokeColor="@color/colorSplashScreenAVD"
                     android:strokeWidth="1.5"
                     android:strokeLineCap="round"/>
             </group>
 
-            <!--GridLines-->
+            <!--Grid Lines-->
             <group android:name="grid_lines">
                 <group android:name="major">
                     <path
                         android:name="left"
-                        android:pathData="M 6 3 L 6 12"
-                        android:strokeColor="#000000"
+                        android:pathData="M 4 1 L 4 10"
+                        android:strokeColor="@color/colorSplashScreenAVD"
                         android:strokeWidth="0.25"
                         android:trimPathEnd="0"/>
                     <path
                         android:name="right"
-                        android:pathData="M 9 12 L 9 3"
-                        android:strokeColor="#000000"
+                        android:pathData="M 7 1 L 7 10"
+                        android:strokeColor="@color/colorSplashScreenAVD"
                         android:strokeWidth="0.25"
                         android:trimPathEnd="0"/>
                     <path
                         android:name="top"
-                        android:pathData="M 3 6 L 12 6"
-                        android:strokeColor="#000000"
+                        android:pathData="M 1 4 L 10 4"
+                        android:strokeColor="@color/colorSplashScreenAVD"
                         android:strokeWidth="0.25"
                         android:trimPathEnd="0"/>
                     <path
                         android:name="bottom"
-                        android:pathData="M 12 9 L 3 9"
-                        android:strokeColor="#000000"
+                        android:pathData="M 1 7 L 10 7"
+                        android:strokeColor="@color/colorSplashScreenAVD"
                         android:strokeWidth="0.25"
                         android:trimPathEnd="0"/>
                 </group>
                 <group android:name="minor_top_left">
                     <path
                         android:name="left_mtl"
-                        android:pathData="M 4 3 L 4 12"
-                        android:strokeColor="#000000"
+                        android:pathData="M 2 1 L 2 10"
+                        android:strokeColor="@color/colorSplashScreenAVD"
                         android:strokeWidth="0.0625"
                         android:trimPathEnd="0"/>
                     <path
                         android:name="right_mtl"
-                        android:pathData="M 5 3 L 5 12"
-                        android:strokeColor="#000000"
+                        android:pathData="M 3 1 L 3 10"
+                        android:strokeColor="@color/colorSplashScreenAVD"
                         android:strokeWidth="0.0625"
                         android:trimPathEnd="0"/>
                     <path
                         android:name="top_mtl"
-                        android:pathData="M 3 4 L 12 4"
-                        android:strokeColor="#000000"
+                        android:pathData="M 1 2 L 10 2"
+                        android:strokeColor="@color/colorSplashScreenAVD"
                         android:strokeWidth="0.0625"
                         android:trimPathEnd="0"/>
                     <path
                         android:name="bottom_mtl"
-                        android:pathData="M 3 5 L 12 5"
-                        android:strokeColor="#000000"
+                        android:pathData="M 1 3 L 10 3"
+                        android:strokeColor="@color/colorSplashScreenAVD"
                         android:strokeWidth="0.0625"
                         android:trimPathEnd="0"/>
                 </group>
                 <group android:name="minor_bottom_right">
                     <path
                         android:name="left_mbr"
-                        android:pathData="M 10 12 L 10 3"
-                        android:strokeColor="#000000"
+                        android:pathData="M 8 10 L 8 1"
+                        android:strokeColor="@color/colorSplashScreenAVD"
                         android:strokeWidth="0.0625"
                         android:trimPathEnd="0"/>
                     <path
                         android:name="right_mbr"
-                        android:pathData="M 11 12 L 11 3"
-                        android:strokeColor="#000000"
+                        android:pathData="M 9 10 L 9 1"
+                        android:strokeColor="@color/colorSplashScreenAVD"
                         android:strokeWidth="0.0625"
                         android:trimPathEnd="0"/>
                     <path
                         android:name="top_mbr"
-                        android:pathData="M 12 10 L 3 10"
-                        android:strokeColor="#000000"
+                        android:pathData="M 10 8 L 1 8"
+                        android:strokeColor="@color/colorSplashScreenAVD"
                         android:strokeWidth="0.0625"
                         android:trimPathEnd="0"/>
                     <path
                         android:name="bottom_mbr"
-                        android:pathData="M 12 11 L 3 11"
-                        android:strokeColor="#000000"
+                        android:pathData="M 10 9 L 1 9"
+                        android:strokeColor="@color/colorSplashScreenAVD"
                         android:strokeWidth="0.0625"
                         android:trimPathEnd="0"/>
                 </group>
                 <group android:name="minor_center_vert">
                     <path
                         android:name="bottom_right_cv"
-                        android:pathData="M 8 7.5 L 8 12"
-                        android:strokeColor="#000000"
+                        android:pathData="M 6 5.5 L 6 10"
+                        android:strokeColor="@color/colorSplashScreenAVD"
                         android:strokeWidth="0.0625"
                         android:trimPathEnd="0"/>
                     <path
                         android:name="top_left_cv"
-                        android:pathData="M 7 7.5 L 7 3"
-                        android:strokeColor="#000000"
+                        android:pathData="M 5 5.5 L 5 1"
+                        android:strokeColor="@color/colorSplashScreenAVD"
                         android:strokeWidth="0.0625"
                         android:trimPathEnd="0"/>
                     <path
                         android:name="top_right_cv"
-                        android:pathData="M 8 7.5 L 8 3"
-                        android:strokeColor="#000000"
+                        android:pathData="M 6 5.5 L 6 1"
+                        android:strokeColor="@color/colorSplashScreenAVD"
                         android:strokeWidth="0.0625"
                         android:trimPathEnd="0"/>
                     <path
                         android:name="bottom_left_cv"
-                        android:pathData="M 7 7.5 L 7 12"
-                        android:strokeColor="#000000"
+                        android:pathData="M 5 5.5 L 5 10"
+                        android:strokeColor="@color/colorSplashScreenAVD"
                         android:strokeWidth="0.0625"
                         android:trimPathEnd="0"/>
                 </group>
                 <group android:name="minor_center_horz">
                     <path
                         android:name="right_bottom_cv"
-                        android:pathData="M 7.5 8 L 12 8"
-                        android:strokeColor="#000000"
+                        android:pathData="M 5.5 6 L 10 6"
+                        android:strokeColor="@color/colorSplashScreenAVD"
                         android:strokeWidth="0.0625"
                         android:trimPathEnd="0"/>
                     <path
                         android:name="left_top_ch"
-                        android:pathData="M 7.5 7 L 3 7"
-                        android:strokeColor="#000000"
+                        android:pathData="M 5.5 5 L 1 5"
+                        android:strokeColor="@color/colorSplashScreenAVD"
                         android:strokeWidth="0.0625"
                         android:trimPathEnd="0"/>
                     <path
                         android:name="right_top_cv"
-                        android:pathData="M 7.5 7 L 12 7"
-                        android:strokeColor="#000000"
+                        android:pathData="M 5.5 5 L 10 5"
+                        android:strokeColor="@color/colorSplashScreenAVD"
                         android:strokeWidth="0.0625"
                         android:trimPathEnd="0"/>
                     <path
                         android:name="left_bottom_cv"
-                        android:pathData="M 7.5 8 L 3 8"
-                        android:strokeColor="#000000"
+                        android:pathData="M 5.5 6 L 1 6"
+                        android:strokeColor="@color/colorSplashScreenAVD"
                         android:strokeWidth="0.0625"
                         android:trimPathEnd="0"/>
                 </group>
             </group>
         </vector>
     </aapt:attr>
-    <target android:name="path">
+    <target android:name="top_sigma">
         <aapt:attr name="android:animation">
             <set>
                 <objectAnimator
                     android:propertyName="pathData"
                     android:duration="1010"
-                    android:valueFrom="M 5 5 L 10 5"
-                    android:valueTo="M 3 3 L 12 3"
+                    android:valueFrom="M 3 3 L 8 3"
+                    android:valueTo="M 1 1 L 10 1"
                     android:valueType="pathType"
                     android:interpolator="@android:anim/accelerate_decelerate_interpolator"/>
                 <objectAnimator
@@ -192,14 +193,14 @@
             </set>
         </aapt:attr>
     </target>
-    <target android:name="path_1">
+    <target android:name="right_sigma">
         <aapt:attr name="android:animation">
             <set>
                 <objectAnimator
                     android:propertyName="pathData"
                     android:duration="1010"
-                    android:valueFrom="M 10 10 L 5 10"
-                    android:valueTo="M 12 3 L 12 12"
+                    android:valueFrom="M 8 8 L 3 8"
+                    android:valueTo="M 10 1 L 10 10"
                     android:valueType="pathType"
                     android:interpolator="@android:anim/accelerate_decelerate_interpolator"/>
                 <objectAnimator
@@ -212,14 +213,14 @@
             </set>
         </aapt:attr>
     </target>
-    <target android:name="path_3">
+    <target android:name="left_sigma">
         <aapt:attr name="android:animation">
             <set>
                 <objectAnimator
                     android:propertyName="pathData"
                     android:duration="1010"
-                    android:valueFrom="M 7.5 7.5 L 5 5"
-                    android:valueTo="M 3 12 L 3 3"
+                    android:valueFrom="M 5.5 5.5 L 3 3"
+                    android:valueTo="M 1 10 L 1 1"
                     android:valueType="pathType"
                     android:interpolator="@android:anim/accelerate_decelerate_interpolator"/>
                 <objectAnimator
@@ -232,14 +233,14 @@
             </set>
         </aapt:attr>
     </target>
-    <target android:name="path_2">
+    <target android:name="bottom_sigma">
         <aapt:attr name="android:animation">
             <set>
                 <objectAnimator
                     android:propertyName="pathData"
                     android:duration="1010"
-                    android:valueFrom="M 7.5 7.5 L 5 10"
-                    android:valueTo="M 3 12 L 12 12"
+                    android:valueFrom="M 5.5 5.5 L 3 8"
+                    android:valueTo="M 1 10 L 10 10"
                     android:valueType="pathType"
                     android:interpolator="@android:anim/accelerate_decelerate_interpolator"/>
                 <objectAnimator

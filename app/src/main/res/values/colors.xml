@@ -6,4 +6,5 @@
     <color name="colourGrid">#000000</color>
     <color name="colourLockedCell">#32000000</color>
     <color name="colorHighlight">#F44336</color>
+    <color name="colorSplashScreenAVD">#E9F1F1</color>
 </resources>
