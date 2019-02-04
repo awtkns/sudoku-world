@@ -14,12 +14,7 @@ class VocabSudokuModel {
     private SparseArray<String> foreignWordsMap;
 
     VocabSudokuModel(String[] nativeWords, String[] foreignWords) {
-        model = new GameModel();
-        init(nativeWords, foreignWords);
-    }
-
-    VocabSudokuModel(String[] nativeWords, String[] foreignWords, int[] startingPuzzle) {
-        model = new GameModel(startingPuzzle);
+        model = new GameModel(3);
         init(nativeWords, foreignWords);
     }
 
@@ -39,7 +34,8 @@ class VocabSudokuModel {
     }
 
     String getCellString(int cellNumber) {
-        return nativeWordsMap.valueAt(model.getCellValue(cellNumber));
+        //return nativeWordsMap.valueAt(model.getCellValue(cellNumber));
+        return String.valueOf(model.getCellValue(cellNumber));
     }
 
     void setCellString(int cellNumber, String str) {
