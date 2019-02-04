@@ -55,12 +55,13 @@ class GameModel {
         cellValues[cellNumber] = val;
     }
 
-    public boolean isGameWon() {
+    //Returns index of first incorrect cell or returns -1 if board is solved
+    public int isGameWon() {
         for (int i = 0; i < sudokuBoardSize; i++) {
             if (cellValues[i] != solutionCellValues[i]) {
-                return false; }
+                return i; }
         }
-        return true;
+        return -1;
     }
 
     public boolean isLockedCell(int cellNumber) {
