@@ -35,12 +35,16 @@ class GameModel {
         }
     }
 
-    public int getCellValue(int cellNumber) {
+    int getCellValue(int cellNumber) {
         return cellValues[cellNumber];
     }
 
-    public void setCellValue(int cellNumber, int val) {
+    void setCellValue(int cellNumber, int val) {
         cellValues[cellNumber] = val;
+    }
+
+    int[] getAllCellValues() {
+        return cellValues;
     }
 
     private boolean checkWinConditions() {
