@@ -202,24 +202,6 @@ public class SudokuRobot {
         return false;
     }
 
-    //Places solution values on the board
-    private void rePlaceBoard() {
-        for (int index = 0; index < mBoardSize; index++) {
-            int row = index / mBoardLength;
-            int column = index % mBoardLength;
-            mSudokuCells[row][column].changeCurrValue(mSolutionValues[index]);
-        }
-    }
-
-    //Takes in solutions and checks if it matches the robot's (right) solutions
-    public boolean isSolved(int[] userSolution) {
-        for (int i = 0; i < mBoardSize; i++) {
-            if (userSolution[i] != mSolutionValues[i]) {
-                return false; }
-        }
-        return true;
-    }
-
 
     //Returns a one dimensional array containing cell values at their respective index
     public int[] returnCellValues() {
