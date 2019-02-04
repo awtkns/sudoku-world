@@ -4,8 +4,8 @@ import java.util.Arrays;
 
 class GameModel {
 
-    final int SUDOKU_SIZE = 9;
-    final int SUDOKU_NUMBER_OF_CELLS;
+    private final int SUDOKU_SIZE = 9;
+    private final int SUDOKU_NUMBER_OF_CELLS;
 
     //The cell values for all cells in the game
     private int[] cellValues;
@@ -15,15 +15,14 @@ class GameModel {
 
 
     GameModel() {
-        SUDOKU_NUMBER_OF_CELLS = SUDOKU_SIZE * SUDOKU_SIZE;
-
-        cellValues = new int[SUDOKU_NUMBER_OF_CELLS];
-        lockedCells = new Boolean[SUDOKU_NUMBER_OF_CELLS];
-        Arrays.fill(lockedCells, false);
+        this(new SudokuRobot(3).returnCellValues());
     }
 
     GameModel(int[] initialValues){
-        this();
+        SUDOKU_NUMBER_OF_CELLS = SUDOKU_SIZE * SUDOKU_SIZE;
+        cellValues = new int[SUDOKU_NUMBER_OF_CELLS];
+        lockedCells = new Boolean[SUDOKU_NUMBER_OF_CELLS];
+        Arrays.fill(lockedCells, false);
 
         //Seting up intial cells
         if (initialValues.length == SUDOKU_NUMBER_OF_CELLS) {

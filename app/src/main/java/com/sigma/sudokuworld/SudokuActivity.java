@@ -27,8 +27,7 @@ public class SudokuActivity extends AppCompatActivity {
         Intent i = getIntent();
         mVocabGame = new VocabSudokuModel(
                 i.getStringArrayExtra("native"),
-                i.getStringArrayExtra("foreign"),
-                i.getIntArrayExtra("puzzle")
+                i.getStringArrayExtra("foreign")
         );
 
         //Initializing sudoku grid
