@@ -51,8 +51,8 @@ class GameModel {
         return cellValues[cellNumber];
     }
 
-    public void setCellValue(int cellNumber, int val) {
-        cellValues[cellNumber] = val;
+    public void setCellValue(int cellNumber, int value) {
+        cellValues[cellNumber] = value;
     }
 
     //Returns index of first incorrect cell or returns -1 if board is solved
