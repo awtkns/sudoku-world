@@ -26,9 +26,9 @@
             android:layout_height="wrap_content"
             android:padding="8dp"
             app:boldGridPaintColor="@color/colourGrid"
-            app:boldGridPaintStrokeWidth="3dp"
+            app:boldGridPaintStrokeWidth="2dp"
             app:gridPaintColor="@color/colourGrid"
-            app:gridPaintStrokeWidth="1dp"
+            app:gridPaintStrokeWidth="0.6dp"
 
             app:highlightedCellColour="@color/colorHighlight"
             app:layout_constraintBottom_toBottomOf="parent"
