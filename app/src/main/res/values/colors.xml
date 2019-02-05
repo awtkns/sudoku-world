@@ -3,8 +3,9 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="colourGrid">#3F3F3F</color>
-    <color name="colourLockedCell">#EAF7FF</color>
-    <color name="colorHighlight">#BBE5FF</color>
+    <color name="colourGrid">#000000</color>
+    <color name="colourLockedCell">#32000000</color>
+    <color name="colorHighlight">#F44336</color>
+    <color name="colorSplashScreenAVD">#E9F1F1</color>
     <color name="colorIncorrect">#FFB3B3</color>
 </resources>

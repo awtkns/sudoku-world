@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">SudokuWorld</string>
+    <string name="splash_group_name">SIGMA</string>
+    <string name="splash_group_literal">GROUP</string>
     <string name="play_button">Play</string>
     <string name="clear_button">Clear</string>
     <string name="enter_button">Enter</string>
