@@ -1,0 +1,317 @@
+<animated-vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
+    <aapt:attr name="android:drawable">
+        <vector
+            android:name="menulines"
+            android:width="18dp"
+            android:height="32dp"
+            android:viewportWidth="18"
+            android:viewportHeight="32"
+            android:alpha=".2">
+            <group android:name="vert">
+                <path
+                    android:name="path"
+                    android:pathData="M 3 0 L 3 32"
+                    android:strokeColor="@color/colorSplashScreenAVD"
+                    android:strokeWidth="0.25"
+                    android:trimPathEnd="0.1"
+                    android:strokeLineCap="round"/>
+                <path
+                    android:name="path_1"
+                    android:pathData="M 6 0 L 6 32"
+                    android:strokeColor="@color/colorSplashScreenAVD"
+                    android:strokeWidth="0.25"
+                    android:trimPathStart="0.8"
+                    android:trimPathEnd="0.9"
+                    android:strokeLineCap="round"/>
+                <path
+                    android:name="path_2"
+                    android:pathData="M 9 0 L 9 32"
+                    android:strokeColor="@color/colorSplashScreenAVD"
+                    android:strokeWidth="0.25"
+                    android:trimPathStart="0.45"
+                    android:trimPathEnd="0.55"
+                    android:strokeLineCap="square"/>
+                <path
+                    android:name="path_3"
+                    android:pathData="M 12 0 L 12 32"
+                    android:strokeColor="@color/colorSplashScreenAVD"
+                    android:strokeWidth="0.25"
+                    android:trimPathStart="0.75"
+                    android:trimPathEnd="0.85"
+                    android:strokeLineCap="round"/>
+                <path
+                    android:name="path_4"
+                    android:pathData="M 15 0 L 15 32"
+                    android:strokeColor="@color/colorSplashScreenAVD"
+                    android:strokeWidth="0.25"
+                    android:trimPathStart="0.3"
+                    android:trimPathEnd="0.4"
+                    android:strokeLineCap="round"/>
+            </group>
+            <group android:name="horz">
+                <path
+                    android:name="h1"
+                    android:pathData="M 0 3 L 18 3"
+                    android:strokeColor="@color/colorSplashScreenAVD"
+                    android:strokeWidth="0.25"
+                    android:trimPathStart="0.3"
+                    android:trimPathEnd="0.4"
+                    android:strokeLineCap="round"/>
+                <path
+                    android:name="h2"
+                    android:pathData="M 0 6 L 18 6"
+                    android:strokeColor="@color/colorSplashScreenAVD"
+                    android:strokeWidth="0.25"
+                    android:trimPathStart="0.7"
+                    android:trimPathEnd="0.8"
+                    android:strokeLineCap="round"/>
+                <path
+                    android:name="h3"
+                    android:pathData="M 0 9 L 18 9"
+                    android:strokeColor="@color/colorSplashScreenAVD"
+                    android:strokeWidth="0.25"
+                    android:trimPathStart="0.5"
+                    android:trimPathEnd="0.6"
+                    android:strokeLineCap="round"/>
+                <path
+                    android:name="h4"
+                    android:pathData="M 0 12 L 18 12"
+                    android:strokeColor="@color/colorSplashScreenAVD"
+                    android:strokeWidth="0.25"
+                    android:trimPathStart="0.9"
+                    android:trimPathEnd="1"
+                    android:strokeLineCap="round"/>
+                <path
+                    android:name="h5"
+                    android:pathData="M 0 15 L 18 15"
+                    android:strokeColor="@color/colorSplashScreenAVD"
+                    android:strokeWidth="0.25"
+                    android:trimPathStart="0.1"
+                    android:trimPathEnd="0.2"
+                    android:strokeLineCap="round"/>
+                <path
+                    android:name="h6"
+                    android:pathData="M 0 18 L 18 18"
+                    android:strokeColor="@color/colorSplashScreenAVD"
+                    android:strokeWidth="0.25"
+                    android:trimPathStart=".55"
+                    android:trimPathEnd="0.65"
+                    android:strokeLineCap="round"/>
+                <path
+                    android:name="h7"
+                    android:pathData="M 0 21 L 18 21"
+                    android:strokeColor="@color/colorSplashScreenAVD"
+                    android:strokeWidth="0.25"
+                    android:trimPathStart="0.8"
+                    android:trimPathEnd="0.9"
+                    android:strokeLineCap="round"/>
+                <path
+                    android:name="h8"
+                    android:pathData="M 0 24 L 18 24"
+                    android:strokeColor="@color/colorSplashScreenAVD"
+                    android:strokeWidth="0.25"
+                    android:trimPathStart="0.2"
+                    android:trimPathEnd="0.3"
+                    android:strokeLineCap="round"/>
+                <path
+                    android:name="h9"
+                    android:pathData="M 0 27 L 18 27"
+                    android:strokeColor="@color/colorSplashScreenAVD"
+                    android:strokeWidth="0.25"
+                    android:trimPathStart="0.5"
+                    android:trimPathEnd="0.6"
+                    android:strokeLineCap="round"/>
+                <path
+                    android:name="h10"
+                    android:pathData="M 0 30 L 18 30"
+                    android:strokeColor="@color/colorSplashScreenAVD"
+                    android:strokeWidth="0.25"
+                    android:trimPathStart="0.7"
+                    android:trimPathEnd="0.8"
+                    android:strokeLineCap="round"/>
+            </group>
+        </vector>
+    </aapt:attr>
+    <target android:name="path">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="trimPathOffset"
+                android:repeatCount="infinite"
+                android:duration="4000"
+                android:valueFrom="0"
+                android:valueTo="1"
+                android:valueType="floatType"
+                android:interpolator="@android:anim/linear_interpolator"/>
+        </aapt:attr>
+    </target>
+    <target android:name="path_1">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="trimPathOffset"
+                android:repeatCount="infinite"
+                android:duration="4000"
+                android:valueFrom="1"
+                android:valueTo="0"
+                android:valueType="floatType"
+                android:interpolator="@android:anim/linear_interpolator"/>
+        </aapt:attr>
+    </target>
+    <target android:name="path_2">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="trimPathOffset"
+                android:repeatCount="infinite"
+                android:duration="4000"
+                android:valueFrom="0"
+                android:valueTo="1"
+                android:valueType="floatType"
+                android:interpolator="@android:anim/linear_interpolator"/>
+        </aapt:attr>
+    </target>
+    <target android:name="path_3">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="trimPathOffset"
+                android:repeatCount="infinite"
+                android:duration="4000"
+                android:valueFrom="1"
+                android:valueTo="0"
+                android:valueType="floatType"
+                android:interpolator="@android:anim/linear_interpolator"/>
+        </aapt:attr>
+    </target>
+    <target android:name="path_4">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="trimPathOffset"
+                android:repeatCount="infinite"
+                android:duration="4000"
+                android:valueFrom="0"
+                android:valueTo="1"
+                android:valueType="floatType"
+                android:interpolator="@android:anim/linear_interpolator"/>
+        </aapt:attr>
+    </target>
+    <target android:name="h1">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="trimPathOffset"
+                android:repeatCount="infinite"
+                android:duration="4000"
+                android:valueFrom="0"
+                android:valueTo="1"
+                android:valueType="floatType"
+                android:interpolator="@android:anim/linear_interpolator"/>
+        </aapt:attr>
+    </target>
+    <target android:name="h2">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="trimPathOffset"
+                android:repeatCount="infinite"
+                android:duration="4000"
+                android:valueFrom="1"
+                android:valueTo="0"
+                android:valueType="floatType"
+                android:interpolator="@android:anim/linear_interpolator"/>
+        </aapt:attr>
+    </target>
+    <target android:name="h3">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="trimPathOffset"
+                android:repeatCount="infinite"
+                android:duration="4000"
+                android:valueFrom="0"
+                android:valueTo="1"
+                android:valueType="floatType"
+                android:interpolator="@android:anim/linear_interpolator"/>
+        </aapt:attr>
+    </target>
+    <target android:name="h4">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="trimPathOffset"
+                android:repeatCount="infinite"
+                android:duration="4000"
+                android:valueFrom="0"
+                android:valueTo="1"
+                android:valueType="floatType"
+                android:interpolator="@android:anim/linear_interpolator"/>
+        </aapt:attr>
+    </target>
+    <target android:name="h5">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="trimPathOffset"
+                android:repeatCount="infinite"
+                android:duration="4000"
+                android:valueFrom="1"
+                android:valueTo="0"
+                android:valueType="floatType"
+                android:interpolator="@android:anim/linear_interpolator"/>
+        </aapt:attr>
+    </target>
+    <target android:name="h6">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="trimPathOffset"
+                android:repeatCount="infinite"
+                android:duration="4000"
+                android:valueFrom="0"
+                android:valueTo="1"
+                android:valueType="floatType"
+                android:interpolator="@android:anim/linear_interpolator"/>
+        </aapt:attr>
+    </target>
+    <target android:name="h7">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="trimPathOffset"
+                android:repeatCount="infinite"
+                android:duration="4000"
+                android:valueFrom="1"
+                android:valueTo="0"
+                android:valueType="floatType"
+                android:interpolator="@android:anim/linear_interpolator"/>
+        </aapt:attr>
+    </target>
+    <target android:name="h8">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="trimPathOffset"
+                android:repeatCount="infinite"
+                android:duration="4000"
+                android:valueFrom="0"
+                android:valueTo="1"
+                android:valueType="floatType"
+                android:interpolator="@android:anim/linear_interpolator"/>
+        </aapt:attr>
+    </target>
+    <target android:name="h9">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="trimPathOffset"
+                android:repeatCount="infinite"
+                android:duration="4000"
+                android:valueFrom="0"
+                android:valueTo="1"
+                android:valueType="floatType"
+                android:interpolator="@android:anim/linear_interpolator"/>
+        </aapt:attr>
+    </target>
+    <target android:name="h10">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="trimPathOffset"
+                android:repeatCount="infinite"
+                android:duration="4000"
+                android:valueFrom="1"
+                android:valueTo="0"
+                android:valueType="floatType"
+                android:interpolator="@android:anim/linear_interpolator"/>
+        </aapt:attr>
+    </target>
+</animated-vector>

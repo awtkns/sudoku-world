@@ -1,11 +1,13 @@
 package com.sigma.sudokuworld;
 
 import android.content.Intent;
+import android.graphics.drawable.AnimatedVectorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,6 +25,10 @@ public class MenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
+        ImageView imageView = findViewById(R.id.menuAVD);
+        AnimatedVectorDrawable animatedVectorDrawable = (AnimatedVectorDrawable) imageView.getDrawable();
+        animatedVectorDrawable.start();
 
         //On play button click go to sudoku activity
         mPlayButton = findViewById(R.id.playButton);
