@@ -17,21 +17,21 @@ class VocabSudokuModel {
     VocabSudokuModel(String[] nativeWords, String[] foreignWords, GameMode gameMode) {
         currGameMode = gameMode;
         model = new GameModel(3);
-        init(nativeWords, foreignWords);
+        initializeWordMaps(nativeWords, foreignWords);
     }
 
-    //LMAO
-    private void init(String[] nWords, String[] fWords) {
+    //Takes in arrays of native words and foreign words and places them into their respective maps
+    private void initializeWordMaps(String[] nativeWords, String[] foreignWords) {
         nativeWordsMap = new SparseArray<>();
         nativeWordsMap.append(0, "");
-        for(int i = 0; i < nWords.length; i++) {
-            nativeWordsMap.append(i + 1, nWords[i]);
+        for(int i = 0; i < nativeWords.length; i++) {
+            nativeWordsMap.append(i + 1, nativeWords[i]);
         }
 
         foreignWordsMap = new SparseArray<>();
         foreignWordsMap.append(0, "");
-        for(int i = 0; i < fWords.length; i++) {
-            foreignWordsMap.append(i + 1, fWords[i]);
+        for(int i = 0; i < foreignWords.length; i++) {
+            foreignWordsMap.append(i + 1, foreignWords[i]);
         }
     }
 

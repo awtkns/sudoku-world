@@ -26,10 +26,11 @@ public class SudokuActivity extends AppCompatActivity {
 
         //Unpacking information from intent
         Intent i = getIntent();
+
         mVocabGame = new VocabSudokuModel(
                 i.getStringArrayExtra("native"),
                 i.getStringArrayExtra("foreign"),
-                GameMode.foreignMode
+                (GameMode) i.getSerializableExtra("gameMode")
         );
 
         //Initializing sudoku grid
@@ -75,8 +76,7 @@ public class SudokuActivity extends AppCompatActivity {
 
                     //If we have selected the incorrect cell, un highlight it
                     if (cellNum == mSudokuGridView.getIncorrectCell())
-                    {mSudokuGridView.setIncorrectCell(-1);
-                    mSudokuGridView.invalidate();}
+                    {mSudokuGridView.clearIncorrectCell(); }
 
                     //The the cell is locked (ei: not one where you can change the number)
                     if (mVocabGame.isInitialCell(cellNum)) {
