@@ -36,8 +36,8 @@ public class SplashActivity extends AppCompatActivity {
         };
 
         Timer timer = new Timer();
-        timer.schedule(animationStartTask, 1500);
-        timer.schedule(exitSplashTask, 5000);
+        timer.schedule(animationStartTask, 0); //SHOULD BE 1500
+        timer.schedule(exitSplashTask, 0);     //SHOULD BE 5000
     }
 
     /**
