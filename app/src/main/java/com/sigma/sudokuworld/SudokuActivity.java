@@ -33,7 +33,7 @@ public class SudokuActivity extends AppCompatActivity {
                 (GameMode) i.getSerializableExtra("gameMode")
         );
 
-        //Initializing sudoku grid
+        //Initializing Sudoku grid
         mSudokuGridView = findViewById(R.id.sudokugrid_view);
         mSudokuGridView.setOnTouchListener(onSudokuGridTouchListener);
 
