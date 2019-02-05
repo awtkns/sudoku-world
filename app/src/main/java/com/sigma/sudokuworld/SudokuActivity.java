@@ -17,6 +17,7 @@ public class SudokuActivity extends AppCompatActivity {
     TextView mTextInputView;
     Button mClearButton;
     Button mEnterButton;
+    Button mCheckAnswerButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,9 @@ public class SudokuActivity extends AppCompatActivity {
         mEnterButton = findViewById(R.id.enterButton);
         mEnterButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
+        mCheckAnswerButton = findViewById(R.id.checkAnswerButton);
+        mCheckAnswerButton.setOnClickListener(onCheckAnswerButtonClickLister);
+
         updateAllViewLabels();
     }
 
@@ -67,6 +71,11 @@ public class SudokuActivity extends AppCompatActivity {
 
                     //Cell that was touched
                     int cellNum = mSudokuGridView.getCellNumberFromCoordinates(x, y);
+
+                    //If we have selected the incorrect cell, un highlight it
+                    if (cellNum == mSudokuGridView.getIncorrectCell())
+                    {mSudokuGridView.setIncorrectCell(-1);
+                    mSudokuGridView.invalidate();}
 
                     //The the cell is locked (ei: not one where you can change the number)
                     if (mVocabGame.isInitialCell(cellNum)) {
@@ -92,6 +101,30 @@ public class SudokuActivity extends AppCompatActivity {
         public void onClick(View v) {
             mSudokuGridView.clearHighlightedCell();
             mEditLayout.setVisibility(View.GONE);
+            mSudokuGridView.invalidate();
+        }
+    };
+
+    View.OnClickListener onCheckAnswerButtonClickLister = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            //Checks if the answers are right and displays the first wrong cell (if any)
+            int potentialIndex = mVocabGame.checkGame();
+            //Clear highlights / what cell is selected for input
+            mEditLayout.setVisibility(View.GONE);
+            mSudokuGridView.clearHighlightedCell();
+
+            //Case where answer is correct
+            if (potentialIndex == -1) {
+                int i = 0;
+            }
+
+            //Case where answer is incorrect
+            else {
+                mSudokuGridView.setIncorrectCell(potentialIndex);
+            }
+
+            //Redraw grid
             mSudokuGridView.invalidate();
         }
     };

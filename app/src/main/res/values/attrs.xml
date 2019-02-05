@@ -7,5 +7,6 @@
         <attr name="boldGridPaintColor" format="color" />
         <attr name="highlightedCellColour" format="color" />
         <attr name="lockedCellColour" format="color" />
+        <attr name="incorrectCellColour" format="color" />
     </declare-styleable>
 </resources>

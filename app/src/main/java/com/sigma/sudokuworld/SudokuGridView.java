@@ -33,11 +33,13 @@ public class SudokuGridView extends View {
     Paint mBoldPaint;
     Paint mCellFilledPaint;
     Paint mLockedCellFillPaint;
+    Paint mIncorrectCellFillPaint;
     Paint mTextPaint;
 
     Float mTextPaintTextHeight;
 
     String[] mCellLabels;       //Labels for every cell in grid
+    int mIncorrectCell = -1;    //Points to first incorrect cell to highlight. -1 = no cell
     int mHighlightedCell = -1;  //Points to cell to draw highlight in. -1 = no cell
 
     public SudokuGridView(Context context) {
@@ -54,6 +56,7 @@ public class SudokuGridView extends View {
         mBoldPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mCellFilledPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mLockedCellFillPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mIncorrectCellFillPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
         //Get styling from activity_sudoku.xml
@@ -70,6 +73,7 @@ public class SudokuGridView extends View {
             mBoldPaint.setColor(a.getColor(R.styleable.SudokuGridView_boldGridPaintColor, Color.BLACK));
             mCellFilledPaint.setColor(a.getColor(R.styleable.SudokuGridView_highlightedCellColour, Color.YELLOW));
             mLockedCellFillPaint.setColor(a.getColor(R.styleable.SudokuGridView_lockedCellColour, Color.GRAY));
+            mIncorrectCellFillPaint.setColor(a.getColor(R.styleable.SudokuGridView_incorrectCellColour, Color.RED));
         } finally {
             a.recycle();
         }
@@ -79,6 +83,7 @@ public class SudokuGridView extends View {
         mBoldPaint.setStrokeCap(Paint.Cap.ROUND);
         mCellFilledPaint.setStyle(Paint.Style.FILL);
         mLockedCellFillPaint.setStyle(Paint.Style.FILL);
+        mIncorrectCellFillPaint.setStyle(Paint.Style.FILL);
     }
 
     @Override   //This is for accessibility
@@ -190,8 +195,8 @@ public class SudokuGridView extends View {
             int cx = i % SUDOKU_SIZE;   //x cell pos
             int cy = i / SUDOKU_SIZE;   //y cell pos
 
-            //If its the cell thats currently highlighted draw the highlight
-             if (i == mHighlightedCell) {
+            //If its the cell that's currently highlighted draw the highlight
+            if (i == mHighlightedCell) {
                 Rect cellRect = new Rect(
                         mXOrigin + (cx * mCellSize),
                         mYOrigin + (cy * mCellSize),
@@ -200,6 +205,18 @@ public class SudokuGridView extends View {
                 );
 
                 canvas.drawRect(cellRect, mCellFilledPaint);
+            }
+
+            // If its the cell that's currently INCORRECT, draw its highlight
+            else if(i == mIncorrectCell) {
+                Rect cellRect = new Rect(
+                        mXOrigin + (cx * mCellSize),
+                        mYOrigin + (cy * mCellSize),
+                        mXOrigin + ((cx + 1) * mCellSize),
+                        mYOrigin + ((cy + 1) * mCellSize)
+                );
+
+                canvas.drawRect(cellRect, mIncorrectCellFillPaint);
             }
 
             //If the cell has a label
@@ -232,7 +249,7 @@ public class SudokuGridView extends View {
 
                 canvas.drawText(label,
                         mXOrigin + (cx * mCellSize) + (mCellSize / 2f) - (textWidth / 2),
-                        mYOrigin + (cy * mCellSize) + (mCellSize / 2f) + (mTextPaintTextHeight / 2),
+                        mYOrigin + (cy * mCellSize) + (mCellSize / 2f) + (mTextPaintTextHeight / 2) - 10,
                         mTextPaint);
 
                 //Reset text paint size
@@ -271,12 +288,20 @@ public class SudokuGridView extends View {
     public int getHighlightedCell() {
         return mHighlightedCell;
     }
-
     public void setHighlightedCell(int cellNumber) {
         mHighlightedCell = cellNumber;
     }
-
     public void clearHighlightedCell() {
+        mHighlightedCell = -1;
+    }
+
+    public int getIncorrectCell(){
+        return mIncorrectCell;
+    }
+    public void setIncorrectCell(int cellNumber) {
+        mIncorrectCell = cellNumber;
+    }
+    public void clearIncorrectCell() {
         mHighlightedCell = -1;
     }
 }
