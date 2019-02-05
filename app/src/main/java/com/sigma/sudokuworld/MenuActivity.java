@@ -35,6 +35,7 @@ public class MenuActivity extends AppCompatActivity {
                 intent.putExtra("native", readWordlistFromCSV(WordType.NATIVE));
                 intent.putExtra("foreign", readWordlistFromCSV(WordType.FOREIGN));
                 intent.putExtra("puzzle", readPuzzleDataFromCSV());
+                intent.putExtra("gameMode", GameMode.normalMode);
                 startActivity(intent);
             }
         });
