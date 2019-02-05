@@ -10,10 +10,12 @@ import java.util.HashMap;
 class VocabSudokuModel {
 
     private GameModel model;
+    private GameMode currGameMode;
     private SparseArray<String> nativeWordsMap;
     private SparseArray<String> foreignWordsMap;
 
-    VocabSudokuModel(String[] nativeWords, String[] foreignWords) {
+    VocabSudokuModel(String[] nativeWords, String[] foreignWords, GameMode gameMode) {
+        currGameMode = gameMode;
         model = new GameModel(3);
         init(nativeWords, foreignWords);
     }
@@ -34,13 +36,25 @@ class VocabSudokuModel {
     }
 
     String getCellString(int cellNumber) {
-        //return nativeWordsMap.valueAt(model.getCellValue(cellNumber));
+        //Normal Mode
+        if (currGameMode == GameMode.normalMode){
+            //Makes the cell blank if its value is 0
+            if (model.getCellValue(cellNumber) == 0)
+            {
+                return nativeWordsMap.valueAt(model.getCellValue(cellNumber));
+            }
 
-        //Makes the cell blank if its value is 0
-        if (model.getCellValue(cellNumber) == 0)
-        {return nativeWordsMap.valueAt(model.getCellValue(cellNumber));}
+            return String.valueOf(model.getCellValue(cellNumber));
+        }
 
-        return String.valueOf(model.getCellValue(cellNumber));
+        //Native mode
+        else if (currGameMode == GameMode.nativeMode)
+        { return nativeWordsMap.valueAt(model.getCellValue(cellNumber)); }
+
+        //Foreign mode
+        else //currGameMode == GameMode.foreignMode
+        { return foreignWordsMap.valueAt(model.getCellValue(cellNumber)); }
+
     }
 
     void setCellString(int cellNumber, int value) {
