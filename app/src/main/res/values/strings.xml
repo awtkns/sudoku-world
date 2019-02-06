@@ -6,4 +6,20 @@
     <string name="clear_button">Clear</string>
     <string name="enter_button">Enter</string>
     <string name="check_answer_button">Check\nAnswer</string>
+
+    <!--Settings Menu-->
+    <string name="settingsTitle">Settings</string>
+    <string name="nativeWords">Native Words</string>
+    <string name="foreignWords">Foreign Words</string>
+    <string name="gameModeLabel">Game Mode</string>
+    <string name="foreignMode">Display foreign words in initial cells</string>
+    <string name="nativeMode">Display native words in initial cells</string>
+    <string name="numbersMode">Display numbers in all cells</string>
+    <string name="difficultyLabel">Difficulty</string>
+    <string name="difficultyEasy">Easy</string>
+    <string name="difficultyMedium">Medium</string>
+    <string name="difficultyHard">Hard</string>
+    <string name="saveWordListString">Save</string>
+    <string name="defaultWordListString">Default</string>
+    <string name="loadWordListString">Load</string>
 </resources>

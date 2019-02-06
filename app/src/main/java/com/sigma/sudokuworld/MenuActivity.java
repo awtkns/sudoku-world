@@ -18,7 +18,12 @@ import java.util.ArrayList;
 
 public class MenuActivity extends AppCompatActivity {
 
+    private final int RESULT_CODE = 1;
+    private GameDifficulty gameDifficulty = GameDifficulty.EASY;
+    private GameMode gameMode = GameMode.NUMBERS;
+
     Button mPlayButton;
+    Button mSettingsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +49,27 @@ public class MenuActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        mSettingsButton = findViewById(R.id.settingsButton);
+        mSettingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuActivity.this, SettingsActivity.class);
+                startActivityForResult(intent, RESULT_CODE);
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_CODE) {
+            if (requestCode == RESULT_OK) {
+                gameDifficulty = (GameDifficulty) data.getSerializableExtra(SettingsActivity.DIFFICULTY_INTENT_KEY);
+                gameMode = (GameMode) data.getSerializableExtra(SettingsActivity.GAME_MODE_INTENT_KEY);
+            }
+        }
     }
 
     /**

@@ -1,7 +1,11 @@
 package com.sigma.sudokuworld;
 
-public enum GameMode {
+enum GameMode {
     NUMBERS,
     NATIVE,
     FOREIGN
+}
+
+enum GameDifficulty {
+    EASY, MEDIUM, HARD
 }
