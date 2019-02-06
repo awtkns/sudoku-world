@@ -11,6 +11,14 @@ import android.widget.TextView;
 
 public class SudokuActivity extends AppCompatActivity {
 
+    private final String PUZZLE_INTENT_KEY = "puzzle";
+    private final String SOLUTION_INTENT_KEY = "solution";
+    private final String INITIAL_CELLS_INTENT_KEY = "initial";
+    private final String FOREIGN_WORDS_INTENT_KEY = "foreign";
+    private final String NATIVE_WORDS_INTENT_KEY = "native";
+
+
+
     VocabSudokuModel mVocabGame;
     SudokuGridView mSudokuGridView;
     LinearLayout mEditLayout;
@@ -24,14 +32,24 @@ public class SudokuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sudoku);
 
-        //Unpacking information from intent
-        Intent i = getIntent();
+        if (savedInstanceState != null) {
+            //Unpacking information from saved instance
+            mVocabGame = new VocabSudokuModel(
+                    savedInstanceState.getStringArray(NATIVE_WORDS_INTENT_KEY),
+                    savedInstanceState.getStringArray(FOREIGN_WORDS_INTENT_KEY),
+                    savedInstanceState.getIntArray(PUZZLE_INTENT_KEY),
+                    savedInstanceState.getIntArray(SOLUTION_INTENT_KEY),
+                    savedInstanceState.getBooleanArray(INITIAL_CELLS_INTENT_KEY)
+            );
+        } else {
+            //Unpacking information from intent
+            Intent i = getIntent();
+            mVocabGame = new VocabSudokuModel(
+                    i.getStringArrayExtra(NATIVE_WORDS_INTENT_KEY),
+                    i.getStringArrayExtra(FOREIGN_WORDS_INTENT_KEY)
+            );
+        }
 
-        mVocabGame = new VocabSudokuModel(
-                i.getStringArrayExtra("native"),
-                i.getStringArrayExtra("foreign"),
-                (GameMode) i.getSerializableExtra("gameMode")
-        );
 
         //Initializing Sudoku grid
         mSudokuGridView = findViewById(R.id.sudokugrid_view);
@@ -54,6 +72,17 @@ public class SudokuActivity extends AppCompatActivity {
 
         updateAllViewLabels();
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putStringArray(NATIVE_WORDS_INTENT_KEY, mVocabGame.getAllNativeWords());
+        outState.putStringArray(FOREIGN_WORDS_INTENT_KEY, mVocabGame.getAllForeignWords());
+        outState.putIntArray(PUZZLE_INTENT_KEY, mVocabGame.getAllCellValues());
+        outState.putIntArray(SOLUTION_INTENT_KEY, mVocabGame.getSolutionValues());
+        outState.putBooleanArray(INITIAL_CELLS_INTENT_KEY, mVocabGame.getAllIntialCells());
+    }
+
 
     //When sudoku grid is touched
     SudokuGridView.OnTouchListener onSudokuGridTouchListener = new SudokuGridView.OnTouchListener() {

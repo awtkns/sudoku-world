@@ -1,5 +1,7 @@
 package com.sigma.sudokuworld;
 
+import android.util.Log;
+
 import java.util.Arrays;
 
 class GameModel {
@@ -13,9 +15,9 @@ class GameModel {
     private int[] solutionCellValues;
 
     //True if the cell value cant be changed (ie: cell that was generated for the start of game)
-    private Boolean[] lockedCells;
+    private boolean[] lockedCells;
 
-
+    //Generates Puzzle from robot
     GameModel(int subsectionSize){
         //Figuring out what type of Sudoku game is being played
         sudokuSubsectionSize = subsectionSize;
@@ -23,40 +25,78 @@ class GameModel {
         sudokuBoardSize = sudokuBoardLength * sudokuBoardLength;
 
 
+        init();
+    }
+
+    GameModel(int subsectionSize, int[] puzzle, int[] solution, boolean[] initialCells) {
+        //Figuring out what type of Sudoku game is being played
+        sudokuSubsectionSize = subsectionSize;
+        sudokuBoardLength = sudokuSubsectionSize * sudokuSubsectionSize;
+        sudokuBoardSize = sudokuBoardLength * sudokuBoardLength;
+
+        //Setting initial values
+        try {
+            cellValues = puzzle;
+            solutionCellValues = solution;
+            lockedCells = initialCells;
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            init();
+        }
+    }
+
+    /**
+     * Initialize a new puzzle
+     */
+    private void init() {
         cellValues = new int[sudokuBoardSize];
         solutionCellValues = new int[sudokuBoardSize];
-        lockedCells = new Boolean[sudokuBoardSize];
+        lockedCells = new boolean[sudokuBoardSize];
         Arrays.fill(lockedCells, false);
 
 
         //Grabbing initial values and solutions from the robot
         SudokuRobot sudokuRobot = new SudokuRobot(sudokuSubsectionSize);
-        int[] initialValues = sudokuRobot.returnCellValues();
-        solutionCellValues = sudokuRobot.returnSolutionValues();
+
+        cellValues = sudokuRobot.returnCellValues();
+        solutionCellValues = sudokuRobot.getSolutionValues();
 
 
         //Setting up initial cells with values given from robot
         //Locks them in place if the value is not 0
-        if (initialValues.length == sudokuBoardSize) {
+        if (cellValues.length == sudokuBoardSize) {
             for (int i = 0; i < sudokuBoardSize; i++) {
-                if (initialValues[i] != 0) {
-                    cellValues[i] = initialValues[i];
+                if (cellValues[i] != 0) {
                     lockedCells[i] = true;
                 }
             }
         }
     }
 
-    public int getCellValue(int cellNumber) {
+
+
+    int getCellValue(int cellNumber) {
         return cellValues[cellNumber];
     }
 
-    public void setCellValue(int cellNumber, int value) {
+    void setCellValue(int cellNumber, int value) {
         cellValues[cellNumber] = value;
     }
 
+    int[] getAllCellValues() {
+        return cellValues;
+    }
+
+    int[] getSolutionValues() {
+        return solutionCellValues;
+    }
+
+    boolean[] getAllInitialCells() {
+        return lockedCells;
+    }
+
     //Returns index of first incorrect cell or returns -1 if board is solved
-    public int isGameWon() {
+    int isGameWon() {
         for (int i = 0; i < sudokuBoardSize; i++) {
             if (cellValues[i] != solutionCellValues[i]) {
                 return i; }
@@ -64,7 +104,7 @@ class GameModel {
         return -1;
     }
 
-    public boolean isLockedCell(int cellNumber) {
+    boolean isInitialCell(int cellNumber) {
         return lockedCells[cellNumber];
     }
 }
