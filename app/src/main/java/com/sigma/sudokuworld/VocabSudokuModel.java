@@ -56,7 +56,7 @@ class VocabSudokuModel {
         }
         else if (gameMode == GameMode.NATIVE) {
             //Native mode
-            nativeWordsMap.valueAt(model.getCellValue(cellNumber));
+            return nativeWordsMap.valueAt(model.getCellValue(cellNumber));
         }
 
         //gameMode == GameMode.foreignMode
