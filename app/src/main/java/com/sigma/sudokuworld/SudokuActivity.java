@@ -37,6 +37,7 @@ public class SudokuActivity extends AppCompatActivity {
             mVocabGame = new VocabSudokuModel(
                     savedInstanceState.getStringArray(NATIVE_WORDS_INTENT_KEY),
                     savedInstanceState.getStringArray(FOREIGN_WORDS_INTENT_KEY),
+                    VocabSudokuModel.GameMode.FOREIGN,
                     savedInstanceState.getIntArray(PUZZLE_INTENT_KEY),
                     savedInstanceState.getIntArray(SOLUTION_INTENT_KEY),
                     savedInstanceState.getBooleanArray(INITIAL_CELLS_INTENT_KEY),
