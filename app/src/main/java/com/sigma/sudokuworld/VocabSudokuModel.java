@@ -72,13 +72,15 @@ class VocabSudokuModel {
         if (gameMode == GameMode.NUMBERS){ return String.valueOf(value); }
 
         else if (gameMode == GameMode.NATIVE){
-            return nativeWordsMap.valueAt(value);
+            return foreignWordsMap.valueAt(value);
         }
 
         else{
-            return foreignWordsMap.valueAt(value);
+            return nativeWordsMap.valueAt(value);
         }
     }
+
+
     public boolean isCellCorrect(int cell){
         return model.isCellCorrect(cell);
     }
