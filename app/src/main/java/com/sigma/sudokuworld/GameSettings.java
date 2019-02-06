@@ -7,5 +7,7 @@ enum GameMode {
 }
 
 enum GameDifficulty {
-    EASY, MEDIUM, HARD
+    EASY,
+    MEDIUM,
+    HARD
 }

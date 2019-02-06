@@ -18,6 +18,7 @@ public class SudokuActivity extends AppCompatActivity {
     private final String FOREIGN_WORDS_INTENT_KEY = "foreign";
     private final String NATIVE_WORDS_INTENT_KEY = "native";
     private final String GAME_MODE_INTENT_KEY = "mode";
+    private final String GAME_DIFFICULTY_INTENT_KEY = "difficulty";
 
 
     VocabSudokuModel mVocabGame;
@@ -47,7 +48,8 @@ public class SudokuActivity extends AppCompatActivity {
             mVocabGame = new VocabSudokuModel(
                     i.getStringArrayExtra(NATIVE_WORDS_INTENT_KEY),
                     i.getStringArrayExtra(FOREIGN_WORDS_INTENT_KEY),
-                    (GameMode) i.getSerializableExtra(GAME_MODE_INTENT_KEY)
+                    (GameMode) i.getSerializableExtra(GAME_MODE_INTENT_KEY),
+                    (GameDifficulty) i.getSerializableExtra(GAME_DIFFICULTY_INTENT_KEY)
             );
         }
 

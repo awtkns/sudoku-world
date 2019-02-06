@@ -20,8 +20,8 @@ class VocabSudokuModel {
         this.gameMode = gameMode;
     }
 
-    VocabSudokuModel(String[] nativeWords, String[] foreignWords, GameMode gameMode) {
-        model = new GameModel(3);
+    VocabSudokuModel(String[] nativeWords, String[] foreignWords, GameMode gameMode, GameDifficulty difficulty) {
+        model = new GameModel(3, difficulty);
         initializeWordMaps(nativeWords, foreignWords);
         this.gameMode = gameMode;
     }

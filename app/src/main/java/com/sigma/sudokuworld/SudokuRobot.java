@@ -14,13 +14,13 @@ public class SudokuRobot {
 
 
     //Constructor
-    public SudokuRobot(int sudokuSubsectionSize) {
+    public SudokuRobot(int sudokuSubsectionSize, GameDifficulty difficulty) {
         mSudokuSubsectionSize = sudokuSubsectionSize;
         mBoardLength = sudokuSubsectionSize * sudokuSubsectionSize;
         mBoardSize = (mBoardLength) * (mBoardLength);
         mSolutionValues = new int[mBoardSize];
         generateSudokuCells();
-        generateBoard();
+        generateBoard(difficulty);
     }
 
 
@@ -37,11 +37,26 @@ public class SudokuRobot {
     }
 
     
-    public void generateBoard() {
+    public void generateBoard(GameDifficulty difficulty) {
         clearBoard();
         solveBoard();
         mSolutionValues = returnCellValues();
-        generatePlayableBoard(40);
+
+
+        //Check a different number of nodes in generatePlayableBoard
+        //based on the selected difficulty setting
+        int nodesToCheck = 0;
+        switch (difficulty){
+            case EASY:
+                nodesToCheck = 20;
+                break;
+            case MEDIUM:
+                nodesToCheck = 35;
+                break;
+            case HARD:
+                nodesToCheck = 60;
+        }
+        generatePlayableBoard(nodesToCheck);
     }
 
 
