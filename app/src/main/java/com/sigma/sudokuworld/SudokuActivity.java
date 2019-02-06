@@ -155,6 +155,10 @@ public class SudokuActivity extends AppCompatActivity {
 
             mVocabGame.setCellString(cellNumber, buttonValue);
             mSudokuGridView.setCellLabel(cellNumber, mVocabGame.getCellString(cellNumber));
+
+            //Clears selected cells and redraws
+            mSudokuGridView.clearHighlightedCell();
+            mSudokuGridView.clearIncorrectCell();
             mSudokuGridView.invalidate();
         }
     };
@@ -163,6 +167,23 @@ public class SudokuActivity extends AppCompatActivity {
     View.OnClickListener onCheckAnswerButtonClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            //Check if cell is selected
+            //If a cell is selected, check if that cell is correct
+            int highlightedCell = mSudokuGridView.getHighlightedCell();
+            if (highlightedCell != -1){
+                if (mVocabGame.isCellCorrect(highlightedCell)){
+                    int i =0;
+                    mSudokuGridView.clearHighlightedCell();
+                    mSudokuGridView.invalidate();
+                    return;
+                }
+                mSudokuGridView.setIncorrectCell(highlightedCell);
+                mSudokuGridView.invalidate();
+                return;
+            }
+
+
+
             //Checks if the answers are right and displays the first wrong cell (if any)
             int potentialIndex = mVocabGame.checkGame();
             //Clear highlights / what cell is selected for input
@@ -176,6 +197,7 @@ public class SudokuActivity extends AppCompatActivity {
             //Case where answer is incorrect
             else {
                 mSudokuGridView.setIncorrectCell(potentialIndex);
+                mSudokuGridView.setHighlightedCell(potentialIndex);
             }
 
             //Redraw grid
