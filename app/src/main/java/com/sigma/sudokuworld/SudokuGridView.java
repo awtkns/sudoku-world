@@ -302,6 +302,6 @@ public class SudokuGridView extends View {
         mIncorrectCell = cellNumber;
     }
     public void clearIncorrectCell() {
-        mHighlightedCell = -1;
+        mIncorrectCell = -1;
     }
 }

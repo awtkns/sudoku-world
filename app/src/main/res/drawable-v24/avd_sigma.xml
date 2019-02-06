@@ -1,0 +1,496 @@
+<!--Contains svg path data and animation data for splash screen AVD-->
+<animated-vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
+    <aapt:attr name="android:drawable">
+        <vector
+            android:name="sigma2grid"
+            android:width="11dp"
+            android:height="11dp"
+            android:viewportWidth="11"
+            android:viewportHeight="11">
+
+            <!--Sigma-->
+            <group android:name="sigma">
+                <path
+                    android:name="top_sigma"
+                    android:pathData="M 3 3 L 8 3"
+                    android:strokeColor="@color/colorSplashScreenAVD"
+                    android:strokeWidth="1.5"
+                    android:trimPathOffset="1"
+                    android:strokeLineCap="round"/>
+                <path
+                    android:name="right_sigma"
+                    android:pathData="M 8 8 L 3 8"
+                    android:strokeColor="@color/colorSplashScreenAVD"
+                    android:strokeWidth="1.5"
+                    android:strokeLineCap="round"/>
+                <path
+                    android:name="left_sigma"
+                    android:pathData="M 5.5 5.5 L 3 3"
+                    android:strokeColor="@color/colorSplashScreenAVD"
+                    android:strokeWidth="1.5"/>
+                <path
+                    android:name="bottom_sigma"
+                    android:pathData="M 5.5 5.5 L 3 8"
+                    android:strokeColor="@color/colorSplashScreenAVD"
+                    android:strokeWidth="1.5"
+                    android:strokeLineCap="round"/>
+            </group>
+
+            <!--Grid Lines-->
+            <group android:name="grid_lines">
+                <group android:name="major">
+                    <path
+                        android:name="left"
+                        android:pathData="M 4 1 L 4 10"
+                        android:strokeColor="@color/colorSplashScreenAVD"
+                        android:strokeWidth="0.25"
+                        android:trimPathEnd="0"/>
+                    <path
+                        android:name="right"
+                        android:pathData="M 7 1 L 7 10"
+                        android:strokeColor="@color/colorSplashScreenAVD"
+                        android:strokeWidth="0.25"
+                        android:trimPathEnd="0"/>
+                    <path
+                        android:name="top"
+                        android:pathData="M 1 4 L 10 4"
+                        android:strokeColor="@color/colorSplashScreenAVD"
+                        android:strokeWidth="0.25"
+                        android:trimPathEnd="0"/>
+                    <path
+                        android:name="bottom"
+                        android:pathData="M 1 7 L 10 7"
+                        android:strokeColor="@color/colorSplashScreenAVD"
+                        android:strokeWidth="0.25"
+                        android:trimPathEnd="0"/>
+                </group>
+                <group android:name="minor_top_left">
+                    <path
+                        android:name="left_mtl"
+                        android:pathData="M 2 1 L 2 10"
+                        android:strokeColor="@color/colorSplashScreenAVD"
+                        android:strokeWidth="0.0625"
+                        android:trimPathEnd="0"/>
+                    <path
+                        android:name="right_mtl"
+                        android:pathData="M 3 1 L 3 10"
+                        android:strokeColor="@color/colorSplashScreenAVD"
+                        android:strokeWidth="0.0625"
+                        android:trimPathEnd="0"/>
+                    <path
+                        android:name="top_mtl"
+                        android:pathData="M 1 2 L 10 2"
+                        android:strokeColor="@color/colorSplashScreenAVD"
+                        android:strokeWidth="0.0625"
+                        android:trimPathEnd="0"/>
+                    <path
+                        android:name="bottom_mtl"
+                        android:pathData="M 1 3 L 10 3"
+                        android:strokeColor="@color/colorSplashScreenAVD"
+                        android:strokeWidth="0.0625"
+                        android:trimPathEnd="0"/>
+                </group>
+                <group android:name="minor_bottom_right">
+                    <path
+                        android:name="left_mbr"
+                        android:pathData="M 8 10 L 8 1"
+                        android:strokeColor="@color/colorSplashScreenAVD"
+                        android:strokeWidth="0.0625"
+                        android:trimPathEnd="0"/>
+                    <path
+                        android:name="right_mbr"
+                        android:pathData="M 9 10 L 9 1"
+                        android:strokeColor="@color/colorSplashScreenAVD"
+                        android:strokeWidth="0.0625"
+                        android:trimPathEnd="0"/>
+                    <path
+                        android:name="top_mbr"
+                        android:pathData="M 10 8 L 1 8"
+                        android:strokeColor="@color/colorSplashScreenAVD"
+                        android:strokeWidth="0.0625"
+                        android:trimPathEnd="0"/>
+                    <path
+                        android:name="bottom_mbr"
+                        android:pathData="M 10 9 L 1 9"
+                        android:strokeColor="@color/colorSplashScreenAVD"
+                        android:strokeWidth="0.0625"
+                        android:trimPathEnd="0"/>
+                </group>
+                <group android:name="minor_center_vert">
+                    <path
+                        android:name="bottom_right_cv"
+                        android:pathData="M 6 5.5 L 6 10"
+                        android:strokeColor="@color/colorSplashScreenAVD"
+                        android:strokeWidth="0.0625"
+                        android:trimPathEnd="0"/>
+                    <path
+                        android:name="top_left_cv"
+                        android:pathData="M 5 5.5 L 5 1"
+                        android:strokeColor="@color/colorSplashScreenAVD"
+                        android:strokeWidth="0.0625"
+                        android:trimPathEnd="0"/>
+                    <path
+                        android:name="top_right_cv"
+                        android:pathData="M 6 5.5 L 6 1"
+                        android:strokeColor="@color/colorSplashScreenAVD"
+                        android:strokeWidth="0.0625"
+                        android:trimPathEnd="0"/>
+                    <path
+                        android:name="bottom_left_cv"
+                        android:pathData="M 5 5.5 L 5 10"
+                        android:strokeColor="@color/colorSplashScreenAVD"
+                        android:strokeWidth="0.0625"
+                        android:trimPathEnd="0"/>
+                </group>
+                <group android:name="minor_center_horz">
+                    <path
+                        android:name="right_bottom_cv"
+                        android:pathData="M 5.5 6 L 10 6"
+                        android:strokeColor="@color/colorSplashScreenAVD"
+                        android:strokeWidth="0.0625"
+                        android:trimPathEnd="0"/>
+                    <path
+                        android:name="left_top_ch"
+                        android:pathData="M 5.5 5 L 1 5"
+                        android:strokeColor="@color/colorSplashScreenAVD"
+                        android:strokeWidth="0.0625"
+                        android:trimPathEnd="0"/>
+                    <path
+                        android:name="right_top_cv"
+                        android:pathData="M 5.5 5 L 10 5"
+                        android:strokeColor="@color/colorSplashScreenAVD"
+                        android:strokeWidth="0.0625"
+                        android:trimPathEnd="0"/>
+                    <path
+                        android:name="left_bottom_cv"
+                        android:pathData="M 5.5 6 L 1 6"
+                        android:strokeColor="@color/colorSplashScreenAVD"
+                        android:strokeWidth="0.0625"
+                        android:trimPathEnd="0"/>
+                </group>
+            </group>
+        </vector>
+    </aapt:attr>
+    <target android:name="top_sigma">
+        <aapt:attr name="android:animation">
+            <set>
+                <objectAnimator
+                    android:propertyName="pathData"
+                    android:duration="1010"
+                    android:valueFrom="M 3 3 L 8 3"
+                    android:valueTo="M 1 1 L 10 1"
+                    android:valueType="pathType"
+                    android:interpolator="@android:anim/accelerate_decelerate_interpolator"/>
+                <objectAnimator
+                    android:propertyName="strokeWidth"
+                    android:duration="1010"
+                    android:valueFrom="1.5"
+                    android:valueTo="0.25"
+                    android:valueType="floatType"
+                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
+            </set>
+        </aapt:attr>
+    </target>
+    <target android:name="right_sigma">
+        <aapt:attr name="android:animation">
+            <set>
+                <objectAnimator
+                    android:propertyName="pathData"
+                    android:duration="1010"
+                    android:valueFrom="M 8 8 L 3 8"
+                    android:valueTo="M 10 1 L 10 10"
+                    android:valueType="pathType"
+                    android:interpolator="@android:anim/accelerate_decelerate_interpolator"/>
+                <objectAnimator
+                    android:propertyName="strokeWidth"
+                    android:duration="1010"
+                    android:valueFrom="1.5"
+                    android:valueTo="0.25"
+                    android:valueType="floatType"
+                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
+            </set>
+        </aapt:attr>
+    </target>
+    <target android:name="left_sigma">
+        <aapt:attr name="android:animation">
+            <set>
+                <objectAnimator
+                    android:propertyName="pathData"
+                    android:duration="1010"
+                    android:valueFrom="M 5.5 5.5 L 3 3"
+                    android:valueTo="M 1 10 L 1 1"
+                    android:valueType="pathType"
+                    android:interpolator="@android:anim/accelerate_decelerate_interpolator"/>
+                <objectAnimator
+                    android:propertyName="strokeWidth"
+                    android:duration="1010"
+                    android:valueFrom="1.5"
+                    android:valueTo="0.25"
+                    android:valueType="floatType"
+                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
+            </set>
+        </aapt:attr>
+    </target>
+    <target android:name="bottom_sigma">
+        <aapt:attr name="android:animation">
+            <set>
+                <objectAnimator
+                    android:propertyName="pathData"
+                    android:duration="1010"
+                    android:valueFrom="M 5.5 5.5 L 3 8"
+                    android:valueTo="M 1 10 L 10 10"
+                    android:valueType="pathType"
+                    android:interpolator="@android:anim/accelerate_decelerate_interpolator"/>
+                <objectAnimator
+                    android:propertyName="strokeWidth"
+                    android:duration="1010"
+                    android:valueFrom="1.5"
+                    android:valueTo="0.25"
+                    android:valueType="floatType"
+                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
+            </set>
+        </aapt:attr>
+    </target>
+    <target android:name="left_mbr">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="trimPathEnd"
+                android:startOffset="1703"
+                android:duration="602"
+                android:valueFrom="0"
+                android:valueTo="1"
+                android:valueType="floatType"
+                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+        </aapt:attr>
+    </target>
+    <target android:name="bottom_right_cv">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="trimPathEnd"
+                android:startOffset="2305"
+                android:duration="695"
+                android:valueFrom="0"
+                android:valueTo="1"
+                android:valueType="floatType"
+                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+        </aapt:attr>
+    </target>
+    <target android:name="right_bottom_cv">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="trimPathEnd"
+                android:startOffset="2305"
+                android:duration="695"
+                android:valueFrom="0"
+                android:valueTo="1"
+                android:valueType="floatType"
+                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+        </aapt:attr>
+    </target>
+    <target android:name="left">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="trimPathEnd"
+                android:startOffset="1010"
+                android:duration="693"
+                android:valueFrom="0"
+                android:valueTo="1"
+                android:valueType="floatType"
+                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+        </aapt:attr>
+    </target>
+    <target android:name="right">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="trimPathEnd"
+                android:startOffset="1010"
+                android:duration="693"
+                android:valueFrom="0"
+                android:valueTo="1"
+                android:valueType="floatType"
+                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+        </aapt:attr>
+    </target>
+    <target android:name="top">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="trimPathEnd"
+                android:startOffset="1010"
+                android:duration="693"
+                android:valueFrom="0"
+                android:valueTo="1"
+                android:valueType="floatType"
+                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+        </aapt:attr>
+    </target>
+    <target android:name="bottom">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="trimPathEnd"
+                android:startOffset="1010"
+                android:duration="693"
+                android:valueFrom="0"
+                android:valueTo="1"
+                android:valueType="floatType"
+                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+        </aapt:attr>
+    </target>
+    <target android:name="left_mtl">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="trimPathEnd"
+                android:startOffset="1703"
+                android:duration="602"
+                android:valueFrom="0"
+                android:valueTo="1"
+                android:valueType="floatType"
+                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+        </aapt:attr>
+    </target>
+    <target android:name="top_mtl">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="trimPathEnd"
+                android:startOffset="1703"
+                android:duration="602"
+                android:valueFrom="0"
+                android:valueTo="1"
+                android:valueType="floatType"
+                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+        </aapt:attr>
+    </target>
+    <target android:name="bottom_mtl">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="trimPathEnd"
+                android:startOffset="1703"
+                android:duration="602"
+                android:valueFrom="0"
+                android:valueTo="1"
+                android:valueType="floatType"
+                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+        </aapt:attr>
+    </target>
+    <target android:name="right_mtl">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="trimPathEnd"
+                android:startOffset="1703"
+                android:duration="602"
+                android:valueFrom="0"
+                android:valueTo="1"
+                android:valueType="floatType"
+                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+        </aapt:attr>
+    </target>
+    <target android:name="right_mbr">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="trimPathEnd"
+                android:startOffset="1703"
+                android:duration="602"
+                android:valueFrom="0"
+                android:valueTo="1"
+                android:valueType="floatType"
+                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+        </aapt:attr>
+    </target>
+    <target android:name="top_mbr">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="trimPathEnd"
+                android:startOffset="1703"
+                android:duration="602"
+                android:valueFrom="0"
+                android:valueTo="1"
+                android:valueType="floatType"
+                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+        </aapt:attr>
+    </target>
+    <target android:name="bottom_mbr">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="trimPathEnd"
+                android:startOffset="1703"
+                android:duration="602"
+                android:valueFrom="0"
+                android:valueTo="1"
+                android:valueType="floatType"
+                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+        </aapt:attr>
+    </target>
+    <target android:name="top_left_cv">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="trimPathEnd"
+                android:startOffset="2305"
+                android:duration="695"
+                android:valueFrom="0"
+                android:valueTo="1"
+                android:valueType="floatType"
+                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+        </aapt:attr>
+    </target>
+    <target android:name="top_right_cv">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="trimPathEnd"
+                android:startOffset="2305"
+                android:duration="695"
+                android:valueFrom="0"
+                android:valueTo="1"
+                android:valueType="floatType"
+                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+        </aapt:attr>
+    </target>
+    <target android:name="bottom_left_cv">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="trimPathEnd"
+                android:startOffset="2305"
+                android:duration="695"
+                android:valueFrom="0"
+                android:valueTo="1"
+                android:valueType="floatType"
+                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+        </aapt:attr>
+    </target>
+    <target android:name="left_top_ch">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="trimPathEnd"
+                android:startOffset="2305"
+                android:duration="695"
+                android:valueFrom="0"
+                android:valueTo="1"
+                android:valueType="floatType"
+                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+        </aapt:attr>
+    </target>
+    <target android:name="right_top_cv">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="trimPathEnd"
+                android:startOffset="2305"
+                android:duration="695"
+                android:valueFrom="0"
+                android:valueTo="1"
+                android:valueType="floatType"
+                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+        </aapt:attr>
+    </target>
+    <target android:name="left_bottom_cv">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="trimPathEnd"
+                android:startOffset="2305"
+                android:duration="695"
+                android:valueFrom="0"
+                android:valueTo="1"
+                android:valueType="floatType"
+                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+        </aapt:attr>
+    </target>
+</animated-vector>

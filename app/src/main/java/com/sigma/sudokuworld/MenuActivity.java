@@ -1,11 +1,13 @@
 package com.sigma.sudokuworld;
 
 import android.content.Intent;
+import android.graphics.drawable.AnimatedVectorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,7 +15,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -23,6 +24,10 @@ public class MenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
+        ImageView imageView = findViewById(R.id.menuAVD);
+        AnimatedVectorDrawable animatedVectorDrawable = (AnimatedVectorDrawable) imageView.getDrawable();
+        animatedVectorDrawable.start();
 
         //On play button click go to sudoku activity
         mPlayButton = findViewById(R.id.playButton);
@@ -35,6 +40,7 @@ public class MenuActivity extends AppCompatActivity {
                 intent.putExtra("native", readWordlistFromCSV(WordType.NATIVE));
                 intent.putExtra("foreign", readWordlistFromCSV(WordType.FOREIGN));
                 intent.putExtra("puzzle", readPuzzleDataFromCSV());
+                intent.putExtra("gameMode", GameMode.normalMode);
                 startActivity(intent);
             }
         });

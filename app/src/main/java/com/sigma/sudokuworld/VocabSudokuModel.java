@@ -21,7 +21,7 @@ class VocabSudokuModel {
 
     VocabSudokuModel(String[] nativeWords, String[] foreignWords) {
         model = new GameModel(3);
-        init(nativeWords, foreignWords);
+        initializeWordMaps(nativeWords, foreignWords);
     }
 
     private void init(String[] nativeWords, String[] foreignWords) {
@@ -42,13 +42,25 @@ class VocabSudokuModel {
     }
 
     String getCellString(int cellNumber) {
-        //return nativeWordsMap.valueAt(model.getCellValue(cellNumber));
+        //Normal Mode
+        if (currGameMode == GameMode.normalMode){
+            //Makes the cell blank if its value is 0
+            if (model.getCellValue(cellNumber) == 0)
+            {
+                return nativeWordsMap.valueAt(model.getCellValue(cellNumber));
+            }
 
-        //Makes the cell blank if its value is 0
-        if (model.getCellValue(cellNumber) == 0)
-        {return nativeWordsMap.valueAt(model.getCellValue(cellNumber));}
+            return String.valueOf(model.getCellValue(cellNumber));
+        }
 
-        return String.valueOf(model.getCellValue(cellNumber));
+        //Native mode
+        else if (currGameMode == GameMode.nativeMode)
+        { return nativeWordsMap.valueAt(model.getCellValue(cellNumber)); }
+
+        //Foreign mode
+        else //currGameMode == GameMode.foreignMode
+        { return foreignWordsMap.valueAt(model.getCellValue(cellNumber)); }
+
     }
 
     void setCellString(int cellNumber, int value) {

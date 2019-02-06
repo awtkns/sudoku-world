@@ -25,9 +25,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            app:boldGridPaintColor="@color/colourGrid"
+            app:boldGridPaintColor="@color/colorGrid"
             app:boldGridPaintStrokeWidth="2dp"
-            app:gridPaintColor="@color/colourGrid"
+            app:gridPaintColor="@color/colorGrid"
             app:gridPaintStrokeWidth="0.6dp"
 
             app:highlightedCellColour="@color/colorHighlight"
@@ -36,7 +36,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:lockedCellColour="@color/colourLockedCell"
+            app:lockedCellColour="@color/colorLockedCell"
             app:incorrectCellColour="@color/colorIncorrect"/>
 
 

@@ -34,8 +34,6 @@ public class SudokuRobot {
                 mSudokuCells[row][column] = new SudokuCell(mSudokuSubsectionSize);
             }
         }
-
-        generateBoard();
     }
 
     
