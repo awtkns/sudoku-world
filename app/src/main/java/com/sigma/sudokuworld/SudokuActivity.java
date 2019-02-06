@@ -86,6 +86,7 @@ public class SudokuActivity extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        //Save the current state of the Sudoku board
         outState.putStringArray(NATIVE_WORDS_INTENT_KEY, mVocabGame.getAllNativeWords());
         outState.putStringArray(FOREIGN_WORDS_INTENT_KEY, mVocabGame.getAllForeignWords());
         outState.putIntArray(PUZZLE_INTENT_KEY, mVocabGame.getAllCellValues());
@@ -139,39 +140,15 @@ public class SudokuActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             int buttonValue = 0;
-            switch(v.getId())
-            {
-                case R.id.button1:
-                    buttonValue = 1;
-                    break;
-                case R.id.button2:
-                    buttonValue = 2;
-                    break;
-                case R.id.button3:
-                    buttonValue =3;
-                    break;
-                case R.id.button4:
-                    buttonValue =4;
-                    break;
-                case R.id.button5:
-                    buttonValue =5;
-                    break;
-                case R.id.button6:
-                    buttonValue =6;
-                    break;
-                case R.id.button7:
-                    buttonValue =7;
-                    break;
-                case R.id.button8:
-                    buttonValue =8;
-                    break;
-                case R.id.button9:
-                    buttonValue =9 ;
-                    break;
-                case R.id.clearCellButton:
-                    buttonValue = 0;
-                    break;
 
+            //Loop through all our possible buttons to see which button is clicked
+            //Set buttonValue to the corresponding button
+            //If no button is found in for loop, clear button is being called so buttonValue = 0
+            for (int buttonNumber = 0; buttonNumber < 9; buttonNumber++) {
+                if (v.getId() == getResources().getIdentifier("button" + (buttonNumber+1), "id",
+                    getPackageName())){
+                    buttonValue = buttonNumber + 1;
+                }
             }
             int cellNumber = mSudokuGridView.getHighlightedCell();
             if (cellNumber == -1){ return; }
