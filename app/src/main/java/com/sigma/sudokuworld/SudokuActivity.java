@@ -61,10 +61,16 @@ public class SudokuActivity extends AppCompatActivity {
         sudokuButtons = new Button[9];
         for(int buttonNumber = 0; buttonNumber < 9; buttonNumber++)
         {
+            //Sets the button array at index to have id button + the current index number
+            //One is added because the number 0 is skipped
             sudokuButtons[buttonNumber] = findViewById(getResources().getIdentifier("button" + (buttonNumber+1), "id",
                     this.getPackageName()));
+
+            //Gets and sets the string the button should display
             String buttonText = mVocabGame.getMapValue(buttonNumber + 1);
             sudokuButtons[buttonNumber].setText(buttonText);
+
+            //Links the listener to the button
             sudokuButtons[buttonNumber].setOnClickListener(onButtonClickListener);
         }
 
