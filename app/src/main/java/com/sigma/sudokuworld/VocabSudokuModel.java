@@ -8,23 +8,22 @@ import android.util.SparseArray;
 class VocabSudokuModel {
 
     private GameModel model;
-    private GameMode gameMode;
-
+    private GameMode currGameMode;
     private String[] foreignWords;
     private String[] nativeWords;
     private SparseArray<String> nativeWordsMap;
     private SparseArray<String> foreignWordsMap;
 
-    VocabSudokuModel(String[] nativeWords, String[] foreignWords, GameMode gameMode, int[] puzzle, int[] solution, boolean[] initialCells) {
+    VocabSudokuModel(String[] nativeWords, String[] foreignWords, int[] puzzle, int[] solution, boolean[] initialCells, GameMode gameMode) {
         model = new GameModel(3, puzzle, solution, initialCells);
         initializeWordMaps(nativeWords, foreignWords);
-        this.gameMode = gameMode;
+        currGameMode = gameMode;
     }
 
     VocabSudokuModel(String[] nativeWords, String[] foreignWords, GameMode gameMode) {
         model = new GameModel(3);
         initializeWordMaps(nativeWords, foreignWords);
-        this.gameMode = gameMode;
+        currGameMode = gameMode;
     }
 
     private void initializeWordMaps(String[] nativeWords, String[] foreignWords) {
