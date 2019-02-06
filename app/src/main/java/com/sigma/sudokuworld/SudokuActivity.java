@@ -69,7 +69,7 @@ public class SudokuActivity extends AppCompatActivity {
                     this.getPackageName()));
 
             //Gets and sets the string the button should display
-            String buttonText = mVocabGame.getMapValue(buttonNumber + 1);
+            String buttonText = mVocabGame.getButtonString(buttonNumber + 1);
             sudokuButtons[buttonNumber].setText(buttonText);
 
             //Links the listener to the button
@@ -157,7 +157,7 @@ public class SudokuActivity extends AppCompatActivity {
             if (cellNumber == -1){ return; }
 
             mVocabGame.setCellString(cellNumber, buttonValue);
-            mSudokuGridView.setCellLabel(cellNumber, button.getText().toString());
+            mSudokuGridView.setCellLabel(cellNumber, mVocabGame.getButtonString(buttonValue));
 
             //Clears selected cells and redraws
             mSudokuGridView.clearHighlightedCell();
