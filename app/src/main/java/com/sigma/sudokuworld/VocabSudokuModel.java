@@ -56,7 +56,7 @@ class VocabSudokuModel {
         }
         else if (gameMode == GameMode.NATIVE) {
             //Native mode
-            nativeWordsMap.valueAt(model.getCellValue(cellNumber));
+            return nativeWordsMap.valueAt(model.getCellValue(cellNumber));
         }
 
         //gameMode == GameMode.foreignMode
@@ -65,6 +65,22 @@ class VocabSudokuModel {
 
     void setCellString(int cellNumber, int value) {
         model.setCellValue(cellNumber, value);
+    }
+
+
+    public String getMapValue(int value){
+        if (gameMode == GameMode.NUMBERS){ return String.valueOf(value); }
+
+        else if (gameMode == GameMode.NATIVE){
+            return nativeWordsMap.valueAt(value);
+        }
+
+        else{
+            return foreignWordsMap.valueAt(value);
+        }
+    }
+    public boolean isCellCorrect(int cell){
+        return model.isCellCorrect(cell);
     }
 
     String[] getAllForeignWords() {

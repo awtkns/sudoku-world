@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimary">#b4ddff</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="colorGrid">#000000</color>
-    <color name="colorLockedCell">#32000000</color>
-    <color name="colorHighlight">#F44336</color>
+    <color name="colorLockedCell">#e6f4ff</color>
+    <color name="colorHighlight">#b4ddff</color>
     <color name="colorSplashScreenAVD">#E9F1F1</color>
     <color name="colorIncorrect">#FFB3B3</color>
 </resources>

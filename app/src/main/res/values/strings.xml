@@ -6,6 +6,7 @@
     <string name="clear_button">Clear</string>
     <string name="enter_button">Enter</string>
     <string name="check_answer_button">Check\nAnswer</string>
+    <string name="clear_cell_button">Clear\nCell</string>
 
     <!--Settings Menu-->
     <string name="settingsTitle">Settings</string>
