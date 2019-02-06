@@ -78,7 +78,13 @@ class GameModel {
     int getCellValue(int cellNumber) {
         return cellValues[cellNumber];
     }
+    public boolean isCellCorrect(int cell){
+        if (solutionCellValues[cell] == cellValues[cell]){
+            return true;
+        }
 
+        else {return false;}
+    }
     void setCellValue(int cellNumber, int value) {
         cellValues[cellNumber] = value;
     }
