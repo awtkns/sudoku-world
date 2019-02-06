@@ -20,7 +20,6 @@ public class SudokuActivity extends AppCompatActivity {
 
 
     VocabSudokuModel mVocabGame;
-    GameMode mGameMode;
     SudokuGridView mSudokuGridView;
     LinearLayout mEditLayout;
     TextView mTextInputView;
@@ -35,23 +34,21 @@ public class SudokuActivity extends AppCompatActivity {
 
         if (savedInstanceState != null) {
             //Unpacking information from saved instance
-            mGameMode =(GameMode) savedInstanceState.getSerializable(GAME_MODE_INTENT_KEY);
             mVocabGame = new VocabSudokuModel(
                     savedInstanceState.getStringArray(NATIVE_WORDS_INTENT_KEY),
                     savedInstanceState.getStringArray(FOREIGN_WORDS_INTENT_KEY),
                     savedInstanceState.getIntArray(PUZZLE_INTENT_KEY),
                     savedInstanceState.getIntArray(SOLUTION_INTENT_KEY),
                     savedInstanceState.getBooleanArray(INITIAL_CELLS_INTENT_KEY),
-                    mGameMode
+                    (GameMode) savedInstanceState.getSerializable(GAME_MODE_INTENT_KEY)
             );
         } else {
             //Unpacking information from intent
             Intent i = getIntent();
-            mGameMode = (GameMode) i.getSerializableExtra(GAME_MODE_INTENT_KEY);
             mVocabGame = new VocabSudokuModel(
                     i.getStringArrayExtra(NATIVE_WORDS_INTENT_KEY),
                     i.getStringArrayExtra(FOREIGN_WORDS_INTENT_KEY),
-                    mGameMode
+                    (GameMode) i.getSerializableExtra(GAME_MODE_INTENT_KEY)
             );
         }
 
@@ -86,7 +83,7 @@ public class SudokuActivity extends AppCompatActivity {
         outState.putIntArray(PUZZLE_INTENT_KEY, mVocabGame.getAllCellValues());
         outState.putIntArray(SOLUTION_INTENT_KEY, mVocabGame.getSolutionValues());
         outState.putBooleanArray(INITIAL_CELLS_INTENT_KEY, mVocabGame.getAllIntialCells());
-        outState.putSerializable(GAME_MODE_INTENT_KEY, mGameMode);
+        outState.putSerializable(GAME_MODE_INTENT_KEY, mVocabGame.getCurrGameMode());
     }
 
 
