@@ -8,7 +8,7 @@ import android.util.SparseArray;
 class VocabSudokuModel {
 
     private GameModel model;
-    private GameMode currGameMode;
+    private GameMode gameMode;
     private String[] foreignWords;
     private String[] nativeWords;
     private SparseArray<String> nativeWordsMap;
@@ -17,13 +17,13 @@ class VocabSudokuModel {
     VocabSudokuModel(String[] nativeWords, String[] foreignWords, int[] puzzle, int[] solution, boolean[] initialCells, GameMode gameMode) {
         model = new GameModel(3, puzzle, solution, initialCells);
         initializeWordMaps(nativeWords, foreignWords);
-        currGameMode = gameMode;
+        this.gameMode = gameMode;
     }
 
     VocabSudokuModel(String[] nativeWords, String[] foreignWords, GameMode gameMode) {
         model = new GameModel(3);
         initializeWordMaps(nativeWords, foreignWords);
-        currGameMode = gameMode;
+        this.gameMode = gameMode;
     }
 
     private void initializeWordMaps(String[] nativeWords, String[] foreignWords) {
@@ -59,7 +59,7 @@ class VocabSudokuModel {
             nativeWordsMap.valueAt(model.getCellValue(cellNumber));
         }
 
-        //currGameMode == GameMode.foreignMode
+        //gameMode == GameMode.foreignMode
         return foreignWordsMap.valueAt(model.getCellValue(cellNumber));
     }
 
@@ -87,6 +87,14 @@ class VocabSudokuModel {
         return model.getAllInitialCells();
     }
 
+    public GameMode getGameMode() {
+        return gameMode;
+    }
+
+    public void setGameMode(GameMode gameMode) {
+        this.gameMode = gameMode;
+    }
+
     //Returns the index of the first incorrect cell or -1 if the board is solved
     int checkGame(){
         return model.isGameWon();
@@ -94,10 +102,6 @@ class VocabSudokuModel {
 
     boolean isInitialCell(int cellNumber) {
         return model.isInitialCell(cellNumber);
-    }
-
-    public enum GameMode {
-        NATIVE, FOREIGN, NUMBERS
     }
 }
 

@@ -16,7 +16,7 @@ public class SudokuActivity extends AppCompatActivity {
     private final String INITIAL_CELLS_INTENT_KEY = "initial";
     private final String FOREIGN_WORDS_INTENT_KEY = "foreign";
     private final String NATIVE_WORDS_INTENT_KEY = "native";
-    private final String GAME_MODE_INTENT_KEY = "gameMode";
+    private final String GAME_MODE_INTENT_KEY = "mode";
 
 
     VocabSudokuModel mVocabGame;
@@ -37,7 +37,6 @@ public class SudokuActivity extends AppCompatActivity {
             mVocabGame = new VocabSudokuModel(
                     savedInstanceState.getStringArray(NATIVE_WORDS_INTENT_KEY),
                     savedInstanceState.getStringArray(FOREIGN_WORDS_INTENT_KEY),
-                    VocabSudokuModel.GameMode.FOREIGN,
                     savedInstanceState.getIntArray(PUZZLE_INTENT_KEY),
                     savedInstanceState.getIntArray(SOLUTION_INTENT_KEY),
                     savedInstanceState.getBooleanArray(INITIAL_CELLS_INTENT_KEY),
@@ -84,7 +83,7 @@ public class SudokuActivity extends AppCompatActivity {
         outState.putIntArray(PUZZLE_INTENT_KEY, mVocabGame.getAllCellValues());
         outState.putIntArray(SOLUTION_INTENT_KEY, mVocabGame.getSolutionValues());
         outState.putBooleanArray(INITIAL_CELLS_INTENT_KEY, mVocabGame.getAllIntialCells());
-        outState.putSerializable(GAME_MODE_INTENT_KEY, mVocabGame.getCurrGameMode());
+        outState.putSerializable(GAME_MODE_INTENT_KEY, mVocabGame.getGameMode());
     }
 
 
