@@ -141,13 +141,14 @@ public class SudokuActivity extends AppCompatActivity {
     View.OnClickListener onButtonClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            Button button = (Button) v;
             int buttonValue = 0;
 
             //Loop through all our possible buttons to see which button is clicked
             //Set buttonValue to the corresponding button
             //If no button is found in for loop, clear button is being called so buttonValue = 0
             for (int buttonNumber = 0; buttonNumber < 9; buttonNumber++) {
-                if (v.getId() == getResources().getIdentifier("button" + (buttonNumber+1), "id",
+                if (button.getId() == getResources().getIdentifier("button" + (buttonNumber+1), "id",
                     getPackageName())){
                     buttonValue = buttonNumber + 1;
                 }
@@ -156,7 +157,7 @@ public class SudokuActivity extends AppCompatActivity {
             if (cellNumber == -1){ return; }
 
             mVocabGame.setCellString(cellNumber, buttonValue);
-            mSudokuGridView.setCellLabel(cellNumber, mVocabGame.getCellString(cellNumber));
+            mSudokuGridView.setCellLabel(cellNumber, button.getText().toString());
 
             //Clears selected cells and redraws
             mSudokuGridView.clearHighlightedCell();
