@@ -8,23 +8,26 @@ import android.util.SparseArray;
 class VocabSudokuModel {
 
     private GameModel model;
+    private GameMode gameMode;
 
     private String[] foreignWords;
     private String[] nativeWords;
     private SparseArray<String> nativeWordsMap;
     private SparseArray<String> foreignWordsMap;
 
-    VocabSudokuModel(String[] nativeWords, String[] foreignWords, int[] puzzle, int[] solution, boolean[] initialCells) {
+    VocabSudokuModel(String[] nativeWords, String[] foreignWords, GameMode gameMode, int[] puzzle, int[] solution, boolean[] initialCells) {
         model = new GameModel(3, puzzle, solution, initialCells);
-        init(nativeWords, foreignWords);
+        initializeWordMaps(nativeWords, foreignWords);
+        this.gameMode = gameMode;
     }
 
-    VocabSudokuModel(String[] nativeWords, String[] foreignWords) {
+    VocabSudokuModel(String[] nativeWords, String[] foreignWords, GameMode gameMode) {
         model = new GameModel(3);
         initializeWordMaps(nativeWords, foreignWords);
+        this.gameMode = gameMode;
     }
 
-    private void init(String[] nativeWords, String[] foreignWords) {
+    private void initializeWordMaps(String[] nativeWords, String[] foreignWords) {
         this.nativeWords = nativeWords;
         this.foreignWords = foreignWords;
 
@@ -43,7 +46,7 @@ class VocabSudokuModel {
 
     String getCellString(int cellNumber) {
         //Normal Mode
-        if (currGameMode == GameMode.normalMode){
+        if (gameMode == GameMode.NUMBERS){
             //Makes the cell blank if its value is 0
             if (model.getCellValue(cellNumber) == 0)
             {
@@ -52,15 +55,13 @@ class VocabSudokuModel {
 
             return String.valueOf(model.getCellValue(cellNumber));
         }
+        else if (gameMode == GameMode.NATIVE) {
+            //Native mode
+            nativeWordsMap.valueAt(model.getCellValue(cellNumber));
+        }
 
-        //Native mode
-        else if (currGameMode == GameMode.nativeMode)
-        { return nativeWordsMap.valueAt(model.getCellValue(cellNumber)); }
-
-        //Foreign mode
-        else //currGameMode == GameMode.foreignMode
-        { return foreignWordsMap.valueAt(model.getCellValue(cellNumber)); }
-
+        //currGameMode == GameMode.foreignMode
+        return foreignWordsMap.valueAt(model.getCellValue(cellNumber));
     }
 
     void setCellString(int cellNumber, int value) {
@@ -95,4 +96,10 @@ class VocabSudokuModel {
     boolean isInitialCell(int cellNumber) {
         return model.isInitialCell(cellNumber);
     }
+
+    public enum GameMode {
+        NATIVE, FOREIGN, NUMBERS
+    }
 }
+
+
