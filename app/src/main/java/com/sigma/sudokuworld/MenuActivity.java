@@ -62,6 +62,10 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -78,6 +82,7 @@ public class MenuActivity extends AppCompatActivity {
      * Stores data in an array.
      * Array index = cell number
      * Stores 0 for empty cell
+     *
      * @return array
      */
     private int[] readPuzzleDataFromCSV() {
@@ -90,13 +95,13 @@ public class MenuActivity extends AppCompatActivity {
         try {
             String puzzleStr;
             puzzleStr = bufferedReader.readLine();
-            puzzleStr = puzzleStr.replace(",","");  //input sanitation
+            puzzleStr = puzzleStr.replace(",", "");  //input sanitation
 
             vals = new int[puzzleStr.length()];
-            for (int i = 0; i < puzzleStr.length(); i++){   //read puzzle data
-                char ch =puzzleStr.charAt(i);
+            for (int i = 0; i < puzzleStr.length(); i++) {   //read puzzle data
+                char ch = puzzleStr.charAt(i);
                 if (ch != '.') {
-                       vals[i] = Character.getNumericValue(ch);
+                    vals[i] = Character.getNumericValue(ch);
                 }
             }
 
@@ -113,6 +118,7 @@ public class MenuActivity extends AppCompatActivity {
 
     /**
      * Reads CSV file containing 9 word pairs
+     *
      * @param wordType get the native or foreign list
      * @return string array of words in either the native or foreign lang
      */
@@ -147,3 +153,4 @@ public class MenuActivity extends AppCompatActivity {
         return wordList.toArray(words);
     }
 }
+
