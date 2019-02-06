@@ -68,7 +68,7 @@ class VocabSudokuModel {
     }
 
 
-    public String getMapValue(int value){
+    public String getButtonString(int value){
         if (gameMode == GameMode.NUMBERS){ return String.valueOf(value); }
 
         else if (gameMode == GameMode.NATIVE){

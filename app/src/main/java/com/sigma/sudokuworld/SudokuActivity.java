@@ -147,10 +147,9 @@ public class SudokuActivity extends AppCompatActivity {
             //Loop through all our possible buttons to see which button is clicked
             //Set buttonValue to the corresponding button
             //If no button is found in for loop, clear button is being called so buttonValue = 0
-            for (int buttonNumber = 0; buttonNumber < 9; buttonNumber++) {
-                if (button.getId() == getResources().getIdentifier("button" + (buttonNumber+1), "id",
-                    getPackageName())){
-                    buttonValue = buttonNumber + 1;
+            for (int buttonindex = 0; buttonindex < 9; buttonindex++) {
+                if (button == sudokuButtons[buttonindex]){
+                    buttonValue = buttonindex + 1;
                 }
             }
             int cellNumber = mSudokuGridView.getHighlightedCell();
