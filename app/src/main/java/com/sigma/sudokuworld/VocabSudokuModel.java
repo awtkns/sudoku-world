@@ -14,16 +14,16 @@ class VocabSudokuModel {
     private SparseArray<String> nativeWordsMap;
     private SparseArray<String> foreignWordsMap;
 
-    VocabSudokuModel(String[] nativeWords, String[] foreignWords, int[] puzzle, int[] solution, boolean[] initialCells, GameMode gameMode) {
+    VocabSudokuModel(String[] nativeWords, String[] foreignWords, int[] puzzle, int[] solution, boolean[] initialCells, GameMode mode) {
         model = new GameModel(3, puzzle, solution, initialCells);
         initializeWordMaps(nativeWords, foreignWords);
-        this.gameMode = gameMode;
+        gameMode = mode;
     }
 
-    VocabSudokuModel(String[] nativeWords, String[] foreignWords, GameMode gameMode) {
+    VocabSudokuModel(String[] nativeWords, String[] foreignWords, GameMode mode) {
         model = new GameModel(3);
         initializeWordMaps(nativeWords, foreignWords);
-        this.gameMode = gameMode;
+        gameMode = mode;
     }
 
     private void initializeWordMaps(String[] nativeWords, String[] foreignWords) {
@@ -55,12 +55,11 @@ class VocabSudokuModel {
             return String.valueOf(model.getCellValue(cellNumber));
         }
         else if (gameMode == GameMode.NATIVE) {
-            //Native mode
             nativeWordsMap.valueAt(model.getCellValue(cellNumber));
         }
 
-        //gameMode == GameMode.foreignMode
-        return foreignWordsMap.valueAt(model.getCellValue(cellNumber));
+        //else if (gameMode == GameMode.FOREIGN){
+        return foreignWordsMap.valueAt(model.getCellValue(cellNumber));}
     }
 
     void setCellString(int cellNumber, int value) {
