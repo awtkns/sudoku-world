@@ -1,6 +1,7 @@
 package com.sigma.sudokuworld;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -21,10 +22,8 @@ public class SudokuActivity extends AppCompatActivity {
 
     VocabSudokuModel mVocabGame;
     SudokuGridView mSudokuGridView;
-    LinearLayout mEditLayout;
-    TextView mTextInputView;
-    Button mClearButton;
-    Button mEnterButton;
+    Button[] sudokuButtons;
+    Button mClearCellButton;
     Button mCheckAnswerButton;
 
     @Override
@@ -57,20 +56,23 @@ public class SudokuActivity extends AppCompatActivity {
         mSudokuGridView = findViewById(R.id.sudokugrid_view);
         mSudokuGridView.setOnTouchListener(onSudokuGridTouchListener);
 
-        mEditLayout = findViewById(R.id.inputLayout);
-        mEditLayout.setVisibility(View.GONE);
 
-        mTextInputView = findViewById(R.id.textInputView);
+        //Initializing buttons
+        sudokuButtons = new Button[9];
+        for(int buttonNumber = 0; buttonNumber < 9; buttonNumber++)
+        {
+            sudokuButtons[buttonNumber] = findViewById(getResources().getIdentifier("button" + (buttonNumber+1), "id",
+                    this.getPackageName()));
+            String buttonText = mVocabGame.getMapValue(buttonNumber + 1);
+            sudokuButtons[buttonNumber].setText(buttonText);
+            sudokuButtons[buttonNumber].setOnClickListener(onButtonClickListener);
+        }
 
-        mClearButton = findViewById(R.id.clearButton);
-        mClearButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-        mClearButton.setOnClickListener(onClearButtonClickLister);
-
-        mEnterButton = findViewById(R.id.enterButton);
-        mEnterButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        mClearCellButton = findViewById(R.id.clearCellButton);
+        mClearCellButton.setOnClickListener(onButtonClickListener);
 
         mCheckAnswerButton = findViewById(R.id.checkAnswerButton);
-        mCheckAnswerButton.setOnClickListener(onCheckAnswerButtonClickLister);
+        mCheckAnswerButton.setOnClickListener(onCheckAnswerButtonClickListener);
 
         updateAllViewLabels();
     }
@@ -112,9 +114,7 @@ public class SudokuActivity extends AppCompatActivity {
 
                     //The the cell is locked (ei: not one where you can change the number)
                     if (mVocabGame.isInitialCell(cellNum)) {
-                        mEditLayout.setVisibility(View.GONE);           //Hide word input
                     } else {
-                        mEditLayout.setVisibility(View.VISIBLE);        //Show word input
                         mSudokuGridView.setHighlightedCell(cellNum);    //Set new highlighted cell
                     }
 
@@ -129,22 +129,60 @@ public class SudokuActivity extends AppCompatActivity {
         }
     };
 
-    View.OnClickListener onClearButtonClickLister = new View.OnClickListener() {
+    View.OnClickListener onButtonClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            mSudokuGridView.clearHighlightedCell();
-            mEditLayout.setVisibility(View.GONE);
+            int buttonValue = 0;
+            switch(v.getId())
+            {
+                case R.id.button1:
+                    buttonValue = 1;
+                    break;
+                case R.id.button2:
+                    buttonValue = 2;
+                    break;
+                case R.id.button3:
+                    buttonValue =3;
+                    break;
+                case R.id.button4:
+                    buttonValue =4;
+                    break;
+                case R.id.button5:
+                    buttonValue =5;
+                    break;
+                case R.id.button6:
+                    buttonValue =6;
+                    break;
+                case R.id.button7:
+                    buttonValue =7;
+                    break;
+                case R.id.button8:
+                    buttonValue =8;
+                    break;
+                case R.id.button9:
+                    buttonValue =9 ;
+                    break;
+                case R.id.clearCellButton:
+                    buttonValue = 0;
+                    break;
+
+            }
+            int cellNumber = mSudokuGridView.getHighlightedCell();
+            if (cellNumber == -1){ return; }
+
+            mVocabGame.setCellString(cellNumber, buttonValue);
+            mSudokuGridView.setCellLabel(cellNumber, mVocabGame.getCellString(cellNumber));
             mSudokuGridView.invalidate();
         }
     };
 
-    View.OnClickListener onCheckAnswerButtonClickLister = new View.OnClickListener() {
+
+    View.OnClickListener onCheckAnswerButtonClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             //Checks if the answers are right and displays the first wrong cell (if any)
             int potentialIndex = mVocabGame.checkGame();
             //Clear highlights / what cell is selected for input
-            mEditLayout.setVisibility(View.GONE);
             mSudokuGridView.clearHighlightedCell();
 
             //Case where answer is correct
