@@ -234,7 +234,8 @@ public class SudokuRobot {
             }
             return cellValues;
     }
-    public int[] returnSolutionValues() {
+
+    public int[] getSolutionValues() {
         return mSolutionValues;
     }
 }

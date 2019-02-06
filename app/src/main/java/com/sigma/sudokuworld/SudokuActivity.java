@@ -13,7 +13,7 @@ public class SudokuActivity extends AppCompatActivity {
 
     private final String PUZZLE_INTENT_KEY = "puzzle";
     private final String SOLUTION_INTENT_KEY = "solution";
-    private final String INITIAL_CELLS_INTENT_KEY = "solution";
+    private final String INITIAL_CELLS_INTENT_KEY = "initial";
     private final String FOREIGN_WORDS_INTENT_KEY = "foreign";
     private final String NATIVE_WORDS_INTENT_KEY = "native";
 

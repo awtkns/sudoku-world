@@ -36,11 +36,11 @@ class GameModel {
 
         //Setting initial values
         try {
-            cellValues = Arrays.copyOf(puzzle, puzzle.length);
-            solutionCellValues = Arrays.copyOf(solution, solution.length);
-            lockedCells = Arrays.copyOf(initialCells, initialCells.length);
+            cellValues = puzzle;
+            solutionCellValues = solution;
+            lockedCells = initialCells;
         } catch (NullPointerException e) {
-            Log.d("INIT", "GameModel: nullptr in game files\nMaking new puzzle");
+            e.printStackTrace();
             init();
         }
     }
@@ -58,19 +58,15 @@ class GameModel {
         //Grabbing initial values and solutions from the robot
         SudokuRobot sudokuRobot = new SudokuRobot(sudokuSubsectionSize);
 
-        int[] tmp = sudokuRobot.returnCellValues();
-        int[] initialValues = Arrays.copyOf(tmp, tmp.length);
-
-        tmp = sudokuRobot.returnSolutionValues();
-        solutionCellValues = Arrays.copyOf(tmp, tmp.length);
+        cellValues = sudokuRobot.returnCellValues();
+        solutionCellValues = sudokuRobot.getSolutionValues();
 
 
         //Setting up initial cells with values given from robot
         //Locks them in place if the value is not 0
-        if (initialValues.length == sudokuBoardSize) {
+        if (cellValues.length == sudokuBoardSize) {
             for (int i = 0; i < sudokuBoardSize; i++) {
-                if (initialValues[i] != 0) {
-                    cellValues[i] = initialValues[i];
+                if (cellValues[i] != 0) {
                     lockedCells[i] = true;
                 }
             }
