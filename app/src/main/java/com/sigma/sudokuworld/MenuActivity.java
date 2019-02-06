@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class MenuActivity extends AppCompatActivity {
 
-    private final int RESULT_CODE = 1;
+    private final int REQUEST_CODE = 0;
     private GameDifficulty gameDifficulty = GameDifficulty.EASY;
     private GameMode gameMode = GameMode.NUMBERS;
 
@@ -45,7 +45,7 @@ public class MenuActivity extends AppCompatActivity {
                 intent.putExtra("native", readWordlistFromCSV(WordType.NATIVE));
                 intent.putExtra("foreign", readWordlistFromCSV(WordType.FOREIGN));
                 intent.putExtra("puzzle", readPuzzleDataFromCSV());
-                intent.putExtra("mode", GameMode.NUMBERS);
+                intent.putExtra("mode", gameMode);
                 startActivity(intent);
             }
         });
@@ -55,7 +55,7 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MenuActivity.this, SettingsActivity.class);
-                startActivityForResult(intent, RESULT_CODE);
+                startActivityForResult(intent, REQUEST_CODE);
             }
         });
     }
@@ -64,8 +64,8 @@ public class MenuActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == RESULT_CODE) {
-            if (requestCode == RESULT_OK) {
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
                 gameDifficulty = (GameDifficulty) data.getSerializableExtra(SettingsActivity.DIFFICULTY_INTENT_KEY);
                 gameMode = (GameMode) data.getSerializableExtra(SettingsActivity.GAME_MODE_INTENT_KEY);
             }

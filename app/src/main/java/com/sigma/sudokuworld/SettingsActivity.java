@@ -1,5 +1,6 @@
 package com.sigma.sudokuworld;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -51,9 +52,10 @@ public class SettingsActivity extends AppCompatActivity {
             gameDifficulty = GameDifficulty.EASY;
         }
 
-        Intent intent = new Intent();
+        Intent intent = new Intent(SettingsActivity.this, MenuActivity.class);
         intent.putExtra(GAME_MODE_INTENT_KEY, gameMode);
         intent.putExtra(DIFFICULTY_INTENT_KEY, gameDifficulty);
-        setResult(RESULT_OK, intent);
+        setResult(Activity.RESULT_OK, intent);
+        finish();
     }
 }
