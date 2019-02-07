@@ -45,8 +45,8 @@ public class MenuActivity extends AppCompatActivity {
                 Intent intent = new Intent(MenuActivity.this, SudokuActivity.class);
 
                 //Adding information for the sudoku activity
-                intent.putExtra(KeyConstants.NATIVE_WORDS_KEY, readWordlistFromCSV(WordType.NATIVE));
-                intent.putExtra(KeyConstants.FOREIGN_WORDS_KEY, readWordlistFromCSV(WordType.FOREIGN));
+                intent.putExtra(KeyConstants.NATIVE_WORDS_KEY, readWordListFromCSV(WordType.NATIVE));
+                intent.putExtra(KeyConstants.FOREIGN_WORDS_KEY, readWordListFromCSV(WordType.FOREIGN));
                 intent.putExtra(KeyConstants.MODE_KEY, gameMode);
                 intent.putExtra(KeyConstants.DIFFICULTY_KEY, gameDifficulty);
                 intent.putExtra(KeyConstants.CONTINUE_KEY, false);
@@ -79,18 +79,6 @@ public class MenuActivity extends AppCompatActivity {
                 startActivityForResult(intent, REQUEST_CODE);
             }
         });
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        try {
-            Bundle data = PersistenceService.loadGameData(this);
-            Log.d("Saved data", "onStart: " + data.toString());
-        } catch (Exception e) {
-            Log.d("Saved data", "onStart: no saved data");
-        }
     }
 
     @Override
@@ -150,7 +138,7 @@ public class MenuActivity extends AppCompatActivity {
      * @param wordType get the native or foreign list
      * @return string array of words in either the native or foreign lang
      */
-    private String[] readWordlistFromCSV(WordType wordType) {
+    private String[] readWordListFromCSV(WordType wordType) {
         InputStream inputStream = getResources().openRawResource(R.raw.wordlist);
         InputStreamReader inputStreamReader = new InputStreamReader(inputStream, Charset.forName("UTF-8"));
         BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
