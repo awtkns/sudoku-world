@@ -71,8 +71,10 @@ public class SudokuGridView extends View {
         try {
             mGridPaint.setStrokeWidth(a.getDimension(R.styleable.SudokuGridView_gridPaintStrokeWidth, 5));
             mGridPaint.setColor(a.getColor(R.styleable.SudokuGridView_gridPaintColor, Color.BLACK));
+            mGridPaint.setAlpha(75);
             mBoldPaint.setStrokeWidth(a.getDimension(R.styleable.SudokuGridView_boldGridPaintStrokeWidth, 10));
             mBoldPaint.setColor(a.getColor(R.styleable.SudokuGridView_boldGridPaintColor, Color.BLACK));
+            mBoldPaint.setAlpha(125);
             mCellFilledPaint.setColor(a.getColor(R.styleable.SudokuGridView_highlightedCellColour, Color.YELLOW));
             mLockedCellFillPaint.setColor(a.getColor(R.styleable.SudokuGridView_lockedCellColour, Color.GRAY));
             mIncorrectCellFillPaint.setColor(a.getColor(R.styleable.SudokuGridView_incorrectCellColour, Color.RED));
@@ -145,6 +147,7 @@ public class SudokuGridView extends View {
 
         drawCellFill(canvas);
         drawGrid(canvas);
+        highlightNeighbours(canvas);
     }
 
     /**
@@ -261,8 +264,8 @@ public class SudokuGridView extends View {
 
 
         }
-        highlightNeighbours(canvas);
     }
+
     private void highlightNeighbours(Canvas canvas){
         //No cell is highlighted
         if(mHighlightedCell == -1 ) {return;}
@@ -321,7 +324,7 @@ public class SudokuGridView extends View {
                 mYOrigin + ((cy + 1) * mCellSize)
         );
         Paint paint = new Paint(mGridPaint);
-        paint.setAlpha(15);
+        paint.setAlpha(17);
         canvas.drawRect(cellRect, paint);
     }
 
