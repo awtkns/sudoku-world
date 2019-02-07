@@ -1,4 +1,5 @@
 package com.sigma.sudokuworld;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.lang.Math;
 
@@ -41,7 +42,7 @@ public class SudokuRobot {
         clearBoard();
         solveBoard();
         mSolutionValues = returnCellValues();
-        generatePlayableBoard(40);
+        generatePlayableBoard(2);
     }
 
 
@@ -167,7 +168,7 @@ public class SudokuRobot {
 
         //Randomly shuffle cell list
         for (int i = 0; i < mBoardSize; i++) {
-            int randomIndex = ThreadLocalRandom.current().nextInt(0, mBoardSize);
+            int randomIndex = randomInt(mBoardSize);
             SudokuCell tempCell = cellList[randomIndex];
             cellList[randomIndex] = cellList[i];
             cellList[i] = tempCell;
@@ -235,5 +236,10 @@ public class SudokuRobot {
 
     public int[] getSolutionValues() {
         return mSolutionValues;
+    }
+
+    static int randomInt(int max){
+        Random random = new Random();
+        return random.nextInt(max);
     }
 }
