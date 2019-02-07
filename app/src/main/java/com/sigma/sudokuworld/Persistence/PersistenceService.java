@@ -1,16 +1,19 @@
-package com.sigma.sudokuworld;
+package com.sigma.sudokuworld.Persistence;
 
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import com.sigma.sudokuworld.VocabGame.GameDifficulty;
+import com.sigma.sudokuworld.VocabGame.GameMode;
+
 import java.util.Map;
 
-import static com.sigma.sudokuworld.KeyConstants.*;
+import static com.sigma.sudokuworld.Persistence.KeyConstants.*;
 
 
-abstract class PersistenceService {
+public abstract class PersistenceService {
 
     //Private file names for what xml file to write to
     private static final String SAVE_GAME_FILE = "save";
@@ -18,7 +21,7 @@ abstract class PersistenceService {
 
     //Private array size keys
     private static final String WORD_LIST_SIZE = "word_size";
-    private static final String SUDOKU_SIZE = "sudoku_size";
+    private static final String SUDOKU_SIZE_KEY = "sudoku_size";
 
     //Private index keys for read / writing arrays to xml
     private static final String VAlUES_KEY_PREFIX = "valueCell";
@@ -27,7 +30,7 @@ abstract class PersistenceService {
     private static final String NATIVE_KEY_PREFIX = "nativeWord";
     private static final String FOREIGN_KEY_PREFIX = "foreignWord";
 
-    static void saveGameData(Context context, Bundle data) {
+    public static void saveGameData(Context context, Bundle data) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(SAVE_GAME_FILE, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
@@ -68,7 +71,7 @@ abstract class PersistenceService {
         editor.apply();
     }
 
-    static Bundle loadGameData(Context context) throws NullPointerException {
+    public static Bundle loadGameData(Context context) throws NullPointerException {
         SharedPreferences sharedPreferences = context.getSharedPreferences(SAVE_GAME_FILE, Context.MODE_PRIVATE);
         Bundle data = new Bundle();
 

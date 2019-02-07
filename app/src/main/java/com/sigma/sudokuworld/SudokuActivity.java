@@ -7,8 +7,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
-import static com.sigma.sudokuworld.KeyConstants.*;
+import static com.sigma.sudokuworld.Persistence.KeyConstants.*;
 import android.widget.Toast;
+
+import com.sigma.sudokuworld.Persistence.PersistenceService;
+import com.sigma.sudokuworld.VocabGame.GameDifficulty;
+import com.sigma.sudokuworld.VocabGame.GameMode;
+import com.sigma.sudokuworld.VocabGame.VocabSudokuModel;
 
 public class SudokuActivity extends AppCompatActivity {
 
@@ -147,10 +152,9 @@ public class SudokuActivity extends AppCompatActivity {
                             mSudokuGridView.clearIncorrectCell();
                         }
 
-                        //The the cell is locked (ei: not one where you can change the number)
-                        if (mVocabGame.isInitialCell(cellNum)) {
-                        } else {
-                            mSudokuGridView.setHighlightedCell(cellNum);    //Set new highlighted cell
+                        //Set new highlighted cell if its not a locked cell
+                        if (!mVocabGame.isLockedCell(cellNum)) {
+                            mSudokuGridView.setHighlightedCell(cellNum);
                         }
 
                         //Force redraw view
@@ -252,7 +256,7 @@ public class SudokuActivity extends AppCompatActivity {
         for (int cellNumber = 0; cellNumber < 81; cellNumber++) {
             String label = mVocabGame.getCellString(cellNumber);
 
-            if (mVocabGame.isInitialCell(cellNumber)) {
+            if (mVocabGame.isLockedCell(cellNumber)) {
                 label = SudokuGridView.LOCKED_FLAG + label;
             }
 

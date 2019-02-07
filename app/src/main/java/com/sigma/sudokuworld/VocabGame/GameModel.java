@@ -1,6 +1,4 @@
-package com.sigma.sudokuworld;
-
-import android.util.Log;
+package com.sigma.sudokuworld.VocabGame;
 
 import java.util.Arrays;
 
@@ -81,12 +79,8 @@ class GameModel {
     int getCellValue(int cellNumber) {
         return cellValues[cellNumber];
     }
-    public boolean isCellCorrect(int cell){
-        if (solutionCellValues[cell] == cellValues[cell]){
-            return true;
-        }
-
-        else {return false;}
+    boolean isCellCorrect(int cell){
+        return solutionCellValues[cell] == cellValues[cell];
     }
     void setCellValue(int cellNumber, int value) {
         cellValues[cellNumber] = value;
@@ -104,7 +98,7 @@ class GameModel {
         return lockedCells;
     }
 
-    public GameDifficulty getGameDifficulty() {
+    GameDifficulty getGameDifficulty() {
         return gameDifficulty;
     }
 

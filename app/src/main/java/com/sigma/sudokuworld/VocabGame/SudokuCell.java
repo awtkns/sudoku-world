@@ -1,4 +1,4 @@
-package com.sigma.sudokuworld;
+package com.sigma.sudokuworld.VocabGame;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -7,7 +7,7 @@ import java.util.Random;
 //It holds the cell value and the potential candidates it has for its values (When attempting to solve)
 //While a cell is locked, its value cannot be changed
 //Cell may hold a restricted value. This is for checking what nodes to delete (-1 if no restriction)
-public class SudokuCell {
+class SudokuCell {
     private int mCurrValue;  //0 if no value is placed
     private int mSudokuSubsectionSize;
     private int mRestrictedValue; //-1 if no restriction placed
@@ -17,12 +17,12 @@ public class SudokuCell {
 
 
     //Constructor
-    public SudokuCell(int sudokuSubsectionSize) {
+    SudokuCell(int sudokuSubsectionSize) {
         mCurrValue = 0;
         mLockValue = false;
         mRestrictedValue = -1;
         mSudokuSubsectionSize = sudokuSubsectionSize;
-        mCandidatesList = new ArrayList<Integer>();
+        mCandidatesList = new ArrayList<>();
         resetCandidateList();
     }
 
@@ -38,7 +38,7 @@ public class SudokuCell {
         }
 
     }
-    public boolean pickCandidate() {
+    boolean pickCandidate() {
         //Randomly gets a possible candidate and removes it from the candidate list
         //If there are no possible candidates it returns 0
 
@@ -58,42 +58,42 @@ public class SudokuCell {
 
         return true;
     }
-    public void removeCandidate(int value) {
+    void removeCandidate(int value) {
         mCandidatesList.remove((Integer) value);
     }
-    public void resetCandidateList() {
+    void resetCandidateList() {
         //Clears the candidate list and sets it to the base candidate list
         mCandidatesList.clear();
         createBaseCandidateList();
     }
 
 
-    public boolean isLocked() {
+    boolean isLocked() {
         return mLockValue;
     }
-    public void changeLockValue(boolean lockValue) {
+    void changeLockValue(boolean lockValue) {
         mLockValue = lockValue;
     }
 
 
-    public void setRestrictedValue(int restrictedValue) {
+    void setRestrictedValue(int restrictedValue) {
         mRestrictedValue = restrictedValue;
     }
 
 
-    public void clearCurrValue() {
+    void clearCurrValue() {
         mCurrValue = 0;
         changeLockValue(false);
     }
-    public int getCurrValue() {
+    int getCurrValue() {
         return mCurrValue;
     }
-    public void changeCurrValue(int value) {
+    void changeCurrValue(int value) {
         mCurrValue = value;
         mLockValue = true;
     }
 
-    static int randomInt(int max){
+    private static int randomInt(int max){
         Random random = new Random();
         return random.nextInt(max);
     }

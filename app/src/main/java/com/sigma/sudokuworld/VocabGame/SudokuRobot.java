@@ -1,12 +1,11 @@
-package com.sigma.sudokuworld;
+package com.sigma.sudokuworld.VocabGame;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 import java.lang.Math;
 
 
 //This object takes in the subsection size of a Sudoku and can solve boards, generate valid sudoku boards
 //and check whether or not a given solution is the correct solution
-public class SudokuRobot {
+class SudokuRobot {
     private SudokuCell[][] mSudokuCells;
     private int mSudokuSubsectionSize;
     private int mBoardLength;
@@ -15,7 +14,7 @@ public class SudokuRobot {
 
 
     //Constructor
-    public SudokuRobot(int sudokuSubsectionSize, GameDifficulty difficulty) {
+    SudokuRobot(int sudokuSubsectionSize, GameDifficulty difficulty) {
         mSudokuSubsectionSize = sudokuSubsectionSize;
         mBoardLength = sudokuSubsectionSize * sudokuSubsectionSize;
         mBoardSize = (mBoardLength) * (mBoardLength);
@@ -38,7 +37,7 @@ public class SudokuRobot {
     }
 
     
-    public void generateBoard(GameDifficulty difficulty) {
+    private void generateBoard(GameDifficulty difficulty) {
         clearBoard();
         solveBoard();
         mSolutionValues = returnCellValues();
@@ -61,7 +60,7 @@ public class SudokuRobot {
     }
 
 
-    public void clearBoard() {
+    private void clearBoard() {
         //Reset solution array
         for (int i = 0; i < mBoardLength; i++){
             mSolutionValues[i] = 0;
@@ -100,7 +99,7 @@ public class SudokuRobot {
     }
 
 
-    public boolean solveBoard() {
+    private boolean solveBoard() {
         //For each cell, check what values it can take and make it take a random value
         //If it has no possible values, go to the previous cell and change its value and move on
         //Keep backtracking if all cells do not have any possible values
@@ -161,7 +160,7 @@ public class SudokuRobot {
     }
 
 
-    public void generatePlayableBoard(int nodesToCheck) {
+    private void generatePlayableBoard(int nodesToCheck) {
         //Keeps track of how loops have been iterated and what cells are emptied.
         //Works by emptying a node and then checking if the solution is unique
         //If a solution can still be generated with that node not being able to take its previous
@@ -226,7 +225,8 @@ public class SudokuRobot {
             deletedNodeList[i].resetCandidateList();
         }
     }
-    private boolean isCellVisited(int size, SudokuCell[] visitedCellList, SudokuCell cell) {
+
+    boolean isCellVisited(int size, SudokuCell[] visitedCellList, SudokuCell cell) {
         for (int i = 0; i < size; i++) {
             if (visitedCellList[i] == cell) {return true;}
         }
@@ -235,7 +235,7 @@ public class SudokuRobot {
 
 
     //Returns a one dimensional array containing cell values at their respective index
-    public int[] returnCellValues() {
+    int[] returnCellValues() {
             int[] cellValues = new int[mBoardSize];
             int cellValueIndex = 0;
             //Loops through and grabs the value of each element in the 2D Sudoku cell array
@@ -249,11 +249,11 @@ public class SudokuRobot {
             return cellValues;
     }
 
-    public int[] getSolutionValues() {
+    int[] getSolutionValues() {
         return mSolutionValues;
     }
 
-    static int randomInt(int max){
+    private static int randomInt(int max){
         Random random = new Random();
         return random.nextInt(max);
     }

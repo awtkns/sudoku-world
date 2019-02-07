@@ -7,6 +7,10 @@ import android.os.Bundle;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 
+import com.sigma.sudokuworld.Persistence.KeyConstants;
+import com.sigma.sudokuworld.VocabGame.GameDifficulty;
+import com.sigma.sudokuworld.VocabGame.GameMode;
+
 public class SettingsActivity extends AppCompatActivity {
 
     RadioGroup mGameModeRadioGroup;

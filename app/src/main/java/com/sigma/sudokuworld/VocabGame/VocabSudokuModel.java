@@ -1,11 +1,11 @@
-package com.sigma.sudokuworld;
+package com.sigma.sudokuworld.VocabGame;
 
 import android.util.SparseArray;
 
 /**
  * This class acts as an adapter allowing to the sudoku game to be played with words instead of numbers
  */
-class VocabSudokuModel {
+public class VocabSudokuModel {
 
     private GameModel model;
     private GameMode gameMode;
@@ -14,13 +14,13 @@ class VocabSudokuModel {
     private SparseArray<String> nativeWordsMap;
     private SparseArray<String> foreignWordsMap;
 
-    VocabSudokuModel(String[] nativeWords, String[] foreignWords, int[] puzzle, int[] solution, boolean[] initialCells, GameMode gameMode, GameDifficulty difficulty) {
+    public VocabSudokuModel(String[] nativeWords, String[] foreignWords, int[] puzzle, int[] solution, boolean[] initialCells, GameMode gameMode, GameDifficulty difficulty) {
         model = new GameModel(3, puzzle, solution, initialCells, difficulty);
         initializeWordMaps(nativeWords, foreignWords);
         this.gameMode = gameMode;
     }
 
-    VocabSudokuModel(String[] nativeWords, String[] foreignWords, GameMode gameMode, GameDifficulty difficulty) {
+    public VocabSudokuModel(String[] nativeWords, String[] foreignWords, GameMode gameMode, GameDifficulty difficulty) {
         model = new GameModel(3, difficulty);
         initializeWordMaps(nativeWords, foreignWords);
         this.gameMode = gameMode;
@@ -43,7 +43,7 @@ class VocabSudokuModel {
         }
     }
 
-    String getCellString(int cellNumber) {
+    public String getCellString(int cellNumber) {
         //Normal Mode
         if (gameMode == GameMode.NUMBERS){
             //Makes the cell blank if its value is 0
@@ -63,7 +63,7 @@ class VocabSudokuModel {
         return foreignWordsMap.valueAt(model.getCellValue(cellNumber));
     }
 
-    void setCellString(int cellNumber, int value) {
+    public void setCellString(int cellNumber, int value) {
         model.setCellValue(cellNumber, value);
     }
 
@@ -86,31 +86,31 @@ class VocabSudokuModel {
         return model.isCellCorrect(cell);
     }
 
-    String[] getForeignWords() {
+    public String[] getForeignWords() {
         return foreignWords;
     }
 
-    String[] getNativeWords() {
+    public String[] getNativeWords() {
         return nativeWords;
     }
 
-    int[] getCellValues() {
+    public int[] getCellValues() {
         return model.getAllCellValues();
     }
 
-    int[] getSolutionValues() {
+    public int[] getSolutionValues() {
         return model.getSolutionValues();
     }
 
-    boolean[] getLockedCells() {
+    public boolean[] getLockedCells() {
         return model.getAllInitialCells();
     }
 
-    GameMode getGameMode() {
+    public GameMode getGameMode() {
         return gameMode;
     }
 
-    GameDifficulty getGameDifficulty(){
+    public GameDifficulty getGameDifficulty(){
         return model.getGameDifficulty();
     }
 
@@ -119,11 +119,11 @@ class VocabSudokuModel {
     }
 
     //Returns the index of the first incorrect cell or -1 if the board is solved
-    int checkGame(){
+    public int checkGame(){
         return model.isGameWon();
     }
 
-    boolean isInitialCell(int cellNumber) {
+    public boolean isLockedCell(int cellNumber) {
         return model.isInitialCell(cellNumber);
     }
 }
