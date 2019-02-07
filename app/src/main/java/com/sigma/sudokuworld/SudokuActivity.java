@@ -177,9 +177,18 @@ public class SudokuActivity extends AppCompatActivity {
             mVocabGame.setCellString(cellNumber, buttonValue);
             mSudokuGridView.setCellLabel(cellNumber, mVocabGame.getButtonString(buttonValue));
 
-            //Clears selected cells and redraws
-            mSudokuGridView.clearHighlightedCell();
-            mSudokuGridView.clearIncorrectCell();
+            //Check if the placed cell is right or if it is cleared
+            if (mVocabGame.isCellCorrect(cellNumber) || buttonValue == 0) {
+                //Clears selected cell
+                mSudokuGridView.clearHighlightedCell();
+                mSudokuGridView.clearIncorrectCell();
+            }
+            //Set cell to incorrect and allow player to input other values
+            else {
+                mSudokuGridView.setIncorrectCell(cellNumber);
+            }
+
+            //Redraw
             mSudokuGridView.invalidate();
         }
     };
