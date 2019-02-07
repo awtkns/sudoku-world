@@ -31,4 +31,7 @@ final class KeyConstants {
     static final String LOCKED_CELLS_KEY = "locked";
     static final String NATIVE_WORDS_KEY = "native";
     static final String FOREIGN_WORDS_KEY = "foreign";
+
+    //Public index key for continue game
+    static final String CONTINUE_KEY = "continue";
 }

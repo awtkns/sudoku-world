@@ -49,6 +49,7 @@ public class MenuActivity extends AppCompatActivity {
                 intent.putExtra(KeyConstants.FOREIGN_WORDS_KEY, readWordlistFromCSV(WordType.FOREIGN));
                 intent.putExtra(KeyConstants.MODE_KEY, gameMode);
                 intent.putExtra(KeyConstants.DIFFICULTY_KEY, gameDifficulty);
+                intent.putExtra(KeyConstants.CONTINUE_KEY, false);
                 startActivity(intent);
             }
         });
@@ -59,9 +60,14 @@ public class MenuActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MenuActivity.this, SudokuActivity.class);
 
-                //Putting game data bundle in intent
-                intent.putExtras(PersistenceService.loadGameData(MenuActivity.this));
-                startActivity(intent);
+                try {
+                    intent.putExtras(PersistenceService.loadGameData(MenuActivity.this));
+                    intent.putExtra(KeyConstants.CONTINUE_KEY, true);
+                    Log.d("Game Data", "onClick: starting game with data");
+                    startActivity(intent);
+                } catch (Exception e) {
+                    Log.d("Game Data", "onClick: no game data");
+                }
             }
         });
 

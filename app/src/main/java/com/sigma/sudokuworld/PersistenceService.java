@@ -10,7 +10,7 @@ import java.util.Map;
 import static com.sigma.sudokuworld.KeyConstants.*;
 
 
-public abstract class PersistenceService  {
+abstract class PersistenceService {
 
     //Private file names for what xml file to write to
     private static final String SAVE_GAME_FILE = "save";

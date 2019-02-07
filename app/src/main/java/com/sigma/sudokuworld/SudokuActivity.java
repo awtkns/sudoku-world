@@ -36,12 +36,29 @@ public class SudokuActivity extends AppCompatActivity {
         } else {
             //Unpacking information from intent
             Intent i = getIntent();
-            mVocabGame = new VocabSudokuModel(
-                    i.getStringArrayExtra(NATIVE_WORDS_KEY),
-                    i.getStringArrayExtra(FOREIGN_WORDS_KEY),
-                    (GameMode) i.getSerializableExtra(MODE_KEY),
-                    (GameDifficulty) i.getSerializableExtra(DIFFICULTY_KEY)
-            );
+
+            if (i.getBooleanExtra(CONTINUE_KEY, false)) {
+                //New game
+
+                mVocabGame = new VocabSudokuModel(
+                        i.getStringArrayExtra(NATIVE_WORDS_KEY),
+                        i.getStringArrayExtra(FOREIGN_WORDS_KEY),
+                        i.getIntArrayExtra(CELL_VALUES_KEY),
+                        i.getIntArrayExtra(SOLUTION_VALUES_KEY),
+                        i.getBooleanArrayExtra(LOCKED_CELLS_KEY),
+                        (GameMode) i.getSerializableExtra(MODE_KEY),
+                        (GameDifficulty) i.getSerializableExtra(DIFFICULTY_KEY)
+                );
+            } else {
+                //Save game
+
+                mVocabGame = new VocabSudokuModel(
+                        i.getStringArrayExtra(NATIVE_WORDS_KEY),
+                        i.getStringArrayExtra(FOREIGN_WORDS_KEY),
+                        (GameMode) i.getSerializableExtra(MODE_KEY),
+                        (GameDifficulty) i.getSerializableExtra(DIFFICULTY_KEY)
+                );
+            }
         }
 
 
@@ -79,30 +96,25 @@ public class SudokuActivity extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+
         //Save the current state of the Sudoku board
-        outState.putSerializable(DIFFICULTY_KEY, mVocabGame.getGameDifficulty());
-        outState.putStringArray(NATIVE_WORDS_KEY, mVocabGame.getNativeWords());
-        outState.putStringArray(FOREIGN_WORDS_KEY, mVocabGame.getForeignWords());
-        outState.putIntArray(CELL_VALUES_KEY, mVocabGame.getCellValues());
-        outState.putIntArray(SOLUTION_VALUES_KEY, mVocabGame.getSolutionValues());
-        outState.putBooleanArray(LOCKED_CELLS_KEY, mVocabGame.getLockedCells());
-        outState.putSerializable(MODE_KEY, mVocabGame.getGameMode());
+        makeSaveBundle(outState);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-
         Bundle data = new Bundle();
-        data.putSerializable(DIFFICULTY_KEY, mVocabGame.getGameDifficulty());
-        data.putSerializable(MODE_KEY, mVocabGame.getGameMode());
-        data.putInt(SUDOKU_SIZE_KEY, 81);
-        data.putIntArray(CELL_VALUES_KEY, mVocabGame.getCellValues());
-        data.putIntArray(SOLUTION_VALUES_KEY, mVocabGame.getSolutionValues());
-        data.putBooleanArray(LOCKED_CELLS_KEY, mVocabGame.getLockedCells());
-        data.putStringArray(NATIVE_WORDS_KEY, mVocabGame.getNativeWords());
-        data.putStringArray(FOREIGN_WORDS_KEY, mVocabGame.getForeignWords());
+        makeSaveBundle(data);
+
+        //Saves data to file
         PersistenceService.saveGameData(this, data);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 
     //When sudoku grid is touched
@@ -226,5 +238,20 @@ public class SudokuActivity extends AppCompatActivity {
         }
 
         mSudokuGridView.invalidate();
+    }
+
+    /**
+     * Bundles all information needed to save the game.
+     * Info on what needs to be in the "save" bundle can be found in KeyConstants
+     * @return game save bundle
+     */
+    private void makeSaveBundle(Bundle data) {
+        data.putSerializable(DIFFICULTY_KEY, mVocabGame.getGameDifficulty());
+        data.putSerializable(MODE_KEY, mVocabGame.getGameMode());
+        data.putIntArray(CELL_VALUES_KEY, mVocabGame.getCellValues());
+        data.putIntArray(SOLUTION_VALUES_KEY, mVocabGame.getSolutionValues());
+        data.putBooleanArray(LOCKED_CELLS_KEY, mVocabGame.getLockedCells());
+        data.putStringArray(NATIVE_WORDS_KEY, mVocabGame.getNativeWords());
+        data.putStringArray(FOREIGN_WORDS_KEY, mVocabGame.getForeignWords());
     }
 }
