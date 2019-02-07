@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class MenuActivity extends AppCompatActivity {
 
-    private final int REQUEST_CODE = 0;
+    private final int REQUEST_CODE = 1;
     private GameDifficulty gameDifficulty = GameDifficulty.EASY;
     private GameMode gameMode = GameMode.NUMBERS;
 
@@ -59,10 +59,9 @@ public class MenuActivity extends AppCompatActivity {
                 startActivityForResult(intent, REQUEST_CODE);
             }
         });
-    }
 
-    @Override
-    public void onBackPressed() {
+        Bundle data = PersistenceService.loadGameData(this);
+        mPlayButton.setText(Integer.toString(data.getInt(PersistenceService.SUDOKU_SIZE_KEY)));
     }
 
     @Override
