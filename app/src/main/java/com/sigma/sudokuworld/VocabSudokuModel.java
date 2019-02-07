@@ -85,15 +85,15 @@ class VocabSudokuModel {
         return model.isCellCorrect(cell);
     }
 
-    String[] getAllForeignWords() {
+    String[] getForeignWords() {
         return foreignWords;
     }
 
-    String[] getAllNativeWords() {
+    String[] getNativeWords() {
         return nativeWords;
     }
 
-    int[] getAllCellValues() {
+    int[] getCellValues() {
         return model.getAllCellValues();
     }
 
@@ -101,7 +101,7 @@ class VocabSudokuModel {
         return model.getSolutionValues();
     }
 
-    boolean[] getAllIntialCells() {
+    boolean[] getLockedCells() {
         return model.getAllInitialCells();
     }
 

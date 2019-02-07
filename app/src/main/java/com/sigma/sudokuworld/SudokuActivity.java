@@ -1,19 +1,11 @@
 package com.sigma.sudokuworld;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 public class SudokuActivity extends AppCompatActivity {
 
@@ -94,11 +86,11 @@ public class SudokuActivity extends AppCompatActivity {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         //Save the current state of the Sudoku board
-        outState.putStringArray(NATIVE_WORDS_INTENT_KEY, mVocabGame.getAllNativeWords());
-        outState.putStringArray(FOREIGN_WORDS_INTENT_KEY, mVocabGame.getAllForeignWords());
-        outState.putIntArray(PUZZLE_INTENT_KEY, mVocabGame.getAllCellValues());
+        outState.putStringArray(NATIVE_WORDS_INTENT_KEY, mVocabGame.getNativeWords());
+        outState.putStringArray(FOREIGN_WORDS_INTENT_KEY, mVocabGame.getForeignWords());
+        outState.putIntArray(PUZZLE_INTENT_KEY, mVocabGame.getCellValues());
         outState.putIntArray(SOLUTION_INTENT_KEY, mVocabGame.getSolutionValues());
-        outState.putBooleanArray(INITIAL_CELLS_INTENT_KEY, mVocabGame.getAllIntialCells());
+        outState.putBooleanArray(INITIAL_CELLS_INTENT_KEY, mVocabGame.getLockedCells());
         outState.putSerializable(GAME_MODE_INTENT_KEY, mVocabGame.getGameMode());
     }
 
@@ -106,10 +98,14 @@ public class SudokuActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
 
-        Bundle saveData = new Bundle();
-        saveData.putInt(PersistenceService.SUDOKU_SIZE_KEY, 81);
-        saveData.putIntArray(PersistenceService.CELL_VALUES_KEY, mVocabGame.getAllCellValues());
-        PersistenceService.saveGameData(this, saveData);
+        Bundle data = new Bundle();
+        data.putInt(PersistenceService.SUDOKU_SIZE_KEY, 81);
+        data.putIntArray(PersistenceService.CELL_VALUES_KEY, mVocabGame.getCellValues());
+        data.putIntArray(PersistenceService.SOLUTION_VALUES_KEY, mVocabGame.getSolutionValues());
+        data.putBooleanArray(PersistenceService.LOCKED_CELLS_KEY, mVocabGame.getLockedCells());
+        data.putStringArray(PersistenceService.NATIVE_WORDLIST_KEY, mVocabGame.getNativeWords());
+        data.putStringArray(PersistenceService.FOREIGN_WORDLIST_KEY, mVocabGame.getForeignWords());
+        PersistenceService.saveGameData(this, data);
     }
 
     //When sudoku grid is touched
