@@ -124,6 +124,8 @@ public class SudokuActivity extends AppCompatActivity {
         public boolean onTouch(View v, MotionEvent event) {
             boolean wasEventHandled = false;
             int eventAction = event.getAction();
+
+            //Through looking at every case, we can move the highlight to where our finger moves to
             switch (eventAction) {
                 case MotionEvent.ACTION_DOWN:
                 case MotionEvent.ACTION_MOVE:
