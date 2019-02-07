@@ -1,7 +1,7 @@
 package com.sigma.sudokuworld;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.Random;
 
 //This is the object for each Sudoku cell
 //It holds the cell value and the potential candidates it has for its values (When attempting to solve)
@@ -48,7 +48,7 @@ public class SudokuCell {
             return false;
 
         //Candidates exist so a random index between 0 and MAX is selected
-        int randomIndex = ThreadLocalRandom.current().nextInt(0, mCandidatesList.size());
+        int randomIndex = randomInt(mCandidatesList.size());
         mCurrValue = mCandidatesList.get(randomIndex);
         mCandidatesList.remove(randomIndex);
 
@@ -91,5 +91,10 @@ public class SudokuCell {
     public void changeCurrValue(int value) {
         mCurrValue = value;
         mLockValue = true;
+    }
+
+    static int randomInt(int max){
+        Random random = new Random();
+        return random.nextInt(max);
     }
 }
