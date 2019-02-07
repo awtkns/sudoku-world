@@ -123,35 +123,39 @@ public class SudokuActivity extends AppCompatActivity {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             boolean wasEventHandled = false;
+            int eventAction = event.getAction();
+            switch (eventAction) {
+                case MotionEvent.ACTION_DOWN:
+                case MotionEvent.ACTION_MOVE:
+                case MotionEvent.ACTION_UP:
+                    int x = (int) event.getX();
+                    int y = (int) event.getY();
 
-            if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                int x = (int) event.getX();
-                int y = (int) event.getY();
+                    //If touch in the bound of the grid
+                    if (mSudokuGridView.getGridBounds().contains(x, y)) {
 
-                //If touch in the bound of the grid
-                if (mSudokuGridView.getGridBounds().contains(x, y)) {
+                        //Clear previous highlighted cell
+                        mSudokuGridView.clearHighlightedCell();
 
-                    //Clear previous highlighted cell
-                    mSudokuGridView.clearHighlightedCell();
+                        //Cell that was touched
+                        int cellNum = mSudokuGridView.getCellNumberFromCoordinates(x, y);
 
-                    //Cell that was touched
-                    int cellNum = mSudokuGridView.getCellNumberFromCoordinates(x, y);
+                        //If we have selected the incorrect cell, un highlight it
+                        if (cellNum == mSudokuGridView.getIncorrectCell()) {
+                            mSudokuGridView.clearIncorrectCell();
+                        }
 
-                    //If we have selected the incorrect cell, un highlight it
-                    if (cellNum == mSudokuGridView.getIncorrectCell())
-                    {mSudokuGridView.clearIncorrectCell(); }
+                        //The the cell is locked (ei: not one where you can change the number)
+                        if (mVocabGame.isInitialCell(cellNum)) {
+                        } else {
+                            mSudokuGridView.setHighlightedCell(cellNum);    //Set new highlighted cell
+                        }
 
-                    //The the cell is locked (ei: not one where you can change the number)
-                    if (mVocabGame.isInitialCell(cellNum)) {
-                    } else {
-                        mSudokuGridView.setHighlightedCell(cellNum);    //Set new highlighted cell
+                        //Force redraw view
+                        mSudokuGridView.invalidate();
+                        mSudokuGridView.performClick();
+                        wasEventHandled = true;
                     }
-
-                    //Force redraw view
-                    mSudokuGridView.invalidate();
-                    mSudokuGridView.performClick();
-                    wasEventHandled = true;
-                }
             }
 
             return wasEventHandled;
