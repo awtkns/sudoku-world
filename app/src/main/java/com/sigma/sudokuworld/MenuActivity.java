@@ -8,15 +8,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+
+
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -25,10 +25,11 @@ public class MenuActivity extends AppCompatActivity {
     private GameMode gameMode = GameMode.NUMBERS;
 
     Button mPlayButton;
+    Button mContinueButton;
     Button mSettingsButton;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
@@ -44,11 +45,22 @@ public class MenuActivity extends AppCompatActivity {
                 Intent intent = new Intent(MenuActivity.this, SudokuActivity.class);
 
                 //Adding information for the sudoku activity
-                intent.putExtra("native", readWordlistFromCSV(WordType.NATIVE));
-                intent.putExtra("foreign", readWordlistFromCSV(WordType.FOREIGN));
-                intent.putExtra("puzzle", readPuzzleDataFromCSV());
-                intent.putExtra("mode", gameMode);
-                intent.putExtra("difficulty", gameDifficulty);
+                intent.putExtra(KeyConstants.NATIVE_WORDS_KEY, readWordlistFromCSV(WordType.NATIVE));
+                intent.putExtra(KeyConstants.FOREIGN_WORDS_KEY, readWordlistFromCSV(WordType.FOREIGN));
+                intent.putExtra(KeyConstants.MODE_KEY, gameMode);
+                intent.putExtra(KeyConstants.DIFFICULTY_KEY, gameDifficulty);
+                startActivity(intent);
+            }
+        });
+
+        mContinueButton = findViewById(R.id.continueButton);
+        mContinueButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuActivity.this, SudokuActivity.class);
+
+                //Putting game data bundle in intent
+                intent.putExtras(PersistenceService.loadGameData(MenuActivity.this));
                 startActivity(intent);
             }
         });
@@ -61,9 +73,18 @@ public class MenuActivity extends AppCompatActivity {
                 startActivityForResult(intent, REQUEST_CODE);
             }
         });
+    }
 
-        Bundle data = PersistenceService.loadGameData(this);
-        mPlayButton.setText(Integer.toString(data.getInt(PersistenceService.SUDOKU_SIZE_KEY)));
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        try {
+            Bundle data = PersistenceService.loadGameData(this);
+            Log.d("Saved data", "onStart: " + data.toString());
+        } catch (Exception e) {
+            Log.d("Saved data", "onStart: no saved data");
+        }
     }
 
     @Override
@@ -72,8 +93,8 @@ public class MenuActivity extends AppCompatActivity {
 
         if (requestCode == REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                gameDifficulty = (GameDifficulty) data.getSerializableExtra(SettingsActivity.DIFFICULTY_INTENT_KEY);
-                gameMode = (GameMode) data.getSerializableExtra(SettingsActivity.GAME_MODE_INTENT_KEY);
+                gameDifficulty = (GameDifficulty) data.getSerializableExtra(KeyConstants.DIFFICULTY_KEY);
+                gameMode = (GameMode) data.getSerializableExtra(KeyConstants.MODE_KEY);
             }
         }
     }

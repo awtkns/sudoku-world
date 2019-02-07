@@ -1,19 +1,16 @@
 package com.sigma.sudokuworld;
 
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-public abstract class PersistenceService  {
+import java.util.Map;
 
-    //Public index keys for saving data in bundle
-    static final String SUDOKU_SIZE_KEY = "size";
-    static final String CELL_VALUES_KEY = "values";
-    static final String SOLUTION_VALUES_KEY = "solution";
-    static final String LOCKED_CELLS_KEY = "locked";
-    static final String NATIVE_WORDLIST_KEY = "native";
-    static final String FOREIGN_WORDLIST_KEY = "foreign";
-    static final String GAME_MODE_KEY = "mode";
+import static com.sigma.sudokuworld.KeyConstants.*;
+
+
+public abstract class PersistenceService  {
 
     //Private file names for what xml file to write to
     private static final String SAVE_GAME_FILE = "save";
@@ -32,16 +29,21 @@ public abstract class PersistenceService  {
         SharedPreferences sharedPreferences = context.getSharedPreferences(SAVE_GAME_FILE, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        //Unpacking bundle
+        //Unpacking "save" bundle
+        GameDifficulty difficulty = (GameDifficulty) data.getSerializable(DIFFICULTY_KEY);
+        GameMode mode = (GameMode) data.getSerializable(MODE_KEY);
         int arraySize = data.getInt(SUDOKU_SIZE_KEY);
         int[] cellValues = data.getIntArray(CELL_VALUES_KEY);
         int[] solutionValues = data.getIntArray(SOLUTION_VALUES_KEY);
         boolean[] lockedCells = data.getBooleanArray(LOCKED_CELLS_KEY);
-        String[] foreignWords = data.getStringArray(FOREIGN_WORDLIST_KEY);
-        String[] nativeWords = data.getStringArray(NATIVE_WORDLIST_KEY);
+        String[] nativeWords = data.getStringArray(NATIVE_WORDS_KEY);
+        String[] foreignWords = data.getStringArray(FOREIGN_WORDS_KEY);
+
+        editor.putString(DIFFICULTY_KEY, difficulty.name());
+        editor.putString(MODE_KEY, mode.name());
+        editor.putInt(SUDOKU_SIZE_KEY, arraySize);
 
         //Writing cell data
-        editor.putInt(SUDOKU_SIZE_KEY, arraySize);
         for (int i=0; i < arraySize; i++) {
             String index = Integer.toString(i);
             editor.putInt(VAlUES_KEY_PREFIX + index, cellValues[i]);
@@ -60,11 +62,14 @@ public abstract class PersistenceService  {
         editor.apply();
     }
 
-    static Bundle loadGameData(Context context) {
+    static Bundle loadGameData(Context context) throws NullPointerException {
         SharedPreferences sharedPreferences = context.getSharedPreferences(SAVE_GAME_FILE, Context.MODE_PRIVATE);
         Bundle data = new Bundle();
 
-        data.putInt(SUDOKU_SIZE_KEY, sharedPreferences.getInt(SUDOKU_SIZE_KEY, 0));
+        Map<String, ?> dataMap = sharedPreferences.getAll();
+        int size = (Integer) dataMap.get(SUDOKU_SIZE_KEY);
+        data.putInt(SUDOKU_SIZE_KEY, size);
+
         return data;
     }
 }

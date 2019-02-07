@@ -9,6 +9,7 @@ class GameModel {
     private final int sudokuSubsectionSize;
     private final int sudokuBoardLength;
     private final int sudokuBoardSize;
+    private final GameDifficulty gameDifficulty;
 
     //The cell values for all cells in the game
     private int[] cellValues;
@@ -20,6 +21,7 @@ class GameModel {
     //Generates Puzzle from robot
     GameModel(int subsectionSize, GameDifficulty difficulty){
         //Figuring out what type of Sudoku game is being played
+        gameDifficulty = difficulty;
         sudokuSubsectionSize = subsectionSize;
         sudokuBoardLength = sudokuSubsectionSize * sudokuSubsectionSize;
         sudokuBoardSize = sudokuBoardLength * sudokuBoardLength;
@@ -28,8 +30,9 @@ class GameModel {
         init(difficulty);
     }
 
-    GameModel(int subsectionSize, int[] puzzle, int[] solution, boolean[] initialCells) {
+    GameModel(int subsectionSize, int[] puzzle, int[] solution, boolean[] initialCells, GameDifficulty difficulty) {
         //Figuring out what type of Sudoku game is being played
+        gameDifficulty = difficulty;
         sudokuSubsectionSize = subsectionSize;
         sudokuBoardLength = sudokuSubsectionSize * sudokuSubsectionSize;
         sudokuBoardSize = sudokuBoardLength * sudokuBoardLength;
@@ -99,6 +102,10 @@ class GameModel {
 
     boolean[] getAllInitialCells() {
         return lockedCells;
+    }
+
+    public GameDifficulty getGameDifficulty() {
+        return gameDifficulty;
     }
 
     //Returns index of first incorrect cell or returns -1 if board is solved

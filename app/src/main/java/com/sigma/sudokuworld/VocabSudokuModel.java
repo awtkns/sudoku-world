@@ -14,8 +14,8 @@ class VocabSudokuModel {
     private SparseArray<String> nativeWordsMap;
     private SparseArray<String> foreignWordsMap;
 
-    VocabSudokuModel(String[] nativeWords, String[] foreignWords, int[] puzzle, int[] solution, boolean[] initialCells, GameMode gameMode) {
-        model = new GameModel(3, puzzle, solution, initialCells);
+    VocabSudokuModel(String[] nativeWords, String[] foreignWords, int[] puzzle, int[] solution, boolean[] initialCells, GameMode gameMode, GameDifficulty difficulty) {
+        model = new GameModel(3, puzzle, solution, initialCells, difficulty);
         initializeWordMaps(nativeWords, foreignWords);
         this.gameMode = gameMode;
     }
@@ -105,8 +105,12 @@ class VocabSudokuModel {
         return model.getAllInitialCells();
     }
 
-    public GameMode getGameMode() {
+    GameMode getGameMode() {
         return gameMode;
+    }
+
+    GameDifficulty getGameDifficulty(){
+        return model.getGameDifficulty();
     }
 
     public void setGameMode(GameMode gameMode) {

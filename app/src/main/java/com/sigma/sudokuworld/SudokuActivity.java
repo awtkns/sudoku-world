@@ -7,16 +7,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
+import static com.sigma.sudokuworld.KeyConstants.*;
+
 public class SudokuActivity extends AppCompatActivity {
-
-    private final String PUZZLE_INTENT_KEY = "puzzle";
-    private final String SOLUTION_INTENT_KEY = "solution";
-    private final String INITIAL_CELLS_INTENT_KEY = "initial";
-    private final String FOREIGN_WORDS_INTENT_KEY = "foreign";
-    private final String NATIVE_WORDS_INTENT_KEY = "native";
-    private final String GAME_MODE_INTENT_KEY = "mode";
-    private final String GAME_DIFFICULTY_INTENT_KEY = "difficulty";
-
 
     VocabSudokuModel mVocabGame;
     SudokuGridView mSudokuGridView;
@@ -32,21 +25,22 @@ public class SudokuActivity extends AppCompatActivity {
         if (savedInstanceState != null) {
             //Unpacking information from saved instance
             mVocabGame = new VocabSudokuModel(
-                    savedInstanceState.getStringArray(NATIVE_WORDS_INTENT_KEY),
-                    savedInstanceState.getStringArray(FOREIGN_WORDS_INTENT_KEY),
-                    savedInstanceState.getIntArray(PUZZLE_INTENT_KEY),
-                    savedInstanceState.getIntArray(SOLUTION_INTENT_KEY),
-                    savedInstanceState.getBooleanArray(INITIAL_CELLS_INTENT_KEY),
-                    (GameMode) savedInstanceState.getSerializable(GAME_MODE_INTENT_KEY)
+                    savedInstanceState.getStringArray(NATIVE_WORDS_KEY),
+                    savedInstanceState.getStringArray(FOREIGN_WORDS_KEY),
+                    savedInstanceState.getIntArray(CELL_VALUES_KEY),
+                    savedInstanceState.getIntArray(SOLUTION_VALUES_KEY),
+                    savedInstanceState.getBooleanArray(LOCKED_CELLS_KEY),
+                    (GameMode) savedInstanceState.getSerializable(MODE_KEY),
+                    (GameDifficulty) savedInstanceState.getSerializable(DIFFICULTY_KEY)
             );
         } else {
             //Unpacking information from intent
             Intent i = getIntent();
             mVocabGame = new VocabSudokuModel(
-                    i.getStringArrayExtra(NATIVE_WORDS_INTENT_KEY),
-                    i.getStringArrayExtra(FOREIGN_WORDS_INTENT_KEY),
-                    (GameMode) i.getSerializableExtra(GAME_MODE_INTENT_KEY),
-                    (GameDifficulty) i.getSerializableExtra(GAME_DIFFICULTY_INTENT_KEY)
+                    i.getStringArrayExtra(NATIVE_WORDS_KEY),
+                    i.getStringArrayExtra(FOREIGN_WORDS_KEY),
+                    (GameMode) i.getSerializableExtra(MODE_KEY),
+                    (GameDifficulty) i.getSerializableExtra(DIFFICULTY_KEY)
             );
         }
 
@@ -86,12 +80,13 @@ public class SudokuActivity extends AppCompatActivity {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         //Save the current state of the Sudoku board
-        outState.putStringArray(NATIVE_WORDS_INTENT_KEY, mVocabGame.getNativeWords());
-        outState.putStringArray(FOREIGN_WORDS_INTENT_KEY, mVocabGame.getForeignWords());
-        outState.putIntArray(PUZZLE_INTENT_KEY, mVocabGame.getCellValues());
-        outState.putIntArray(SOLUTION_INTENT_KEY, mVocabGame.getSolutionValues());
-        outState.putBooleanArray(INITIAL_CELLS_INTENT_KEY, mVocabGame.getLockedCells());
-        outState.putSerializable(GAME_MODE_INTENT_KEY, mVocabGame.getGameMode());
+        outState.putSerializable(DIFFICULTY_KEY, mVocabGame.getGameDifficulty());
+        outState.putStringArray(NATIVE_WORDS_KEY, mVocabGame.getNativeWords());
+        outState.putStringArray(FOREIGN_WORDS_KEY, mVocabGame.getForeignWords());
+        outState.putIntArray(CELL_VALUES_KEY, mVocabGame.getCellValues());
+        outState.putIntArray(SOLUTION_VALUES_KEY, mVocabGame.getSolutionValues());
+        outState.putBooleanArray(LOCKED_CELLS_KEY, mVocabGame.getLockedCells());
+        outState.putSerializable(MODE_KEY, mVocabGame.getGameMode());
     }
 
     @Override
@@ -99,12 +94,14 @@ public class SudokuActivity extends AppCompatActivity {
         super.onPause();
 
         Bundle data = new Bundle();
-        data.putInt(PersistenceService.SUDOKU_SIZE_KEY, 81);
-        data.putIntArray(PersistenceService.CELL_VALUES_KEY, mVocabGame.getCellValues());
-        data.putIntArray(PersistenceService.SOLUTION_VALUES_KEY, mVocabGame.getSolutionValues());
-        data.putBooleanArray(PersistenceService.LOCKED_CELLS_KEY, mVocabGame.getLockedCells());
-        data.putStringArray(PersistenceService.NATIVE_WORDLIST_KEY, mVocabGame.getNativeWords());
-        data.putStringArray(PersistenceService.FOREIGN_WORDLIST_KEY, mVocabGame.getForeignWords());
+        data.putSerializable(DIFFICULTY_KEY, mVocabGame.getGameDifficulty());
+        data.putSerializable(MODE_KEY, mVocabGame.getGameMode());
+        data.putInt(SUDOKU_SIZE_KEY, 81);
+        data.putIntArray(CELL_VALUES_KEY, mVocabGame.getCellValues());
+        data.putIntArray(SOLUTION_VALUES_KEY, mVocabGame.getSolutionValues());
+        data.putBooleanArray(LOCKED_CELLS_KEY, mVocabGame.getLockedCells());
+        data.putStringArray(NATIVE_WORDS_KEY, mVocabGame.getNativeWords());
+        data.putStringArray(FOREIGN_WORDS_KEY, mVocabGame.getForeignWords());
         PersistenceService.saveGameData(this, data);
     }
 
