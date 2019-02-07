@@ -321,7 +321,7 @@ public class SudokuGridView extends View {
                 mYOrigin + ((cy + 1) * mCellSize)
         );
         Paint paint = new Paint(mGridPaint);
-        paint.setAlpha(25);
+        paint.setAlpha(15);
         canvas.drawRect(cellRect, paint);
     }
 
