@@ -1,24 +1,15 @@
 package com.sigma.sudokuworld;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+
+import static com.sigma.sudokuworld.KeyConstants.*;
 
 public class SudokuActivity extends AppCompatActivity {
-
-    private final String PUZZLE_INTENT_KEY = "puzzle";
-    private final String SOLUTION_INTENT_KEY = "solution";
-    private final String INITIAL_CELLS_INTENT_KEY = "initial";
-    private final String FOREIGN_WORDS_INTENT_KEY = "foreign";
-    private final String NATIVE_WORDS_INTENT_KEY = "native";
-    private final String GAME_MODE_INTENT_KEY = "mode";
-
 
     VocabSudokuModel mVocabGame;
     SudokuGridView mSudokuGridView;
@@ -34,21 +25,40 @@ public class SudokuActivity extends AppCompatActivity {
         if (savedInstanceState != null) {
             //Unpacking information from saved instance
             mVocabGame = new VocabSudokuModel(
-                    savedInstanceState.getStringArray(NATIVE_WORDS_INTENT_KEY),
-                    savedInstanceState.getStringArray(FOREIGN_WORDS_INTENT_KEY),
-                    savedInstanceState.getIntArray(PUZZLE_INTENT_KEY),
-                    savedInstanceState.getIntArray(SOLUTION_INTENT_KEY),
-                    savedInstanceState.getBooleanArray(INITIAL_CELLS_INTENT_KEY),
-                    (GameMode) savedInstanceState.getSerializable(GAME_MODE_INTENT_KEY)
+                    savedInstanceState.getStringArray(NATIVE_WORDS_KEY),
+                    savedInstanceState.getStringArray(FOREIGN_WORDS_KEY),
+                    savedInstanceState.getIntArray(CELL_VALUES_KEY),
+                    savedInstanceState.getIntArray(SOLUTION_VALUES_KEY),
+                    savedInstanceState.getBooleanArray(LOCKED_CELLS_KEY),
+                    (GameMode) savedInstanceState.getSerializable(MODE_KEY),
+                    (GameDifficulty) savedInstanceState.getSerializable(DIFFICULTY_KEY)
             );
         } else {
             //Unpacking information from intent
             Intent i = getIntent();
-            mVocabGame = new VocabSudokuModel(
-                    i.getStringArrayExtra(NATIVE_WORDS_INTENT_KEY),
-                    i.getStringArrayExtra(FOREIGN_WORDS_INTENT_KEY),
-                    (GameMode) i.getSerializableExtra(GAME_MODE_INTENT_KEY)
-            );
+
+            if (i.getBooleanExtra(CONTINUE_KEY, false)) {
+                //New game
+
+                mVocabGame = new VocabSudokuModel(
+                        i.getStringArrayExtra(NATIVE_WORDS_KEY),
+                        i.getStringArrayExtra(FOREIGN_WORDS_KEY),
+                        i.getIntArrayExtra(CELL_VALUES_KEY),
+                        i.getIntArrayExtra(SOLUTION_VALUES_KEY),
+                        i.getBooleanArrayExtra(LOCKED_CELLS_KEY),
+                        (GameMode) i.getSerializableExtra(MODE_KEY),
+                        (GameDifficulty) i.getSerializableExtra(DIFFICULTY_KEY)
+                );
+            } else {
+                //Save game
+
+                mVocabGame = new VocabSudokuModel(
+                        i.getStringArrayExtra(NATIVE_WORDS_KEY),
+                        i.getStringArrayExtra(FOREIGN_WORDS_KEY),
+                        (GameMode) i.getSerializableExtra(MODE_KEY),
+                        (GameDifficulty) i.getSerializableExtra(DIFFICULTY_KEY)
+                );
+            }
         }
 
 
@@ -67,7 +77,7 @@ public class SudokuActivity extends AppCompatActivity {
                     this.getPackageName()));
 
             //Gets and sets the string the button should display
-            String buttonText = mVocabGame.getMapValue(buttonNumber + 1);
+            String buttonText = mVocabGame.getButtonString(buttonNumber + 1);
             sudokuButtons[buttonNumber].setText(buttonText);
 
             //Links the listener to the button
@@ -86,15 +96,26 @@ public class SudokuActivity extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+
         //Save the current state of the Sudoku board
-        outState.putStringArray(NATIVE_WORDS_INTENT_KEY, mVocabGame.getAllNativeWords());
-        outState.putStringArray(FOREIGN_WORDS_INTENT_KEY, mVocabGame.getAllForeignWords());
-        outState.putIntArray(PUZZLE_INTENT_KEY, mVocabGame.getAllCellValues());
-        outState.putIntArray(SOLUTION_INTENT_KEY, mVocabGame.getSolutionValues());
-        outState.putBooleanArray(INITIAL_CELLS_INTENT_KEY, mVocabGame.getAllIntialCells());
-        outState.putSerializable(GAME_MODE_INTENT_KEY, mVocabGame.getGameMode());
+        makeSaveBundle(outState);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Bundle data = new Bundle();
+        makeSaveBundle(data);
+
+        //Saves data to file
+        PersistenceService.saveGameData(this, data);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 
     //When sudoku grid is touched
     SudokuGridView.OnTouchListener onSudokuGridTouchListener = new SudokuGridView.OnTouchListener() {
@@ -139,22 +160,22 @@ public class SudokuActivity extends AppCompatActivity {
     View.OnClickListener onButtonClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            Button button = (Button) v;
             int buttonValue = 0;
 
             //Loop through all our possible buttons to see which button is clicked
             //Set buttonValue to the corresponding button
             //If no button is found in for loop, clear button is being called so buttonValue = 0
-            for (int buttonNumber = 0; buttonNumber < 9; buttonNumber++) {
-                if (v.getId() == getResources().getIdentifier("button" + (buttonNumber+1), "id",
-                    getPackageName())){
-                    buttonValue = buttonNumber + 1;
+            for (int buttonindex = 0; buttonindex < 9; buttonindex++) {
+                if (button == sudokuButtons[buttonindex]){
+                    buttonValue = buttonindex + 1;
                 }
             }
             int cellNumber = mSudokuGridView.getHighlightedCell();
             if (cellNumber == -1){ return; }
 
             mVocabGame.setCellString(cellNumber, buttonValue);
-            mSudokuGridView.setCellLabel(cellNumber, mVocabGame.getCellString(cellNumber));
+            mSudokuGridView.setCellLabel(cellNumber, mVocabGame.getButtonString(buttonValue));
 
             //Clears selected cells and redraws
             mSudokuGridView.clearHighlightedCell();
@@ -217,5 +238,20 @@ public class SudokuActivity extends AppCompatActivity {
         }
 
         mSudokuGridView.invalidate();
+    }
+
+    /**
+     * Bundles all information needed to save the game.
+     * Info on what needs to be in the "save" bundle can be found in KeyConstants
+     * @return game save bundle
+     */
+    private void makeSaveBundle(Bundle data) {
+        data.putSerializable(DIFFICULTY_KEY, mVocabGame.getGameDifficulty());
+        data.putSerializable(MODE_KEY, mVocabGame.getGameMode());
+        data.putIntArray(CELL_VALUES_KEY, mVocabGame.getCellValues());
+        data.putIntArray(SOLUTION_VALUES_KEY, mVocabGame.getSolutionValues());
+        data.putBooleanArray(LOCKED_CELLS_KEY, mVocabGame.getLockedCells());
+        data.putStringArray(NATIVE_WORDS_KEY, mVocabGame.getNativeWords());
+        data.putStringArray(FOREIGN_WORDS_KEY, mVocabGame.getForeignWords());
     }
 }

@@ -9,6 +9,7 @@ class GameModel {
     private final int sudokuSubsectionSize;
     private final int sudokuBoardLength;
     private final int sudokuBoardSize;
+    private final GameDifficulty gameDifficulty;
 
     //The cell values for all cells in the game
     private int[] cellValues;
@@ -18,18 +19,20 @@ class GameModel {
     private boolean[] lockedCells;
 
     //Generates Puzzle from robot
-    GameModel(int subsectionSize){
+    GameModel(int subsectionSize, GameDifficulty difficulty){
         //Figuring out what type of Sudoku game is being played
+        gameDifficulty = difficulty;
         sudokuSubsectionSize = subsectionSize;
         sudokuBoardLength = sudokuSubsectionSize * sudokuSubsectionSize;
         sudokuBoardSize = sudokuBoardLength * sudokuBoardLength;
 
 
-        init();
+        init(difficulty);
     }
 
-    GameModel(int subsectionSize, int[] puzzle, int[] solution, boolean[] initialCells) {
+    GameModel(int subsectionSize, int[] puzzle, int[] solution, boolean[] initialCells, GameDifficulty difficulty) {
         //Figuring out what type of Sudoku game is being played
+        gameDifficulty = difficulty;
         sudokuSubsectionSize = subsectionSize;
         sudokuBoardLength = sudokuSubsectionSize * sudokuSubsectionSize;
         sudokuBoardSize = sudokuBoardLength * sudokuBoardLength;
@@ -41,14 +44,14 @@ class GameModel {
             lockedCells = initialCells;
         } catch (NullPointerException e) {
             e.printStackTrace();
-            init();
+            init(GameDifficulty.MEDIUM);
         }
     }
 
     /**
      * Initialize a new puzzle
      */
-    private void init() {
+    private void init(GameDifficulty difficulty) {
         cellValues = new int[sudokuBoardSize];
         solutionCellValues = new int[sudokuBoardSize];
         lockedCells = new boolean[sudokuBoardSize];
@@ -56,7 +59,7 @@ class GameModel {
 
 
         //Grabbing initial values and solutions from the robot
-        SudokuRobot sudokuRobot = new SudokuRobot(sudokuSubsectionSize);
+        SudokuRobot sudokuRobot = new SudokuRobot(sudokuSubsectionSize, difficulty);
 
         cellValues = sudokuRobot.returnCellValues();
         solutionCellValues = sudokuRobot.getSolutionValues();
@@ -99,6 +102,10 @@ class GameModel {
 
     boolean[] getAllInitialCells() {
         return lockedCells;
+    }
+
+    public GameDifficulty getGameDifficulty() {
+        return gameDifficulty;
     }
 
     //Returns index of first incorrect cell or returns -1 if board is solved

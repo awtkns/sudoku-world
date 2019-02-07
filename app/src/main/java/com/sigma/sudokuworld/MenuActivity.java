@@ -16,12 +16,20 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 
+
+
 public class MenuActivity extends AppCompatActivity {
 
+    private final int REQUEST_CODE = 1;
+    private GameDifficulty gameDifficulty = GameDifficulty.EASY;
+    private GameMode gameMode = GameMode.NUMBERS;
+
     Button mPlayButton;
+    Button mContinueButton;
+    Button mSettingsButton;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
@@ -37,13 +45,64 @@ public class MenuActivity extends AppCompatActivity {
                 Intent intent = new Intent(MenuActivity.this, SudokuActivity.class);
 
                 //Adding information for the sudoku activity
-                intent.putExtra("native", readWordlistFromCSV(WordType.NATIVE));
-                intent.putExtra("foreign", readWordlistFromCSV(WordType.FOREIGN));
-                intent.putExtra("puzzle", readPuzzleDataFromCSV());
-                intent.putExtra("mode", GameMode.NUMBERS);
+                intent.putExtra(KeyConstants.NATIVE_WORDS_KEY, readWordlistFromCSV(WordType.NATIVE));
+                intent.putExtra(KeyConstants.FOREIGN_WORDS_KEY, readWordlistFromCSV(WordType.FOREIGN));
+                intent.putExtra(KeyConstants.MODE_KEY, gameMode);
+                intent.putExtra(KeyConstants.DIFFICULTY_KEY, gameDifficulty);
+                intent.putExtra(KeyConstants.CONTINUE_KEY, false);
                 startActivity(intent);
             }
         });
+
+        mContinueButton = findViewById(R.id.continueButton);
+        mContinueButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuActivity.this, SudokuActivity.class);
+
+                try {
+                    intent.putExtras(PersistenceService.loadGameData(MenuActivity.this));
+                    intent.putExtra(KeyConstants.CONTINUE_KEY, true);
+                    Log.d("Game Data", "onClick: starting game with data");
+                    startActivity(intent);
+                } catch (Exception e) {
+                    Log.d("Game Data", "onClick: no game data");
+                }
+            }
+        });
+
+        mSettingsButton = findViewById(R.id.settingsButton);
+        mSettingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuActivity.this, SettingsActivity.class);
+                startActivityForResult(intent, REQUEST_CODE);
+            }
+        });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        try {
+            Bundle data = PersistenceService.loadGameData(this);
+            Log.d("Saved data", "onStart: " + data.toString());
+        } catch (Exception e) {
+            Log.d("Saved data", "onStart: no saved data");
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                gameDifficulty = (GameDifficulty) data.getSerializableExtra(KeyConstants.DIFFICULTY_KEY);
+                gameMode = (GameMode) data.getSerializableExtra(KeyConstants.MODE_KEY);
+            }
+        }
     }
 
     /**
@@ -51,6 +110,7 @@ public class MenuActivity extends AppCompatActivity {
      * Stores data in an array.
      * Array index = cell number
      * Stores 0 for empty cell
+     *
      * @return array
      */
     private int[] readPuzzleDataFromCSV() {
@@ -63,13 +123,13 @@ public class MenuActivity extends AppCompatActivity {
         try {
             String puzzleStr;
             puzzleStr = bufferedReader.readLine();
-            puzzleStr = puzzleStr.replace(",","");  //input sanitation
+            puzzleStr = puzzleStr.replace(",", "");  //input sanitation
 
             vals = new int[puzzleStr.length()];
-            for (int i = 0; i < puzzleStr.length(); i++){   //read puzzle data
-                char ch =puzzleStr.charAt(i);
+            for (int i = 0; i < puzzleStr.length(); i++) {   //read puzzle data
+                char ch = puzzleStr.charAt(i);
                 if (ch != '.') {
-                       vals[i] = Character.getNumericValue(ch);
+                    vals[i] = Character.getNumericValue(ch);
                 }
             }
 
@@ -86,6 +146,7 @@ public class MenuActivity extends AppCompatActivity {
 
     /**
      * Reads CSV file containing 9 word pairs
+     *
      * @param wordType get the native or foreign list
      * @return string array of words in either the native or foreign lang
      */
@@ -120,3 +181,4 @@ public class MenuActivity extends AppCompatActivity {
         return wordList.toArray(words);
     }
 }
+

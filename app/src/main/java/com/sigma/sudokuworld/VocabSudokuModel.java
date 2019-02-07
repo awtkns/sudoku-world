@@ -14,14 +14,14 @@ class VocabSudokuModel {
     private SparseArray<String> nativeWordsMap;
     private SparseArray<String> foreignWordsMap;
 
-    VocabSudokuModel(String[] nativeWords, String[] foreignWords, int[] puzzle, int[] solution, boolean[] initialCells, GameMode gameMode) {
-        model = new GameModel(3, puzzle, solution, initialCells);
+    VocabSudokuModel(String[] nativeWords, String[] foreignWords, int[] puzzle, int[] solution, boolean[] initialCells, GameMode gameMode, GameDifficulty difficulty) {
+        model = new GameModel(3, puzzle, solution, initialCells, difficulty);
         initializeWordMaps(nativeWords, foreignWords);
         this.gameMode = gameMode;
     }
 
-    VocabSudokuModel(String[] nativeWords, String[] foreignWords, GameMode gameMode) {
-        model = new GameModel(3);
+    VocabSudokuModel(String[] nativeWords, String[] foreignWords, GameMode gameMode, GameDifficulty difficulty) {
+        model = new GameModel(3, difficulty);
         initializeWordMaps(nativeWords, foreignWords);
         this.gameMode = gameMode;
     }
@@ -68,30 +68,32 @@ class VocabSudokuModel {
     }
 
 
-    public String getMapValue(int value){
+    public String getButtonString(int value){
         if (gameMode == GameMode.NUMBERS){ return String.valueOf(value); }
 
         else if (gameMode == GameMode.NATIVE){
-            return nativeWordsMap.valueAt(value);
+            return foreignWordsMap.valueAt(value);
         }
 
         else{
-            return foreignWordsMap.valueAt(value);
+            return nativeWordsMap.valueAt(value);
         }
     }
+
+
     public boolean isCellCorrect(int cell){
         return model.isCellCorrect(cell);
     }
 
-    String[] getAllForeignWords() {
+    String[] getForeignWords() {
         return foreignWords;
     }
 
-    String[] getAllNativeWords() {
+    String[] getNativeWords() {
         return nativeWords;
     }
 
-    int[] getAllCellValues() {
+    int[] getCellValues() {
         return model.getAllCellValues();
     }
 
@@ -99,12 +101,16 @@ class VocabSudokuModel {
         return model.getSolutionValues();
     }
 
-    boolean[] getAllIntialCells() {
+    boolean[] getLockedCells() {
         return model.getAllInitialCells();
     }
 
-    public GameMode getGameMode() {
+    GameMode getGameMode() {
         return gameMode;
+    }
+
+    GameDifficulty getGameDifficulty(){
+        return model.getGameDifficulty();
     }
 
     public void setGameMode(GameMode gameMode) {
