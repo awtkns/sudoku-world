@@ -10,7 +10,9 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class SudokuGridView extends View {
 
@@ -199,6 +201,17 @@ public class SudokuGridView extends View {
             String label = mCellLabels[i];
             if (!label.equals("")) {
 
+                // If its the cell that's currently INCORRECT, draw its highlight
+                if(i == mIncorrectCell) {
+                    Rect cellRect = new Rect(
+                            mXOrigin + (cx * mCellSize),
+                            mYOrigin + (cy * mCellSize),
+                            mXOrigin + ((cx + 1) * mCellSize),
+                            mYOrigin + ((cy + 1) * mCellSize)
+                    );
+
+                    canvas.drawRect(cellRect, mIncorrectCellFillPaint);
+                }
                 //Draws the cell fill for squares that cant be edited
                 if (label.charAt(0) == LOCKED_FLAG) {
 
@@ -232,17 +245,6 @@ public class SudokuGridView extends View {
                 mTextPaint.setTextSize(defaultTextSize);
             }
 
-            // If its the cell that's currently INCORRECT, draw its highlight
-            if(i == mIncorrectCell) {
-                Rect cellRect = new Rect(
-                        mXOrigin + (cx * mCellSize),
-                        mYOrigin + (cy * mCellSize),
-                        mXOrigin + ((cx + 1) * mCellSize),
-                        mYOrigin + ((cy + 1) * mCellSize)
-                );
-
-                canvas.drawRect(cellRect, mIncorrectCellFillPaint);
-            }
 
             //If its the cell that's currently highlighted draw the highlight
             if (i == mHighlightedCell) {
@@ -267,18 +269,37 @@ public class SudokuGridView extends View {
         int subsectionRow = SUDOKU_SIZE * SUDOKU_ROOT_SIZE * (row / SUDOKU_ROOT_SIZE);
         int subsectionColumn = SUDOKU_ROOT_SIZE * (column / SUDOKU_ROOT_SIZE);
         int i;
+        List<Integer> visitedList = new ArrayList<Integer>();
+        visitedList.add(mHighlightedCell);
 
         //Draw row and column highlights
         for(i = 0; i < SUDOKU_SIZE; i++) {
-            drawCellHighlight(canvas, (SUDOKU_SIZE * row) + i);
-            drawCellHighlight(canvas, column + SUDOKU_SIZE*i);
+            //Row
+            int cellnumber = SUDOKU_SIZE * row + i;
+            if (cellnumber != mHighlightedCell)
+            {
+                drawCellHighlight(canvas, cellnumber);
+                visitedList.add(cellnumber);
+            }
+
+
+            //Column
+            cellnumber = column + i * SUDOKU_SIZE;
+            if (cellnumber != mHighlightedCell)
+            {
+                drawCellHighlight(canvas, cellnumber);
+                visitedList.add(cellnumber);
+            }
         }
 
         //Draw subsection highlights
         for(i = 0; i < SUDOKU_ROOT_SIZE; i++){
             for (int j = 0; j < SUDOKU_ROOT_SIZE; j++)
             {
-                drawCellHighlight(canvas, subsectionRow + SUDOKU_SIZE * i + subsectionColumn + j);
+                int cellnumber = subsectionRow + SUDOKU_SIZE * i + subsectionColumn + j;
+                if (!visitedList.contains(cellnumber)) {
+                    drawCellHighlight(canvas, cellnumber);
+                }
             }
         }
     }
