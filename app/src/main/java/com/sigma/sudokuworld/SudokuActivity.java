@@ -145,20 +145,32 @@ public class SudokuActivity extends AppCompatActivity {
             //Set buttonValue to the corresponding button
             //If no button is found in for loop, clear button is being called so buttonValue = 0
             for (int buttonNumber = 0; buttonNumber < 9; buttonNumber++) {
-                if (v.getId() == getResources().getIdentifier("button" + (buttonNumber+1), "id",
-                    getPackageName())){
+                if (v.getId() == getResources().getIdentifier("button" + (buttonNumber + 1), "id",
+                        getPackageName())) {
                     buttonValue = buttonNumber + 1;
                 }
             }
             int cellNumber = mSudokuGridView.getHighlightedCell();
-            if (cellNumber == -1){ return; }
+            if (cellNumber == -1) {
+                return;
+            }
 
             mVocabGame.setCellString(cellNumber, buttonValue);
             mSudokuGridView.setCellLabel(cellNumber, mVocabGame.getCellString(cellNumber));
+            
 
-            //Clears selected cells and redraws
-            mSudokuGridView.clearHighlightedCell();
-            mSudokuGridView.clearIncorrectCell();
+            //Check if the placed cell is right or if it is cleared
+            if (mVocabGame.isCellCorrect(cellNumber) || buttonValue == 0) {
+                //Clears selected cell
+                mSudokuGridView.clearHighlightedCell();
+                mSudokuGridView.clearIncorrectCell();
+            }
+            //Set cell to incorrect and allow player to input other values
+            else {
+                mSudokuGridView.setIncorrectCell(cellNumber);
+            }
+
+            //Redraw
             mSudokuGridView.invalidate();
         }
     };
