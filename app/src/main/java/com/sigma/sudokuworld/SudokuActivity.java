@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import static com.sigma.sudokuworld.KeyConstants.*;
+import android.widget.Toast;
 
 public class SudokuActivity extends AppCompatActivity {
 
@@ -212,7 +213,13 @@ public class SudokuActivity extends AppCompatActivity {
                 return;
             }
 
-
+            //Check if we have finished the game
+            if (mVocabGame.checkGame() == -1)
+            {
+                Toast.makeText(getBaseContext(),
+                        "Congratulations, You've Won!",
+                        Toast.LENGTH_LONG).show();
+            }
 
             //Checks if the answers are right and displays the first wrong cell (if any)
             int potentialIndex = mVocabGame.checkGame();
