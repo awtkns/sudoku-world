@@ -12,11 +12,15 @@ Hard: Less than 35 pre-placed Sudoku tiles<br/><br/>
 - User story: As a language learner, I would like to be able to pick the words I would be able to use for the game so I can decide on which words I want to learn in the non-native language.
 - Example: When the player enters the word list menu, the player is able to freely choose their 9 desired words they want to learn in the non-native language.<br/><br/>
 
-- User Story: As a user I like to consume content with a dark background as it is easier on my eyes.
-- Example: Within the settings menu give theme options that the player may select from. Light and Dark mode being among the options.<br/><br/>
 - User Story: As a program user, I want to be able to select my role in this App, so that I can continue to use this App.
 - Example: When a user first opens this App, he can select which role he wants to play.
 - User Story: As a player, I would like to be able integrate studying a new language and playing.
 - Example: When the player selects the English word, the player is able to see the translated version of that word while playing.<br/><br/>
 - User Story: As a user, i would like to be able to zoom into the screen to better see the words on the grid
 - Example: When a user pinches and releases the screen, the app zooms into the pinched area<br/><br/>
+- User Story: As a player, I would like to be able to continue where I left off if I decide to stop playing midway in the game.
+- Example: When a user opens up the App, the user is able to press the continue button in the title screen in order to continue where the user left off.<br/><br/>
+- User Story: As a player, I would like to be able to check if I solved the sudoku puzzle correctly.
+- Example: Once the player has completed the puzzle, the player is able to press check the answer to see if the player correctly solved it. If so, a toast will pop up and congratulate you for solving the puzzle.<br/><br/>
+- User Story: As a player, I would like to be able to edit my grid in case I input an incorrect value in the grid cell.
+- Example: The player is able to clear cells by selecting which cell he wants to clear and using the "clear cell" button.<br/><br/>
