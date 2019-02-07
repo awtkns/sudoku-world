@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SudokuActivity extends AppCompatActivity {
 
@@ -157,7 +158,7 @@ public class SudokuActivity extends AppCompatActivity {
 
             mVocabGame.setCellString(cellNumber, buttonValue);
             mSudokuGridView.setCellLabel(cellNumber, mVocabGame.getCellString(cellNumber));
-            
+
 
             //Check if the placed cell is right or if it is cleared
             if (mVocabGame.isCellCorrect(cellNumber) || buttonValue == 0) {
@@ -194,7 +195,13 @@ public class SudokuActivity extends AppCompatActivity {
                 return;
             }
 
-
+            //Check if we have finished the game
+            if (mVocabGame.checkGame() == -1)
+            {
+                Toast.makeText(getBaseContext(),
+                        "Congratulations, You've Won!",
+                        Toast.LENGTH_LONG).show();
+            }
 
             //Checks if the answers are right and displays the first wrong cell (if any)
             int potentialIndex = mVocabGame.checkGame();
