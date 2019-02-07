@@ -197,21 +197,34 @@ public class SudokuGridView extends View {
             int cx = i % SUDOKU_SIZE;   //x cell pos
             int cy = i / SUDOKU_SIZE;   //y cell pos
 
+            // If its the cell that's currently INCORRECT, draw its highlight
+            if(i == mIncorrectCell) {
+                Rect cellRect = new Rect(
+                        mXOrigin + (cx * mCellSize),
+                        mYOrigin + (cy * mCellSize),
+                        mXOrigin + ((cx + 1) * mCellSize),
+                        mYOrigin + ((cy + 1) * mCellSize)
+                );
+
+                canvas.drawRect(cellRect, mIncorrectCellFillPaint);
+            }
+
+            //If its the cell that's currently highlighted draw the highlight
+            else if (i == mHighlightedCell) {
+                Rect cellRect = new Rect(
+                        mXOrigin + (cx * mCellSize),
+                        mYOrigin + (cy * mCellSize),
+                        mXOrigin + ((cx + 1) * mCellSize),
+                        mYOrigin + ((cy + 1) * mCellSize)
+                );
+                canvas.drawRect(cellRect, mCellFilledPaint);
+            }
+
             //If the cell has a label
             String label = mCellLabels[i];
             if (!label.equals("")) {
 
-                // If its the cell that's currently INCORRECT, draw its highlight
-                if(i == mIncorrectCell) {
-                    Rect cellRect = new Rect(
-                            mXOrigin + (cx * mCellSize),
-                            mYOrigin + (cy * mCellSize),
-                            mXOrigin + ((cx + 1) * mCellSize),
-                            mYOrigin + ((cy + 1) * mCellSize)
-                    );
 
-                    canvas.drawRect(cellRect, mIncorrectCellFillPaint);
-                }
                 //Draws the cell fill for squares that cant be edited
                 if (label.charAt(0) == LOCKED_FLAG) {
 
@@ -246,24 +259,15 @@ public class SudokuGridView extends View {
             }
 
 
-            //If its the cell that's currently highlighted draw the highlight
-            if (i == mHighlightedCell) {
-                Rect cellRect = new Rect(
-                        mXOrigin + (cx * mCellSize),
-                        mYOrigin + (cy * mCellSize),
-                        mXOrigin + ((cx + 1) * mCellSize),
-                        mYOrigin + ((cy + 1) * mCellSize)
-                );
-                if(mHighlightedCell != mIncorrectCell)
-                    {canvas.drawRect(cellRect, mCellFilledPaint);}
-                highlightNeighbours(canvas);
-            }
-
-
 
         }
+        highlightNeighbours(canvas);
     }
     private void highlightNeighbours(Canvas canvas){
+        //No cell is highlighted
+        if(mHighlightedCell == -1 ) {return;}
+
+
         int row = (mHighlightedCell / SUDOKU_SIZE);
         int column = (mHighlightedCell % SUDOKU_SIZE);
         int subsectionRow = SUDOKU_SIZE * SUDOKU_ROOT_SIZE * (row / SUDOKU_ROOT_SIZE);
@@ -304,6 +308,7 @@ public class SudokuGridView extends View {
         }
     }
 
+
     private void drawCellHighlight(Canvas canvas, int cellNumber)
     {
         int cx = cellNumber % SUDOKU_SIZE;   //x cell pos
@@ -316,9 +321,10 @@ public class SudokuGridView extends View {
                 mYOrigin + ((cy + 1) * mCellSize)
         );
         Paint paint = new Paint(mGridPaint);
-        paint.setAlpha(30);
+        paint.setAlpha(25);
         canvas.drawRect(cellRect, paint);
     }
+
 
     public Rect getGridBounds() {
         return mGridBoundingRect;
