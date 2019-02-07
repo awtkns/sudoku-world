@@ -231,7 +231,7 @@ public class SudokuGridView extends View {
                 //Reset text paint size
                 mTextPaint.setTextSize(defaultTextSize);
             }
-            
+
             // If its the cell that's currently INCORRECT, draw its highlight
             if(i == mIncorrectCell) {
                 Rect cellRect = new Rect(
@@ -262,19 +262,25 @@ public class SudokuGridView extends View {
         }
     }
     private void highlightNeighbours(Canvas canvas){
-        int row = mHighlightedCell / 9;
-        int column = mHighlightedCell % 9;
-        int subsectionRow = row / 3;
-        int subsectionColumn = column % 3;
+        int row = (mHighlightedCell / SUDOKU_SIZE);
+        int column = (mHighlightedCell % SUDOKU_SIZE);
+        int subsectionRow = SUDOKU_SIZE * SUDOKU_ROOT_SIZE * (row / SUDOKU_ROOT_SIZE);
+        int subsectionColumn = SUDOKU_ROOT_SIZE * (column / SUDOKU_ROOT_SIZE);
         int i;
 
-        //Draw row highlights
+        //Draw row and column highlights
         for(i = 0; i < SUDOKU_SIZE; i++) {
-            drawCellHighlight(canvas, (9 * row) + i);
+            drawCellHighlight(canvas, (SUDOKU_SIZE * row) + i);
+            drawCellHighlight(canvas, column + SUDOKU_SIZE*i);
         }
 
-        //Draw column highlights
-        drawCellHighlight(canvas, column);
+        //Draw subsection highlights
+        for(i = 0; i < SUDOKU_ROOT_SIZE; i++){
+            for (int j = 0; j < SUDOKU_ROOT_SIZE; j++)
+            {
+                drawCellHighlight(canvas, subsectionRow + SUDOKU_SIZE * i + subsectionColumn + j);
+            }
+        }
     }
 
     private void drawCellHighlight(Canvas canvas, int cellNumber)
