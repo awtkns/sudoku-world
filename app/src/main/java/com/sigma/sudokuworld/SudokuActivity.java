@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import static com.sigma.sudokuworld.KeyConstants.*;
+import android.widget.Toast;
 
 public class SudokuActivity extends AppCompatActivity {
 
@@ -122,35 +123,41 @@ public class SudokuActivity extends AppCompatActivity {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             boolean wasEventHandled = false;
+            int eventAction = event.getAction();
 
-            if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                int x = (int) event.getX();
-                int y = (int) event.getY();
+            //Through looking at every case, we can move the highlight to where our finger moves to
+            switch (eventAction) {
+                case MotionEvent.ACTION_DOWN:
+                case MotionEvent.ACTION_MOVE:
+                case MotionEvent.ACTION_UP:
+                    int x = (int) event.getX();
+                    int y = (int) event.getY();
 
-                //If touch in the bound of the grid
-                if (mSudokuGridView.getGridBounds().contains(x, y)) {
+                    //If touch in the bound of the grid
+                    if (mSudokuGridView.getGridBounds().contains(x, y)) {
 
-                    //Clear previous highlighted cell
-                    mSudokuGridView.clearHighlightedCell();
+                        //Clear previous highlighted cell
+                        mSudokuGridView.clearHighlightedCell();
 
-                    //Cell that was touched
-                    int cellNum = mSudokuGridView.getCellNumberFromCoordinates(x, y);
+                        //Cell that was touched
+                        int cellNum = mSudokuGridView.getCellNumberFromCoordinates(x, y);
 
-                    //If we have selected the incorrect cell, un highlight it
-                    if (cellNum == mSudokuGridView.getIncorrectCell())
-                    {mSudokuGridView.clearIncorrectCell(); }
+                        //If we have selected the incorrect cell, un highlight it
+                        if (cellNum == mSudokuGridView.getIncorrectCell()) {
+                            mSudokuGridView.clearIncorrectCell();
+                        }
 
-                    //The the cell is locked (ei: not one where you can change the number)
-                    if (mVocabGame.isInitialCell(cellNum)) {
-                    } else {
-                        mSudokuGridView.setHighlightedCell(cellNum);    //Set new highlighted cell
+                        //The the cell is locked (ei: not one where you can change the number)
+                        if (mVocabGame.isInitialCell(cellNum)) {
+                        } else {
+                            mSudokuGridView.setHighlightedCell(cellNum);    //Set new highlighted cell
+                        }
+
+                        //Force redraw view
+                        mSudokuGridView.invalidate();
+                        mSudokuGridView.performClick();
+                        wasEventHandled = true;
                     }
-
-                    //Force redraw view
-                    mSudokuGridView.invalidate();
-                    mSudokuGridView.performClick();
-                    wasEventHandled = true;
-                }
             }
 
             return wasEventHandled;
@@ -177,9 +184,18 @@ public class SudokuActivity extends AppCompatActivity {
             mVocabGame.setCellString(cellNumber, buttonValue);
             mSudokuGridView.setCellLabel(cellNumber, mVocabGame.getButtonString(buttonValue));
 
-            //Clears selected cells and redraws
-            mSudokuGridView.clearHighlightedCell();
-            mSudokuGridView.clearIncorrectCell();
+            //Check if the placed cell is right or if it is cleared
+            if (mVocabGame.isCellCorrect(cellNumber) || buttonValue == 0) {
+                //Clears selected cell
+                mSudokuGridView.clearHighlightedCell();
+                mSudokuGridView.clearIncorrectCell();
+            }
+            //Set cell to incorrect and allow player to input other values
+            else {
+                mSudokuGridView.setIncorrectCell(cellNumber);
+            }
+
+            //Redraw
             mSudokuGridView.invalidate();
         }
     };
@@ -203,7 +219,13 @@ public class SudokuActivity extends AppCompatActivity {
                 return;
             }
 
-
+            //Check if we have finished the game
+            if (mVocabGame.checkGame() == -1)
+            {
+                Toast.makeText(getBaseContext(),
+                        "Congratulations, You've Won!",
+                        Toast.LENGTH_LONG).show();
+            }
 
             //Checks if the answers are right and displays the first wrong cell (if any)
             int potentialIndex = mVocabGame.checkGame();

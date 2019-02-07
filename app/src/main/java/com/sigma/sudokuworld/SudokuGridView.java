@@ -10,7 +10,9 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class SudokuGridView extends View {
 
@@ -195,7 +197,7 @@ public class SudokuGridView extends View {
             int cx = i % SUDOKU_SIZE;   //x cell pos
             int cy = i / SUDOKU_SIZE;   //y cell pos
 
-            //If its the cell that's currently highlighted draw the highlight
+            // If its the cell that's currently INCORRECT, draw its highlight
             if(i == mIncorrectCell) {
                 Rect cellRect = new Rect(
                         mXOrigin + (cx * mCellSize),
@@ -207,6 +209,7 @@ public class SudokuGridView extends View {
                 canvas.drawRect(cellRect, mIncorrectCellFillPaint);
             }
 
+            //If its the cell that's currently highlighted draw the highlight
             else if (i == mHighlightedCell) {
                 Rect cellRect = new Rect(
                         mXOrigin + (cx * mCellSize),
@@ -214,16 +217,13 @@ public class SudokuGridView extends View {
                         mXOrigin + ((cx + 1) * mCellSize),
                         mYOrigin + ((cy + 1) * mCellSize)
                 );
-
                 canvas.drawRect(cellRect, mCellFilledPaint);
             }
-
-            // If its the cell that's currently INCORRECT, draw its highlight
-
 
             //If the cell has a label
             String label = mCellLabels[i];
             if (!label.equals("")) {
+
 
                 //Draws the cell fill for squares that cant be edited
                 if (label.charAt(0) == LOCKED_FLAG) {
@@ -257,8 +257,74 @@ public class SudokuGridView extends View {
                 //Reset text paint size
                 mTextPaint.setTextSize(defaultTextSize);
             }
+
+
+
+        }
+        highlightNeighbours(canvas);
+    }
+    private void highlightNeighbours(Canvas canvas){
+        //No cell is highlighted
+        if(mHighlightedCell == -1 ) {return;}
+
+
+        int row = (mHighlightedCell / SUDOKU_SIZE);
+        int column = (mHighlightedCell % SUDOKU_SIZE);
+        int subsectionRow = SUDOKU_SIZE * SUDOKU_ROOT_SIZE * (row / SUDOKU_ROOT_SIZE);
+        int subsectionColumn = SUDOKU_ROOT_SIZE * (column / SUDOKU_ROOT_SIZE);
+        int i;
+        List<Integer> visitedList = new ArrayList<Integer>();
+        visitedList.add(mHighlightedCell);
+
+        //Draw row and column highlights
+        for(i = 0; i < SUDOKU_SIZE; i++) {
+            //Row
+            int cellnumber = SUDOKU_SIZE * row + i;
+            if (cellnumber != mHighlightedCell)
+            {
+                drawCellHighlight(canvas, cellnumber);
+                visitedList.add(cellnumber);
+            }
+
+
+            //Column
+            cellnumber = column + i * SUDOKU_SIZE;
+            if (cellnumber != mHighlightedCell)
+            {
+                drawCellHighlight(canvas, cellnumber);
+                visitedList.add(cellnumber);
+            }
+        }
+
+        //Draw subsection highlights
+        for(i = 0; i < SUDOKU_ROOT_SIZE; i++){
+            for (int j = 0; j < SUDOKU_ROOT_SIZE; j++)
+            {
+                int cellnumber = subsectionRow + SUDOKU_SIZE * i + subsectionColumn + j;
+                if (!visitedList.contains(cellnumber)) {
+                    drawCellHighlight(canvas, cellnumber);
+                }
+            }
         }
     }
+
+
+    private void drawCellHighlight(Canvas canvas, int cellNumber)
+    {
+        int cx = cellNumber % SUDOKU_SIZE;   //x cell pos
+        int cy = cellNumber / SUDOKU_SIZE;   //y cell pos
+
+        Rect cellRect = new Rect(
+                mXOrigin + (cx * mCellSize),
+                mYOrigin + (cy * mCellSize),
+                mXOrigin + ((cx + 1) * mCellSize),
+                mYOrigin + ((cy + 1) * mCellSize)
+        );
+        Paint paint = new Paint(mGridPaint);
+        paint.setAlpha(15);
+        canvas.drawRect(cellRect, paint);
+    }
+
 
     public Rect getGridBounds() {
         return mGridBoundingRect;
