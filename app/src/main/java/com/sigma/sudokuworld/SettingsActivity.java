@@ -14,8 +14,8 @@ import com.sigma.sudokuworld.VocabGame.GameMode;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    RadioGroup mGameModeRadioGroup;
-    SeekBar mDifficultySeekBar;
+    private RadioGroup mGameModeRadioGroup;
+    private SeekBar mDifficultySeekBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

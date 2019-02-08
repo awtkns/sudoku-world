@@ -116,10 +116,6 @@ public class VocabSudokuModel {
         return model.getGameDifficulty();
     }
 
-    public void setGameMode(GameMode gameMode) {
-        this.gameMode = gameMode;
-    }
-
     //Returns the index of the first incorrect cell or -1 if the board is solved
     public int checkGame(){
         return model.isGameWon();

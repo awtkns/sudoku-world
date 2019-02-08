@@ -18,10 +18,10 @@ public class MenuActivity extends AppCompatActivity {
     private static final String TAG = "MENU";
     private static final int REQUEST_CODE = 1;
 
-    Button mPlayButton;
-    Button mContinueButton;
-    Button mSettingsButton;
-    SoundPlayer mSoundPlayer;
+    private Button mPlayButton;
+    private Button mContinueButton;
+    private Button mSettingsButton;
+    private SoundPlayer mSoundPlayer;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
