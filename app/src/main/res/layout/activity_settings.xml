@@ -10,7 +10,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="164dp"
+        tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp">
 
         <LinearLayout
@@ -22,35 +22,37 @@
                 android:id="@+id/textView11"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/settingsTitle" />
+                android:text="@string/settingsTitle"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
             <TextView
                 android:id="@+id/textView9"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/gameModeLabel" />
+                android:text="@string/gameModeLabel"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
             <RadioGroup
-                android:id="@+id/modeSelector"
+                android:id="@+id/gameModeRadioGroup"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:checkedButton="@+id/nativeMode">
+                android:checkedButton="@+id/nativeModeRadioButton">
 
                 <RadioButton
-                    android:id="@+id/nativeMode"
+                    android:id="@+id/nativeModeRadioButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/nativeMode" />
 
                 <RadioButton
-                    android:id="@+id/foreignMode"
+                    android:id="@+id/foreignModeRadioButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/foreignMode" />
 
                 <RadioButton
-                    android:id="@+id/numbersMode"
+                    android:id="@+id/numbersModeRadioButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -63,7 +65,8 @@
                 android:id="@+id/difficultyLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/difficultyLabel" />
+                android:text="@string/difficultyLabel"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -103,10 +106,21 @@
                 android:max="2"
                 android:progress="1" />
 
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/wordListHeader"
+                android:textAlignment="textStart"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:visibility="gone" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:visibility="gone"
                 tools:layout_editor_absoluteX="8dp"
                 tools:layout_editor_absoluteY="8dp">
 
@@ -247,6 +261,14 @@
                         android:text="Name" />
 
                     <EditText
+                        android:id="@+id/foreign9"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="textPersonName"
+                        android:text="Name" />
+
+                    <EditText
                         android:id="@+id/foreign6"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -270,13 +292,6 @@
                         android:inputType="textPersonName"
                         android:text="Name" />
 
-                    <EditText
-                        android:id="@+id/foreign9"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:inputType="textPersonName"
-                        android:text="Name" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -284,7 +299,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <Button
                     android:id="@+id/defaultWordList"
