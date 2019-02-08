@@ -83,18 +83,6 @@ public class VocabSudokuModel {
         }
     }
 
-    public String translateString(String string) {
-        if (gameMode == GameMode.NUMBERS) {
-            return string;
-        } else if (foreignWordsMap.indexOfValue(string) != -1) {
-            int index = foreignWordsMap.indexOfValue(string);
-            return nativeWordsMap.valueAt(index);
-        } else if (nativeWordsMap.indexOfValue(string) != -1) {
-            int index = nativeWordsMap.indexOfValue(string);
-            return foreignWordsMap.valueAt(index);
-        } else return "Failed translation";
-    }
-
     public boolean isCellCorrect(int cell){
         return model.isCellCorrect(cell);
     }

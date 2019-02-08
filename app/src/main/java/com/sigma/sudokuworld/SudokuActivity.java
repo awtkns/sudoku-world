@@ -145,10 +145,7 @@ public class SudokuActivity extends AppCompatActivity {
             switch (eventAction) {
                 case MotionEvent.ACTION_MOVE:
                 case MotionEvent.ACTION_UP:
-                    touchHandled = true;
                 case MotionEvent.ACTION_DOWN:
-
-
                     int x = (int) event.getX();
                     int y = (int) event.getY();
 
@@ -170,6 +167,9 @@ public class SudokuActivity extends AppCompatActivity {
                         //Set new highlighted cell if its not a locked cell
                         if (!mVocabGame.isLockedCell(cellNum)) {
                             mSudokuGridView.setHighlightedCell(cellNum);
+
+                            //No long press
+                            touchHandled = true;
                         }
 
                         //Force redraw view
@@ -186,7 +186,7 @@ public class SudokuActivity extends AppCompatActivity {
         @Override
         public boolean onLongClick(View v) {
             if (mVocabGame.isLockedCell(cellTouched)) {
-                String text = mVocabGame.translateString(mVocabGame.getCellString(cellTouched, true));
+                String text = mVocabGame.getCellString(cellTouched, false);
                 Toast.makeText(getBaseContext(), text, Toast.LENGTH_SHORT).show();
             }
 
