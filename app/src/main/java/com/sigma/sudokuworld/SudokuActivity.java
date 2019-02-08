@@ -1,8 +1,11 @@
 package com.sigma.sudokuworld;
 
 import android.content.Intent;
+import android.nfc.Tag;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -24,6 +27,7 @@ public class SudokuActivity extends AppCompatActivity {
     private Button mClearCellButton;
     private Button mCheckAnswerButton;
     private SoundPlayer mSoundPlayer;
+    private int cellTouched;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,10 +73,13 @@ public class SudokuActivity extends AppCompatActivity {
             }
         }
 
-
         //Initializing Sudoku grid
         mSudokuGridView = findViewById(R.id.sudokuGrid_view);
         mSudokuGridView.setOnTouchListener(onSudokuGridTouchListener);
+
+        if (mVocabGame.getGameMode() != GameMode.NUMBERS) {
+            mSudokuGridView.setOnLongClickListener(longClickListener);
+        }
 
 
         //Initializing buttons
@@ -131,14 +138,17 @@ public class SudokuActivity extends AppCompatActivity {
     private SudokuGridView.OnTouchListener onSudokuGridTouchListener = new SudokuGridView.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-            boolean wasEventHandled = false;
             int eventAction = event.getAction();
+            boolean touchHandled = false;
 
             //Through looking at every case, we can move the highlight to where our finger moves to
             switch (eventAction) {
-                case MotionEvent.ACTION_DOWN:
                 case MotionEvent.ACTION_MOVE:
                 case MotionEvent.ACTION_UP:
+                    touchHandled = true;
+                case MotionEvent.ACTION_DOWN:
+
+
                     int x = (int) event.getX();
                     int y = (int) event.getY();
 
@@ -150,6 +160,7 @@ public class SudokuActivity extends AppCompatActivity {
 
                         //Cell that was touched
                         int cellNum = mSudokuGridView.getCellNumberFromCoordinates(x, y);
+                        cellTouched = cellNum;
 
                         //If we have selected the incorrect cell, un highlight it
                         if (cellNum == mSudokuGridView.getIncorrectCell()) {
@@ -164,11 +175,22 @@ public class SudokuActivity extends AppCompatActivity {
                         //Force redraw view
                         mSudokuGridView.invalidate();
                         mSudokuGridView.performClick();
-                        wasEventHandled = true;
                     }
             }
 
-            return wasEventHandled;
+            return touchHandled;
+        }
+    };
+
+    SudokuGridView.OnLongClickListener longClickListener = new SudokuGridView.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View v) {
+            if (mVocabGame.isLockedCell(cellTouched)) {
+                String text = mVocabGame.translateString(mVocabGame.getCellString(cellTouched, true));
+                Toast.makeText(getBaseContext(), text, Toast.LENGTH_SHORT).show();
+            }
+
+            return true;
         }
     };
 
