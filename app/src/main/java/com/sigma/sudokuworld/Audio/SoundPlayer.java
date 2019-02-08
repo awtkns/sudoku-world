@@ -8,6 +8,7 @@ import android.media.SoundPool;
 public class SoundPlayer {
 
     private static SoundPool gameSounds;
+    private static AudioAttributes audioAttributes;
     private static int emptyButtonSound;
     private static int placeCellSound;
     private static int wrongSound;
@@ -16,7 +17,7 @@ public class SoundPlayer {
 
     public  SoundPlayer(Context context){
 
-        AudioAttributes audioAttributes = new AudioAttributes.Builder()
+        audioAttributes = new AudioAttributes.Builder()
                 .setUsage(AudioAttributes.USAGE_GAME)
                 .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
                 .build();
