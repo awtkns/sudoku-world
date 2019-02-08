@@ -24,7 +24,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         //HIDE STATUS BAR
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        
+
         setContentView(R.layout.activity_settings);
 
         mGameModeRadioGroup = findViewById(R.id.gameModeRadioGroup);

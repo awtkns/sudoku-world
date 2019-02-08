@@ -27,7 +27,10 @@ public class MenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //HIDE STATUS BAR
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_menu);
 
         ImageView imageView = findViewById(R.id.menuAVD);
