@@ -11,6 +11,7 @@
 
     <!--Settings Menu-->
     <string name="settingsTitle">Settings</string>
+    <string name="wordListHeader">Word List</string>
     <string name="nativeWords">Native Words</string>
     <string name="foreignWords">Foreign Words</string>
     <string name="gameModeLabel">Game Mode</string>
