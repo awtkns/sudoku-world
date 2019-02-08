@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 
 import static com.sigma.sudokuworld.Persistence.KeyConstants.*;
@@ -32,6 +33,10 @@ public class SudokuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //HIDE STATUS BAR
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_sudoku);
 
         if (savedInstanceState != null) {
@@ -262,6 +267,9 @@ public class SudokuActivity extends AppCompatActivity {
                     mSudokuGridView.clearHighlightedCell();
                     mSudokuGridView.invalidate();
                     mSoundPlayer.playCorrectSound();
+                    Toast.makeText(getBaseContext(),
+                            "The selected cell is correct!",
+                            Toast.LENGTH_LONG).show();
                 }
 
                 //Cell is wrong

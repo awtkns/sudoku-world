@@ -90,7 +90,7 @@ public class SudokuGridView extends View {
         mIncorrectCellFillPaint.setStyle(Paint.Style.FILL);
     }
 
-    @Override   //This is for accessibility
+    @Override   //This is for accessibility (REQUIRED BY ANDRIOD STUDIO)
     public boolean performClick() {
         return super.performClick();
     }
@@ -140,6 +140,7 @@ public class SudokuGridView extends View {
         int size = Math.min(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.getSize(heightMeasureSpec));
         setMeasuredDimension(size, size);
     }
+
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -267,6 +268,9 @@ public class SudokuGridView extends View {
     }
 
     private void highlightNeighbours(Canvas canvas){
+        //This method will highlight all the neighbours of the currently selected cell
+        //Neighbours refer to cells in the same column, row, and section as the selected cell
+
         //No cell is highlighted
         if(mHighlightedCell == -1 ) {return;}
 
@@ -314,6 +318,8 @@ public class SudokuGridView extends View {
 
     private void drawCellHighlight(Canvas canvas, int cellNumber)
     {
+        //Draws the individual highlight of a cell
+
         int cx = cellNumber % SUDOKU_SIZE;   //x cell pos
         int cy = cellNumber / SUDOKU_SIZE;   //y cell pos
 
