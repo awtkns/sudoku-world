@@ -240,6 +240,9 @@ public class SudokuActivity extends AppCompatActivity {
                     mSudokuGridView.clearHighlightedCell();
                     mSudokuGridView.invalidate();
                     mSoundPlayer.playCorrectSound();
+                    Toast.makeText(getBaseContext(),
+                            "The selected cell is correct!",
+                            Toast.LENGTH_LONG).show();
                 }
 
                 //Cell is wrong
