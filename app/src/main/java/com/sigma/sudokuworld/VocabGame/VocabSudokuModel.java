@@ -43,7 +43,7 @@ public class VocabSudokuModel {
         }
     }
 
-    public String getCellString(int cellNumber) {
+    public String getCellString(int cellNumber, boolean isCellLocked) {
         //Normal Mode
         if (gameMode == GameMode.NUMBERS){
             //Makes the cell blank if its value is 0
@@ -56,11 +56,14 @@ public class VocabSudokuModel {
         }
         else if (gameMode == GameMode.NATIVE) {
             //Native mode
-            return nativeWordsMap.valueAt(model.getCellValue(cellNumber));
+            if(isCellLocked) {return nativeWordsMap.valueAt(model.getCellValue(cellNumber));}
+            return foreignWordsMap.valueAt(model.getCellValue(cellNumber));
+
         }
 
         //gameMode == GameMode.foreignMode
-        return foreignWordsMap.valueAt(model.getCellValue(cellNumber));
+        if(isCellLocked) {return foreignWordsMap.valueAt(model.getCellValue(cellNumber));}
+        return nativeWordsMap.valueAt(model.getCellValue(cellNumber));
     }
 
     public void setCellString(int cellNumber, int value) {
@@ -80,7 +83,6 @@ public class VocabSudokuModel {
             return nativeWordsMap.valueAt(value);
         }
     }
-
 
     public boolean isCellCorrect(int cell){
         return model.isCellCorrect(cell);

@@ -11,6 +11,7 @@ import android.widget.ImageView;
 
 import com.sigma.sudokuworld.Persistence.KeyConstants;
 import com.sigma.sudokuworld.Persistence.PersistenceService;
+import com.sigma.sudokuworld.Audio.SoundPlayer;
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -20,6 +21,7 @@ public class MenuActivity extends AppCompatActivity {
     Button mPlayButton;
     Button mContinueButton;
     Button mSettingsButton;
+    SoundPlayer mSoundPlayer;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -41,6 +43,7 @@ public class MenuActivity extends AppCompatActivity {
                 Bundle settings = PersistenceService.loadSettingsData(MenuActivity.this);
                 intent.putExtras(settings);
                 intent.putExtra(KeyConstants.CONTINUE_KEY, false);
+                mSoundPlayer.playPlaceCellSound();
                 startActivity(intent);
             }
         });
@@ -53,9 +56,11 @@ public class MenuActivity extends AppCompatActivity {
                     Intent intent = new Intent(MenuActivity.this, SudokuActivity.class);
                     intent.putExtras(PersistenceService.loadGameData(MenuActivity.this));
                     intent.putExtra(KeyConstants.CONTINUE_KEY, true);
+                    mSoundPlayer.playPlaceCellSound();
                     Log.d(TAG, "onContinueClick: starting game with data");
                     startActivity(intent);
                 } catch (Exception e) {
+                    mSoundPlayer.playPlaceCellSound();
                     Log.d(TAG, "onContinueClick: no game data");
                 }
             }
@@ -66,9 +71,18 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MenuActivity.this, SettingsActivity.class);
+                mSoundPlayer.playPlaceCellSound();
                 startActivityForResult(intent, REQUEST_CODE);
             }
         });
+
+        mSoundPlayer = new SoundPlayer(this);
+    }
+
+    //So the splash doesn't replay every time / the activity simply gets minimized on back press
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
     }
 }
 

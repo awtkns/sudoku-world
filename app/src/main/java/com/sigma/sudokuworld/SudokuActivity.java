@@ -14,6 +14,7 @@ import com.sigma.sudokuworld.Persistence.PersistenceService;
 import com.sigma.sudokuworld.VocabGame.GameDifficulty;
 import com.sigma.sudokuworld.VocabGame.GameMode;
 import com.sigma.sudokuworld.VocabGame.VocabSudokuModel;
+import com.sigma.sudokuworld.Audio.SoundPlayer;
 
 public class SudokuActivity extends AppCompatActivity {
 
@@ -22,6 +23,7 @@ public class SudokuActivity extends AppCompatActivity {
     Button[] sudokuButtons;
     Button mClearCellButton;
     Button mCheckAnswerButton;
+    SoundPlayer mSoundPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +97,8 @@ public class SudokuActivity extends AppCompatActivity {
 
         mCheckAnswerButton = findViewById(R.id.checkAnswerButton);
         mCheckAnswerButton.setOnClickListener(onCheckAnswerButtonClickListener);
+
+        mSoundPlayer = new SoundPlayer(this);
 
         updateAllViewLabels();
     }
@@ -183,20 +187,38 @@ public class SudokuActivity extends AppCompatActivity {
                 }
             }
             int cellNumber = mSudokuGridView.getHighlightedCell();
-            if (cellNumber == -1){ return; }
+
+            //No cell is highlighted
+            if (cellNumber == -1){
+                mSoundPlayer.playEmptyButtonSound();
+                return;
+            }
 
             mVocabGame.setCellString(cellNumber, buttonValue);
             mSudokuGridView.setCellLabel(cellNumber, mVocabGame.getButtonString(buttonValue));
 
-            //Check if the placed cell is right or if it is cleared
-            if (mVocabGame.isCellCorrect(cellNumber) || buttonValue == 0) {
+
+            //Clear cell has been pressed
+            if (buttonValue == 0)
+            {
+                mSudokuGridView.clearHighlightedCell();
+                mSudokuGridView.clearIncorrectCell();
+                mSoundPlayer.playClearCellSound();
+            }
+
+            //Correct number is placed in cell
+            else if (mVocabGame.isCellCorrect(cellNumber)) {
                 //Clears selected cell
                 mSudokuGridView.clearHighlightedCell();
                 mSudokuGridView.clearIncorrectCell();
+                mSoundPlayer.playPlaceCellSound();
             }
-            //Set cell to incorrect and allow player to input other values
+
+
+            //Incorrect value has been placed in cell
             else {
                 mSudokuGridView.setIncorrectCell(cellNumber);
+                mSoundPlayer.playWrongSound();
             }
 
             //Redraw
@@ -211,24 +233,23 @@ public class SudokuActivity extends AppCompatActivity {
             //Check if cell is selected
             //If a cell is selected, check if that cell is correct
             int highlightedCell = mSudokuGridView.getHighlightedCell();
-            if (highlightedCell != -1){
+            if (highlightedCell != -1)
+            {
+                //Cell is right
                 if (mVocabGame.isCellCorrect(highlightedCell)){
-                    int i =0;
                     mSudokuGridView.clearHighlightedCell();
                     mSudokuGridView.invalidate();
-                    return;
+                    mSoundPlayer.playCorrectSound();
                 }
-                mSudokuGridView.setIncorrectCell(highlightedCell);
+
+                //Cell is wrong
+                else {
+                    mSudokuGridView.setIncorrectCell(highlightedCell);
+                    mSoundPlayer.playWrongSound();
+
+                }
                 mSudokuGridView.invalidate();
                 return;
-            }
-
-            //Check if we have finished the game
-            if (mVocabGame.checkGame() == -1)
-            {
-                Toast.makeText(getBaseContext(),
-                        "Congratulations, You've Won!",
-                        Toast.LENGTH_LONG).show();
             }
 
             //Checks if the answers are right and displays the first wrong cell (if any)
@@ -238,13 +259,17 @@ public class SudokuActivity extends AppCompatActivity {
 
             //Case where answer is correct
             if (potentialIndex == -1) {
-                int i = 0;
+                mSoundPlayer.playCorrectSound();
+                Toast.makeText(getBaseContext(),
+                        "Congratulations, You've Won!",
+                        Toast.LENGTH_LONG).show();
             }
 
             //Case where answer is incorrect
             else {
                 mSudokuGridView.setIncorrectCell(potentialIndex);
                 mSudokuGridView.setHighlightedCell(potentialIndex);
+                mSoundPlayer.playWrongSound();
             }
 
             //Redraw grid
@@ -254,12 +279,11 @@ public class SudokuActivity extends AppCompatActivity {
 
     private void updateAllViewLabels() {
         for (int cellNumber = 0; cellNumber < 81; cellNumber++) {
-            String label = mVocabGame.getCellString(cellNumber);
+            String label = mVocabGame.getCellString(cellNumber , mVocabGame.isLockedCell(cellNumber));
 
             if (mVocabGame.isLockedCell(cellNumber)) {
                 label = SudokuGridView.LOCKED_FLAG + label;
             }
-
             mSudokuGridView.setCellLabel(cellNumber, label);
         }
 
@@ -269,7 +293,6 @@ public class SudokuActivity extends AppCompatActivity {
     /**
      * Bundles all information needed to save the game.
      * Info on what needs to be in the "save" bundle can be found in KeyConstants
-     * @return game save bundle
      */
     private void makeSaveBundle(Bundle data) {
         data.putSerializable(DIFFICULTY_KEY, mVocabGame.getGameDifficulty());
