@@ -88,7 +88,7 @@ class SudokuRobot {
 
 
         //Remove pre-existing sub-section values
-        //The below calculations will be coordinants for the top left index of each sub-section
+        //The below calculations will be coordinates for the top left index of each sub-section
         int subSectionRow = mSudokuSubsectionSize*(row / mSudokuSubsectionSize);
         int subSectionColumn = mSudokuSubsectionSize*(column / mSudokuSubsectionSize);
         for ( int i = 0; i < mSudokuSubsectionSize; i++) {
@@ -199,7 +199,7 @@ class SudokuRobot {
             cell.setRestrictedValue(restrictedValue);
 
             deletedNodeList[deletedNodeIndex] = cell;
-            //Reseting all cells that have been emptied
+            //Resetting all cells that have been emptied
             for (int i = 0; i <= deletedNodeIndex; i++) {
                 deletedNodeList[i].clearCurrValue();
             }

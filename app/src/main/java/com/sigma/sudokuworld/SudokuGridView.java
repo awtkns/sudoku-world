@@ -22,27 +22,27 @@ public class SudokuGridView extends View {
     private static final int SUDOKU_SIZE = 9;
     private static final int SUDOKU_ROOT_SIZE = 3;
 
-    int mViewWidth;
-    int mViewHeight;
-    int mXOrigin;
-    int mYOrigin;
-    int mSquareSize;
-    int mCellSize;
+    private int mViewWidth;
+    private int mViewHeight;
+    private int mXOrigin;
+    private int mYOrigin;
+    private int mSquareSize;
+    private int mCellSize;
 
-    Rect mGridBoundingRect;
+    private Rect mGridBoundingRect;
 
-    Paint mGridPaint;
-    Paint mBoldPaint;
-    Paint mCellFilledPaint;
-    Paint mLockedCellFillPaint;
-    Paint mIncorrectCellFillPaint;
-    Paint mTextPaint;
+    private Paint mGridPaint;
+    private Paint mBoldPaint;
+    private Paint mCellFilledPaint;
+    private Paint mLockedCellFillPaint;
+    private Paint mIncorrectCellFillPaint;
+    private Paint mTextPaint;
 
-    Float mTextPaintTextHeight;
+    private Float mTextPaintTextHeight;
 
-    String[] mCellLabels;       //Labels for every cell in grid
-    int mIncorrectCell = -1;    //Points to first incorrect cell to highlight. -1 = no cell
-    int mHighlightedCell = -1;  //Points to cell to draw highlight in. -1 = no cell
+    private String[] mCellLabels;       //Labels for every cell in grid
+    private int mIncorrectCell = -1;    //Points to first incorrect cell to highlight. -1 = no cell
+    private int mHighlightedCell = -1;  //Points to cell to draw highlight in. -1 = no cell
 
     public SudokuGridView(Context context) {
         this(context, null);
@@ -130,7 +130,7 @@ public class SudokuGridView extends View {
     }
 
     /**
-     * Tell the layout manager the perfered size for the view.
+     * Tell the layout manager the preferred size for the view.
      * Makes the view square.
      */
     @Override
@@ -280,26 +280,26 @@ public class SudokuGridView extends View {
         int subsectionRow = SUDOKU_SIZE * SUDOKU_ROOT_SIZE * (row / SUDOKU_ROOT_SIZE);
         int subsectionColumn = SUDOKU_ROOT_SIZE * (column / SUDOKU_ROOT_SIZE);
         int i;
-        List<Integer> visitedList = new ArrayList<Integer>();
+        List<Integer> visitedList = new ArrayList<>();
         visitedList.add(mHighlightedCell);
 
         //Draw row and column highlights
         for(i = 0; i < SUDOKU_SIZE; i++) {
             //Row
-            int cellnumber = SUDOKU_SIZE * row + i;
-            if (cellnumber != mHighlightedCell)
+            int cellNumber = SUDOKU_SIZE * row + i;
+            if (cellNumber != mHighlightedCell)
             {
-                drawCellHighlight(canvas, cellnumber);
-                visitedList.add(cellnumber);
+                drawCellHighlight(canvas, cellNumber);
+                visitedList.add(cellNumber);
             }
 
 
             //Column
-            cellnumber = column + i * SUDOKU_SIZE;
-            if (cellnumber != mHighlightedCell)
+            cellNumber = column + i * SUDOKU_SIZE;
+            if (cellNumber != mHighlightedCell)
             {
-                drawCellHighlight(canvas, cellnumber);
-                visitedList.add(cellnumber);
+                drawCellHighlight(canvas, cellNumber);
+                visitedList.add(cellNumber);
             }
         }
 
@@ -307,9 +307,9 @@ public class SudokuGridView extends View {
         for(i = 0; i < SUDOKU_ROOT_SIZE; i++){
             for (int j = 0; j < SUDOKU_ROOT_SIZE; j++)
             {
-                int cellnumber = subsectionRow + SUDOKU_SIZE * i + subsectionColumn + j;
-                if (!visitedList.contains(cellnumber)) {
-                    drawCellHighlight(canvas, cellnumber);
+                int cellNumber = subsectionRow + SUDOKU_SIZE * i + subsectionColumn + j;
+                if (!visitedList.contains(cellNumber)) {
+                    drawCellHighlight(canvas, cellNumber);
                 }
             }
         }
@@ -340,7 +340,7 @@ public class SudokuGridView extends View {
     }
 
     /**
-     * Retuns the cellnumber that is closest to the coordinate.
+     * Returns the cell number that is closest to the coordinate.
      * Used to find out what cell was touched
      * @param x cord
      * @param y cord

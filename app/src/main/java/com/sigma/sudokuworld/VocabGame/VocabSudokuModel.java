@@ -70,7 +70,6 @@ public class VocabSudokuModel {
         model.setCellValue(cellNumber, value);
     }
 
-
     public String getButtonString(int value){
         if (value == 0) { return "";}
         if (gameMode == GameMode.NUMBERS){ return String.valueOf(value); }
@@ -82,6 +81,18 @@ public class VocabSudokuModel {
         else{
             return nativeWordsMap.valueAt(value);
         }
+    }
+
+    public String translateString(String string) {
+        if (gameMode == GameMode.NUMBERS) {
+            return string;
+        } else if (foreignWordsMap.indexOfValue(string) != -1) {
+            int index = foreignWordsMap.indexOfValue(string);
+            return nativeWordsMap.valueAt(index);
+        } else if (nativeWordsMap.indexOfValue(string) != -1) {
+            int index = nativeWordsMap.indexOfValue(string);
+            return foreignWordsMap.valueAt(index);
+        } else return "Failed translation";
     }
 
     public boolean isCellCorrect(int cell){
@@ -114,10 +125,6 @@ public class VocabSudokuModel {
 
     public GameDifficulty getGameDifficulty(){
         return model.getGameDifficulty();
-    }
-
-    public void setGameMode(GameMode gameMode) {
-        this.gameMode = gameMode;
     }
 
     //Returns the index of the first incorrect cell or -1 if the board is solved

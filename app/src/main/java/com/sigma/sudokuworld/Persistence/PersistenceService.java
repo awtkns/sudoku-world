@@ -59,6 +59,7 @@ public abstract class PersistenceService {
         String[] nativeWords = data.getStringArray(NATIVE_WORDS_KEY);
         String[] foreignWords = data.getStringArray(FOREIGN_WORDS_KEY);
 
+        assert cellValues != null;
         int arraySize = cellValues.length;
         int wordListSize = nativeWords.length;
 
@@ -155,7 +156,7 @@ public abstract class PersistenceService {
         String[] foreignWords = data.getStringArray(FOREIGN_WORDS_KEY);
 
         //Try wordList
-        int wordListSize = 0;
+        int wordListSize;
         try {
             wordListSize = nativeWords.length;
         } catch (NullPointerException e) {
