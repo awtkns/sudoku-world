@@ -1,5 +1,19 @@
 <h1>SudokuWorld</h1>
-<h2>When creating a new branch:</h2>
- - name the branch: \<issue#>-\<name>
- - doing so will link the branch to an issue so they can both be resolved when doing a merge
- - after creating a branch in gitlab pull the branch in the IDE
+<h3>Iteration One Core Feature List</h3>
+<ul>
+    <li>Soduko game core gameplay</li>
+    <li>Word soduko game core gameplay</li>
+    <li><b>Persistent Storage</b>
+        <ul>
+            <li>Game saved on exit and rotate</li>
+            <li>Settings saved on exit and rotate</li>
+        </ul>
+    </li>
+    <li>Abilitly to change game settings:
+        <ul>
+            <li>Game Difficulty</li>
+            <li>Game Mode</li>
+        </ul>
+    </li>
+    <li>Unique <b>Puzzle Generation</n>
+</ul>
