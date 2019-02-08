@@ -37,7 +37,7 @@ public class MenuActivity extends AppCompatActivity {
         AnimatedVectorDrawable animatedVectorDrawable = (AnimatedVectorDrawable) imageView.getDrawable();
         animatedVectorDrawable.start();
 
-        //On play button click go to sudoku activity
+        //Send currently selected settings into Sudoku Activity
         mPlayButton = findViewById(R.id.playButton);
         mPlayButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,6 +53,7 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
+        //Load saved game data into Sudoku Activity
         mContinueButton = findViewById(R.id.continueButton);
         mContinueButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,6 +72,8 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
+
+        //Send current settings into Settings activity
         mSettingsButton = findViewById(R.id.settingsButton);
         mSettingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,9 +87,10 @@ public class MenuActivity extends AppCompatActivity {
         mSoundPlayer = new SoundPlayer(this);
     }
 
-    //So the splash doesn't replay every time / the activity simply gets minimized on back press
+
     @Override
     public void onBackPressed() {
+        //So the splash doesn't replay every time / the activity simply gets minimized on back press
         moveTaskToBack(true);
     }
 }
