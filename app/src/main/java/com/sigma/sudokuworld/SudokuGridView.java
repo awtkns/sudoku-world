@@ -319,7 +319,7 @@ public class SudokuGridView extends View {
     private void drawCellHighlight(Canvas canvas, int cellNumber)
     {
         //Draws the individual highlight of a cell
-        
+
         int cx = cellNumber % SUDOKU_SIZE;   //x cell pos
         int cy = cellNumber / SUDOKU_SIZE;   //y cell pos
 

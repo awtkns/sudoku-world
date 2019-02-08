@@ -17,6 +17,7 @@ public class SoundPlayer {
 
     public  SoundPlayer(Context context){
 
+        //Initializing our pool of sounds
         audioAttributes = new AudioAttributes.Builder()
                 .setUsage(AudioAttributes.USAGE_GAME)
                 .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
@@ -27,6 +28,8 @@ public class SoundPlayer {
                 .setMaxStreams(2)
                 .build();
 
+        
+        //Linking our sounds with the right files in /raw
         emptyButtonSound = gameSounds.load(context, R.raw.emptybutton, 1);
         placeCellSound = gameSounds.load(context, R.raw.placecell, 1);
         wrongSound = gameSounds.load(context, R.raw.wrong, 1);
