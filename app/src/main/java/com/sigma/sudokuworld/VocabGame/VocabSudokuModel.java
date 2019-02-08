@@ -84,7 +84,6 @@ public class VocabSudokuModel {
     }
 
     public String translateString(String string) {
-        String translation;
         if (gameMode == GameMode.NUMBERS) {
             return string;
         } else if (foreignWordsMap.indexOfValue(string) != -1) {
