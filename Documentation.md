@@ -38,3 +38,6 @@ the definitions for these words in their native language.
 
 - User Story: As a player, I would like to be able to edit my grid in case I input an incorrect value in the grid cell.
 - Example: The player is able to clear cells by selecting which cell he wants to clear and using the "clear cell" button.<br/><br/>
+
+- User Story: As a language learner, i would like to know the transation of some words incase i forget while playing.
+- Example: Through a long press of a locked cell, a toast displaying that cells translation will appear<br/><br/>
