@@ -4,19 +4,34 @@ import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.drawable.AnimatedVectorDrawable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class SplashActivity extends AppCompatActivity {
-
+    ConstraintLayout animationLayout;
+    Timer timer = new Timer();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+
+        //If we click the layout we can skip the animation and cancel the timer
+        animationLayout = findViewById(R.id.animationLayout);
+        animationLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                timer.cancel();
+                startActivity(new Intent(SplashActivity.this, MenuActivity.class));
+            }
+        });
+
 
         ImageView imageView = findViewById(R.id.sigmaAnimation);
         final AnimatedVectorDrawable animatedVectorDrawable = (AnimatedVectorDrawable) imageView.getDrawable();
@@ -29,7 +44,7 @@ public class SplashActivity extends AppCompatActivity {
             }
         };
 
-        TimerTask exitSplashTask = new TimerTask() {
+        final TimerTask exitSplashTask = new TimerTask() {
             @Override
             public void run() {
                 Intent i = new Intent(SplashActivity.this, MenuActivity.class);
@@ -37,9 +52,9 @@ public class SplashActivity extends AppCompatActivity {
             }
         };
 
-        Timer timer = new Timer();
-        timer.schedule(animationStartTask, 0); //SHOULD BE 1500
-        timer.schedule(exitSplashTask, 0);     //SHOULD BE 5000
+        timer.schedule(animationStartTask, 500); //SHOULD BE 1500
+        timer.schedule(exitSplashTask, 4000);     //SHOULD BE 5000
+
     }
 
     /**
@@ -50,4 +65,6 @@ public class SplashActivity extends AppCompatActivity {
         super.onPause();
         finish();
     }
+
+
 }
