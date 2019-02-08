@@ -2,7 +2,7 @@ package com.sigma.sudokuworld.Audio;
 import com.sigma.sudokuworld.R;
 
 import android.content.Context;
-import android.media.AudioManager;
+import android.media.AudioAttributes;
 import android.media.SoundPool;
 
 public class SoundPlayer {
@@ -15,7 +15,16 @@ public class SoundPlayer {
     private static int clearCellSound;
 
     public  SoundPlayer(Context context){
-        gameSounds = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
+
+        AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_GAME)
+                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                .build();
+
+        gameSounds = new SoundPool.Builder()
+                .setAudioAttributes(audioAttributes)
+                .setMaxStreams(2)
+                .build();
 
         emptyButtonSound = gameSounds.load(context, R.raw.emptybutton, 1);
         placeCellSound = gameSounds.load(context, R.raw.placecell, 1);
