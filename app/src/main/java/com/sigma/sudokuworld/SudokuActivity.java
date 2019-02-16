@@ -22,7 +22,6 @@ public class SudokuActivity extends AppCompatActivity {
     private VocabSudokuModel mVocabGame;
     private SudokuGridView mSudokuGridView;
     private Button[] mInputButtons;
-    private Button mClearCellButton;
     private SoundPlayer mSoundPlayer;
     private int cellTouched;
 
@@ -99,9 +98,6 @@ public class SudokuActivity extends AppCompatActivity {
             //Links the listener to the button
             mInputButtons[i].setOnClickListener(onButtonClickListener);
         }
-
-        mClearCellButton = findViewById(R.id.clearCellButton);
-        mClearCellButton.setOnClickListener(onButtonClickListener);
 
         mSoundPlayer = new SoundPlayer(this);
 
@@ -200,49 +196,36 @@ public class SudokuActivity extends AppCompatActivity {
 
             //Loop through all our possible buttons to see which button is clicked
             //Set buttonValue to the corresponding button
-            //If no button is found in for loop, clear button is being called so buttonValue = 0
             for (int buttonIndex = 0; buttonIndex < 9; buttonIndex++) {
                 if (button == mInputButtons[buttonIndex]){
                     buttonValue = buttonIndex + 1;
                 }
             }
+
             int cellNumber = mSudokuGridView.getHighlightedCell();
 
             //No cell is highlighted
             if (cellNumber == -1){
                 mSoundPlayer.playEmptyButtonSound();
-                return;
+            } else {
+                mVocabGame.setCellString(cellNumber, buttonValue);
+                mSudokuGridView.setCellLabel(cellNumber, mVocabGame.getButtonString(buttonValue));
+
+
+                if (mVocabGame.isCellCorrect(cellNumber)) {
+                    //Correct number is placed in cell
+                    mSudokuGridView.clearHighlightedCell();
+                    mSudokuGridView.clearIncorrectCell();
+                    mSoundPlayer.playPlaceCellSound();
+                } else {
+                    //Incorrect value has been placed in cell
+                    mSudokuGridView.setIncorrectCell(cellNumber);
+                    mSoundPlayer.playWrongSound();
+                }
+
+                //Redraw
+                mSudokuGridView.invalidate();
             }
-
-            mVocabGame.setCellString(cellNumber, buttonValue);
-            mSudokuGridView.setCellLabel(cellNumber, mVocabGame.getButtonString(buttonValue));
-
-
-            //Clear cell has been pressed
-            if (buttonValue == 0)
-            {
-                mSudokuGridView.clearHighlightedCell();
-                mSudokuGridView.clearIncorrectCell();
-                mSoundPlayer.playClearCellSound();
-            }
-
-            //Correct number is placed in cell
-            else if (mVocabGame.isCellCorrect(cellNumber)) {
-                //Clears selected cell
-                mSudokuGridView.clearHighlightedCell();
-                mSudokuGridView.clearIncorrectCell();
-                mSoundPlayer.playPlaceCellSound();
-            }
-
-
-            //Incorrect value has been placed in cell
-            else {
-                mSudokuGridView.setIncorrectCell(cellNumber);
-                mSoundPlayer.playWrongSound();
-            }
-
-            //Redraw
-            mSudokuGridView.invalidate();
         }
     };
 
@@ -294,6 +277,22 @@ public class SudokuActivity extends AppCompatActivity {
 
         //Redraw grid
         mSudokuGridView.invalidate();
+    }
+
+    public void onClearCellPressed(View v) {
+        int cellNumber = mSudokuGridView.getHighlightedCell();
+
+        if (cellNumber == -1){
+            //No cell is highlighted
+            mSoundPlayer.playEmptyButtonSound();
+        } else {
+            mVocabGame.setCellString(cellNumber, 0);
+            mSudokuGridView.setCellLabel(cellNumber, mVocabGame.getButtonString(0));
+            mSudokuGridView.clearHighlightedCell();
+            mSudokuGridView.clearIncorrectCell();
+            mSoundPlayer.playClearCellSound();
+            mSudokuGridView.invalidate();
+        }
     }
 
     private void updateAllViewLabels() {
