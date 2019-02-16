@@ -14,12 +14,14 @@ public class VocabSudokuModel {
     private SparseArray<String> nativeWordsMap;
     private SparseArray<String> foreignWordsMap;
 
+    //Continue Game
     public VocabSudokuModel(String[] nativeWords, String[] foreignWords, int[] puzzle, int[] solution, boolean[] initialCells, GameMode gameMode, GameDifficulty difficulty) {
         model = new GameModel(3, puzzle, solution, initialCells, difficulty);
         initializeWordMaps(nativeWords, foreignWords);
         this.gameMode = gameMode;
     }
 
+    //New Game
     public VocabSudokuModel(String[] nativeWords, String[] foreignWords, GameMode gameMode, GameDifficulty difficulty) {
         model = new GameModel(3, difficulty);
         initializeWordMaps(nativeWords, foreignWords);

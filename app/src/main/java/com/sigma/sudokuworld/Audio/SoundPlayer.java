@@ -15,7 +15,13 @@ public class SoundPlayer {
     private static int correctSound;
     private static int clearCellSound;
 
-    public  SoundPlayer(Context context){
+    private static final float LEFT_VOLUME = 1;
+    private static final int RIGHT_VOLUME = 1;
+    private static final int PRIORITY = 1;
+    private static final int LOOP = 1;
+    private static final float RATE = 1;
+
+    public SoundPlayer(Context context){
 
         //Initializing our pool of sounds
         audioAttributes = new AudioAttributes.Builder()
@@ -38,22 +44,22 @@ public class SoundPlayer {
     }
 
     public void playEmptyButtonSound(){
-        gameSounds.play(emptyButtonSound, 1.0f, 1.0f, 1, 0, 1.0f);
+        gameSounds.play(emptyButtonSound, LEFT_VOLUME, RIGHT_VOLUME, PRIORITY, LOOP, RATE);
     }
 
     public void playPlaceCellSound() {
-        gameSounds.play(placeCellSound, 1.0f, 1.0f, 1, 0, 1.0f);
+        gameSounds.play(placeCellSound, LEFT_VOLUME, RIGHT_VOLUME, PRIORITY, LOOP, RATE);
     }
 
     public void playWrongSound() {
-        gameSounds.play(wrongSound, 1.0f, 1.0f, 1, 0, 1.0f);
+        gameSounds.play(wrongSound, LEFT_VOLUME, RIGHT_VOLUME, PRIORITY, LOOP, RATE);
     }
 
     public void playCorrectSound(){
-        gameSounds.play(correctSound, 1.0f, 1.0f, 1, 0, 1.0f);
+        gameSounds.play(correctSound, LEFT_VOLUME, RIGHT_VOLUME, PRIORITY, LOOP, RATE);
     }
 
     public void playClearCellSound() {
-        gameSounds.play(clearCellSound, 1.0f, 1.0f, 1, 0, 1.0f);
+        gameSounds.play(clearCellSound, LEFT_VOLUME, RIGHT_VOLUME, PRIORITY, LOOP, RATE);
     }
 }

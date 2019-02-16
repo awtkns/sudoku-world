@@ -15,6 +15,7 @@ import java.util.TimerTask;
 public class SplashActivity extends AppCompatActivity {
     private ConstraintLayout animationLayout;
     private Timer timer = new Timer();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,15 +31,12 @@ public class SplashActivity extends AppCompatActivity {
         animationLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //timer.cancel();
+                timer.cancel();
                 startActivity(new Intent(SplashActivity.this, MenuActivity.class));
+                finish();
             }
         });
 
-/**     COMMENTING OUT BELOW BECAUSE IT DOES NOT WORK ON LOWER VERSIONS OF ANDRIOD
- *
- *
- * 
         ImageView imageView = findViewById(R.id.sigmaAnimation);
         final AnimatedVectorDrawable animatedVectorDrawable = (AnimatedVectorDrawable) imageView.getDrawable();
 
@@ -55,12 +53,12 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 Intent i = new Intent(SplashActivity.this, MenuActivity.class);
                 startActivity(i);
+                finish();
             }
         };
 
-        timer.schedule(animationStartTask, 500); //SHOULD BE 1500
-        timer.schedule(exitSplashTask, 4000);     //SHOULD BE 5000
-    */
+        timer.schedule(animationStartTask, 500);
+        timer.schedule(exitSplashTask, 4000);
     }
 
 
