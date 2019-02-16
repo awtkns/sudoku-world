@@ -15,7 +15,7 @@ public class SoundPlayer {
     private static int correctSound;
     private static int clearCellSound;
 
-    public  SoundPlayer(Context context){
+    public SoundPlayer(Context context){
 
         //Initializing our pool of sounds
         audioAttributes = new AudioAttributes.Builder()
