@@ -1,11 +1,8 @@
 package com.sigma.sudokuworld;
 
 import android.content.Intent;
-import android.nfc.Tag;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -24,7 +21,7 @@ public class SudokuActivity extends AppCompatActivity {
 
     private VocabSudokuModel mVocabGame;
     private SudokuGridView mSudokuGridView;
-    private Button[] sudokuButtons;
+    private Button[] mInputButtons;
     private Button mClearCellButton;
     private Button mCheckAnswerButton;
     private SoundPlayer mSoundPlayer;
@@ -88,20 +85,20 @@ public class SudokuActivity extends AppCompatActivity {
 
 
         //Initializing buttons
-        sudokuButtons = new Button[9];
-        for(int buttonNumber = 0; buttonNumber < 9; buttonNumber++)
+        mInputButtons = new Button[9];
+        for(int i = 0; i < mInputButtons.length; i++)
         {
             //Sets the button array at index to have id button + the current index number
             //One is added because the number 0 is skipped
-            sudokuButtons[buttonNumber] = findViewById(getResources().getIdentifier("button" + (buttonNumber+1), "id",
+            mInputButtons[i] = findViewById(getResources().getIdentifier("button" + (i+1), "id",
                     this.getPackageName()));
 
             //Gets and sets the string the button should display
-            String buttonText = mVocabGame.getButtonString(buttonNumber + 1);
-            sudokuButtons[buttonNumber].setText(buttonText);
+            String buttonText = mVocabGame.getButtonString(i + 1);
+            mInputButtons[i].setText(buttonText);
 
             //Links the listener to the button
-            sudokuButtons[buttonNumber].setOnClickListener(onButtonClickListener);
+            mInputButtons[i].setOnClickListener(onButtonClickListener);
         }
 
         mClearCellButton = findViewById(R.id.clearCellButton);
@@ -209,7 +206,7 @@ public class SudokuActivity extends AppCompatActivity {
             //Set buttonValue to the corresponding button
             //If no button is found in for loop, clear button is being called so buttonValue = 0
             for (int buttonIndex = 0; buttonIndex < 9; buttonIndex++) {
-                if (button == sudokuButtons[buttonIndex]){
+                if (button == mInputButtons[buttonIndex]){
                     buttonValue = buttonIndex + 1;
                 }
             }
