@@ -23,7 +23,6 @@ public class SudokuActivity extends AppCompatActivity {
     private SudokuGridView mSudokuGridView;
     private Button[] mInputButtons;
     private Button mClearCellButton;
-    private Button mCheckAnswerButton;
     private SoundPlayer mSoundPlayer;
     private int cellTouched;
 
@@ -103,9 +102,6 @@ public class SudokuActivity extends AppCompatActivity {
 
         mClearCellButton = findViewById(R.id.clearCellButton);
         mClearCellButton.setOnClickListener(onButtonClickListener);
-
-        mCheckAnswerButton = findViewById(R.id.checkAnswerButton);
-        mCheckAnswerButton.setOnClickListener(onCheckAnswerButtonClickListener);
 
         mSoundPlayer = new SoundPlayer(this);
 
@@ -250,59 +246,55 @@ public class SudokuActivity extends AppCompatActivity {
         }
     };
 
-
-    private View.OnClickListener onCheckAnswerButtonClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            //Check if cell is selected
-            //If a cell is selected, check if that cell is correct
-            int highlightedCell = mSudokuGridView.getHighlightedCell();
-            if (highlightedCell != -1)
-            {
-                //Cell is right
-                if (mVocabGame.isCellCorrect(highlightedCell)){
-                    mSudokuGridView.clearHighlightedCell();
-                    mSudokuGridView.invalidate();
-                    mSoundPlayer.playCorrectSound();
-                    Toast.makeText(getBaseContext(),
-                            "The selected cell is correct!",
-                            Toast.LENGTH_LONG).show();
-                }
-
-                //Cell is wrong
-                else {
-                    mSudokuGridView.setIncorrectCell(highlightedCell);
-                    mSoundPlayer.playWrongSound();
-
-                }
+    public void onCheckAnswerPressed(View v) {
+        //Check if cell is selected
+        //If a cell is selected, check if that cell is correct
+        int highlightedCell = mSudokuGridView.getHighlightedCell();
+        if (highlightedCell != -1)
+        {
+            //Cell is right
+            if (mVocabGame.isCellCorrect(highlightedCell)){
+                mSudokuGridView.clearHighlightedCell();
                 mSudokuGridView.invalidate();
-                return;
-            }
-
-            //Checks if the answers are right and displays the first wrong cell (if any)
-            int potentialIndex = mVocabGame.checkGame();
-            //Clear highlights / what cell is selected for input
-            mSudokuGridView.clearHighlightedCell();
-
-            //Case where answer is correct
-            if (potentialIndex == -1) {
                 mSoundPlayer.playCorrectSound();
                 Toast.makeText(getBaseContext(),
-                        "Congratulations, You've Won!",
+                        "The selected cell is correct!",
                         Toast.LENGTH_LONG).show();
             }
 
-            //Case where answer is incorrect
+            //Cell is wrong
             else {
-                mSudokuGridView.setIncorrectCell(potentialIndex);
-                mSudokuGridView.setHighlightedCell(potentialIndex);
+                mSudokuGridView.setIncorrectCell(highlightedCell);
                 mSoundPlayer.playWrongSound();
-            }
 
-            //Redraw grid
+            }
             mSudokuGridView.invalidate();
+            return;
         }
-    };
+
+        //Checks if the answers are right and displays the first wrong cell (if any)
+        int potentialIndex = mVocabGame.checkGame();
+        //Clear highlights / what cell is selected for input
+        mSudokuGridView.clearHighlightedCell();
+
+        //Case where answer is correct
+        if (potentialIndex == -1) {
+            mSoundPlayer.playCorrectSound();
+            Toast.makeText(getBaseContext(),
+                    "Congratulations, You've Won!",
+                    Toast.LENGTH_LONG).show();
+        }
+
+        //Case where answer is incorrect
+        else {
+            mSudokuGridView.setIncorrectCell(potentialIndex);
+            mSudokuGridView.setHighlightedCell(potentialIndex);
+            mSoundPlayer.playWrongSound();
+        }
+
+        //Redraw grid
+        mSudokuGridView.invalidate();
+    }
 
     private void updateAllViewLabels() {
         for (int cellNumber = 0; cellNumber < 81; cellNumber++) {
