@@ -68,6 +68,10 @@ public class VocabSudokuModel {
         return nativeWordsMap.valueAt(model.getCellValue(cellNumber));
     }
 
+    public String getCorSting(int cellNumber, boolean isCellLocked){
+        return nativeWordsMap.valueAt(model.getCellValue(cellNumber));
+    }
+
     public void setCellString(int cellNumber, int value) {
         model.setCellValue(cellNumber, value);
     }

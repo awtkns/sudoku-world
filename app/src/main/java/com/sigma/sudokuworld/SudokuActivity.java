@@ -1,14 +1,18 @@
 package com.sigma.sudokuworld;
 
 import android.content.Intent;
+import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 
 import static com.sigma.sudokuworld.Persistence.KeyConstants.*;
+
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.sigma.sudokuworld.Persistence.PersistenceService;
@@ -17,6 +21,9 @@ import com.sigma.sudokuworld.VocabGame.GameMode;
 import com.sigma.sudokuworld.VocabGame.VocabSudokuModel;
 import com.sigma.sudokuworld.Audio.SoundPlayer;
 
+import java.util.ArrayList;
+import java.util.Locale;
+
 public class SudokuActivity extends AppCompatActivity {
 
     private VocabSudokuModel mVocabGame;
@@ -24,6 +31,11 @@ public class SudokuActivity extends AppCompatActivity {
     private Button[] mInputButtons;
     private SoundPlayer mSoundPlayer;
     private int cellTouched;
+
+    private TextToSpeech mTTS;
+    private ArrayList<LanguageItem> mLanguageList;
+    private LanguageAdapter mAdapter;
+    private String clickedLanguage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,10 +89,47 @@ public class SudokuActivity extends AppCompatActivity {
         mSudokuGridView = findViewById(R.id.sudokuGrid_view);
         mSudokuGridView.setOnTouchListener(onSudokuGridTouchListener);
 
+        //Initializing languagelist
+        initList();
+
+        Spinner spinnerLanguages = findViewById(R.id.spinner_languages);
+
+        mAdapter = new LanguageAdapter(this, mLanguageList);
+        spinnerLanguages.setAdapter(mAdapter);
+
+        spinnerLanguages.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                LanguageItem clickedItem = (LanguageItem)parent.getItemAtPosition(position);
+                clickedLanguage = clickedItem.getLanguageName();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+
+        //Initializing mTTS
+        mTTS = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status == TextToSpeech.SUCCESS){
+                    Locale aLocale;
+                    aLocale = new Locale(clickedLanguage);
+                    mTTS.setLanguage(aLocale);
+                }
+            }
+        });
+
+        /*
         if (mVocabGame.getGameMode() != GameMode.NUMBERS) {
             mSudokuGridView.setOnLongClickListener(longClickListener);
         }
+        */
 
+        mSudokuGridView.setOnLongClickListener(longClickListener);
 
         //Initializing buttons
         mInputButtons = new Button[9];
@@ -180,13 +229,28 @@ public class SudokuActivity extends AppCompatActivity {
         @Override
         public boolean onLongClick(View v) {
             if (mVocabGame.isLockedCell(cellTouched)) {
-                String text = mVocabGame.getCellString(cellTouched, false);
-                Toast.makeText(getBaseContext(), text, Toast.LENGTH_SHORT).show();
+                if(mVocabGame.getGameMode() != GameMode.NUMBERS) {
+                    String text = mVocabGame.getCellString(cellTouched, false);
+                    Toast.makeText(getBaseContext(), text, Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    String text = mVocabGame.getCorSting(cellTouched, false);
+                    mTTS.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+                }
             }
 
             return true;
         }
     };
+
+    @Override
+    protected void onDestroy() {
+        if(mTTS != null){
+            mTTS.stop();
+            mTTS.shutdown();
+        }
+        super.onDestroy();
+    }
 
     private View.OnClickListener onButtonClickListener = new View.OnClickListener() {
         @Override
@@ -320,5 +384,12 @@ public class SudokuActivity extends AppCompatActivity {
         data.putBooleanArray(LOCKED_CELLS_KEY, mVocabGame.getLockedCells());
         data.putStringArray(NATIVE_WORDS_KEY, mVocabGame.getNativeWords());
         data.putStringArray(FOREIGN_WORDS_KEY, mVocabGame.getForeignWords());
+    }
+
+    private void initList(){
+        mLanguageList = new ArrayList<>();
+        mLanguageList.add(new LanguageItem("en", R.drawable.en));
+        mLanguageList.add(new LanguageItem("fr", R.drawable.fr));
+
     }
 }
