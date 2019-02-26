@@ -7,12 +7,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 
 import com.sigma.sudokuworld.Persistence.KeyConstants;
 import com.sigma.sudokuworld.Persistence.PersistenceService;
 import com.sigma.sudokuworld.Audio.SoundPlayer;
+import com.sigma.sudokuworld.Sudoku.AudioSudokuActivity;
+import com.sigma.sudokuworld.Sudoku.SudokuActivity;
+import com.sigma.sudokuworld.Sudoku.VocabSudokuActivity;
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -42,7 +44,7 @@ public class MenuActivity extends AppCompatActivity {
     public void onPlayPressed(View v) {
         //Settings bundle
         Bundle settings = PersistenceService.loadSettingsData(getBaseContext());
-        Intent intent = new Intent(getBaseContext(), SudokuActivity.class);
+        Intent intent = new Intent(getBaseContext(), AudioSudokuActivity.class);
         intent.putExtras(settings);
         intent.putExtra(KeyConstants.CONTINUE_KEY, false);
 
