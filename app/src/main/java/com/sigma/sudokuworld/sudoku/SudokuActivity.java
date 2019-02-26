@@ -24,8 +24,8 @@ public abstract class SudokuActivity extends AppCompatActivity {
     protected SudokuGridView mSudokuGridView;
     protected int cellTouched;
     protected VocabSudokuModel mVocabGame;
+    protected Button[] mInputButtons;
 
-    private Button[] mInputButtons;
     private SoundPlayer mSoundPlayer;
 
     @Override

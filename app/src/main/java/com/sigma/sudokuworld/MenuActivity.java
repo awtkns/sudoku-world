@@ -13,7 +13,6 @@ import com.sigma.sudokuworld.persistence.KeyConstants;
 import com.sigma.sudokuworld.persistence.PersistenceService;
 import com.sigma.sudokuworld.audio.SoundPlayer;
 import com.sigma.sudokuworld.sudoku.AudioSudokuActivity;
-import com.sigma.sudokuworld.sudoku.SudokuActivity;
 import com.sigma.sudokuworld.sudoku.VocabSudokuActivity;
 
 public class MenuActivity extends AppCompatActivity {
