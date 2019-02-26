@@ -11,8 +11,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".SettingsActivity">
-        </activity>
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,7 +19,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".MenuActivity" />
-        <activity android:name=".SudokuActivity" />
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".sudoku.VocabSudokuActivity" />
+        <activity android:name=".sudoku.AudioSudokuActivity" />
     </application>
 
 </manifest>

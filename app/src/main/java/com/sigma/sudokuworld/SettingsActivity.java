@@ -7,32 +7,33 @@ import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
+import android.widget.Switch;
 
-import com.sigma.sudokuworld.Persistence.KeyConstants;
-import com.sigma.sudokuworld.Persistence.PersistenceService;
-import com.sigma.sudokuworld.VocabGame.GameDifficulty;
-import com.sigma.sudokuworld.VocabGame.GameMode;
+import com.sigma.sudokuworld.persistence.KeyConstants;
+import com.sigma.sudokuworld.persistence.PersistenceService;
+import com.sigma.sudokuworld.game.GameDifficulty;
+import com.sigma.sudokuworld.game.GameMode;
 
 public class SettingsActivity extends AppCompatActivity {
 
     private RadioGroup mGameModeRadioGroup;
+    private Switch mAudioModeSwitch;
     private SeekBar mDifficultySeekBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //HIDE STATUS BAR
+        setContentView(R.layout.activity_settings);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        setContentView(R.layout.activity_settings);
-
         mGameModeRadioGroup = findViewById(R.id.gameModeRadioGroup);
+        mAudioModeSwitch = findViewById(R.id.audioModeSwitch);
         mDifficultySeekBar = findViewById(R.id.difficultyBar);
 
         Bundle previousSettings = PersistenceService.loadSettingsData(SettingsActivity.this);
         GameDifficulty gameDifficulty = (GameDifficulty) previousSettings.getSerializable(KeyConstants.DIFFICULTY_KEY);
         GameMode gameMode = (GameMode) previousSettings.getSerializable(KeyConstants.MODE_KEY);
+        boolean isAudioMode = previousSettings.getBoolean(KeyConstants.AUDIO_KEY);
 
         if (gameDifficulty == GameDifficulty.EASY) {
             mDifficultySeekBar.setProgress(0);
@@ -40,6 +41,12 @@ public class SettingsActivity extends AppCompatActivity {
             mDifficultySeekBar.setProgress(1);
         } else  if (gameDifficulty == GameDifficulty.HARD) {
             mDifficultySeekBar.setProgress(2);
+        }
+
+        if (isAudioMode) {
+            mAudioModeSwitch.setChecked(true);
+        } else {
+            mAudioModeSwitch.setChecked(false);
         }
 
         if (gameMode == GameMode.NATIVE) {
@@ -80,6 +87,7 @@ public class SettingsActivity extends AppCompatActivity {
         Bundle settingsBundle = new Bundle();
         settingsBundle.putSerializable(KeyConstants.DIFFICULTY_KEY, gameDifficulty);
         settingsBundle.putSerializable(KeyConstants.MODE_KEY, gameMode);
+        settingsBundle.putBoolean(KeyConstants.AUDIO_KEY, mAudioModeSwitch.isChecked());
         PersistenceService.saveSettingsData(SettingsActivity.this, settingsBundle);
 
         Intent intent = getIntent();

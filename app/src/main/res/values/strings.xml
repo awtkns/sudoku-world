@@ -22,6 +22,7 @@
     <string name="difficultyEasy">Easy</string>
     <string name="difficultyMedium">Medium</string>
     <string name="difficultyHard">Hard</string>
+    <string name="audioMode">Listening Comprehension Mode</string>
     <string name="saveWordListString">Save</string>
     <string name="defaultWordListString">Default</string>
     <string name="loadWordListString">Load</string>

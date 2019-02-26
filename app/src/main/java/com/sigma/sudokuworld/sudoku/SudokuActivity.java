@@ -1,4 +1,4 @@
-package com.sigma.sudokuworld;
+package com.sigma.sudokuworld.sudoku;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -8,99 +8,42 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 
-import static com.sigma.sudokuworld.Persistence.KeyConstants.*;
+import static com.sigma.sudokuworld.persistence.KeyConstants.*;
+
 import android.widget.Toast;
 
-import com.sigma.sudokuworld.Persistence.PersistenceService;
-import com.sigma.sudokuworld.VocabGame.GameDifficulty;
-import com.sigma.sudokuworld.VocabGame.GameMode;
-import com.sigma.sudokuworld.VocabGame.VocabSudokuModel;
-import com.sigma.sudokuworld.Audio.SoundPlayer;
+import com.sigma.sudokuworld.persistence.PersistenceService;
+import com.sigma.sudokuworld.R;
+import com.sigma.sudokuworld.game.GameDifficulty;
+import com.sigma.sudokuworld.game.GameMode;
+import com.sigma.sudokuworld.game.VocabSudokuModel;
+import com.sigma.sudokuworld.audio.SoundPlayer;
 
-public class SudokuActivity extends AppCompatActivity {
+public abstract class SudokuActivity extends AppCompatActivity {
 
-    private VocabSudokuModel mVocabGame;
-    private SudokuGridView mSudokuGridView;
-    private Button[] mInputButtons;
+    protected SudokuGridView mSudokuGridView;
+    protected int cellTouched;
+    protected VocabSudokuModel mVocabGame;
+    protected Button[] mInputButtons;
+
     private SoundPlayer mSoundPlayer;
-    private int cellTouched;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //HIDE STATUS BAR
+        setContentView(R.layout.activity_sudoku);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        setContentView(R.layout.activity_sudoku);
+        //Sets up game model from either savedInstance or intent
+        initGameModel(savedInstanceState);
 
-        if (savedInstanceState != null) {
-            //Unpacking information from saved instance
-            mVocabGame = new VocabSudokuModel(
-                    savedInstanceState.getStringArray(NATIVE_WORDS_KEY),
-                    savedInstanceState.getStringArray(FOREIGN_WORDS_KEY),
-                    savedInstanceState.getIntArray(CELL_VALUES_KEY),
-                    savedInstanceState.getIntArray(SOLUTION_VALUES_KEY),
-                    savedInstanceState.getBooleanArray(LOCKED_CELLS_KEY),
-                    (GameMode) savedInstanceState.getSerializable(MODE_KEY),
-                    (GameDifficulty) savedInstanceState.getSerializable(DIFFICULTY_KEY)
-            );
-        } else {
-            //Unpacking information from intent
-            Intent i = getIntent();
-
-            if (i.getBooleanExtra(CONTINUE_KEY, false)) {
-                //New game
-
-                mVocabGame = new VocabSudokuModel(
-                        i.getStringArrayExtra(NATIVE_WORDS_KEY),
-                        i.getStringArrayExtra(FOREIGN_WORDS_KEY),
-                        i.getIntArrayExtra(CELL_VALUES_KEY),
-                        i.getIntArrayExtra(SOLUTION_VALUES_KEY),
-                        i.getBooleanArrayExtra(LOCKED_CELLS_KEY),
-                        (GameMode) i.getSerializableExtra(MODE_KEY),
-                        (GameDifficulty) i.getSerializableExtra(DIFFICULTY_KEY)
-                );
-            } else {
-                //Save game
-
-                mVocabGame = new VocabSudokuModel(
-                        i.getStringArrayExtra(NATIVE_WORDS_KEY),
-                        i.getStringArrayExtra(FOREIGN_WORDS_KEY),
-                        (GameMode) i.getSerializableExtra(MODE_KEY),
-                        (GameDifficulty) i.getSerializableExtra(DIFFICULTY_KEY)
-                );
-            }
-        }
+        //Set up buttons
+        initButtons();
 
         //Initializing Sudoku grid
         mSudokuGridView = findViewById(R.id.sudokuGrid_view);
         mSudokuGridView.setOnTouchListener(onSudokuGridTouchListener);
-
-        if (mVocabGame.getGameMode() != GameMode.NUMBERS) {
-            mSudokuGridView.setOnLongClickListener(longClickListener);
-        }
-
-
-        //Initializing buttons
-        mInputButtons = new Button[9];
-        for(int i = 0; i < mInputButtons.length; i++)
-        {
-            //Sets the button array at index to have id button + the current index number
-            //One is added because the number 0 is skipped
-            mInputButtons[i] = findViewById(getResources().getIdentifier("button" + (i+1), "id",
-                    this.getPackageName()));
-
-            //Gets and sets the string the button should display
-            String buttonText = mVocabGame.getButtonString(i + 1);
-            mInputButtons[i].setText(buttonText);
-
-            //Links the listener to the button
-            mInputButtons[i].setOnClickListener(onButtonClickListener);
-        }
-
         mSoundPlayer = new SoundPlayer(this);
-
         updateAllViewLabels();
     }
 
@@ -173,18 +116,6 @@ public class SudokuActivity extends AppCompatActivity {
             }
 
             return touchHandled;
-        }
-    };
-
-    SudokuGridView.OnLongClickListener longClickListener = new SudokuGridView.OnLongClickListener() {
-        @Override
-        public boolean onLongClick(View v) {
-            if (mVocabGame.isLockedCell(cellTouched)) {
-                String text = mVocabGame.getCellString(cellTouched, false);
-                Toast.makeText(getBaseContext(), text, Toast.LENGTH_SHORT).show();
-            }
-
-            return true;
         }
     };
 
@@ -306,6 +237,72 @@ public class SudokuActivity extends AppCompatActivity {
         }
 
         mSudokuGridView.invalidate();
+    }
+
+    /**
+     * Sets up the vocab game.
+     * @param savedInstanceState restore from rotate
+     */
+    private void initGameModel(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            //Unpacking information from saved instance
+            mVocabGame = new VocabSudokuModel(
+                    savedInstanceState.getStringArray(NATIVE_WORDS_KEY),
+                    savedInstanceState.getStringArray(FOREIGN_WORDS_KEY),
+                    savedInstanceState.getIntArray(CELL_VALUES_KEY),
+                    savedInstanceState.getIntArray(SOLUTION_VALUES_KEY),
+                    savedInstanceState.getBooleanArray(LOCKED_CELLS_KEY),
+                    (GameMode) savedInstanceState.getSerializable(MODE_KEY),
+                    (GameDifficulty) savedInstanceState.getSerializable(DIFFICULTY_KEY)
+            );
+        } else {
+            //Unpacking information from intent
+            Intent i = getIntent();
+
+            if (i.getBooleanExtra(CONTINUE_KEY, false)) {
+                //Continue from save game
+                mVocabGame = new VocabSudokuModel(
+                        i.getStringArrayExtra(NATIVE_WORDS_KEY),
+                        i.getStringArrayExtra(FOREIGN_WORDS_KEY),
+                        i.getIntArrayExtra(CELL_VALUES_KEY),
+                        i.getIntArrayExtra(SOLUTION_VALUES_KEY),
+                        i.getBooleanArrayExtra(LOCKED_CELLS_KEY),
+                        (GameMode) i.getSerializableExtra(MODE_KEY),
+                        (GameDifficulty) i.getSerializableExtra(DIFFICULTY_KEY)
+                );
+            } else {
+                //new game
+                mVocabGame = new VocabSudokuModel(
+                        i.getStringArrayExtra(NATIVE_WORDS_KEY),
+                        i.getStringArrayExtra(FOREIGN_WORDS_KEY),
+                        (GameMode) i.getSerializableExtra(MODE_KEY),
+                        (GameDifficulty) i.getSerializableExtra(DIFFICULTY_KEY)
+                );
+            }
+        }
+    }
+
+    /**
+     * Sets up the 9 input buttons
+     */
+    private void initButtons() {
+
+        //Initializing buttons
+        mInputButtons = new Button[9];
+        for(int i = 0; i < mInputButtons.length; i++)
+        {
+            //Sets the button array at index to have id button + the current index number
+            //One is added because the number 0 is skipped
+            mInputButtons[i] = findViewById(getResources().getIdentifier("button" + (i+1), "id",
+                    this.getPackageName()));
+
+            //Gets and sets the string the button should display
+            String buttonText = mVocabGame.getButtonString(i + 1);
+            mInputButtons[i].setText(buttonText);
+
+            //Links the listener to the button
+            mInputButtons[i].setOnClickListener(onButtonClickListener);
+        }
     }
 
     /**

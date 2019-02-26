@@ -1,4 +1,4 @@
-package com.sigma.sudokuworld.Persistence;
+package com.sigma.sudokuworld.persistence;
 
 
 import android.content.Context;
@@ -7,8 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.sigma.sudokuworld.R;
-import com.sigma.sudokuworld.VocabGame.GameDifficulty;
-import com.sigma.sudokuworld.VocabGame.GameMode;
+import com.sigma.sudokuworld.game.GameDifficulty;
+import com.sigma.sudokuworld.game.GameMode;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,7 +18,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Map;
 
-import static com.sigma.sudokuworld.Persistence.KeyConstants.*;
+import static com.sigma.sudokuworld.persistence.KeyConstants.*;
 
 
 public abstract class PersistenceService {
@@ -152,6 +152,7 @@ public abstract class PersistenceService {
         //Unpacking "settings" bundle
         GameDifficulty difficulty = (GameDifficulty) data.getSerializable(DIFFICULTY_KEY);
         GameMode mode = (GameMode) data.getSerializable(MODE_KEY);
+        boolean isAudioMode = data.getBoolean(AUDIO_KEY);
         String[] nativeWords = data.getStringArray(NATIVE_WORDS_KEY);
         String[] foreignWords = data.getStringArray(FOREIGN_WORDS_KEY);
 
@@ -171,6 +172,7 @@ public abstract class PersistenceService {
         //Writing settings constants
         editor.putString(DIFFICULTY_KEY, difficulty.name());
         editor.putString(MODE_KEY, mode.name());
+        editor.putString(AUDIO_KEY, Boolean.toString(isAudioMode));
         editor.putInt(WORD_LIST_SIZE, wordListSize);
 
         //Writing word lists
@@ -199,6 +201,7 @@ public abstract class PersistenceService {
             //Loading game constants
             GameDifficulty difficulty = GameDifficulty.valueOf((String) dataMap.get(DIFFICULTY_KEY));
             GameMode mode = GameMode.valueOf((String) dataMap.get(MODE_KEY));
+            boolean isAudioMode = Boolean.parseBoolean((String) dataMap.get(AUDIO_KEY));
 
             int wordListSize = (Integer) dataMap.get(WORD_LIST_SIZE);
             String[] nativeWords = new String[wordListSize];
@@ -214,6 +217,7 @@ public abstract class PersistenceService {
             //Bundling settings
             data.putSerializable(DIFFICULTY_KEY, difficulty);
             data.putSerializable(MODE_KEY, mode);
+            data.putBoolean(AUDIO_KEY, isAudioMode);
             data.putStringArray(NATIVE_WORDS_KEY, nativeWords);
             data.putStringArray(FOREIGN_WORDS_KEY, foreignWords);
         } catch (NullPointerException e) {
@@ -230,6 +234,7 @@ public abstract class PersistenceService {
         //Making settings bundle
         data.putSerializable(DIFFICULTY_KEY, GameDifficulty.MEDIUM);
         data.putSerializable(MODE_KEY, GameMode.NATIVE);
+        data.putBoolean(AUDIO_KEY, false);
         bundleWordListFromCSV(context, data);
 
         return data;

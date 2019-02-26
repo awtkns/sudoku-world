@@ -1,4 +1,4 @@
-package com.sigma.sudokuworld.VocabGame;
+package com.sigma.sudokuworld.game;
 
 import android.util.SparseArray;
 
@@ -65,6 +65,10 @@ public class VocabSudokuModel {
 
         //gameMode == GameMode.foreignMode
         if(isCellLocked) {return foreignWordsMap.valueAt(model.getCellValue(cellNumber));}
+        return nativeWordsMap.valueAt(model.getCellValue(cellNumber));
+    }
+
+    public String getCorSting(int cellNumber, boolean isCellLocked){
         return nativeWordsMap.valueAt(model.getCellValue(cellNumber));
     }
 

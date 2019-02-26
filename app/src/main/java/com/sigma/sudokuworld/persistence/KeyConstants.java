@@ -1,4 +1,4 @@
-package com.sigma.sudokuworld.Persistence;
+package com.sigma.sudokuworld.persistence;
 
 public final class KeyConstants {
 
@@ -8,6 +8,7 @@ public final class KeyConstants {
      * A "settings" Bundle should have:
      * Difficulty
      * GameMode
+     * isAudioMode
      * Native words
      * Foreign words
      *
@@ -24,6 +25,7 @@ public final class KeyConstants {
     //Public index keys for saving data in bundle
     public static final String DIFFICULTY_KEY = "difficulty";
     public static final String MODE_KEY = "mode";
+    public static final String AUDIO_KEY = "audio";
     public static final String CELL_VALUES_KEY = "values";
     public static final String SOLUTION_VALUES_KEY = "solution";
     public static final String LOCKED_CELLS_KEY = "locked";

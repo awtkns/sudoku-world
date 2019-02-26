@@ -44,7 +44,7 @@ public class SplashActivity extends AppCompatActivity {
         TimerTask animationStartTask = new TimerTask() {
             @Override
             public void run() {
-                animatedVectorDrawable.start();
+                //animatedVectorDrawable.start();
             }
         };
 

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SudokuActivity">
+    tools:context=".sudoku.SudokuActivity">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -21,7 +21,7 @@
 
         <view
             android:id="@+id/sudokuGrid_view"
-            class="com.sigma.sudokuworld.SudokuGridView"
+            class="com.sigma.sudokuworld.sudoku.SudokuGridView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
