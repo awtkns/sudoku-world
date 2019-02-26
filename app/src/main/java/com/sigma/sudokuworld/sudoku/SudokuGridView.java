@@ -1,4 +1,4 @@
-package com.sigma.sudokuworld.Sudoku;
+package com.sigma.sudokuworld.sudoku;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -24,8 +24,6 @@ public class SudokuGridView extends View {
     private static final int SUDOKU_SIZE = 9;
     private static final int SUDOKU_ROOT_SIZE = 3;
 
-    private int mViewWidth;
-    private int mViewHeight;
     private int mXOrigin;
     private int mYOrigin;
     private int mSquareSize;
@@ -104,9 +102,6 @@ public class SudokuGridView extends View {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-
-        mViewWidth = w;
-        mViewHeight = h;
 
         mXOrigin = getPaddingLeft();
         mYOrigin = getPaddingTop();

@@ -1,4 +1,4 @@
-package com.sigma.sudokuworld.Audio;
+package com.sigma.sudokuworld.audio;
 import com.sigma.sudokuworld.R;
 
 import android.content.Context;

@@ -1,4 +1,4 @@
-package com.sigma.sudokuworld.VocabGame;
+package com.sigma.sudokuworld.game;
 import java.util.Random;
 import java.lang.Math;
 

@@ -1,8 +1,10 @@
-package com.sigma.sudokuworld.Sudoku;
+package com.sigma.sudokuworld.sudoku;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
+
+import com.sigma.sudokuworld.game.GameMode;
 
 public class VocabSudokuActivity extends SudokuActivity {
 
@@ -10,7 +12,9 @@ public class VocabSudokuActivity extends SudokuActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        super.mSudokuGridView.setOnLongClickListener(onLongClickListener);
+        if (mVocabGame.getGameMode() != GameMode.NUMBERS) {
+            super.mSudokuGridView.setOnLongClickListener(onLongClickListener);
+        }
     }
 
     View.OnLongClickListener onLongClickListener = new View.OnLongClickListener() {

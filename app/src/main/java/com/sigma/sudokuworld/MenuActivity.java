@@ -9,12 +9,12 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
-import com.sigma.sudokuworld.Persistence.KeyConstants;
-import com.sigma.sudokuworld.Persistence.PersistenceService;
-import com.sigma.sudokuworld.Audio.SoundPlayer;
-import com.sigma.sudokuworld.Sudoku.AudioSudokuActivity;
-import com.sigma.sudokuworld.Sudoku.SudokuActivity;
-import com.sigma.sudokuworld.Sudoku.VocabSudokuActivity;
+import com.sigma.sudokuworld.persistence.KeyConstants;
+import com.sigma.sudokuworld.persistence.PersistenceService;
+import com.sigma.sudokuworld.audio.SoundPlayer;
+import com.sigma.sudokuworld.sudoku.AudioSudokuActivity;
+import com.sigma.sudokuworld.sudoku.SudokuActivity;
+import com.sigma.sudokuworld.sudoku.VocabSudokuActivity;
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -44,7 +44,15 @@ public class MenuActivity extends AppCompatActivity {
     public void onPlayPressed(View v) {
         //Settings bundle
         Bundle settings = PersistenceService.loadSettingsData(getBaseContext());
-        Intent intent = new Intent(getBaseContext(), AudioSudokuActivity.class);
+        boolean isAudioMode = settings.getBoolean(KeyConstants.AUDIO_KEY, true);
+
+        Intent intent;
+        if (isAudioMode) {
+            intent = new Intent(getBaseContext(), AudioSudokuActivity.class);
+        } else {
+            intent = new Intent(getBaseContext(), VocabSudokuActivity.class);
+        }
+
         intent.putExtras(settings);
         intent.putExtra(KeyConstants.CONTINUE_KEY, false);
 
@@ -57,7 +65,16 @@ public class MenuActivity extends AppCompatActivity {
      */
     public void onContinuePressed(View v) {
         try {
-            Intent intent = new Intent(getBaseContext(), SudokuActivity.class);
+            Bundle settings = PersistenceService.loadSettingsData(getBaseContext());
+
+            Intent intent;
+            if (settings.getBoolean(KeyConstants.AUDIO_KEY,false )) {
+               //Start in audio mode
+               intent = new Intent(getBaseContext(), AudioSudokuActivity.class);
+            } else {
+               intent = new Intent(getBaseContext(), VocabSudokuActivity.class);
+            }
+
             intent.putExtras(PersistenceService.loadGameData(getBaseContext()));
             intent.putExtra(KeyConstants.CONTINUE_KEY, true);
             mSoundPlayer.playPlaceCellSound();

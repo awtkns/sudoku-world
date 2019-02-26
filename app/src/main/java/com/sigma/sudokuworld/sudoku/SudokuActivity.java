@@ -1,4 +1,4 @@
-package com.sigma.sudokuworld.Sudoku;
+package com.sigma.sudokuworld.sudoku;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -8,18 +8,18 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 
-import static com.sigma.sudokuworld.Persistence.KeyConstants.*;
+import static com.sigma.sudokuworld.persistence.KeyConstants.*;
 
 import android.widget.Toast;
 
-import com.sigma.sudokuworld.Persistence.PersistenceService;
+import com.sigma.sudokuworld.persistence.PersistenceService;
 import com.sigma.sudokuworld.R;
-import com.sigma.sudokuworld.VocabGame.GameDifficulty;
-import com.sigma.sudokuworld.VocabGame.GameMode;
-import com.sigma.sudokuworld.VocabGame.VocabSudokuModel;
-import com.sigma.sudokuworld.Audio.SoundPlayer;
+import com.sigma.sudokuworld.game.GameDifficulty;
+import com.sigma.sudokuworld.game.GameMode;
+import com.sigma.sudokuworld.game.VocabSudokuModel;
+import com.sigma.sudokuworld.audio.SoundPlayer;
 
-public class SudokuActivity extends AppCompatActivity {
+public abstract class SudokuActivity extends AppCompatActivity {
 
     protected SudokuGridView mSudokuGridView;
     protected int cellTouched;

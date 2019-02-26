@@ -20,9 +20,8 @@
         </activity>
         <activity android:name=".MenuActivity" />
         <activity android:name=".SettingsActivity" />
-        <activity android:name=".Sudoku.SudokuActivity" />
-        <activity android:name=".Sudoku.VocabSudokuActivity" />
-        <activity android:name=".Sudoku.AudioSudokuActivity" />
+        <activity android:name=".sudoku.VocabSudokuActivity" />
+        <activity android:name=".sudoku.AudioSudokuActivity" />
     </application>
 
 </manifest>
