@@ -8,7 +8,7 @@
             android:height="32dp"
             android:viewportWidth="18"
             android:viewportHeight="32"
-            android:alpha=".2">
+            android:alpha="1">
             <group android:name="vert">
                 <path
                     android:name="path"
