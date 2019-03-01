@@ -67,8 +67,8 @@ public class SettingsActivity extends AppCompatActivity {
         List<Language> languages = app.getDB().getLanguageDao().getAll();
 
         String str = "[WIP] Language database test:";
-        for (Language l: languages) {
-            str += "\nEntry: " + l.getLanguageID() + " lang: " + l.getLanguage() + " code: " + l.getCode();
+        for (Language language: languages) {
+            str += "\nEntry: " + language.getLanguageID() + " lang: " + language.getName() + " code: " + language.getCode();
         }
         textView.setText(str);
     }

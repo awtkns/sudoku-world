@@ -9,9 +9,21 @@ import android.content.Context
  * Creates the builds the database and ensure that only one is present
  * Written in kotlin
  */
-@Database(version = 2, entities = [Language::class, Word::class])
+@Database(
+        version = 4,
+        entities = [
+            Language::class,
+            Word::class,
+            WordPair::class,
+            Set::class,
+            WordSet::class
+        ])
 abstract class AppDatabase : RoomDatabase() {
     abstract fun getLanguageDao(): LanguageDao
+    abstract fun getWordDao(): WordDao
+    abstract fun getWordPairDao(): WordPairDao
+    abstract fun getSetDao(): SetDao
+    abstract fun getWordSetDao(): WordSetDao
 
     //Singleton
     companion object {

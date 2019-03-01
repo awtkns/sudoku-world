@@ -13,6 +13,6 @@ import android.arch.persistence.room.PrimaryKey
 @Entity(tableName = "languages")
 data class Language (
     @PrimaryKey(autoGenerate = true) var languageID: Int,
-    var language: String,
+    var name: String,
     var code: String
 )

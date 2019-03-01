@@ -6,15 +6,14 @@ import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
 
 @Dao
-interface WordDao {
+interface WordSetDao {
 
-    @Query("SELECT * FROM words")
-    fun getAll(): List<Word>
+    @Query("SELECT * FROM word_set_cross_reference")
+    fun getAll(): List<WordSet>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(vararg words: Word)
+    fun insert(vararg wordSets: WordSet)
 
-    @Query("DELETE FROM words")
+    @Query("DELETE FROM word_set_cross_reference")
     fun deleteAll()
-
 }
