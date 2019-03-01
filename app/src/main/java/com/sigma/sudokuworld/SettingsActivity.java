@@ -8,17 +8,22 @@ import android.view.WindowManager;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.Switch;
+import android.widget.TextView;
 
+import com.sigma.sudokuworld.db.Language;
 import com.sigma.sudokuworld.persistence.KeyConstants;
 import com.sigma.sudokuworld.persistence.PersistenceService;
 import com.sigma.sudokuworld.game.GameDifficulty;
 import com.sigma.sudokuworld.game.GameMode;
+
+import java.util.List;
 
 public class SettingsActivity extends AppCompatActivity {
 
     private RadioGroup mGameModeRadioGroup;
     private Switch mAudioModeSwitch;
     private SeekBar mDifficultySeekBar;
+    private TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +34,7 @@ public class SettingsActivity extends AppCompatActivity {
         mGameModeRadioGroup = findViewById(R.id.gameModeRadioGroup);
         mAudioModeSwitch = findViewById(R.id.audioModeSwitch);
         mDifficultySeekBar = findViewById(R.id.difficultyBar);
+        textView = findViewById(R.id.textView3);
 
         Bundle previousSettings = PersistenceService.loadSettingsData(SettingsActivity.this);
         GameDifficulty gameDifficulty = (GameDifficulty) previousSettings.getSerializable(KeyConstants.DIFFICULTY_KEY);
@@ -56,6 +62,15 @@ public class SettingsActivity extends AppCompatActivity {
         } else {
             mGameModeRadioGroup.check(R.id.numbersModeRadioButton);
         }
+
+        SudokuApplication app = (SudokuApplication) getApplication();
+        List<Language> languages = app.getDB().languageDao().getAll();
+
+        String str = "[WIP] Language database test:";
+        for (Language l: languages) {
+            str += "\nEntry: " + l.getLanguageID() + " lang: " + l.getLanguage() + " code: " + l.getCode();
+        }
+        textView.setText(str);
     }
 
     @Override
