@@ -17,13 +17,13 @@ class DatabaseInitializer {
 
         //Caution
         fun deleteAll(db: AppDatabase) {
-            db.languageDao().deleteAll()
+            db.getLanguageDao().deleteAll()
         }
 
         private fun addLanguage(db: AppDatabase, languageName: String, code: String) {
             val lang = Language(0, languageName, code)
 
-            db.languageDao().insert(lang)
+            db.getLanguageDao().insert(lang)
         }
     }
 

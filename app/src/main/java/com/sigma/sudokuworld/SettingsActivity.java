@@ -64,7 +64,7 @@ public class SettingsActivity extends AppCompatActivity {
         }
 
         SudokuApplication app = (SudokuApplication) getApplication();
-        List<Language> languages = app.getDB().languageDao().getAll();
+        List<Language> languages = app.getDB().getLanguageDao().getAll();
 
         String str = "[WIP] Language database test:";
         for (Language l: languages) {
