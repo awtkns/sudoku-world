@@ -20,6 +20,6 @@ import android.arch.persistence.room.PrimaryKey
 )
 data class WordPair (
     @PrimaryKey(autoGenerate = true) var wordPairID: Int,
-    var nativeWordID: String,
-    var foreignWordID: String
+    var nativeWordID: Int,
+    var foreignWordID: Int
 )

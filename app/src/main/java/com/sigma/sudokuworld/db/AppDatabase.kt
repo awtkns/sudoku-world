@@ -10,7 +10,7 @@ import android.content.Context
  * Written in kotlin
  */
 @Database(
-        version = 4,
+        version = 5,
         entities = [
             Language::class,
             Word::class,
