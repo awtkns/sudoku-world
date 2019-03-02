@@ -8,8 +8,8 @@ import android.arch.persistence.room.Query
 @Dao
 interface WordSetDao {
 
-    @Query("SELECT * FROM word_set_cross_reference")
-    fun getAll(): List<WordSet>
+    @Query("SELECT * FROM word_set_cross_reference as cr INNER JOIN word_pairs as p on cr.wordPairID == p.wordPairID WHERE setID = :setID")
+    fun getAllWordsInSet(setID: Int): List<WordPair>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(vararg wordSets: WordSet)
