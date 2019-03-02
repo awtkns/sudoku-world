@@ -1,4 +1,4 @@
-package com.sigma.sudokuworld.db
+package com.sigma.sudokuworld.persistence.db
 
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
@@ -6,15 +6,14 @@ import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
 
 @Dao
-interface WordDao {
+interface SetDao {
 
-    @Query("SELECT * FROM words")
-    fun getAll(): List<Word>
+    @Query("SELECT * FROM sets")
+    fun getAll(): List<Set>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(vararg words: Word)
+    fun insert(vararg set: Set)
 
-    @Query("DELETE FROM words")
+    @Query("DELETE FROM sets")
     fun deleteAll()
-
 }

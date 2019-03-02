@@ -8,11 +8,11 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 
-import static com.sigma.sudokuworld.persistence.KeyConstants.*;
+import static com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants.*;
 
 import android.widget.Toast;
 
-import com.sigma.sudokuworld.persistence.PersistenceService;
+import com.sigma.sudokuworld.persistence.sharedpreferences.PersistenceService;
 import com.sigma.sudokuworld.R;
 import com.sigma.sudokuworld.game.GameDifficulty;
 import com.sigma.sudokuworld.game.GameMode;

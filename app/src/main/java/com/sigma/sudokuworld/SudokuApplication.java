@@ -2,8 +2,8 @@ package com.sigma.sudokuworld;
 
 import android.app.Application;
 
-import com.sigma.sudokuworld.db.AppDatabase;
-import com.sigma.sudokuworld.db.utils.DatabaseInitializer;
+import com.sigma.sudokuworld.persistence.db.AppDatabase;
+import com.sigma.sudokuworld.persistence.db.utils.DatabaseInitializer;
 
 public class SudokuApplication extends Application {
 

@@ -3,8 +3,8 @@ package com.sigma.sudokuworld
 import android.arch.persistence.room.Room
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
-import com.sigma.sudokuworld.db.*
-import com.sigma.sudokuworld.db.Set
+import com.sigma.sudokuworld.persistence.db.*
+import com.sigma.sudokuworld.persistence.db.Set
 
 import org.junit.After
 import org.junit.Before

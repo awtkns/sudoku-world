@@ -1,4 +1,4 @@
-package com.sigma.sudokuworld.db
+package com.sigma.sudokuworld.persistence.db
 
 import android.arch.persistence.room.Database
 import android.arch.persistence.room.Room

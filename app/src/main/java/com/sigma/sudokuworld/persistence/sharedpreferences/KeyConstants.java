@@ -1,4 +1,4 @@
-package com.sigma.sudokuworld.persistence;
+package com.sigma.sudokuworld.persistence.sharedpreferences;
 
 public final class KeyConstants {
 
