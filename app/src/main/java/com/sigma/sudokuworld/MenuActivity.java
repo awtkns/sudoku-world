@@ -21,6 +21,7 @@ public class MenuActivity extends AppCompatActivity {
     private static final int REQUEST_CODE = 1;
 
     private SoundPlayer mSoundPlayer;
+    private SettingsFragment mSettingsFragment;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -31,7 +32,7 @@ public class MenuActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         mSoundPlayer = new SoundPlayer(this);
-
+        mSettingsFragment = (SettingsFragment) getFragmentManager().findFragmentById(R.id.settingsFragment);
         ImageView imageView = findViewById(R.id.menuAVD);
         AnimatedVectorDrawable animatedVectorDrawable = (AnimatedVectorDrawable) imageView.getDrawable();
         animatedVectorDrawable.start();
@@ -89,14 +90,16 @@ public class MenuActivity extends AppCompatActivity {
      * Called when Settings button is pressed. (Action defined in xml onClick)
      */
     public void onSettingsPressed(View v) {
-        Intent intent = new Intent(getBaseContext(), SettingsActivity.class);
         mSoundPlayer.playPlaceCellSound();
-        startActivityForResult(intent, REQUEST_CODE);
+        mSettingsFragment.showSettings();
     }
 
     @Override
     public void onBackPressed() {
-        this.moveTaskToBack(true);
+        //If the settingsFragment cannot be hidden, then settings is not open therefore we minimize the app
+        if (mSettingsFragment.hideSettings() == false){
+            this.moveTaskToBack(true);
+        }
     }
 }
 

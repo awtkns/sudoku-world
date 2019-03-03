@@ -1,4 +1,4 @@
-package com.sigma.sudokuworld.sudoku;
+package com.sigma.sudokuworld;
 import com.sigma.sudokuworld.R;
 import com.sigma.sudokuworld.SudokuApplication;
 import com.sigma.sudokuworld.db.Language;
@@ -29,10 +29,18 @@ public class SettingsFragment extends Fragment {
     private TextView mTextView;
     private View mView;
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceStace) {
+        //Hidden when the app is started and is only shown when the settings button is clicked
         mView = inflater.inflate(R.layout.fragment_settings, container, false);
-        super.onCreate(savedInstanceStace);
+        mView.setVisibility(View.INVISIBLE);
+        mView.bringToFront();
+        return mView;
+    }
+
+    public void showSettings(){
 
         mGameModeRadioGroup = mView.findViewById(R.id.gameModeRadioGroup);
         mAudioModeSwitch = mView.findViewById(R.id.audioModeSwitch);
@@ -74,14 +82,46 @@ public class SettingsFragment extends Fragment {
             str += "\nEntry: " + language.getLanguageID() + " lang: " + language.getName() + " code: " + language.getCode();
         }
         mTextView.setText(str);
-        return mView;
+        mView.setVisibility(View.VISIBLE);
     }
 
     public boolean hideSettings(){
+        //If settings is open, save what we have
         if (mView.getVisibility() == View.VISIBLE) {
             mView.setVisibility(View.INVISIBLE);
+
+            //Checking GameMode
+            GameMode gameMode;
+            int checkedRadioButtonID = mGameModeRadioGroup.getCheckedRadioButtonId();
+            if (checkedRadioButtonID == R.id.nativeModeRadioButton) {
+                gameMode = GameMode.NATIVE;
+            } else if (checkedRadioButtonID == R.id.foreignModeRadioButton) {
+                gameMode = GameMode.FOREIGN;
+            } else {
+                gameMode = GameMode.NUMBERS;
+            }
+
+            //Checking Difficulty
+            GameDifficulty gameDifficulty;
+            int difficulty = mDifficultySeekBar.getProgress();
+            if (difficulty == 1) {
+                gameDifficulty = GameDifficulty.MEDIUM;
+            } else if (difficulty == 2) {
+                gameDifficulty = GameDifficulty.HARD;
+            } else {
+                gameDifficulty = GameDifficulty.EASY;
+            }
+
+            //Saving Data
+            Bundle settingsBundle = new Bundle();
+            settingsBundle.putSerializable(KeyConstants.DIFFICULTY_KEY, gameDifficulty);
+            settingsBundle.putSerializable(KeyConstants.MODE_KEY, gameMode);
+            settingsBundle.putBoolean(KeyConstants.AUDIO_KEY, mAudioModeSwitch.isChecked());
+            PersistenceService.saveSettingsData(getActivity(), settingsBundle);
+
             return true;
         } else {
+            //Settings is already hidden
             return false;
         }
     }

@@ -47,24 +47,15 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/vd_logo" />
 
-            <fragment
-                android:id="@+id/settingsFragment"
-                android:name="com.sigma.sudokuworld.sudoku.SettingsFragment"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginLeft="50dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="50dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/imageView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
 
             <Button
                 android:id="@+id/playButton"
-                android:layout_width="wrap_content"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
                 android:layout_marginTop="50dp"
+                android:elevation="0dp"
                 android:onClick="onPlayPressed"
                 android:text="@string/play_button"
                 android:visibility="visible"
@@ -75,19 +66,20 @@
 
             <Button
                 android:id="@+id/continueButton"
-                android:layout_width="wrap_content"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:elevation="0dp"
                 android:onClick="onContinuePressed"
                 android:text="@string/continue_button"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/playButton" />
 
             <Button
                 android:id="@+id/settingsButton"
-                android:layout_width="wrap_content"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:elevation="0dp"
@@ -101,5 +93,21 @@
         </android.support.constraint.ConstraintLayout>
 
     </FrameLayout>
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.sigma.sudokuworld.SettingsFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="50dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.84"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageView"
+        app:layout_constraintVertical_bias="1.0" />
 
 </android.support.constraint.ConstraintLayout>
