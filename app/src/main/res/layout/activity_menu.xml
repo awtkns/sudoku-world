@@ -50,6 +50,7 @@
 
             <Button
                 android:id="@+id/playButton"
+                android:textSize="15sp"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -66,19 +67,20 @@
 
             <Button
                 android:id="@+id/continueButton"
+                android:textSize="15sp"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:elevation="0dp"
                 android:onClick="onContinuePressed"
                 android:text="@string/continue_button"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/playButton" />
 
             <Button
                 android:id="@+id/settingsButton"
+                android:textSize="15sp"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
