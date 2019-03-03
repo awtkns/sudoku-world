@@ -97,7 +97,7 @@ public class MenuActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         //If the settingsFragment cannot be hidden, then settings is not open therefore we minimize the app
-        if (mSettingsFragment.hideSettings() == false){
+        if (!mSettingsFragment.hideSettings()){
             this.moveTaskToBack(true);
         }
     }
