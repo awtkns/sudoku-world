@@ -93,5 +93,10 @@ public class MenuActivity extends AppCompatActivity {
         mSoundPlayer.playPlaceCellSound();
         startActivityForResult(intent, REQUEST_CODE);
     }
+
+    @Override
+    public void onBackPressed() {
+        this.moveTaskToBack(true);
+    }
 }
 

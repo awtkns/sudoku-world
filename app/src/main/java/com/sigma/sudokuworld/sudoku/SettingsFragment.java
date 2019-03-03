@@ -26,17 +26,18 @@ public class SettingsFragment extends Fragment {
     private RadioGroup mGameModeRadioGroup;
     private Switch mAudioModeSwitch;
     private SeekBar mDifficultySeekBar;
-    private TextView textView;
+    private TextView mTextView;
+    private View mView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceStace) {
-        View view = inflater.inflate(R.layout.fragment_settings, container, false);
+        mView = inflater.inflate(R.layout.fragment_settings, container, false);
         super.onCreate(savedInstanceStace);
 
-        mGameModeRadioGroup = view.findViewById(R.id.gameModeRadioGroup);
-        mAudioModeSwitch = view.findViewById(R.id.audioModeSwitch);
-        mDifficultySeekBar = view.findViewById(R.id.difficultyBar);
-        textView = view.findViewById(R.id.textView3);
+        mGameModeRadioGroup = mView.findViewById(R.id.gameModeRadioGroup);
+        mAudioModeSwitch = mView.findViewById(R.id.audioModeSwitch);
+        mDifficultySeekBar = mView.findViewById(R.id.difficultyBar);
+        mTextView = mView.findViewById(R.id.textView3);
 
         Bundle previousSettings = PersistenceService.loadSettingsData(getActivity());
         GameDifficulty gameDifficulty = (GameDifficulty) previousSettings.getSerializable(KeyConstants.DIFFICULTY_KEY);
@@ -72,8 +73,17 @@ public class SettingsFragment extends Fragment {
         for (Language language: languages) {
             str += "\nEntry: " + language.getLanguageID() + " lang: " + language.getName() + " code: " + language.getCode();
         }
-        textView.setText(str);
-        return view;
+        mTextView.setText(str);
+        return mView;
+    }
+
+    public boolean hideSettings(){
+        if (mView.getVisibility() == View.VISIBLE) {
+            mView.setVisibility(View.INVISIBLE);
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }
