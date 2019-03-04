@@ -9,7 +9,10 @@
     <color name="colorSplashScreenAVD">#f88195</color>
     <color name="colorIncorrect">#FFB3B3</color>
 
-    <color name="color1">#6C5B</color>
+    <color name="colorButton">#ffffff</color>
+    <color name="colorButtonPressed">#80000000</color>
+
+    <color name="testcolor1">#6C5B</color>
 
     <!--Logo-->
     <color name="colorLogo_stroke">#000000</color>
