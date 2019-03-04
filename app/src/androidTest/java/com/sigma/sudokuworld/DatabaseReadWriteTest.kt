@@ -3,8 +3,11 @@ package com.sigma.sudokuworld
 import android.arch.persistence.room.Room
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
+import com.sigma.sudokuworld.game.GameDifficulty
+import com.sigma.sudokuworld.game.GameMode
 import com.sigma.sudokuworld.persistence.db.*
-import com.sigma.sudokuworld.persistence.db.Set
+import com.sigma.sudokuworld.persistence.db.entities.*
+import com.sigma.sudokuworld.persistence.db.entities.Set
 
 import org.junit.After
 import org.junit.Before
@@ -92,6 +95,18 @@ class DatabaseInstrumentedTest {
         val wordPairsInSet = db.getWordSetDao().getAllWordsInSet(1)
         assertEquals(2, wordPairsInSet.size)
         assertEquals(1, wordPairsInSet[0].nativeWordID)
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun readGameSave() {
+        val save = GameSave(1, GameDifficulty.MEDIUM, GameMode.FOREIGN, "", "", "")
+        db.getGameSaveDao().insert(save)
+
+        val gameSaves = db.getGameSaveDao().getAll()
+        assertEquals(1, gameSaves[0].saveID)
+        assertEquals(GameDifficulty.MEDIUM, gameSaves[0].difficulty)
+        assertEquals(GameMode.FOREIGN, gameSaves[0].gameMode)
     }
 
 
