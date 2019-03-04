@@ -36,12 +36,67 @@ public class SettingsFragment extends Fragment {
         //Hidden when the app is started and is only shown when the settings button is clicked
         mView = inflater.inflate(R.layout.fragment_settings, container, false);
         mView.setVisibility(View.INVISIBLE);
-        mView.bringToFront();
+        loadSettings();
         return mView;
     }
 
-    public void showSettings(){
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        saveSettings();
+    }
 
+    public void showSettings(){
+        loadSettings();
+        mView.setVisibility(View.VISIBLE);
+    }
+
+    public boolean hideSettings(){
+        //If settings is open, save what we have
+        if (mView.getVisibility() == View.VISIBLE) {
+            mView.setVisibility(View.INVISIBLE);
+            saveSettings();
+            return true;
+
+        //Settings is already hidden so do nothing
+        } else {
+            return false;
+        }
+    }
+
+
+    private void saveSettings(){
+        //Checking GameMode
+        GameMode gameMode;
+        int checkedRadioButtonID = mGameModeRadioGroup.getCheckedRadioButtonId();
+        if (checkedRadioButtonID == R.id.nativeModeRadioButton) {
+            gameMode = GameMode.NATIVE;
+        } else if (checkedRadioButtonID == R.id.foreignModeRadioButton) {
+            gameMode = GameMode.FOREIGN;
+        } else {
+            gameMode = GameMode.NUMBERS;
+        }
+
+        //Checking Difficulty
+        GameDifficulty gameDifficulty;
+        int difficulty = mDifficultySeekBar.getProgress();
+        if (difficulty == 1) {
+            gameDifficulty = GameDifficulty.MEDIUM;
+        } else if (difficulty == 2) {
+            gameDifficulty = GameDifficulty.HARD;
+        } else {
+            gameDifficulty = GameDifficulty.EASY;
+        }
+
+        //Saving Data
+        Bundle settingsBundle = new Bundle();
+        settingsBundle.putSerializable(KeyConstants.DIFFICULTY_KEY, gameDifficulty);
+        settingsBundle.putSerializable(KeyConstants.MODE_KEY, gameMode);
+        settingsBundle.putBoolean(KeyConstants.AUDIO_KEY, mAudioModeSwitch.isChecked());
+        PersistenceService.saveSettingsData(getActivity(), settingsBundle);
+    }
+
+    private void loadSettings(){
         mGameModeRadioGroup = mView.findViewById(R.id.gameModeRadioGroup);
         mAudioModeSwitch = mView.findViewById(R.id.audioModeSwitch);
         mDifficultySeekBar = mView.findViewById(R.id.difficultyBar);
@@ -82,48 +137,5 @@ public class SettingsFragment extends Fragment {
             str += "\nEntry: " + language.getLanguageID() + " lang: " + language.getName() + " code: " + language.getCode();
         }
         mTextView.setText(str);
-        mView.setVisibility(View.VISIBLE);
     }
-
-    public boolean hideSettings(){
-        //If settings is open, save what we have
-        if (mView.getVisibility() == View.VISIBLE) {
-            mView.setVisibility(View.INVISIBLE);
-
-            //Checking GameMode
-            GameMode gameMode;
-            int checkedRadioButtonID = mGameModeRadioGroup.getCheckedRadioButtonId();
-            if (checkedRadioButtonID == R.id.nativeModeRadioButton) {
-                gameMode = GameMode.NATIVE;
-            } else if (checkedRadioButtonID == R.id.foreignModeRadioButton) {
-                gameMode = GameMode.FOREIGN;
-            } else {
-                gameMode = GameMode.NUMBERS;
-            }
-
-            //Checking Difficulty
-            GameDifficulty gameDifficulty;
-            int difficulty = mDifficultySeekBar.getProgress();
-            if (difficulty == 1) {
-                gameDifficulty = GameDifficulty.MEDIUM;
-            } else if (difficulty == 2) {
-                gameDifficulty = GameDifficulty.HARD;
-            } else {
-                gameDifficulty = GameDifficulty.EASY;
-            }
-
-            //Saving Data
-            Bundle settingsBundle = new Bundle();
-            settingsBundle.putSerializable(KeyConstants.DIFFICULTY_KEY, gameDifficulty);
-            settingsBundle.putSerializable(KeyConstants.MODE_KEY, gameMode);
-            settingsBundle.putBoolean(KeyConstants.AUDIO_KEY, mAudioModeSwitch.isChecked());
-            PersistenceService.saveSettingsData(getActivity(), settingsBundle);
-
-            return true;
-        } else {
-            //Settings is already hidden
-            return false;
-        }
-    }
-
 }
