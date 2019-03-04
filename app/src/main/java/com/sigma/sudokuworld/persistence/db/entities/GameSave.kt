@@ -13,4 +13,34 @@ data class GameSave (
     var cellValues: IntArray,
     var solutionValues: IntArray,
     var lockedCells: BooleanArray
-)
+) {
+    fun setCellValue(cellNumber: Int, value: Int) {
+        cellValues[cellNumber] = value
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as GameSave
+
+        if (saveID != other.saveID) return false
+        if (difficulty != other.difficulty) return false
+        if (gameMode != other.gameMode) return false
+        if (!cellValues.contentEquals(other.cellValues)) return false
+        if (!solutionValues.contentEquals(other.solutionValues)) return false
+        if (!lockedCells.contentEquals(other.lockedCells)) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = saveID
+        result = 31 * result + difficulty.hashCode()
+        result = 31 * result + gameMode.hashCode()
+        result = 31 * result + cellValues.contentHashCode()
+        result = 31 * result + solutionValues.contentHashCode()
+        result = 31 * result + lockedCells.contentHashCode()
+        return result
+    }
+}
