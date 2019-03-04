@@ -1,4 +1,9 @@
 package com.sigma.sudokuworld.game;
+import android.os.Bundle;
+
+import com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants;
+
+import java.util.Arrays;
 import java.util.Random;
 import java.lang.Math;
 
@@ -12,15 +17,33 @@ class SudokuRobot {
     private int mBoardSize;
     private int[] mSolutionValues;
 
-
     //Constructor
-    SudokuRobot(int sudokuSubsectionSize, GameDifficulty difficulty) {
+    public SudokuRobot(int sudokuSubsectionSize) {
         mSudokuSubsectionSize = sudokuSubsectionSize;
         mBoardLength = sudokuSubsectionSize * sudokuSubsectionSize;
         mBoardSize = (mBoardLength) * (mBoardLength);
         mSolutionValues = new int[mBoardSize];
+    }
+
+    public Bundle generatePuzzle(GameDifficulty difficulty) {
         generateSudokuCells();
         generateBoard(difficulty);
+
+        Bundle puzzle = new Bundle();
+
+        int[] cellValues = getCellValues();
+        boolean[] lockedCells = new boolean[cellValues.length];
+        Arrays.fill(lockedCells, false);
+        for (int i = 0; i < cellValues.length; i++) {
+            if (cellValues[i] != 0) {
+                lockedCells[i] = true;
+            }
+        }
+
+        puzzle.putIntArray(KeyConstants.CELL_VALUES_KEY, cellValues);
+        puzzle.putIntArray(KeyConstants.SOLUTION_VALUES_KEY, mSolutionValues);
+        puzzle.putBooleanArray(KeyConstants.SOLUTION_VALUES_KEY, lockedCells);
+        return puzzle;
     }
 
 
@@ -40,8 +63,7 @@ class SudokuRobot {
     private void generateBoard(GameDifficulty difficulty) {
         clearBoard();
         solveBoard();
-        mSolutionValues = returnCellValues();
-
+        mSolutionValues = getCellValues();
 
         //Check a different number of nodes in generatePlayableBoard
         //based on the selected difficulty setting
@@ -235,7 +257,7 @@ class SudokuRobot {
 
 
     //Returns a one dimensional array containing cell values at their respective index
-    int[] returnCellValues() {
+    private int[] getCellValues() {
             int[] cellValues = new int[mBoardSize];
             int cellValueIndex = 0;
             //Loops through and grabs the value of each element in the 2D Sudoku cell array
@@ -247,10 +269,6 @@ class SudokuRobot {
                 }
             }
             return cellValues;
-    }
-
-    int[] getSolutionValues() {
-        return mSolutionValues;
     }
 
     private static int randomInt(int max){
