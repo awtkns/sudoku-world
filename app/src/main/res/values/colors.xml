@@ -12,6 +12,7 @@
     <color name="colorButton">#ffffff</color>
     <color name="colorButtonPressed">#80000000</color>
 
+    <color name ="colorTranslucent">#e0ffffff</color>
     <color name="testcolor1">#6C5B</color>
 
     <!--Logo-->
