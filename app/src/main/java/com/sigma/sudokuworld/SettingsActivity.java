@@ -10,7 +10,7 @@ import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.sigma.sudokuworld.persistence.db.Language;
+import com.sigma.sudokuworld.persistence.db.entities.Language;
 import com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants;
 import com.sigma.sudokuworld.persistence.sharedpreferences.PersistenceService;
 import com.sigma.sudokuworld.game.GameDifficulty;

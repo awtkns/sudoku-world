@@ -1,6 +1,7 @@
-package com.sigma.sudokuworld.persistence.db
+package com.sigma.sudokuworld.persistence.db.daos
 
 import android.arch.persistence.room.*
+import com.sigma.sudokuworld.persistence.db.entities.Language
 
 @Dao
 interface LanguageDao {

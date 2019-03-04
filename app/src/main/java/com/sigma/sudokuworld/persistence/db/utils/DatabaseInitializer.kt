@@ -1,7 +1,7 @@
 package com.sigma.sudokuworld.persistence.db.utils
 
 import com.sigma.sudokuworld.persistence.db.AppDatabase
-import com.sigma.sudokuworld.persistence.db.Language
+import com.sigma.sudokuworld.persistence.db.entities.Language
 
 abstract class DatabaseInitializer {
 
