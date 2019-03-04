@@ -62,15 +62,6 @@ public class SettingsActivity extends AppCompatActivity {
         } else {
             mGameModeRadioGroup.check(R.id.numbersModeRadioButton);
         }
-
-        SudokuApplication app = (SudokuApplication) getApplication();
-        List<Language> languages = app.getDB().getLanguageDao().getAll();
-
-        String str = "[WIP] Language database test:";
-        for (Language language: languages) {
-            str += "\nEntry: " + language.getLanguageID() + " lang: " + language.getName() + " code: " + language.getCode();
-        }
-        textView.setText(str);
     }
 
     @Override

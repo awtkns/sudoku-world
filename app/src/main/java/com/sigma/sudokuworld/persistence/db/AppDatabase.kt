@@ -15,7 +15,7 @@ import com.sigma.sudokuworld.persistence.db.utils.Converters
  * Written in kotlin
  */
 @Database(
-        version = 6,
+        version = 7,
         entities = [
             Language::class,
             Word::class,

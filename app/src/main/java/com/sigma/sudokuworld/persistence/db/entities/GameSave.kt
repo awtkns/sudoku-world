@@ -10,7 +10,7 @@ data class GameSave (
     @PrimaryKey(autoGenerate = true) var saveID: Int,
     var difficulty: GameDifficulty,
     var gameMode: GameMode,
-    var cellValues: String,
-    var solutionValues: String,
-    var lockedCells: String
+    var cellValues: IntArray,
+    var solutionValues: IntArray,
+    var lockedCells: BooleanArray
 )

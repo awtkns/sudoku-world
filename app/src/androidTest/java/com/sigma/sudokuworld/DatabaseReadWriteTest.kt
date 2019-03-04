@@ -100,7 +100,7 @@ class DatabaseInstrumentedTest {
     @Test
     @Throws(Exception::class)
     fun readGameSave() {
-        val save = GameSave(1, GameDifficulty.MEDIUM, GameMode.FOREIGN, "", "", "")
+        val save = GameSave(1, GameDifficulty.MEDIUM, GameMode.FOREIGN, IntArray(0), IntArray(0), BooleanArray(0))
         db.getGameSaveDao().insert(save)
 
         val gameSaves = db.getGameSaveDao().getAll()
