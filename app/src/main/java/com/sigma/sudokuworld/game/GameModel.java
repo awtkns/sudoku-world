@@ -55,12 +55,12 @@ class GameModel {
         lockedCells = new boolean[sudokuBoardSize];
         Arrays.fill(lockedCells, false);
 
-
-        //Grabbing initial values and solutions from the robot
-        SudokuRobot sudokuRobot = new SudokuRobot(sudokuSubsectionSize, difficulty);
-
-        cellValues = sudokuRobot.returnCellValues();
-        solutionCellValues = sudokuRobot.getSolutionValues();
+//
+//        //Grabbing initial values and solutions from the robot
+//        SudokuRobot sudokuRobot = new SudokuRobot(sudokuSubsectionSize, difficulty);
+//
+//        cellValues = sudokuRobot.returnCellValues();
+//        solutionCellValues = sudokuRobot.getSolutionValues();
 
 
         //Setting up initial cells with values given from robot

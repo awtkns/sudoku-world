@@ -22,7 +22,7 @@ import com.sigma.sudokuworld.persistence.db.utils.Converters
             WordPair::class,
             Set::class,
             WordSet::class,
-            GameSave::class
+            Game::class
         ])
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {

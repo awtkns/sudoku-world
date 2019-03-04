@@ -1,11 +1,10 @@
 package com.sigma.sudokuworld.persistence;
 
 import android.app.Application;
-import android.arch.lifecycle.LiveData;
 ;
 import com.sigma.sudokuworld.persistence.db.AppDatabase;
 import com.sigma.sudokuworld.persistence.db.daos.GameSaveDao;
-import com.sigma.sudokuworld.persistence.db.entities.GameSave;
+import com.sigma.sudokuworld.persistence.db.entities.Game;
 
 import android.support.annotation.NonNull;
 
@@ -16,15 +15,15 @@ public class GameRepository {
         gameSaveDao = AppDatabase.Companion.getInstance(application).getGameSaveDao();
     }
 
-    public void newGame(GameSave game) {
+    public void newGame(Game game) {
         gameSaveDao.insert(game);
     }
 
-    public void saveGame(GameSave gameSave) {
-        gameSaveDao.update(gameSave);
+    public void saveGame(Game game) {
+        gameSaveDao.update(game);
     }
 
-    public GameSave getGameSaveByID(int saveID) {
+    public Game getGameSaveByID(int saveID) {
         return gameSaveDao.getGameSaveByID(saveID);
     }
 }
