@@ -10,7 +10,7 @@ import java.lang.Math;
 
 //This object takes in the subsection size of a Sudoku and can solve boards, generate valid sudoku boards
 //and check whether or not a given solution is the correct solution
-class SudokuRobot {
+public class SudokuRobot {
     private SudokuCell[][] mSudokuCells;
     private int mSudokuSubsectionSize;
     private int mBoardLength;
@@ -42,7 +42,7 @@ class SudokuRobot {
 
         puzzle.putIntArray(KeyConstants.CELL_VALUES_KEY, cellValues);
         puzzle.putIntArray(KeyConstants.SOLUTION_VALUES_KEY, mSolutionValues);
-        puzzle.putBooleanArray(KeyConstants.SOLUTION_VALUES_KEY, lockedCells);
+        puzzle.putBooleanArray(KeyConstants.LOCKED_CELLS_KEY, lockedCells);
         return puzzle;
     }
 
