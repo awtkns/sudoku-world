@@ -34,4 +34,6 @@ public final class KeyConstants {
 
     //Public index key for continue game
     public static final String CONTINUE_KEY = "continue";
+
+    public static final String SAVE_KEY = "saveID";
 }
