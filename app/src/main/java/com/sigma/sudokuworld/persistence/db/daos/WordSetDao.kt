@@ -15,7 +15,7 @@ interface WordSetDao {
     fun getAllWordsInSet(setID: Int): List<WordPair>
 
     @Query("""
-        SELECT * FROM word_set_cross_reference as cf
+        SELECT nw.wordID, nw.languageID, nw.word FROM word_set_cross_reference as cf
         INNER JOIN word_pairs as p ON p.wordPairID == cf.wordPairID
         INNER JOIN words as nw ON p.nativeWordID == nw.wordID
         WHERE cf.setID == :setID
@@ -24,7 +24,7 @@ interface WordSetDao {
     fun getAllNativeWordsInSet(setID: Int): List<Word>
 
     @Query("""
-        SELECT * FROM word_set_cross_reference as cf
+        SELECT fw.wordID, fw.languageID, fw.word  FROM word_set_cross_reference as cf
         INNER JOIN word_pairs as p ON p.wordPairID == cf.wordPairID
         INNER JOIN words as fw ON p.foreignWordID == fw.wordID
         WHERE cf.setID == :setID
