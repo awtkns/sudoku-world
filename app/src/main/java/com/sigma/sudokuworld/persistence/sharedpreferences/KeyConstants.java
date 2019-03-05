@@ -36,4 +36,6 @@ public final class KeyConstants {
     public static final String CONTINUE_KEY = "continue";
 
     public static final String SAVE_KEY = "saveID";
+
+    public static final char CELL_LOCKED_FLAG = '~';
 }
