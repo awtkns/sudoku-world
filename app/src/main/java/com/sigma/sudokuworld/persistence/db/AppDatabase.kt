@@ -1,29 +1,37 @@
-package com.sigma.sudokuworld.db
+package com.sigma.sudokuworld.persistence.db
 
 import android.arch.persistence.room.Database
 import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
+import android.arch.persistence.room.TypeConverters
 import android.content.Context
+import com.sigma.sudokuworld.persistence.db.daos.*
+import com.sigma.sudokuworld.persistence.db.entities.*
+import com.sigma.sudokuworld.persistence.db.entities.Set
+import com.sigma.sudokuworld.persistence.db.utils.Converters
 
 /**
  * Creates the builds the database and ensure that only one is present
  * Written in kotlin
  */
 @Database(
-        version = 5,
+        version = 7,
         entities = [
             Language::class,
             Word::class,
             WordPair::class,
             Set::class,
-            WordSet::class
+            WordSet::class,
+            Game::class
         ])
+@TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun getLanguageDao(): LanguageDao
     abstract fun getWordDao(): WordDao
     abstract fun getWordPairDao(): WordPairDao
     abstract fun getSetDao(): SetDao
     abstract fun getWordSetDao(): WordSetDao
+    abstract fun getGameSaveDao(): GameSaveDao
 
     //Singleton
     companion object {

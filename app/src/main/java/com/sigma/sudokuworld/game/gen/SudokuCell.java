@@ -1,4 +1,4 @@
-package com.sigma.sudokuworld.game;
+package com.sigma.sudokuworld.game.gen;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;

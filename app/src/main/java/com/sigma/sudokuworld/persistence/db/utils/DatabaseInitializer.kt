@@ -1,9 +1,9 @@
-package com.sigma.sudokuworld.db.utils
+package com.sigma.sudokuworld.persistence.db.utils
 
-import com.sigma.sudokuworld.db.AppDatabase
-import com.sigma.sudokuworld.db.Language
+import com.sigma.sudokuworld.persistence.db.AppDatabase
+import com.sigma.sudokuworld.persistence.db.entities.Language
 
-class DatabaseInitializer {
+abstract class DatabaseInitializer {
 
     //Kotlin equivalent to static
     companion object {

@@ -10,9 +10,9 @@ import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.sigma.sudokuworld.db.Language;
-import com.sigma.sudokuworld.persistence.KeyConstants;
-import com.sigma.sudokuworld.persistence.PersistenceService;
+import com.sigma.sudokuworld.persistence.db.entities.Language;
+import com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants;
+import com.sigma.sudokuworld.persistence.sharedpreferences.PersistenceService;
 import com.sigma.sudokuworld.game.GameDifficulty;
 import com.sigma.sudokuworld.game.GameMode;
 
@@ -62,15 +62,6 @@ public class SettingsActivity extends AppCompatActivity {
         } else {
             mGameModeRadioGroup.check(R.id.numbersModeRadioButton);
         }
-
-        SudokuApplication app = (SudokuApplication) getApplication();
-        List<Language> languages = app.getDB().getLanguageDao().getAll();
-
-        String str = "[WIP] Language database test:";
-        for (Language language: languages) {
-            str += "\nEntry: " + language.getLanguageID() + " lang: " + language.getName() + " code: " + language.getCode();
-        }
-        textView.setText(str);
     }
 
     @Override

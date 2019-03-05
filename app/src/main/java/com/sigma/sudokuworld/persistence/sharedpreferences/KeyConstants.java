@@ -1,4 +1,4 @@
-package com.sigma.sudokuworld.persistence;
+package com.sigma.sudokuworld.persistence.sharedpreferences;
 
 public final class KeyConstants {
 
@@ -34,4 +34,8 @@ public final class KeyConstants {
 
     //Public index key for continue game
     public static final String CONTINUE_KEY = "continue";
+
+    public static final String SAVE_KEY = "saveID";
+
+    public static final char CELL_LOCKED_FLAG = '~';
 }
