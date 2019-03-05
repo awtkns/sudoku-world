@@ -1,5 +1,8 @@
 package com.sigma.sudokuworld.sudoku;
 
+import android.arch.lifecycle.LifecycleOwner;
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -11,16 +14,13 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.sigma.sudokuworld.R;
+import com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class SudokuGridView extends View {
-
-    //Flag that prepends a str to tell the view to draw the cell as 'locked' (ie: not intractable)
-    static final char LOCKED_FLAG = '~';
-
     private static final int SUDOKU_SIZE = 9;
     private static final int SUDOKU_ROOT_SIZE = 3;
 
@@ -50,10 +50,13 @@ public class SudokuGridView extends View {
 
     public SudokuGridView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        initPaint(context, attrs);
 
         mCellLabels = new String[SUDOKU_SIZE*SUDOKU_SIZE];
         Arrays.fill(mCellLabels, "");
+    }
 
+    private void initPaint(Context context, AttributeSet attrs) {
         mGridPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mBoldPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mCellFilledPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -88,6 +91,17 @@ public class SudokuGridView extends View {
         mCellFilledPaint.setStyle(Paint.Style.FILL);
         mLockedCellFillPaint.setStyle(Paint.Style.FILL);
         mIncorrectCellFillPaint.setStyle(Paint.Style.FILL);
+    }
+
+    public void setCellLabels(LifecycleOwner owner, LiveData<List<String>> labelsLiveData) {
+        final Observer<List<String>> cellLabelsObserver = new Observer<List<String>>() {
+            @Override
+            public void onChanged(@Nullable List<String> strings) {
+                mCellLabels = strings.toArray(new String[0]);
+                invalidate();
+            }
+        };
+        labelsLiveData.observe(owner, cellLabelsObserver);
     }
 
     @Override   //This is for accessibility (REQUIRED BY ANDRIOD STUDIO)
@@ -227,7 +241,7 @@ public class SudokuGridView extends View {
 
 
                 //Draws the cell fill for squares that cant be edited
-                if (label.charAt(0) == LOCKED_FLAG) {
+                if (label.charAt(0) == KeyConstants.CELL_LOCKED_FLAG) {
 
                     Rect cellRect = new Rect(
                             mXOrigin + (cx * mCellSize),
@@ -271,7 +285,6 @@ public class SudokuGridView extends View {
         //No cell is highlighted
         if(mHighlightedCell == -1 ) {return;}
 
-
         int row = (mHighlightedCell / SUDOKU_SIZE);
         int column = (mHighlightedCell % SUDOKU_SIZE);
         int subsectionRow = SUDOKU_SIZE * SUDOKU_ROOT_SIZE * (row / SUDOKU_ROOT_SIZE);
@@ -312,9 +325,7 @@ public class SudokuGridView extends View {
         }
     }
 
-
-    private void drawCellHighlight(Canvas canvas, int cellNumber)
-    {
+    private void drawCellHighlight(Canvas canvas, int cellNumber) {
         //Draws the individual highlight of a cell
 
         int cx = cellNumber % SUDOKU_SIZE;   //x cell pos
@@ -349,14 +360,6 @@ public class SudokuGridView extends View {
         x /= mCellSize;
         y /= mCellSize;
         return (y * SUDOKU_SIZE) + x;
-    }
-
-    public void setCellLabel(int cellNumber, String string) {
-        mCellLabels[cellNumber] = string;
-    }
-
-    public String getCellLabel(int cellNumber) {
-        return mCellLabels[cellNumber];
     }
 
     public int getHighlightedCell() {

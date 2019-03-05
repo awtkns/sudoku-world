@@ -36,8 +36,11 @@ public class AudioSudokuActivity extends SudokuActivity {
     View.OnLongClickListener longClickListener = new View.OnLongClickListener() {
         @Override
         public boolean onLongClick(View v) {
-            if (mVocabGame.isLockedCell(cellTouched)) {
-                String text = mVocabGame.getCellString(cellTouched, false);
+            if (mViewModel.isLockedCell(cellTouched)) {
+                String text = mViewModel.getMappedString(
+                        mViewModel.getCellValue(cellTouched),
+                        GameMode.opposite(mViewModel.getGameMode())
+                );
                 mTTS.speak(text, TextToSpeech.QUEUE_FLUSH, null);
             }
 
@@ -63,7 +66,7 @@ public class AudioSudokuActivity extends SudokuActivity {
                 if (status == TextToSpeech.SUCCESS){
 
                     //Set Lang
-                    if (mVocabGame.getGameMode() == GameMode.NATIVE) {
+                    if (mViewModel.getGameMode() == GameMode.NATIVE) {
                         mTTS.setLanguage(new Locale("fr"));
                     } else {
                         mTTS.setLanguage(new Locale("en"));
