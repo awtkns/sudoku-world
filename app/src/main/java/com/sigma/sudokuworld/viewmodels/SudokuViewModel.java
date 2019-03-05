@@ -39,7 +39,7 @@ public class SudokuViewModel extends AndroidViewModel {
     private String TAG = "SudokuViewModel";
 
     //Constructor loads a saved game
-    public SudokuViewModel(@NonNull Application application, int saveID) {
+    SudokuViewModel(@NonNull Application application, int saveID) {
         super(application);
         mGameRepository = new GameRepository(application);
 
@@ -67,6 +67,14 @@ public class SudokuViewModel extends AndroidViewModel {
         return buttonLabelsLiveData;
     }
 
+    public String getMappedString(int value, GameMode mode) {
+        return valueToMappedLabel(value, mode);
+    }
+
+    public int getCellValue(int cellNumber) {
+        return mGame.getCellValue(cellNumber);
+    }
+
     public void setCellValue(int cellNumber, int value) {
         if (cellNumber > mGame.getCellValues().length || cellNumber < 0) {
             Log.wtf(TAG, "Invalid Cell number");
@@ -79,6 +87,10 @@ public class SudokuViewModel extends AndroidViewModel {
 
         mGame.setCellValue(cellNumber, value);
         updateCellLabel(cellNumber, value);
+    }
+
+    public GameMode getGameMode() {
+        return mGame.getGameMode();
     }
 
     public boolean isLockedCell(int cellNumber) {
@@ -135,10 +147,7 @@ public class SudokuViewModel extends AndroidViewModel {
         buttonLabels = new ArrayList<>();
 
         GameMode gameMode = mGame.getGameMode();
-        if (gameMode != GameMode.NUMBERS) {
-            if (gameMode == GameMode.FOREIGN) gameMode = GameMode.NATIVE;
-            else gameMode = GameMode.FOREIGN;
-        }
+        gameMode = GameMode.opposite(gameMode);
 
         for (int i = 0; i < 9; i++) {
             String label = "";
