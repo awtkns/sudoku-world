@@ -9,11 +9,20 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
+import com.sigma.sudokuworld.game.GameDifficulty;
+import com.sigma.sudokuworld.game.GameMode;
+import com.sigma.sudokuworld.game.gen.PuzzleGenerator;
+import com.sigma.sudokuworld.persistence.GameRepository;
+import com.sigma.sudokuworld.persistence.db.entities.Game;
 import com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants;
 import com.sigma.sudokuworld.persistence.sharedpreferences.PersistenceService;
 import com.sigma.sudokuworld.audio.SoundPlayer;
 import com.sigma.sudokuworld.sudoku.AudioSudokuActivity;
 import com.sigma.sudokuworld.sudoku.VocabSudokuActivity;
+
+import static com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants.DIFFICULTY_KEY;
+import static com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants.MODE_KEY;
+import static com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants.SAVE_KEY;
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -52,9 +61,26 @@ public class MenuActivity extends AppCompatActivity {
             intent = new Intent(getBaseContext(), VocabSudokuActivity.class);
         }
 
-        intent.putExtras(settings);
-        intent.putExtra(KeyConstants.CONTINUE_KEY, false);
+        //New game
+        GameDifficulty  difficulty = (GameDifficulty) settings.getSerializable(DIFFICULTY_KEY);
+        GameMode gameMode = (GameMode) settings.getSerializable(MODE_KEY);
+        PuzzleGenerator robot = new PuzzleGenerator(3);
+        Bundle puzzle = robot.generatePuzzle(difficulty);
 
+        Game game = new Game(
+                //SaveID 0 = auto generate
+                1, 0,
+                difficulty,
+                gameMode,
+                puzzle.getIntArray(KeyConstants.CELL_VALUES_KEY),
+                puzzle.getIntArray(KeyConstants.SOLUTION_VALUES_KEY),
+                puzzle.getBooleanArray(KeyConstants.LOCKED_CELLS_KEY)
+        );
+
+        GameRepository repository = new GameRepository(getApplication());
+        repository.newGame(game);
+
+        intent.putExtra(SAVE_KEY, game.getSaveID());
         mSoundPlayer.playPlaceCellSound();
         startActivity(intent);
     }
