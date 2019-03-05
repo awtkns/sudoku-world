@@ -1,9 +1,6 @@
 package com.sigma.sudokuworld;
-import com.sigma.sudokuworld.R;
-import com.sigma.sudokuworld.SudokuApplication;
-import com.sigma.sudokuworld.db.Language;
-import com.sigma.sudokuworld.persistence.KeyConstants;
-import com.sigma.sudokuworld.persistence.PersistenceService;
+import com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants;
+import com.sigma.sudokuworld.persistence.sharedpreferences.PersistenceService;
 import com.sigma.sudokuworld.game.GameDifficulty;
 import com.sigma.sudokuworld.game.GameMode;
 
@@ -19,10 +16,6 @@ import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 
-
-import java.security.Key;
-import java.util.List;
-
 public class SettingsFragment extends Fragment {
     private RadioGroup mGameModeRadioGroup;
     private Switch mAudioModeSwitch;
@@ -31,8 +24,6 @@ public class SettingsFragment extends Fragment {
     private SeekBar mDifficultySeekBar;
     private TextView mTextView;
     private View mView;
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceStace) {
@@ -74,7 +65,6 @@ public class SettingsFragment extends Fragment {
         mSoundSwitch = mView.findViewById(R.id.soundSwitch);
         mHintsSwitch = mView.findViewById(R.id.hintsSwitch);
         mDifficultySeekBar = mView.findViewById(R.id.difficultyBar);
-        mTextView = mView.findViewById(R.id.textView3);
 
         Bundle previousSettings = PersistenceService.loadSettingsData(getActivity());
         GameDifficulty gameDifficulty = (GameDifficulty) previousSettings.getSerializable(KeyConstants.DIFFICULTY_KEY);
@@ -116,15 +106,6 @@ public class SettingsFragment extends Fragment {
         } else {
             mGameModeRadioGroup.check(R.id.numbersModeRadioButton);
         }
-
-        SudokuApplication app = (SudokuApplication) getActivity().getApplication();
-        List<Language> languages = app.getDB().getLanguageDao().getAll();
-
-        String str = "[WIP] Language database test:";
-        for (Language language: languages) {
-            str += "\nEntry: " + language.getLanguageID() + " lang: " + language.getName() + " code: " + language.getCode();
-        }
-        mTextView.setText(str);
     }
 
     private void saveSettings(){

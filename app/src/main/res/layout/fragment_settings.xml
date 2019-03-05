@@ -133,14 +133,6 @@
                 android:max="2"
                 android:progress="1" />
 
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="TextView"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
-
         </LinearLayout>
     </ScrollView>
 </android.support.constraint.ConstraintLayout>

@@ -1,7 +1,7 @@
 package com.sigma.sudokuworld.audio;
 import com.sigma.sudokuworld.R;
-import com.sigma.sudokuworld.persistence.KeyConstants;
-import com.sigma.sudokuworld.persistence.PersistenceService;
+import com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants;
+import com.sigma.sudokuworld.persistence.sharedpreferences.PersistenceService;
 
 import android.app.Activity;
 import android.content.Context;
