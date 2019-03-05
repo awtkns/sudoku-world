@@ -34,6 +34,9 @@ data class Game (
         return cellValues[cellNumber]
     }
 
+    fun getSolutionValue(cellNumber: Int): Int {
+        return solutionValues[cellNumber]
+    }
 
     fun isLocked(cellNumber: Int): Boolean {
         return lockedCells[cellNumber]
