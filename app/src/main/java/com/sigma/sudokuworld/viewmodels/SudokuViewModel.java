@@ -1,14 +1,14 @@
-package com.sigma.sudokuworld.game;
+package com.sigma.sudokuworld.viewmodels;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.util.SparseArray;
 
+import com.sigma.sudokuworld.game.GameMode;
 import com.sigma.sudokuworld.persistence.GameRepository;
 import com.sigma.sudokuworld.persistence.WordSetRepository;
 import com.sigma.sudokuworld.persistence.db.entities.Game;
@@ -17,22 +17,22 @@ import com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class SudokuViewModel extends AndroidViewModel {
-    public static final String CELL_LABEL_LOCKED_FLAG = "~";
-
     private final int SUDOKU_SIZE;
     private GameRepository mGameRepository;
     private Game mGame;
-
 
     private MutableLiveData<List<String>> cellLabelsLiveData;
     private MutableLiveData<List<String>> buttonLabelsLiveData;
 
     private List<String> labels;
+    private List<String> buttonLabels;
     private Word[] foreignWords;
     private Word[] nativeWords;
+    private String[] nWords;
+    private String[] fWords;
+
     private SparseArray<String> nativeWordsMap;
     private SparseArray<String> foreignWordsMap;
 
@@ -63,34 +63,55 @@ public class SudokuViewModel extends AndroidViewModel {
         return cellLabelsLiveData;
     }
 
-    public LiveData<List<String>> getButtonLabel() {
+    public LiveData<List<String>> getButtonLabels() {
         return buttonLabelsLiveData;
     }
 
-    public boolean setCellValue(int cellNumber, int value) {
-        if (cellNumber > mGame.getCellValues().length || cellNumber < 1) {
+    public void setCellValue(int cellNumber, int value) {
+        if (cellNumber > mGame.getCellValues().length || cellNumber < 0) {
             Log.wtf(TAG, "Invalid Cell number");
-            return false;
+            return;
         }
 
         // Locked cell
-        if (mGame.getLockedCells()[cellNumber]) return false;
+        if (mGame.getLockedCells()[cellNumber]) return;
 
 
         mGame.setCellValue(cellNumber, value);
         updateCellLabel(cellNumber, value);
-        return true;
+    }
+
+    public boolean isLockedCell(int cellNumber) {
+        return mGame.isLocked(cellNumber);
+    }
+
+    public boolean isCorrectValue(int cellNumber, int value) {
+        return mGame.getSolutionValue(cellNumber) ==  value;
+    }
+
+    public boolean isCellCorrect(int cellNumber) {
+        return mGame.getSolutionValue(cellNumber) ==  mGame.getCellValue(cellNumber);
+    }
+
+    public int getIncorrectCellNumber() {
+        for (int i = 0; i < SUDOKU_SIZE; i++) {
+            if (mGame.getCellValue(i) != mGame.getSolutionValue(i)) return i;
+        }
+
+        //Returns -1 if game is solved;
+        return -1;
     }
 
     private void updateCellLabel(int cellNumber, int value) {
         GameMode gameMode = mGame.getGameMode();
-        labels.set(cellNumber, valueToMappedLabel(cellNumber, gameMode));
+        labels.set(cellNumber, valueToMappedLabel(value, gameMode));
         cellLabelsLiveData.setValue(labels); //TODO: Don't run on main thread
     }
 
     private void init() {
         initializeWordMaps();
         initCellLabelsLiveData();
+        initButtonLabelsLiveData();
     }
 
     private void initCellLabelsLiveData() {
@@ -100,7 +121,7 @@ public class SudokuViewModel extends AndroidViewModel {
         GameMode gameMode = mGame.getGameMode();
         for (int i = 0; i < SUDOKU_SIZE; i++) {
             String label = "";
-            if (mGame.isLocked(i)) label = CELL_LABEL_LOCKED_FLAG;
+            if (mGame.isLocked(i)) label += KeyConstants.CELL_LOCKED_FLAG;
             label += valueToMappedLabel(mGame.getCellValue(i), gameMode);
 
             labels.add(i, label);
@@ -109,13 +130,31 @@ public class SudokuViewModel extends AndroidViewModel {
         cellLabelsLiveData.setValue(labels); //TODO: Don't run on main thread
     }
 
-//    private void intiButtonLabelsLiveData
-//
+    private void initButtonLabelsLiveData() {
+        buttonLabelsLiveData = new MutableLiveData<>();
+        buttonLabels = new ArrayList<>();
+
+        GameMode gameMode = mGame.getGameMode();
+        if (gameMode != GameMode.NUMBERS) {
+            if (gameMode == GameMode.FOREIGN) gameMode = GameMode.NATIVE;
+            else gameMode = GameMode.FOREIGN;
+        }
+
+        for (int i = 0; i < 9; i++) {
+            String label = "";
+            label += valueToMappedLabel(i + 1, gameMode);
+
+            buttonLabels.add(i, label);
+        }
+
+        buttonLabelsLiveData.setValue(buttonLabels); //TODO: Don't run on main thread
+    }
+
     private void initializeWordMaps() {
         WordSetRepository wordSetRepository = new WordSetRepository(getApplication());
         //foreignWords = wordSetRepository.getForeignWordsInSet(mGame.getSetID());        //TODO: SET BUILDER
         //nativeWords = wordSetRepository.getNativeWordsInSet(mGame.getSetID());
-        String[] nWords = new String[] {
+        nWords = new String[] {
                 "Red",
                 "Pink",
                 "Green",
@@ -125,7 +164,7 @@ public class SudokuViewModel extends AndroidViewModel {
                 "Black",
                 "Brown",
                 "Blue"};
-        String[] fWords = new String[] {
+        fWords = new String[] {
                 "Rouge",
                 "Rose",
                 "Vert",
