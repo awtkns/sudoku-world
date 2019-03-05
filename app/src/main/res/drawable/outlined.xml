@@ -4,8 +4,7 @@
     <!-- Button when it is NOT pressed -->
     <item android:state_pressed="false">
         <shape android:shape="rectangle">
-            <!-- <solid android:color="@color/colorTransparent" /> -->
-            <!-- Uncomment the top if you want the button to have a fill -->
+            <solid android:color="@color/colorButtonBackground" />
 
 
             <!-- The outline colour and width -->

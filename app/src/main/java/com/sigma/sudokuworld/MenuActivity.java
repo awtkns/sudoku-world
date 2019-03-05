@@ -100,6 +100,10 @@ public class MenuActivity extends AppCompatActivity {
         if (!mSettingsFragment.hideSettings()){
             this.moveTaskToBack(true);
         }
+
+        else {
+            mSoundPlayer.playPlaceCellSound();
+        }
     }
 }
 

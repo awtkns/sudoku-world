@@ -18,7 +18,7 @@ public class SoundPlayer {
     private static final float LEFT_VOLUME = 1;
     private static final int RIGHT_VOLUME = 1;
     private static final int PRIORITY = 1;
-    private static final int LOOP = 1;
+    private static final int LOOP = 0;
     private static final float RATE = 1;
 
     public SoundPlayer(Context context){

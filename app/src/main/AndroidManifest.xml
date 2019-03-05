@@ -20,7 +20,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".MenuActivity" />
-        <activity android:name=".SettingsActivity" />
         <activity android:name=".sudoku.VocabSudokuActivity" />
         <activity android:name=".sudoku.AudioSudokuActivity" />
     </application>
