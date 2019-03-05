@@ -27,6 +27,7 @@ public class SettingsFragment extends Fragment {
     private RadioGroup mGameModeRadioGroup;
     private Switch mAudioModeSwitch;
     private Switch mSoundSwitch;
+    private Switch mHintsSwitch;
     private SeekBar mDifficultySeekBar;
     private TextView mTextView;
     private View mView;
@@ -67,6 +68,65 @@ public class SettingsFragment extends Fragment {
     }
 
 
+    private void loadSettings(){
+        mGameModeRadioGroup = mView.findViewById(R.id.gameModeRadioGroup);
+        mAudioModeSwitch = mView.findViewById(R.id.audioModeSwitch);
+        mSoundSwitch = mView.findViewById(R.id.soundSwitch);
+        mHintsSwitch = mView.findViewById(R.id.hintsSwitch);
+        mDifficultySeekBar = mView.findViewById(R.id.difficultyBar);
+        mTextView = mView.findViewById(R.id.textView3);
+
+        Bundle previousSettings = PersistenceService.loadSettingsData(getActivity());
+        GameDifficulty gameDifficulty = (GameDifficulty) previousSettings.getSerializable(KeyConstants.DIFFICULTY_KEY);
+        GameMode gameMode = (GameMode) previousSettings.getSerializable(KeyConstants.MODE_KEY);
+        boolean isAudioMode = previousSettings.getBoolean(KeyConstants.AUDIO_KEY);
+        boolean isSoundMode = previousSettings.getBoolean(KeyConstants.SOUND_KEY);
+        boolean isHintsMode = previousSettings.getBoolean(KeyConstants.HINTS_KEY);
+
+        if (gameDifficulty == GameDifficulty.EASY) {
+            mDifficultySeekBar.setProgress(0);
+        } else if (gameDifficulty == GameDifficulty.MEDIUM) {
+            mDifficultySeekBar.setProgress(1);
+        } else  if (gameDifficulty == GameDifficulty.HARD) {
+            mDifficultySeekBar.setProgress(2);
+        }
+
+        if (isAudioMode) {
+            mAudioModeSwitch.setChecked(true);
+        } else {
+            mAudioModeSwitch.setChecked(false);
+        }
+
+        if (isSoundMode) {
+            mSoundSwitch.setChecked(true);
+        } else {
+            mSoundSwitch.setChecked(false);
+        }
+
+        if (isHintsMode) {
+            mHintsSwitch.setChecked(true);
+        } else {
+            mHintsSwitch.setChecked(false);
+        }
+
+        if (gameMode == GameMode.NATIVE) {
+            mGameModeRadioGroup.check(R.id.nativeModeRadioButton);
+        } else if (gameMode == GameMode.FOREIGN) {
+            mGameModeRadioGroup.check(R.id.foreignModeRadioButton);
+        } else {
+            mGameModeRadioGroup.check(R.id.numbersModeRadioButton);
+        }
+
+        SudokuApplication app = (SudokuApplication) getActivity().getApplication();
+        List<Language> languages = app.getDB().getLanguageDao().getAll();
+
+        String str = "[WIP] Language database test:";
+        for (Language language: languages) {
+            str += "\nEntry: " + language.getLanguageID() + " lang: " + language.getName() + " code: " + language.getCode();
+        }
+        mTextView.setText(str);
+    }
+
     private void saveSettings(){
         //Checking GameMode
         GameMode gameMode;
@@ -96,57 +156,7 @@ public class SettingsFragment extends Fragment {
         settingsBundle.putSerializable(KeyConstants.MODE_KEY, gameMode);
         settingsBundle.putBoolean(KeyConstants.AUDIO_KEY, mAudioModeSwitch.isChecked());
         settingsBundle.putBoolean(KeyConstants.SOUND_KEY, mSoundSwitch.isChecked());
+        settingsBundle.putBoolean(KeyConstants.HINTS_KEY, mHintsSwitch.isChecked());
         PersistenceService.saveSettingsData(getActivity(), settingsBundle);
-    }
-
-    private void loadSettings(){
-        mGameModeRadioGroup = mView.findViewById(R.id.gameModeRadioGroup);
-        mAudioModeSwitch = mView.findViewById(R.id.audioModeSwitch);
-        mSoundSwitch = mView.findViewById(R.id.soundSwitch);
-        mDifficultySeekBar = mView.findViewById(R.id.difficultyBar);
-        mTextView = mView.findViewById(R.id.textView3);
-
-        Bundle previousSettings = PersistenceService.loadSettingsData(getActivity());
-        GameDifficulty gameDifficulty = (GameDifficulty) previousSettings.getSerializable(KeyConstants.DIFFICULTY_KEY);
-        GameMode gameMode = (GameMode) previousSettings.getSerializable(KeyConstants.MODE_KEY);
-        boolean isAudioMode = previousSettings.getBoolean(KeyConstants.AUDIO_KEY);
-        boolean isSoundMode = previousSettings.getBoolean(KeyConstants.SOUND_KEY);
-
-        if (gameDifficulty == GameDifficulty.EASY) {
-            mDifficultySeekBar.setProgress(0);
-        } else if (gameDifficulty == GameDifficulty.MEDIUM) {
-            mDifficultySeekBar.setProgress(1);
-        } else  if (gameDifficulty == GameDifficulty.HARD) {
-            mDifficultySeekBar.setProgress(2);
-        }
-
-        if (isAudioMode) {
-            mAudioModeSwitch.setChecked(true);
-        } else {
-            mAudioModeSwitch.setChecked(false);
-        }
-
-        if (isSoundMode) {
-            mSoundSwitch.setChecked(true);
-        } else {
-            mSoundSwitch.setChecked(false);
-        }
-
-        if (gameMode == GameMode.NATIVE) {
-            mGameModeRadioGroup.check(R.id.nativeModeRadioButton);
-        } else if (gameMode == GameMode.FOREIGN) {
-            mGameModeRadioGroup.check(R.id.foreignModeRadioButton);
-        } else {
-            mGameModeRadioGroup.check(R.id.numbersModeRadioButton);
-        }
-
-        SudokuApplication app = (SudokuApplication) getActivity().getApplication();
-        List<Language> languages = app.getDB().getLanguageDao().getAll();
-
-        String str = "[WIP] Language database test:";
-        for (Language language: languages) {
-            str += "\nEntry: " + language.getLanguageID() + " lang: " + language.getName() + " code: " + language.getCode();
-        }
-        mTextView.setText(str);
     }
 }

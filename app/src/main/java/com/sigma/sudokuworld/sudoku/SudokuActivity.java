@@ -12,6 +12,7 @@ import static com.sigma.sudokuworld.persistence.KeyConstants.*;
 
 import android.widget.Toast;
 
+import com.sigma.sudokuworld.persistence.KeyConstants;
 import com.sigma.sudokuworld.persistence.PersistenceService;
 import com.sigma.sudokuworld.R;
 import com.sigma.sudokuworld.game.GameDifficulty;
@@ -142,14 +143,17 @@ public abstract class SudokuActivity extends AppCompatActivity {
                 mVocabGame.setCellString(cellNumber, buttonValue);
                 mSudokuGridView.setCellLabel(cellNumber, mVocabGame.getButtonString(buttonValue));
 
+                //Find out whether the user is playing with hints or not
+                Bundle previousSettings = PersistenceService.loadSettingsData(SudokuActivity.this);
+                boolean isHintsMode = previousSettings.getBoolean(KeyConstants.HINTS_KEY);
 
-                if (mVocabGame.isCellCorrect(cellNumber)) {
-                    //Correct number is placed in cell
+                if (mVocabGame.isCellCorrect(cellNumber) || !isHintsMode) {
+                    //Correct number is placed in cell OR hints are off
                     mSudokuGridView.clearHighlightedCell();
                     mSudokuGridView.clearIncorrectCell();
                     mSoundPlayer.playPlaceCellSound();
                 } else {
-                    //Incorrect value has been placed in cell
+                    //Incorrect value has been placed in cell AND hints are on
                     mSudokuGridView.setIncorrectCell(cellNumber);
                     mSoundPlayer.playWrongSound();
                 }
