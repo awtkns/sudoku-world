@@ -20,11 +20,13 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 
+import java.security.Key;
 import java.util.List;
 
 public class SettingsFragment extends Fragment {
     private RadioGroup mGameModeRadioGroup;
     private Switch mAudioModeSwitch;
+    private Switch mSoundSwitch;
     private SeekBar mDifficultySeekBar;
     private TextView mTextView;
     private View mView;
@@ -93,12 +95,14 @@ public class SettingsFragment extends Fragment {
         settingsBundle.putSerializable(KeyConstants.DIFFICULTY_KEY, gameDifficulty);
         settingsBundle.putSerializable(KeyConstants.MODE_KEY, gameMode);
         settingsBundle.putBoolean(KeyConstants.AUDIO_KEY, mAudioModeSwitch.isChecked());
+        settingsBundle.putBoolean(KeyConstants.SOUND_KEY, mSoundSwitch.isChecked());
         PersistenceService.saveSettingsData(getActivity(), settingsBundle);
     }
 
     private void loadSettings(){
         mGameModeRadioGroup = mView.findViewById(R.id.gameModeRadioGroup);
         mAudioModeSwitch = mView.findViewById(R.id.audioModeSwitch);
+        mSoundSwitch = mView.findViewById(R.id.soundSwitch);
         mDifficultySeekBar = mView.findViewById(R.id.difficultyBar);
         mTextView = mView.findViewById(R.id.textView3);
 
@@ -106,6 +110,7 @@ public class SettingsFragment extends Fragment {
         GameDifficulty gameDifficulty = (GameDifficulty) previousSettings.getSerializable(KeyConstants.DIFFICULTY_KEY);
         GameMode gameMode = (GameMode) previousSettings.getSerializable(KeyConstants.MODE_KEY);
         boolean isAudioMode = previousSettings.getBoolean(KeyConstants.AUDIO_KEY);
+        boolean isSoundMode = previousSettings.getBoolean(KeyConstants.SOUND_KEY);
 
         if (gameDifficulty == GameDifficulty.EASY) {
             mDifficultySeekBar.setProgress(0);
@@ -119,6 +124,12 @@ public class SettingsFragment extends Fragment {
             mAudioModeSwitch.setChecked(true);
         } else {
             mAudioModeSwitch.setChecked(false);
+        }
+
+        if (isSoundMode) {
+            mSoundSwitch.setChecked(true);
+        } else {
+            mSoundSwitch.setChecked(false);
         }
 
         if (gameMode == GameMode.NATIVE) {

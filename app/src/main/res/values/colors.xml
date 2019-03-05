@@ -4,8 +4,8 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#f04a57</color>
     <color name="colorGrid">#000000</color>
-    <color name="colorLockedCell">#70aed6f1</color>
-    <color name="colorHighlight">#703498db</color>
+    <color name="colorLockedCell">#50aed6f1</color>
+    <color name="colorHighlight">#503498db</color>
     <color name="colorSplashScreenAVD">#f88195</color>
     <color name="colorIncorrect">#FFB3B3</color>
 
@@ -21,7 +21,9 @@
     <color name="colorButtonBackground">#ccaed6f1</color>
     <color name="colorButtonPressed">#aed6f1</color>
 
-    <color name="testcolor1">#6C5B</color>
+    <!-- Settings Fragment -->
+    <color name="colorSettingsBackground">#e7F1F5FF</color>
+    <color name="colorSettingsStroke">#3498db</color>
 
     <!--Logo-->
     <color name="colorLogo_stroke">#000000</color>

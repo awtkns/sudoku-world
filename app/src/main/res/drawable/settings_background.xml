@@ -4,14 +4,14 @@
     <!-- Button when it is NOT pressed -->
     <item android:state_pressed="false">
         <shape android:shape="rectangle">
-            <solid android:color="@color/colorTranslucent" />
+            <solid android:color="@color/colorSettingsBackground" />
 
 
             <!-- The outline colour and width -->
-            <stroke android:width="4dp" android:color="@color/colorBlack" />
+            <stroke android:width="3dp" android:color="@color/colorSettingsStroke" />
 
             <!-- How round the corners are -->
-            <corners android:radius="50dp" />
+            <corners android:radius="20dp" />
         </shape>
     </item>
 </selector>

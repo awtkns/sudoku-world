@@ -12,6 +12,7 @@
 
     <ScrollView
         android:id="@+id/scrollView2"
+        android:scrollbars="none"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout_editor_absoluteX="16dp"
@@ -72,6 +73,13 @@
                 android:layout_height="wrap_content"
                 android:checked="false"
                 android:text="@string/audioMode" />
+
+            <Switch
+                android:id="@+id/soundSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/soundMode" />
 
             <TextView
                 android:id="@+id/difficultyLabel"
