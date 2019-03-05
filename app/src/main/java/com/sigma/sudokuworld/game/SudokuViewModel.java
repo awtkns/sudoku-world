@@ -28,6 +28,8 @@ public class SudokuViewModel extends AndroidViewModel {
 
 
     private MutableLiveData<List<String>> cellLabelsLiveData;
+    private MutableLiveData<List<String>> buttonLabelsLiveData;
+
     private List<String> labels;
     private Word[] foreignWords;
     private Word[] nativeWords;
@@ -36,33 +38,10 @@ public class SudokuViewModel extends AndroidViewModel {
 
     private String TAG = "SudokuViewModel";
 
-    //Constructor that creates a new game
-    public SudokuViewModel(@NonNull Application application, GameDifficulty difficulty, GameMode gameMode) {
-        super(application);
-        mGameRepository = new GameRepository(application);
-
-        SudokuRobot robot = new SudokuRobot(3);
-        Bundle puzzle = robot.generatePuzzle(difficulty);
-
-        mGame = new Game(
-                //SaveID 0 = auto generate
-                0, 0,
-                difficulty,
-                gameMode,
-                Objects.requireNonNull(puzzle.getIntArray(KeyConstants.CELL_VALUES_KEY)),
-                Objects.requireNonNull(puzzle.getIntArray(KeyConstants.SOLUTION_VALUES_KEY)),
-                Objects.requireNonNull(puzzle.getBooleanArray(KeyConstants.LOCKED_CELLS_KEY))
-        );
-
-        mGameRepository.newGame(mGame);
-        SUDOKU_SIZE = mGame.getCellValues().length;
-        init();
-    }
-
-    //Constructor that loads a saved game
+    //Constructor loads a saved game
     public SudokuViewModel(@NonNull Application application, int saveID) {
         super(application);
-
+        mGameRepository = new GameRepository(application);
 
         try {
             mGame = mGameRepository.getGameSaveByID(saveID);//
@@ -82,6 +61,10 @@ public class SudokuViewModel extends AndroidViewModel {
 
     public LiveData<List<String>> getCellLabels() {
         return cellLabelsLiveData;
+    }
+
+    public LiveData<List<String>> getButtonLabel() {
+        return buttonLabelsLiveData;
     }
 
     public boolean setCellValue(int cellNumber, int value) {
@@ -116,27 +99,60 @@ public class SudokuViewModel extends AndroidViewModel {
 
         GameMode gameMode = mGame.getGameMode();
         for (int i = 0; i < SUDOKU_SIZE; i++) {
-            labels.add(i, valueToMappedLabel(mGame.getCellValue(i), gameMode));
+            String label = "";
+            if (mGame.isLocked(i)) label = CELL_LABEL_LOCKED_FLAG;
+            label += valueToMappedLabel(mGame.getCellValue(i), gameMode);
+
+            labels.add(i, label);
         }
 
         cellLabelsLiveData.setValue(labels); //TODO: Don't run on main thread
     }
 
+//    private void intiButtonLabelsLiveData
+//
     private void initializeWordMaps() {
         WordSetRepository wordSetRepository = new WordSetRepository(getApplication());
-        foreignWords = wordSetRepository.getForeignWordsInSet(mGame.getSetID());
-        nativeWords = wordSetRepository.getNativeWordsInSet(mGame.getSetID());
+        //foreignWords = wordSetRepository.getForeignWordsInSet(mGame.getSetID());        //TODO: SET BUILDER
+        //nativeWords = wordSetRepository.getNativeWordsInSet(mGame.getSetID());
+        String[] nWords = new String[] {
+                "Red",
+                "Pink",
+                "Green",
+                "Purple",
+                "Yellow",
+                "White",
+                "Black",
+                "Brown",
+                "Blue"};
+        String[] fWords = new String[] {
+                "Rouge",
+                "Rose",
+                "Vert",
+                "Violet",
+                "Jaune",
+                "Blanc",
+                "Noir",
+                "Marron",
+                "Bleu"
+        };
 
         nativeWordsMap = new SparseArray<>();
         nativeWordsMap.append(0, "");
-        for(int i = 0; i < nativeWords.length; i++) {
-            nativeWordsMap.append(i + 1, nativeWords[i].getWord());
+//        for(int i = 0; i < nativeWords.length; i++) {
+//            nativeWordsMap.append(i + 1, nativeWords[i].getWord());
+//        }
+        for(int i = 0; i < nWords.length; i++) {
+            nativeWordsMap.append(i + 1, nWords[i]);
         }
 
         foreignWordsMap = new SparseArray<>();
         foreignWordsMap.append(0, "");
-        for(int i = 0; i < foreignWords.length; i++) {
-            foreignWordsMap.append(i + 1, foreignWords[i].getWord());
+//        for(int i = 0; i < foreignWords.length; i++) {
+//            foreignWordsMap.append(i + 1, foreignWords[i].getWord());
+//        }
+        for(int i = 0; i < fWords.length; i++) {
+            foreignWordsMap.append(i + 1, fWords[i]);
         }
     }
 
