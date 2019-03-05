@@ -1,4 +1,4 @@
-package com.sigma.sudokuworld.persistence;
+package com.sigma.sudokuworld.persistence.sharedpreferences;
 
 
 import android.content.Context;
@@ -18,7 +18,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Map;
 
-import static com.sigma.sudokuworld.persistence.KeyConstants.*;
+import static com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants.*;
 
 
 public abstract class PersistenceService {
