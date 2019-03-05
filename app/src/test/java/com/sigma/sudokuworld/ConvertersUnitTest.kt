@@ -15,7 +15,7 @@ class ConvertersUnitTest {
     @Test
     @Throws(Exception::class)
     fun booleanArrayConvert() {
-        val booleanArray: BooleanArray = booleanArrayOf(true, false, false, true)
+        val booleanArray: BooleanArray = booleanArrayOf(true, false, false, true, true)
         val booleansString = converters.booleanArrayToString(booleanArray)
 
         val convertedArray = converters.stringToBooleanArray(booleansString)!!
