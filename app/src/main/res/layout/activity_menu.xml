@@ -45,7 +45,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/vd_logo" />
+                app:srcCompat="@drawable/ic_sudokuworld" />
 
 
             <Button
@@ -54,7 +54,7 @@
                 android:layout_height="50dp"
                 android:background="@drawable/outlined_button"
                 android:elevation="0dp"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/colorButtonText"
                 android:textSize="21sp"
                 android:layout_marginTop="40dp"
                 android:onClick="onPlayPressed"
@@ -62,7 +62,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                style="?android:attr/borderlessButtonStyle"/>
 
             <Button
                 android:id="@+id/continueButton"
@@ -70,14 +71,15 @@
                 android:layout_height="50dp"
                 android:background="@drawable/outlined_button"
                 android:elevation="0dp"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/colorButtonText"
                 android:textSize="21sp"
                 android:layout_marginTop="20dp"
                 android:onClick="onContinuePressed"
                 android:text="@string/continue_button"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/playButton" />
+                app:layout_constraintTop_toBottomOf="@+id/playButton"
+                style="?android:attr/borderlessButtonStyle"/>
 
             <Button
                 android:id="@+id/settingsButton"
@@ -85,14 +87,15 @@
                 android:layout_height="50dp"
                 android:background="@drawable/outlined_button"
                 android:elevation="0dp"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/colorButtonText"
                 android:textSize="21sp"
                 android:layout_marginTop="20dp"
                 android:onClick="onSettingsPressed"
                 android:text="@string/settingsTitle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/continueButton" />
+                app:layout_constraintTop_toBottomOf="@+id/continueButton"
+                style="?android:attr/borderlessButtonStyle"/>
 
 
         </android.support.constraint.ConstraintLayout>

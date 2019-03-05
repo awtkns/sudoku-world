@@ -5,14 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusableInTouchMode="true"
-    android:background="@color/colorTranslucent"
-    tools:context=".SettingsActivity">
+    android:background="@drawable/settings_background"
+    tools:context=".MenuActivity"
+    android:paddingStart="15dp"
+    android:paddingEnd="15dp">
 
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="0dp">
 
         <LinearLayout

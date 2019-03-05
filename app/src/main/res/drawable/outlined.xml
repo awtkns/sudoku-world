@@ -8,7 +8,7 @@
 
 
             <!-- The outline colour and width -->
-            <stroke android:width="3dp" android:color="@color/colorButton" />
+            <!--<stroke android:width="3dp" android:color="@color/colorButtonBackground" />-->
 
             <!-- How round the corners are -->
             <corners android:radius="50dp" />
@@ -23,7 +23,7 @@
 
 
             <!-- The outline colour and width -->
-            <stroke android:width="3dp" android:color="@color/colorButton" />
+            <stroke android:width="3dp" android:color="@color/colorButtonBorder" />
 
             <!-- How round the corners are -->
             <corners android:radius="50dp" />
