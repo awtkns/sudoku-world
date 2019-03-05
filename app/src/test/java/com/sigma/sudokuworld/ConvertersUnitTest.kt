@@ -18,8 +18,9 @@ class ConvertersUnitTest {
         val booleanArray: BooleanArray = booleanArrayOf(true, false, false, true)
         val booleansString = converters.booleanArrayToString(booleanArray)
 
-        val convertedArray = converters.stringToBooleanArray(booleansString)
-        assertTrue(convertedArray!!.contentEquals(booleanArray))
+        val convertedArray = converters.stringToBooleanArray(booleansString)!!
+        assertTrue(convertedArray.contentEquals(booleanArray))
+        assertFalse(convertedArray.contentEquals(booleanArray.reversedArray()))
     }
 
     @Test
@@ -28,8 +29,9 @@ class ConvertersUnitTest {
         val intArray: IntArray = intArrayOf(0, 2, 6, 4)
         val intsString = converters.intArrayToString(intArray)
 
-        val convertedArray = converters.stringToIntArray(intsString)
-        assertTrue(convertedArray!!.contentEquals(intArray))
+        val convertedArray = converters.stringToIntArray(intsString)!!
+        assertTrue(convertedArray.contentEquals(intArray))
+        assertFalse(convertedArray.contentEquals(intArray.reversedArray()))
     }
 
     @Test
@@ -42,6 +44,7 @@ class ConvertersUnitTest {
         assertEquals(nativeMode, converters.stringToGameMode(converters.gameModeToString(nativeMode)))
         assertEquals(foreignMode, converters.stringToGameMode(converters.gameModeToString(foreignMode)))
         assertEquals(numbersMode, converters.stringToGameMode(converters.gameModeToString(numbersMode)))
+        assertNotEquals(numbersMode, converters.stringToGameMode(converters.gameModeToString(nativeMode)))
     }
 
     @Test
