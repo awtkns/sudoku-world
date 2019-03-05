@@ -1,6 +1,7 @@
-package com.sigma.sudokuworld.game;
+package com.sigma.sudokuworld.game.gen;
 import android.os.Bundle;
 
+import com.sigma.sudokuworld.game.GameDifficulty;
 import com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants;
 
 import java.util.Arrays;
@@ -10,7 +11,7 @@ import java.lang.Math;
 
 //This object takes in the subsection size of a Sudoku and can solve boards, generate valid sudoku boards
 //and check whether or not a given solution is the correct solution
-public class SudokuRobot {
+public class PuzzleGenerator {
     private SudokuCell[][] mSudokuCells;
     private int mSudokuSubsectionSize;
     private int mBoardLength;
@@ -18,7 +19,7 @@ public class SudokuRobot {
     private int[] mSolutionValues;
 
     //Constructor
-    public SudokuRobot(int sudokuSubsectionSize) {
+    public PuzzleGenerator(int sudokuSubsectionSize) {
         mSudokuSubsectionSize = sudokuSubsectionSize;
         mBoardLength = sudokuSubsectionSize * sudokuSubsectionSize;
         mBoardSize = (mBoardLength) * (mBoardLength);
