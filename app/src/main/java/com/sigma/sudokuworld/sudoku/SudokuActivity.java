@@ -2,6 +2,7 @@ package com.sigma.sudokuworld.sudoku;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ public abstract class SudokuActivity extends AppCompatActivity {
     protected SudokuViewModel mViewModel;
     protected Button[] mInputButtons;
     private SoundPlayer mSoundPlayer;
+    private boolean mIsHintsEnabled;
     private int mSaveID = 0;
 
     @Override
@@ -38,7 +40,12 @@ public abstract class SudokuActivity extends AppCompatActivity {
 
         if (savedInstanceState != null) {
             mSaveID = savedInstanceState.getInt(KeyConstants.SAVE_KEY);
-        } else mSaveID = getIntent().getIntExtra(KeyConstants.SAVE_KEY, 1);
+            mIsHintsEnabled = savedInstanceState.getBoolean(KeyConstants.HINTS_KEY);
+        } else {
+            Intent intent = getIntent();
+            mSaveID = intent.getIntExtra(KeyConstants.SAVE_KEY, 1);
+            mIsHintsEnabled = intent.getBooleanExtra(KeyConstants.HINTS_KEY, true);
+        }
 
         SudokuViewModelFactory sudokuViewModelFactory = new SudokuViewModelFactory(getApplication(), mSaveID);
         mViewModel = ViewModelProviders.of(this, sudokuViewModelFactory).get(SudokuViewModel.class);
@@ -67,6 +74,7 @@ public abstract class SudokuActivity extends AppCompatActivity {
 
         //Save the current state of the Sudoku board
         outState.putInt(KeyConstants.SAVE_KEY, mSaveID);
+        outState.putBoolean(KeyConstants.HINTS_KEY, mIsHintsEnabled);
     }
 
     @Override
@@ -144,7 +152,7 @@ public abstract class SudokuActivity extends AppCompatActivity {
             if (cellNumber == -1){
                 mSoundPlayer.playEmptyButtonSound();
             } else {
-                if (mViewModel.isCorrectValue(cellNumber, buttonValue)) {
+                if (mViewModel.isCorrectValue(cellNumber, buttonValue) || !mIsHintsEnabled) {
                     //Correct number is placed in cell
                     mSudokuGridView.clearHighlightedCell();
                     mSudokuGridView.clearIncorrectCell();
