@@ -1,6 +1,9 @@
 package com.sigma.sudokuworld.audio;
 import com.sigma.sudokuworld.R;
+import com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants;
+import com.sigma.sudokuworld.persistence.sharedpreferences.PersistenceService;
 
+import android.app.Activity;
 import android.content.Context;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
@@ -18,11 +21,12 @@ public class SoundPlayer {
     private static final float LEFT_VOLUME = 1;
     private static final int RIGHT_VOLUME = 1;
     private static final int PRIORITY = 1;
-    private static final int LOOP = 1;
+    private static final int LOOP = 0;
     private static final float RATE = 1;
 
+    private Context mContext;
     public SoundPlayer(Context context){
-
+        mContext = context;
         //Initializing our pool of sounds
         audioAttributes = new AudioAttributes.Builder()
                 .setUsage(AudioAttributes.USAGE_GAME)
@@ -44,22 +48,37 @@ public class SoundPlayer {
     }
 
     public void playEmptyButtonSound(){
-        gameSounds.play(emptyButtonSound, LEFT_VOLUME, RIGHT_VOLUME, PRIORITY, LOOP, RATE);
+        if (isSoundOn()){
+            gameSounds.play(emptyButtonSound, LEFT_VOLUME, RIGHT_VOLUME, PRIORITY, LOOP, RATE);
+        }
     }
 
     public void playPlaceCellSound() {
-        gameSounds.play(placeCellSound, LEFT_VOLUME, RIGHT_VOLUME, PRIORITY, LOOP, RATE);
+        if (isSoundOn()){
+            gameSounds.play(placeCellSound, LEFT_VOLUME, RIGHT_VOLUME, PRIORITY, LOOP, RATE);
+        }
     }
 
     public void playWrongSound() {
-        gameSounds.play(wrongSound, LEFT_VOLUME, RIGHT_VOLUME, PRIORITY, LOOP, RATE);
+        if (isSoundOn()){
+            gameSounds.play(wrongSound, LEFT_VOLUME, RIGHT_VOLUME, PRIORITY, LOOP, RATE);
+        }
     }
 
     public void playCorrectSound(){
-        gameSounds.play(correctSound, LEFT_VOLUME, RIGHT_VOLUME, PRIORITY, LOOP, RATE);
+        if (isSoundOn()){
+            gameSounds.play(correctSound, LEFT_VOLUME, RIGHT_VOLUME, PRIORITY, LOOP, RATE);
+        }
     }
 
     public void playClearCellSound() {
-        gameSounds.play(clearCellSound, LEFT_VOLUME, RIGHT_VOLUME, PRIORITY, LOOP, RATE);
+        if (isSoundOn()){
+            gameSounds.play(clearCellSound, LEFT_VOLUME, RIGHT_VOLUME, PRIORITY, LOOP, RATE);
+        }
+    }
+
+    private boolean isSoundOn(){
+        boolean isSoundMode = PersistenceService.loadSettingsData(mContext).getBoolean(KeyConstants.SOUND_KEY);
+        return isSoundMode;
     }
 }

@@ -153,6 +153,8 @@ public abstract class PersistenceService {
         GameDifficulty difficulty = (GameDifficulty) data.getSerializable(DIFFICULTY_KEY);
         GameMode mode = (GameMode) data.getSerializable(MODE_KEY);
         boolean isAudioMode = data.getBoolean(AUDIO_KEY);
+        boolean isSoundMode = data.getBoolean(SOUND_KEY);
+        boolean isHintsMode = data.getBoolean(HINTS_KEY);
         String[] nativeWords = data.getStringArray(NATIVE_WORDS_KEY);
         String[] foreignWords = data.getStringArray(FOREIGN_WORDS_KEY);
 
@@ -173,6 +175,8 @@ public abstract class PersistenceService {
         editor.putString(DIFFICULTY_KEY, difficulty.name());
         editor.putString(MODE_KEY, mode.name());
         editor.putString(AUDIO_KEY, Boolean.toString(isAudioMode));
+        editor.putString(SOUND_KEY, Boolean.toString(isSoundMode));
+        editor.putString(HINTS_KEY, Boolean.toString(isHintsMode));
         editor.putInt(WORD_LIST_SIZE, wordListSize);
 
         //Writing word lists
@@ -202,6 +206,8 @@ public abstract class PersistenceService {
             GameDifficulty difficulty = GameDifficulty.valueOf((String) dataMap.get(DIFFICULTY_KEY));
             GameMode mode = GameMode.valueOf((String) dataMap.get(MODE_KEY));
             boolean isAudioMode = Boolean.parseBoolean((String) dataMap.get(AUDIO_KEY));
+            boolean isSoundMode = Boolean.parseBoolean((String) dataMap.get(SOUND_KEY));
+            boolean isHintsMode = Boolean.parseBoolean((String) dataMap.get(HINTS_KEY));
 
             int wordListSize = (Integer) dataMap.get(WORD_LIST_SIZE);
             String[] nativeWords = new String[wordListSize];
@@ -218,6 +224,8 @@ public abstract class PersistenceService {
             data.putSerializable(DIFFICULTY_KEY, difficulty);
             data.putSerializable(MODE_KEY, mode);
             data.putBoolean(AUDIO_KEY, isAudioMode);
+            data.putBoolean(SOUND_KEY, isSoundMode);
+            data.putBoolean(HINTS_KEY, isHintsMode);
             data.putStringArray(NATIVE_WORDS_KEY, nativeWords);
             data.putStringArray(FOREIGN_WORDS_KEY, foreignWords);
         } catch (NullPointerException e) {
@@ -235,6 +243,8 @@ public abstract class PersistenceService {
         data.putSerializable(DIFFICULTY_KEY, GameDifficulty.MEDIUM);
         data.putSerializable(MODE_KEY, GameMode.NATIVE);
         data.putBoolean(AUDIO_KEY, false);
+        data.putBoolean(SOUND_KEY, true);
+        data.putBoolean(HINTS_KEY, true);
         bundleWordListFromCSV(context, data);
 
         return data;

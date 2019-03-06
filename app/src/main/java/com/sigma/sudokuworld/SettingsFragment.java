@@ -1,45 +1,77 @@
 package com.sigma.sudokuworld;
-
-import android.app.Activity;
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.WindowManager;
-import android.widget.RadioGroup;
-import android.widget.SeekBar;
-import android.widget.Switch;
-import android.widget.TextView;
-
-import com.sigma.sudokuworld.persistence.db.entities.Language;
 import com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants;
 import com.sigma.sudokuworld.persistence.sharedpreferences.PersistenceService;
 import com.sigma.sudokuworld.game.GameDifficulty;
 import com.sigma.sudokuworld.game.GameMode;
 
-import java.util.List;
 
-public class SettingsActivity extends AppCompatActivity {
+import android.os.Bundle;
+import android.app.Fragment;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.RadioGroup;
+import android.widget.SeekBar;
+import android.widget.Switch;
+import android.widget.TextView;
 
+public class SettingsFragment extends Fragment {
     private RadioGroup mGameModeRadioGroup;
     private Switch mAudioModeSwitch;
+    private Switch mSoundSwitch;
+    private Switch mHintsSwitch;
     private SeekBar mDifficultySeekBar;
-    private TextView textView;
+    private TextView mTextView;
+    private View mView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceStace) {
+        //Hidden when the app is started and is only shown when the settings button is clicked
+        mView = inflater.inflate(R.layout.fragment_settings, container, false);
+        mView.setVisibility(View.INVISIBLE);
+        loadSettings();
+        return mView;
+    }
 
-        mGameModeRadioGroup = findViewById(R.id.gameModeRadioGroup);
-        mAudioModeSwitch = findViewById(R.id.audioModeSwitch);
-        mDifficultySeekBar = findViewById(R.id.difficultyBar);
-        textView = findViewById(R.id.textView3);
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        saveSettings();
+    }
 
-        Bundle previousSettings = PersistenceService.loadSettingsData(SettingsActivity.this);
+    public void showSettings(){
+        loadSettings();
+        mView.setVisibility(View.VISIBLE);
+    }
+
+    public boolean hideSettings(){
+        //If settings is open, save what we have
+        if (mView.getVisibility() == View.VISIBLE) {
+            mView.setVisibility(View.INVISIBLE);
+            saveSettings();
+            return true;
+
+        //Settings is already hidden so do nothing
+        } else {
+            return false;
+        }
+    }
+
+
+    private void loadSettings(){
+        mGameModeRadioGroup = mView.findViewById(R.id.gameModeRadioGroup);
+        mAudioModeSwitch = mView.findViewById(R.id.audioModeSwitch);
+        mSoundSwitch = mView.findViewById(R.id.soundSwitch);
+        mHintsSwitch = mView.findViewById(R.id.hintsSwitch);
+        mDifficultySeekBar = mView.findViewById(R.id.difficultyBar);
+
+        Bundle previousSettings = PersistenceService.loadSettingsData(getActivity());
         GameDifficulty gameDifficulty = (GameDifficulty) previousSettings.getSerializable(KeyConstants.DIFFICULTY_KEY);
         GameMode gameMode = (GameMode) previousSettings.getSerializable(KeyConstants.MODE_KEY);
         boolean isAudioMode = previousSettings.getBoolean(KeyConstants.AUDIO_KEY);
+        boolean isSoundMode = previousSettings.getBoolean(KeyConstants.SOUND_KEY);
+        boolean isHintsMode = previousSettings.getBoolean(KeyConstants.HINTS_KEY);
 
         if (gameDifficulty == GameDifficulty.EASY) {
             mDifficultySeekBar.setProgress(0);
@@ -55,6 +87,18 @@ public class SettingsActivity extends AppCompatActivity {
             mAudioModeSwitch.setChecked(false);
         }
 
+        if (isSoundMode) {
+            mSoundSwitch.setChecked(true);
+        } else {
+            mSoundSwitch.setChecked(false);
+        }
+
+        if (isHintsMode) {
+            mHintsSwitch.setChecked(true);
+        } else {
+            mHintsSwitch.setChecked(false);
+        }
+
         if (gameMode == GameMode.NATIVE) {
             mGameModeRadioGroup.check(R.id.nativeModeRadioButton);
         } else if (gameMode == GameMode.FOREIGN) {
@@ -64,9 +108,7 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public void onBackPressed() {
-
+    private void saveSettings(){
         //Checking GameMode
         GameMode gameMode;
         int checkedRadioButtonID = mGameModeRadioGroup.getCheckedRadioButtonId();
@@ -94,10 +136,8 @@ public class SettingsActivity extends AppCompatActivity {
         settingsBundle.putSerializable(KeyConstants.DIFFICULTY_KEY, gameDifficulty);
         settingsBundle.putSerializable(KeyConstants.MODE_KEY, gameMode);
         settingsBundle.putBoolean(KeyConstants.AUDIO_KEY, mAudioModeSwitch.isChecked());
-        PersistenceService.saveSettingsData(SettingsActivity.this, settingsBundle);
-
-        Intent intent = getIntent();
-        setResult(Activity.RESULT_OK, intent);
-        finish();
+        settingsBundle.putBoolean(KeyConstants.SOUND_KEY, mSoundSwitch.isChecked());
+        settingsBundle.putBoolean(KeyConstants.HINTS_KEY, mHintsSwitch.isChecked());
+        PersistenceService.saveSettingsData(getActivity(), settingsBundle);
     }
 }

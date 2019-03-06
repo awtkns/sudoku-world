@@ -1,13 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#355c7d</color>
+    <color name="colorPrimary">#ffffff</color>
     <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorAccent">#f04a57</color>
     <color name="colorGrid">#000000</color>
-    <color name="colorLockedCell">#e6f4ff</color>
-    <color name="colorHighlight">#b4ddff</color>
+    <color name="colorLockedCell">#50aed6f1</color>
+    <color name="colorHighlight">#503498db</color>
     <color name="colorSplashScreenAVD">#f88195</color>
     <color name="colorIncorrect">#FFB3B3</color>
+
+    <color name="colorWhite">#ffffff</color>
+    <color name ="colorTranslucent">#e7ffffff</color>
+    <color name="colorBlack">#000000</color>
+
+    <color name="colorLogoLightBlue">#aed6f1</color>
+    <color name="colorLogoMiddleBlue">#3498db</color>
+
+    <color name="colorButtonBorder">#803498db</color>
+    <color name="colorButtonText">#ffffff</color>
+    <color name="colorButtonBackground">#ccaed6f1</color>
+    <color name="colorButtonPressed">#aed6f1</color>
+
+    <!-- Settings Fragment -->
+    <color name="colorSettingsBackground">#e7F1F5FF</color>
+    <color name="colorSettingsStroke">#3498db</color>
 
     <!--Logo-->
     <color name="colorLogo_stroke">#000000</color>
