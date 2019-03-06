@@ -1,5 +1,7 @@
 package com.sigma.sudokuworld;
 
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.support.v7.app.AppCompatActivity;
@@ -27,10 +29,7 @@ import static com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants.S
 public class MenuActivity extends AppCompatActivity {
 
     private static final String TAG = "MENU";
-    private static final int REQUEST_CODE = 1;
-
     private SoundPlayer mSoundPlayer;
-    private SettingsFragment mSettingsFragment;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -41,7 +40,6 @@ public class MenuActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         mSoundPlayer = new SoundPlayer(this);
-        mSettingsFragment = (SettingsFragment) getFragmentManager().findFragmentById(R.id.settingsFragment);
         ImageView imageView = findViewById(R.id.menuAVD);
         AnimatedVectorDrawable animatedVectorDrawable = (AnimatedVectorDrawable) imageView.getDrawable();
         animatedVectorDrawable.start();
@@ -51,6 +49,55 @@ public class MenuActivity extends AppCompatActivity {
      * Called when play button is pressed. (Action defined in xml onClick)
      */
     public void onPlayPressed(View v) {
+        Bundle settings = PersistenceService.loadSettingsData(getBaseContext());    //TODO: refactor
+
+        //New game
+        GameDifficulty  difficulty = (GameDifficulty) settings.getSerializable(DIFFICULTY_KEY);
+        GameMode gameMode = (GameMode) settings.getSerializable(MODE_KEY);
+        PuzzleGenerator robot = new PuzzleGenerator(3);
+        Bundle puzzle = robot.generatePuzzle(difficulty);
+
+        Game game = new Game(
+                //SaveID 0 = auto generate
+                0, 0,
+                difficulty,
+                gameMode,
+                puzzle.getIntArray(KeyConstants.CELL_VALUES_KEY),
+                puzzle.getIntArray(KeyConstants.SOLUTION_VALUES_KEY),
+                puzzle.getBooleanArray(KeyConstants.LOCKED_CELLS_KEY)
+        );
+
+        GameRepository repository = new GameRepository(getApplication());
+        int saveID = repository.newGame(game);
+
+        startGame(saveID);
+    }
+
+    /**
+     * Called when Continue button is pressed. (Action defined in xml onClick)
+     */
+    public void onContinuePressed(View v) {
+        mSoundPlayer.playPlaceCellSound();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, new SelectGameFragment())
+                .addToBackStack(null)
+                .commit();
+    }
+
+    /**
+     * Called when Settings button is pressed. (Action defined in xml onClick)
+     */
+    public void onSettingsPressed(View v) {
+        mSoundPlayer.playPlaceCellSound();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, new SettingsFragment())
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public void startGame(int saveID) {
         //Settings bundle
         Bundle settings = PersistenceService.loadSettingsData(getBaseContext());
         boolean isAudioMode = settings.getBoolean(KeyConstants.AUDIO_KEY, true);
@@ -62,74 +109,9 @@ public class MenuActivity extends AppCompatActivity {
             intent = new Intent(getBaseContext(), VocabSudokuActivity.class);
         }
 
-        //New game
-        GameDifficulty  difficulty = (GameDifficulty) settings.getSerializable(DIFFICULTY_KEY);
-        GameMode gameMode = (GameMode) settings.getSerializable(MODE_KEY);
-        PuzzleGenerator robot = new PuzzleGenerator(3);
-        Bundle puzzle = robot.generatePuzzle(difficulty);
-
-        Game game = new Game(
-                //SaveID 0 = auto generate
-                1, 0,
-                difficulty,
-                gameMode,
-                puzzle.getIntArray(KeyConstants.CELL_VALUES_KEY),
-                puzzle.getIntArray(KeyConstants.SOLUTION_VALUES_KEY),
-                puzzle.getBooleanArray(KeyConstants.LOCKED_CELLS_KEY)
-        );
-
-        GameRepository repository = new GameRepository(getApplication());
-        repository.newGame(game);
-
-        intent.putExtra(SAVE_KEY, game.getSaveID());
+        intent.putExtra(SAVE_KEY, saveID);
         mSoundPlayer.playPlaceCellSound();
         startActivity(intent);
-    }
-
-    /**
-     * Called when Continue button is pressed. (Action defined in xml onClick)
-     */
-    public void onContinuePressed(View v) {
-        try {
-            Bundle settings = PersistenceService.loadSettingsData(getBaseContext());
-
-            Intent intent;
-            if (settings.getBoolean(KeyConstants.AUDIO_KEY,false )) {
-               //Start in audio mode
-               intent = new Intent(getBaseContext(), AudioSudokuActivity.class);
-            } else {
-               intent = new Intent(getBaseContext(), VocabSudokuActivity.class);
-            }
-
-            intent.putExtras(PersistenceService.loadGameData(getBaseContext()));
-            intent.putExtra(KeyConstants.CONTINUE_KEY, true);
-            mSoundPlayer.playPlaceCellSound();
-            Log.d(TAG, "onContinueClick: starting game with data");
-            startActivity(intent);
-        } catch (NullPointerException e) {
-            mSoundPlayer.playPlaceCellSound();
-            Log.d(TAG, "onContinueClick: no game data");
-        }
-    }
-
-    /**
-     * Called when Settings button is pressed. (Action defined in xml onClick)
-     */
-    public void onSettingsPressed(View v) {
-        mSoundPlayer.playPlaceCellSound();
-        mSettingsFragment.showSettings();
-    }
-
-    @Override
-    public void onBackPressed() {
-        //If the settingsFragment cannot be hidden, then settings is not open therefore we minimize the app
-        if (!mSettingsFragment.hideSettings()){
-            this.moveTaskToBack(true);
-        }
-
-        else {
-            mSoundPlayer.playPlaceCellSound();
-        }
     }
 }
 

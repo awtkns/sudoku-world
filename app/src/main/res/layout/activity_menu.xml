@@ -8,6 +8,7 @@
     tools:context=".MenuActivity">
 
     <FrameLayout
+        android:id="@+id/frameLayout3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="visible"
@@ -50,72 +51,75 @@
 
             <Button
                 android:id="@+id/playButton"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="280dp"
                 android:layout_height="50dp"
+                android:layout_marginTop="40dp"
                 android:background="@drawable/outlined_button"
                 android:elevation="0dp"
-                android:textColor="@color/colorButtonText"
-                android:textSize="21sp"
-                android:layout_marginTop="40dp"
                 android:onClick="onPlayPressed"
                 android:text="@string/play_button"
+                android:textColor="@color/colorButtonText"
+                android:textSize="21sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                style="?android:attr/borderlessButtonStyle"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/continueButton"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="280dp"
                 android:layout_height="50dp"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/outlined_button"
                 android:elevation="0dp"
-                android:textColor="@color/colorButtonText"
-                android:textSize="21sp"
-                android:layout_marginTop="20dp"
                 android:onClick="onContinuePressed"
                 android:text="@string/continue_button"
+                android:textColor="@color/colorButtonText"
+                android:textSize="21sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/playButton"
-                style="?android:attr/borderlessButtonStyle"/>
+                app:layout_constraintTop_toBottomOf="@+id/playButton" />
 
             <Button
                 android:id="@+id/settingsButton"
                 android:layout_width="280dp"
                 android:layout_height="50dp"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/outlined_button"
                 android:elevation="0dp"
-                android:textColor="@color/colorButtonText"
-                android:textSize="21sp"
-                android:layout_marginTop="20dp"
                 android:onClick="onSettingsPressed"
                 android:text="@string/settingsTitle"
+                android:textColor="@color/colorButtonText"
+                android:textSize="21sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/continueButton"
-                style="?android:attr/borderlessButtonStyle"/>
+                app:layout_constraintTop_toBottomOf="@+id/continueButton" />
 
 
         </android.support.constraint.ConstraintLayout>
 
-    </FrameLayout>
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <fragment
-        android:id="@+id/settingsFragment"
-        android:name="com.sigma.sudokuworld.SettingsFragment"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginBottom="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.84"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageView"
-        app:layout_constraintVertical_bias="1.0" />
+            <FrameLayout
+                android:id="@+id/fragmentContainer"
+                android:layout_width="342dp"
+                android:layout_height="409dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.492"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0">
+
+            </FrameLayout>
+        </android.support.constraint.ConstraintLayout>
+
+    </FrameLayout>
 
 </android.support.constraint.ConstraintLayout>
