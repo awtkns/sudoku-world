@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:context=".GamePageFragment">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <com.sigma.sudokuworld.sudoku.SudokuGridView
+            android:id="@+id/sudokuGridViewPage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/pageMode"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pageDifficulty"
+            app:layout_constraintVertical_bias="0.448"
+            app:lockedCellColour="@color/colorIncorrect"/>
+
+        <TextView
+            android:id="@+id/pageDifficulty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="TextView"
+            android:textAlignment="center"
+            android:textColor="@color/colorAccent"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/pageMode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="TextView"
+            android:textAlignment="center"
+            android:textColor="@color/colorAccent"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
+</FrameLayout>
