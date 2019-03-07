@@ -28,4 +28,5 @@
     <string name="saveWordListString">Save</string>
     <string name="defaultWordListString">Default</string>
     <string name="loadWordListString">Load</string>
+    <string name="PlayButton">Play</string>
 </resources>

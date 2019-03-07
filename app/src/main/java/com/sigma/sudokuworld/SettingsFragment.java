@@ -4,10 +4,9 @@ import com.sigma.sudokuworld.persistence.sharedpreferences.PersistenceService;
 import com.sigma.sudokuworld.game.GameDifficulty;
 import com.sigma.sudokuworld.game.GameMode;
 
-
 import android.os.Bundle;
-import android.app.Fragment;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +28,6 @@ public class SettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceStace) {
         //Hidden when the app is started and is only shown when the settings button is clicked
         mView = inflater.inflate(R.layout.fragment_settings, container, false);
-        mView.setVisibility(View.INVISIBLE);
         loadSettings();
         return mView;
     }
@@ -39,25 +37,6 @@ public class SettingsFragment extends Fragment {
         super.onDestroyView();
         saveSettings();
     }
-
-    public void showSettings(){
-        loadSettings();
-        mView.setVisibility(View.VISIBLE);
-    }
-
-    public boolean hideSettings(){
-        //If settings is open, save what we have
-        if (mView.getVisibility() == View.VISIBLE) {
-            mView.setVisibility(View.INVISIBLE);
-            saveSettings();
-            return true;
-
-        //Settings is already hidden so do nothing
-        } else {
-            return false;
-        }
-    }
-
 
     private void loadSettings(){
         mGameModeRadioGroup = mView.findViewById(R.id.gameModeRadioGroup);

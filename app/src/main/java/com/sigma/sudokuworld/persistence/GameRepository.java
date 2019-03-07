@@ -8,6 +8,8 @@ import com.sigma.sudokuworld.persistence.db.entities.Game;
 
 import android.support.annotation.NonNull;
 
+import java.util.List;
+
 public class GameRepository {
     private GameSaveDao gameSaveDao;
 
@@ -15,8 +17,8 @@ public class GameRepository {
         gameSaveDao = AppDatabase.Companion.getInstance(application).getGameSaveDao();
     }
 
-    public void newGame(Game game) {
-        gameSaveDao.insert(game);
+    public int newGame(Game game) {
+        return (int) gameSaveDao.insert(game);
     }
 
     public void saveGame(Game game) {
@@ -25,5 +27,9 @@ public class GameRepository {
 
     public Game getGameSaveByID(int saveID) {
         return gameSaveDao.getGameSaveByID(saveID);
+    }
+
+    public List<Game> getAllGames() {
+        return gameSaveDao.getAll();
     }
 }

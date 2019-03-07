@@ -104,6 +104,13 @@ public class SudokuGridView extends View {
         labelsLiveData.observe(owner, cellLabelsObserver);
     }
 
+    public void lazySetLockedCellsLabels(boolean[] lockedCells) {
+        for (int i = 0; i < lockedCells.length; i++) {
+            if (lockedCells[i]) mCellLabels[i] = Character.toString(KeyConstants.CELL_LOCKED_FLAG);
+        }
+        invalidate();
+    }
+
     @Override   //This is for accessibility (REQUIRED BY ANDRIOD STUDIO)
     public boolean performClick() {
         return super.performClick();

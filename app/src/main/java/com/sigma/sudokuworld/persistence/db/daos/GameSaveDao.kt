@@ -7,7 +7,7 @@ import com.sigma.sudokuworld.persistence.db.entities.Game
 interface GameSaveDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(vararg game: Game)
+    fun insert(game: Game): Long
 
     @Update
     fun update(game: Game)
