@@ -29,4 +29,9 @@
     <string name="defaultWordListString">Default</string>
     <string name="loadWordListString">Load</string>
     <string name="PlayButton">Play</string>
+
+    <!--Set Builder-->
+    <string name="WordSetName">Set Name</string>
+    <string name="WordSetDescription">Set Description</string>
+    <string name="ChangeSet">Change Set</string>
 </resources>

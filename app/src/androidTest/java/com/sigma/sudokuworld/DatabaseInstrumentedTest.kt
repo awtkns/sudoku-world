@@ -134,8 +134,8 @@ class DatabaseInstrumentedTest {
 
         val gameList = listOf(save1, save2)
 
-
-        db.getGameSaveDao().insert(save1, save2)
+        db.getGameSaveDao().insert(save1)
+        db.getGameSaveDao().insert(save2)
 
         val gameSaves = db.getGameSaveDao().getAll()
         assertEquals(gameList[0].saveID, gameSaves[0].saveID)
