@@ -19,12 +19,7 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //HIDE STATUS BAR
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         setContentView(R.layout.activity_splash);
-
 
         //If we click the layout we can skip the animation and cancel the timer
         animationLayout = findViewById(R.id.animationLayout);

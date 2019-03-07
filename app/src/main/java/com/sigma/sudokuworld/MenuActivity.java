@@ -34,9 +34,6 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        //HIDE STATUS BAR
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         mSoundPlayer = new SoundPlayer(this);
         ImageView imageView = findViewById(R.id.menuAVD);
         AnimatedVectorDrawable animatedVectorDrawable = (AnimatedVectorDrawable) imageView.getDrawable();

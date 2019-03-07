@@ -36,7 +36,6 @@ public abstract class SudokuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sudoku);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         if (savedInstanceState != null) {
             mSaveID = savedInstanceState.getInt(KeyConstants.SAVE_KEY);
