@@ -22,9 +22,7 @@ import static com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants.*
 
 
 public abstract class PersistenceService {
-
     private static final String TAG = "PERSISTENCE_SERVICE";
-
 
     //Private file names for what xml file to write to
     private static final String SAVE_GAME_FILE = "save";
@@ -42,10 +40,79 @@ public abstract class PersistenceService {
     private static final String FOREIGN_KEY_PREFIX = "foreignWord";
 
     /**
-     * Saves game data
+     * Saves settings data
+     * Saves default wordList if no valid word list provided
      * @param context caller
      * @param data bundle
      */
+    public static void saveSettingsData(Context context, Bundle data) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SAVE_SETTINGS_FILE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        //Unpacking "settings" bundle
+        GameDifficulty difficulty = (GameDifficulty) data.getSerializable(DIFFICULTY_KEY);
+        GameMode mode = (GameMode) data.getSerializable(MODE_KEY);
+        boolean isAudioMode = data.getBoolean(AUDIO_KEY);
+        boolean isSoundMode = data.getBoolean(SOUND_KEY);
+        boolean isHintsMode = data.getBoolean(HINTS_KEY);
+
+        //Writing settings constants
+        editor.putString(DIFFICULTY_KEY, difficulty.name());
+        editor.putString(MODE_KEY, mode.name());
+        editor.putString(AUDIO_KEY, Boolean.toString(isAudioMode));
+        editor.putString(SOUND_KEY, Boolean.toString(isSoundMode));
+        editor.putString(HINTS_KEY, Boolean.toString(isHintsMode));
+
+        //Make changes to xml file
+        editor.apply();
+    }
+
+    /**
+     * Loads settings data
+     * Loads default settings if no valid settings
+     * @param context caller
+     * @return settings bundle
+     */
+    public static Bundle loadSettingsData(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SAVE_SETTINGS_FILE, Context.MODE_PRIVATE);
+        Map<String, ?> dataMap = sharedPreferences.getAll();
+        Bundle data = new Bundle();
+
+        try {
+            //Loading game constants
+            GameDifficulty difficulty = GameDifficulty.valueOf((String) dataMap.get(DIFFICULTY_KEY));
+            GameMode mode = GameMode.valueOf((String) dataMap.get(MODE_KEY));
+            boolean isAudioMode = Boolean.parseBoolean((String) dataMap.get(AUDIO_KEY));
+            boolean isSoundMode = Boolean.parseBoolean((String) dataMap.get(SOUND_KEY));
+            boolean isHintsMode = Boolean.parseBoolean((String) dataMap.get(HINTS_KEY));
+
+            //Bundling settings
+            data.putSerializable(DIFFICULTY_KEY, difficulty);
+            data.putSerializable(MODE_KEY, mode);
+            data.putBoolean(AUDIO_KEY, isAudioMode);
+            data.putBoolean(SOUND_KEY, isSoundMode);
+            data.putBoolean(HINTS_KEY, isHintsMode);
+        } catch (NullPointerException e) {
+            Log.d(TAG, "loadSettingsData: Error loading settings data. Will load default settings");
+            data = getDefaultSettings(context);
+        }
+
+        return data;
+    }
+
+    private static Bundle getDefaultSettings(Context context) {
+        Bundle data = new Bundle();
+
+        //Making settings bundle
+        data.putSerializable(DIFFICULTY_KEY, GameDifficulty.MEDIUM);
+        data.putSerializable(MODE_KEY, GameMode.NATIVE);
+        data.putBoolean(AUDIO_KEY, false);
+        data.putBoolean(SOUND_KEY, true);
+        data.putBoolean(HINTS_KEY, true);
+        return data;
+    }
+
+    @Deprecated
     public static void saveGameData(Context context, Bundle data) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(SAVE_GAME_FILE, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -88,12 +155,7 @@ public abstract class PersistenceService {
         editor.apply();
     }
 
-    /**
-     * Load game data from file
-     * @param context Caller
-     * @return Game data bundle
-     * @throws NullPointerException thrown if no valid file
-     */
+    @Deprecated
     public static Bundle loadGameData(Context context) throws NullPointerException {
         SharedPreferences sharedPreferences = context.getSharedPreferences(SAVE_GAME_FILE, Context.MODE_PRIVATE);
         Bundle data = new Bundle();
@@ -139,117 +201,7 @@ public abstract class PersistenceService {
         return data;
     }
 
-    /**
-     * Saves settings data
-     * Saves default wordList if no valid word list provided
-     * @param context caller
-     * @param data bundle
-     */
-    public static void saveSettingsData(Context context, Bundle data) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SAVE_SETTINGS_FILE, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        //Unpacking "settings" bundle
-        GameDifficulty difficulty = (GameDifficulty) data.getSerializable(DIFFICULTY_KEY);
-        GameMode mode = (GameMode) data.getSerializable(MODE_KEY);
-        boolean isAudioMode = data.getBoolean(AUDIO_KEY);
-        boolean isSoundMode = data.getBoolean(SOUND_KEY);
-        boolean isHintsMode = data.getBoolean(HINTS_KEY);
-        String[] nativeWords = data.getStringArray(NATIVE_WORDS_KEY);
-        String[] foreignWords = data.getStringArray(FOREIGN_WORDS_KEY);
-
-        //Try wordList
-        int wordListSize;
-        try {
-            wordListSize = nativeWords.length;
-        } catch (NullPointerException e) {
-            Log.d(TAG, "saveSettingsData: Error saving word list settings data. Will load default word list");
-
-            bundleWordListFromCSV(context, data);
-            nativeWords = data.getStringArray(NATIVE_WORDS_KEY);
-            foreignWords = data.getStringArray(FOREIGN_WORDS_KEY);
-            wordListSize = nativeWords.length;
-        }
-
-        //Writing settings constants
-        editor.putString(DIFFICULTY_KEY, difficulty.name());
-        editor.putString(MODE_KEY, mode.name());
-        editor.putString(AUDIO_KEY, Boolean.toString(isAudioMode));
-        editor.putString(SOUND_KEY, Boolean.toString(isSoundMode));
-        editor.putString(HINTS_KEY, Boolean.toString(isHintsMode));
-        editor.putInt(WORD_LIST_SIZE, wordListSize);
-
-        //Writing word lists
-        for (int i = 0; i < wordListSize; i++) {
-            String index = Integer.toString(i);
-            editor.putString(NATIVE_KEY_PREFIX + index, nativeWords[i]);
-            editor.putString(FOREIGN_KEY_PREFIX + index, foreignWords[i]);
-        }
-
-        //Make changes to xml file
-        editor.apply();
-    }
-
-    /**
-     * Loads settings data
-     * Loads default settings if no valid settings
-     * @param context caller
-     * @return settings bundle
-     */
-    public static Bundle loadSettingsData(Context context) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SAVE_SETTINGS_FILE, Context.MODE_PRIVATE);
-        Map<String, ?> dataMap = sharedPreferences.getAll();
-        Bundle data = new Bundle();
-
-        try {
-            //Loading game constants
-            GameDifficulty difficulty = GameDifficulty.valueOf((String) dataMap.get(DIFFICULTY_KEY));
-            GameMode mode = GameMode.valueOf((String) dataMap.get(MODE_KEY));
-            boolean isAudioMode = Boolean.parseBoolean((String) dataMap.get(AUDIO_KEY));
-            boolean isSoundMode = Boolean.parseBoolean((String) dataMap.get(SOUND_KEY));
-            boolean isHintsMode = Boolean.parseBoolean((String) dataMap.get(HINTS_KEY));
-
-            int wordListSize = (Integer) dataMap.get(WORD_LIST_SIZE);
-            String[] nativeWords = new String[wordListSize];
-            String[] foreignWords = new String[wordListSize];
-
-            //Loading word list
-            for (int i = 0; i < wordListSize; i++) {
-                String index = Integer.toString(i);
-                nativeWords[i] = (String) dataMap.get(NATIVE_KEY_PREFIX + index);
-                foreignWords[i] = (String) dataMap.get(FOREIGN_KEY_PREFIX + index);
-            }
-
-            //Bundling settings
-            data.putSerializable(DIFFICULTY_KEY, difficulty);
-            data.putSerializable(MODE_KEY, mode);
-            data.putBoolean(AUDIO_KEY, isAudioMode);
-            data.putBoolean(SOUND_KEY, isSoundMode);
-            data.putBoolean(HINTS_KEY, isHintsMode);
-            data.putStringArray(NATIVE_WORDS_KEY, nativeWords);
-            data.putStringArray(FOREIGN_WORDS_KEY, foreignWords);
-        } catch (NullPointerException e) {
-            Log.d(TAG, "loadSettingsData: Error loading settings data. Will load default settings");
-            data = getDefaultSettings(context);
-        }
-
-        return data;
-    }
-
-    private static Bundle getDefaultSettings(Context context) {
-        Bundle data = new Bundle();
-
-        //Making settings bundle
-        data.putSerializable(DIFFICULTY_KEY, GameDifficulty.MEDIUM);
-        data.putSerializable(MODE_KEY, GameMode.NATIVE);
-        data.putBoolean(AUDIO_KEY, false);
-        data.putBoolean(SOUND_KEY, true);
-        data.putBoolean(HINTS_KEY, true);
-        bundleWordListFromCSV(context, data);
-
-        return data;
-    }
-
+    @Deprecated
     private static void bundleWordListFromCSV(Context context, Bundle settings) {
         ArrayList<String> nativeWordList = new ArrayList<>();
         ArrayList<String> foreignWordList = new ArrayList<>();
