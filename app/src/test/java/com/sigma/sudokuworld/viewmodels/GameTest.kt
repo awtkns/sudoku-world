@@ -9,10 +9,10 @@ import org.junit.Assert.*
 import java.lang.IndexOutOfBoundsException
 
 class GameTest {
-    val cells: IntArray = intArrayOf(1, 2, 4, 6, 8)
-    val solutions: IntArray = intArrayOf(1, 3, 5, 7, 9)
-    val locked: BooleanArray = booleanArrayOf(true, false, false, false, false)
-    val game = Game(1, 1, GameDifficulty.MEDIUM, GameMode.NUMBERS, cells, solutions, locked)
+    private val cells: IntArray = intArrayOf(1, 2, 4, 6, 8)
+    private val solutions: IntArray = intArrayOf(1, 3, 5, 7, 9)
+    private val locked: BooleanArray = booleanArrayOf(true, false, false, false, false)
+    private val game = Game(1, 1, GameDifficulty.MEDIUM, GameMode.NUMBERS, cells, solutions, locked)
 
     @Test(expected = IndexOutOfBoundsException::class)
     fun indexOutOfBoundsException() {
