@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -18,7 +17,6 @@ import com.sigma.sudokuworld.persistence.GameRepository;
 import com.sigma.sudokuworld.persistence.db.entities.Game;
 import com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants;
 
-import java.security.Key;
 import java.util.List;
 
 public class SelectGameFragment extends Fragment implements View.OnClickListener {
@@ -39,8 +37,7 @@ public class SelectGameFragment extends Fragment implements View.OnClickListener
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_select_game, container, false);
         mPlayButton = view.findViewById(R.id.playButtonSelectGameFragment);
         mPlayButton.setOnClickListener(this);
@@ -56,12 +53,13 @@ public class SelectGameFragment extends Fragment implements View.OnClickListener
     }
 
     public void onClick(View v) {
-        if (v.getId() == mPlayButton.getId())
-        if (!gameSaves.isEmpty()) {
-            try {
-                ((MenuActivity) getActivity()).startGame(gameSaves.get(mViewPager.getCurrentItem()).getSaveID());
-            } catch (NullPointerException e) {
-                Log.d("Frag", "onPlayPressed: bad stuff happened");
+        if (v.getId() == mPlayButton.getId()) {
+            if (!gameSaves.isEmpty()) {
+                try {
+                    ((MenuActivity) getActivity()).startGame(gameSaves.get(mViewPager.getCurrentItem()).getSaveID());
+                } catch (NullPointerException e) {
+                    Log.d("Frag", "onPlayPressed: bad stuff happened");
+                }
             }
         }
     }

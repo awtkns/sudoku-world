@@ -1,9 +1,7 @@
 package com.sigma.sudokuworld.audio;
 import com.sigma.sudokuworld.R;
-import com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants;
 import com.sigma.sudokuworld.persistence.sharedpreferences.PersistenceService;
 
-import android.app.Activity;
 import android.content.Context;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
@@ -78,7 +76,6 @@ public class SoundPlayer {
     }
 
     private boolean isSoundOn(){
-        boolean isSoundMode = PersistenceService.loadSettingsData(mContext).getBoolean(KeyConstants.SOUND_KEY);
-        return isSoundMode;
+        return PersistenceService.loadSoundEnabledSetting(mContext);
     }
 }

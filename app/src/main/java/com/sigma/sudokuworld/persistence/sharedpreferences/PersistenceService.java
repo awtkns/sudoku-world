@@ -19,29 +19,29 @@ public abstract class PersistenceService {
     }
 
     public static void saveGameModeSetting(Context context, GameMode gameMode) {
-        getEditor(context).putString(DIFFICULTY_KEY, gameMode.name()).apply();
+        getEditor(context).putString(MODE_KEY, gameMode.name()).apply();
     }
 
     public static void saveAudioModeEnableSetting(Context context, boolean audioModeEnabled) {
-        getEditor(context).putString(AUDIO_KEY, Boolean.toString(audioModeEnabled)).apply();
+        getEditor(context).putBoolean(AUDIO_KEY, audioModeEnabled).apply();
     }
 
     public static void saveSoundEnabledSetting(Context context, boolean soundEnabled) {
-        getEditor(context).putString(SOUND_KEY, Boolean.toString(soundEnabled)).apply();
+        getEditor(context).putBoolean(SOUND_KEY, soundEnabled).apply();
     }
 
     public static void saveHintsEnabledSetting(Context context, boolean hintsEnabled) {
-        getEditor(context).putString(HINTS_KEY, Boolean.toString(hintsEnabled)).apply();
+        getEditor(context).putBoolean(HINTS_KEY, hintsEnabled).apply();
     }
 
     /* --- Loading --- */
 
     public static GameDifficulty loadDifficultySetting(Context context) {
-        return GameDifficulty.valueOf(getSettings(context).getString(DIFFICULTY_KEY, GameDifficulty.EASY.toString()));
+        return GameDifficulty.fromString(getSettings(context).getString(DIFFICULTY_KEY, GameDifficulty.EASY.name()));
     }
 
     public static GameMode loadGameModeSetting(Context context) {
-        return GameMode.valueOf(getSettings(context).getString(MODE_KEY, GameMode.NUMBERS.toString()));
+        return GameMode.fromString(getSettings(context).getString(MODE_KEY, GameMode.NUMBERS.name()));
     }
 
     public static boolean loadAudioModeSetting(Context context) {
