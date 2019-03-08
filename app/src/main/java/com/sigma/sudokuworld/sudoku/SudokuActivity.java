@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 
 
@@ -38,11 +37,11 @@ public abstract class SudokuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sudoku);
 
         if (savedInstanceState != null) {
-            mSaveID = savedInstanceState.getInt(KeyConstants.SAVE_KEY);
+            mSaveID = savedInstanceState.getInt(KeyConstants.SAVE_ID_KEY);
             mIsHintsEnabled = savedInstanceState.getBoolean(KeyConstants.HINTS_KEY);
         } else {
             Intent intent = getIntent();
-            mSaveID = intent.getIntExtra(KeyConstants.SAVE_KEY, 1);
+            mSaveID = intent.getIntExtra(KeyConstants.SAVE_ID_KEY, 1);
             mIsHintsEnabled = intent.getBooleanExtra(KeyConstants.HINTS_KEY, true);
         }
 
@@ -72,7 +71,7 @@ public abstract class SudokuActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
 
         //Save the current state of the Sudoku board
-        outState.putInt(KeyConstants.SAVE_KEY, mSaveID);
+        outState.putInt(KeyConstants.SAVE_ID_KEY, mSaveID);
         outState.putBoolean(KeyConstants.HINTS_KEY, mIsHintsEnabled);
     }
 

@@ -6,7 +6,6 @@ import android.graphics.drawable.AnimatedVectorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.sigma.sudokuworld.game.GameDifficulty;
@@ -21,7 +20,7 @@ import com.sigma.sudokuworld.sudoku.AudioSudokuActivity;
 import com.sigma.sudokuworld.sudoku.VocabSudokuActivity;
 
 import static com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants.HINTS_KEY;
-import static com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants.SAVE_KEY;
+import static com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants.SAVE_ID_KEY;
 import static com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants.SOUND_KEY;
 
 public class MenuActivity extends AppCompatActivity {
@@ -109,7 +108,7 @@ public class MenuActivity extends AppCompatActivity {
             intent = new Intent(getBaseContext(), VocabSudokuActivity.class);
         }
 
-        intent.putExtra(SAVE_KEY, saveID);
+        intent.putExtra(SAVE_ID_KEY, saveID);
         intent.putExtra(SOUND_KEY, isSoundOn);
         intent.putExtra(HINTS_KEY, isHintsOn);
         mSoundPlayer.playPlaceCellSound();
