@@ -1,5 +1,6 @@
 package com.sigma.sudokuworld.sudoku;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.view.View;
@@ -41,9 +42,8 @@ public class AudioSudokuActivity extends SudokuActivity {
                         mViewModel.getCellValue(cellTouched),
                         GameMode.opposite(mViewModel.getGameMode())
                 );
-                mTTS.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+                mTTS.speak(text,TextToSpeech.QUEUE_FLUSH,null,null);
             }
-
             return true;
         }
     };
@@ -52,7 +52,7 @@ public class AudioSudokuActivity extends SudokuActivity {
         @Override
         public boolean onLongClick(View v) {
             Button button = (Button) v;
-            mTTS.speak(button.getText().toString(), TextToSpeech.QUEUE_FLUSH, null);
+            mTTS.speak(button.getText().toString(),TextToSpeech.QUEUE_FLUSH,null,null);
             return true;
         }
     };
