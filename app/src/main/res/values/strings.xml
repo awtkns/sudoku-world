@@ -29,6 +29,7 @@
     <string name="defaultWordListString">Default</string>
     <string name="loadWordListString">Load</string>
     <string name="PlayButton">Play</string>
+    <string name="RectangleMode">Display Sudoku Cells as Rectangles</string>
 
     <!--Set Builder-->
     <string name="WordSetName">Set Name</string>
