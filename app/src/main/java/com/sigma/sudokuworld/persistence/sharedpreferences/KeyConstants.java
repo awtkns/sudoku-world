@@ -28,6 +28,7 @@ public final class KeyConstants {
     public static final String AUDIO_KEY = "audio";
     public static final String SOUND_KEY = "sound";
     public static final String HINTS_KEY = "hints";
+    public static final String RECTANGLE_KEY = "rect";
     public static final String CELL_VALUES_KEY = "values";
     public static final String SOLUTION_VALUES_KEY = "solution";
     public static final String LOCKED_CELLS_KEY = "locked";

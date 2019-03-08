@@ -34,6 +34,10 @@ public abstract class PersistenceService {
         getEditor(context).putBoolean(HINTS_KEY, hintsEnabled).apply();
     }
 
+    public static void saveRectagleModeEnabledSetting(Context context, boolean rectangleModeEnabled) {
+        getEditor(context).putBoolean(RECTANGLE_KEY, rectangleModeEnabled).apply();
+    }
+
     /* --- Loading --- */
 
     public static GameDifficulty loadDifficultySetting(Context context) {
@@ -54,6 +58,10 @@ public abstract class PersistenceService {
 
     public static boolean loadHintsEnabledSetting(Context context) {
         return getSettings(context).getBoolean(HINTS_KEY, true);
+    }
+
+    public static boolean loadRectagleModeEnabledSetting(Context context) {
+        return getSettings(context).getBoolean(RECTANGLE_KEY, false);
     }
 
     /*Private Helpers**/

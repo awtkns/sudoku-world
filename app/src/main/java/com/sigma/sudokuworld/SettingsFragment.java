@@ -14,6 +14,7 @@ public class SettingsFragment extends Fragment {
     private Switch mAudioModeSwitch;
     private Switch mSoundSwitch;
     private Switch mHintsSwitch;
+    private Switch mRectangleSwitch;
     private View mView;
 
     @Override
@@ -33,29 +34,13 @@ public class SettingsFragment extends Fragment {
         mAudioModeSwitch = mView.findViewById(R.id.audioModeSwitch);
         mSoundSwitch = mView.findViewById(R.id.soundSwitch);
         mHintsSwitch = mView.findViewById(R.id.hintsSwitch);
+        mRectangleSwitch = mView.findViewById(R.id.rectangleMode);
 
         Context context = getActivity();
-        boolean isAudioMode = PersistenceService.loadAudioModeSetting(context);
-        boolean isSoundMode = PersistenceService.loadSoundEnabledSetting(context);
-        boolean isHintsMode = PersistenceService.loadHintsEnabledSetting(context);
-
-        if (isAudioMode) {
-            mAudioModeSwitch.setChecked(true);
-        } else {
-            mAudioModeSwitch.setChecked(false);
-        }
-
-        if (isSoundMode) {
-            mSoundSwitch.setChecked(true);
-        } else {
-            mSoundSwitch.setChecked(false);
-        }
-
-        if (isHintsMode) {
-            mHintsSwitch.setChecked(true);
-        } else {
-            mHintsSwitch.setChecked(false);
-        }
+        mAudioModeSwitch.setChecked(PersistenceService.loadAudioModeSetting(context));
+        mSoundSwitch.setChecked(PersistenceService.loadSoundEnabledSetting(context));
+        mHintsSwitch.setChecked(PersistenceService.loadHintsEnabledSetting(context));
+        mRectangleSwitch.setChecked(PersistenceService.loadRectagleModeEnabledSetting(context));
     }
 
     private void saveSettings() {
@@ -64,5 +49,6 @@ public class SettingsFragment extends Fragment {
         PersistenceService.saveAudioModeEnableSetting(context, mAudioModeSwitch.isChecked());
         PersistenceService.saveSoundEnabledSetting(context, mSoundSwitch.isChecked());
         PersistenceService.saveHintsEnabledSetting(context, mHintsSwitch.isChecked());
+        PersistenceService.saveRectagleModeEnabledSetting(context, mRectangleSwitch.isChecked());
     }
 }
