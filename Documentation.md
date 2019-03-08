@@ -8,7 +8,7 @@ Easy : 50-60 pre-placed Sudoku tiles
 Medium : 35 - 40 pre-placed Sudoku tiles
 Hard: Less than 35 pre-placed Sudoku tiles<br/><br/>
 
-- User Story: As a user i would like an interface in which i can navigate and use to play games and change options.
+- User Story: As a user I would like an interface in which i can navigate and use to play games and change options.
 - Example: The main menu will have a settings button which will lead the user to an activity that can controll how the game is played. (Difficulty, language, etc)<br/><br/>
 
 
@@ -40,4 +40,16 @@ the definitions for these words in their native language.
 - Example: The player is able to clear cells by selecting which cell he wants to clear and using the "clear cell" button.<br/><br/>
 
 - User Story: As a language learner, i would like to know the transation of some words incase i forget while playing.
-- Example: Through a long press of a locked cell, a toast displaying that cells translation will appear<br/><br/>
+- Example: Through a long press of a locked cell, a toast displaying that cells translation will appear.<br/><br/>
+
+- User Story: As a player, I would like to improve my listening and speaking ability.
+- Example: When I press the numbers, I will hear the sound of the corresponding words.<br/><br/>
+
+- User Story: As a user, I would like to use this app in various devices.
+- Example: When I change to other devices, the app works well.<br/><br/>
+
+- User Story: As a teacher, I would assign wordlist to students.
+- Example: User is able to upload lists.<br/><br/>
+
+- User Story: As a student, I would like to work with wordlists attached with textbook and knowing which words are difficult for me.
+- Example: Users are able to load lists and keep track of the ones they've made mistakes.<br/><br/>
