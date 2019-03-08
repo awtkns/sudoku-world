@@ -8,7 +8,8 @@ import android.widget.TextView;
 
 import com.sigma.sudokuworld.R;
 import com.sigma.sudokuworld.persistence.WordPairRepository;
-import com.sigma.sudokuworld.select.PairListFragment.OnPairListFragmentInteractionListener;
+import com.sigma.sudokuworld.select.PairListFragment;
+import com.sigma.sudokuworld.select.PairListFragment.OnFragmentInteractionListener;
 
 import java.util.List;
 
@@ -16,9 +17,9 @@ import java.util.List;
 public class PairRecyclerViewAdapter extends RecyclerView.Adapter<PairRecyclerViewAdapter.ViewHolder> {
 
     private final List<WordPairRepository.WordPairInformative> mWordPairs;
-    private final OnPairListFragmentInteractionListener mListener;
+    private final OnFragmentInteractionListener mListener;
 
-    public PairRecyclerViewAdapter(List<WordPairRepository.WordPairInformative> wordPair, OnPairListFragmentInteractionListener listener) {
+    public PairRecyclerViewAdapter(List<WordPairRepository.WordPairInformative> wordPair, PairListFragment.OnFragmentInteractionListener listener) {
         mWordPairs = wordPair;
         mListener = listener;
     }
@@ -41,7 +42,7 @@ public class PairRecyclerViewAdapter extends RecyclerView.Adapter<PairRecyclerVi
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onPairListFragmentInteraction(holder.mWordPair);
+                    mListener.onClickPairFragmentInteraction(holder.mWordPair);
                 }
             }
         });

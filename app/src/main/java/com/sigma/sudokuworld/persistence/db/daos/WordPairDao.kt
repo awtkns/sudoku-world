@@ -12,6 +12,9 @@ interface WordPairDao {
     @Query("SELECT * FROM word_pairs")
     fun getAll(): List<WordPair>
 
+    @Query("SELECT * FROM word_pairs where wordPairID = :wordPairID")
+    fun getWordPairByID(wordPairID: Int): WordPair
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(vararg wordPairs: WordPair)
 

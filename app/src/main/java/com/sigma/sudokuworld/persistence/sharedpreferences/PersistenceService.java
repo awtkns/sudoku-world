@@ -34,7 +34,7 @@ public abstract class PersistenceService {
         getEditor(context).putBoolean(HINTS_KEY, hintsEnabled).apply();
     }
 
-    public static void saveRectagleModeEnabledSetting(Context context, boolean rectangleModeEnabled) {
+    public static void saveRectangleModeEnabledSetting(Context context, boolean rectangleModeEnabled) {
         getEditor(context).putBoolean(RECTANGLE_KEY, rectangleModeEnabled).apply();
     }
 
@@ -60,7 +60,7 @@ public abstract class PersistenceService {
         return getSettings(context).getBoolean(HINTS_KEY, true);
     }
 
-    public static boolean loadRectagleModeEnabledSetting(Context context) {
+    public static boolean loadRectangleModeEnabledSetting(Context context) {
         return getSettings(context).getBoolean(RECTANGLE_KEY, false);
     }
 

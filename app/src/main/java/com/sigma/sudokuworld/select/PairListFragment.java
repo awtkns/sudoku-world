@@ -11,13 +11,14 @@ import android.view.ViewGroup;
 
 import com.sigma.sudokuworld.R;
 import com.sigma.sudokuworld.persistence.WordPairRepository;
+import com.sigma.sudokuworld.persistence.db.entities.Set;
 import com.sigma.sudokuworld.select.adapters.PairRecyclerViewAdapter;
 
 import java.util.List;
 
 
 public class PairListFragment extends Fragment {
-    private OnPairListFragmentInteractionListener mListener;
+    private OnFragmentInteractionListener mListener;
     private List<WordPairRepository.WordPairInformative> mWordPairs;
 
     public static PairListFragment newInstance() {
@@ -51,10 +52,10 @@ public class PairListFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnPairListFragmentInteractionListener) {
-            mListener = (OnPairListFragmentInteractionListener) context;
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
         } else {
-            throw new RuntimeException(context.toString() + " must implement OnPairListFragmentInteractionListener");
+            throw new RuntimeException(context.toString() + " must implement OnFragmentInteractionListener");
         }
     }
 
@@ -64,8 +65,9 @@ public class PairListFragment extends Fragment {
         mListener = null;
     }
 
-    public interface OnPairListFragmentInteractionListener {
-        void onPairListFragmentInteraction(WordPairRepository.WordPairInformative wordPair);
+    public interface OnFragmentInteractionListener {
+        void onClickPairFragmentInteraction(WordPairRepository.WordPairInformative wordPair);
+        void onLongPairClickFragmentInteraction(Set set);
     }
 }
 

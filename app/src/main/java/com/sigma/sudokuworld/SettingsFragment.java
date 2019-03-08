@@ -40,7 +40,7 @@ public class SettingsFragment extends Fragment {
         mAudioModeSwitch.setChecked(PersistenceService.loadAudioModeSetting(context));
         mSoundSwitch.setChecked(PersistenceService.loadSoundEnabledSetting(context));
         mHintsSwitch.setChecked(PersistenceService.loadHintsEnabledSetting(context));
-        mRectangleSwitch.setChecked(PersistenceService.loadRectagleModeEnabledSetting(context));
+        mRectangleSwitch.setChecked(PersistenceService.loadRectangleModeEnabledSetting(context));
     }
 
     private void saveSettings() {
@@ -49,6 +49,6 @@ public class SettingsFragment extends Fragment {
         PersistenceService.saveAudioModeEnableSetting(context, mAudioModeSwitch.isChecked());
         PersistenceService.saveSoundEnabledSetting(context, mSoundSwitch.isChecked());
         PersistenceService.saveHintsEnabledSetting(context, mHintsSwitch.isChecked());
-        PersistenceService.saveRectagleModeEnabledSetting(context, mRectangleSwitch.isChecked());
+        PersistenceService.saveRectangleModeEnabledSetting(context, mRectangleSwitch.isChecked());
     }
 }

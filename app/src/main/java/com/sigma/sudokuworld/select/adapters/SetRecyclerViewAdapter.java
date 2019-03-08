@@ -42,7 +42,7 @@ public class SetRecyclerViewAdapter extends RecyclerView.Adapter<SetRecyclerView
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onClickFragmentInteraction(holder.mSetItem);
+                    mListener.onClickSetFragmentInteraction(holder.mSetItem);
                 }
             }
         });
@@ -53,7 +53,7 @@ public class SetRecyclerViewAdapter extends RecyclerView.Adapter<SetRecyclerView
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onLongClickFragmentInteraction(holder.mView, holder.mSetItem);
+                    mListener.onLongClickSetFragmentInteraction(holder.mView, holder.mSetItem);
                 }
 
                 return true;

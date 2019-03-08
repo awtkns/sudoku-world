@@ -24,6 +24,13 @@ public class WordPairRepository {
         languageDao = AppDatabase.Companion.getInstance(application).getLanguageDao();
     }
 
+    public WordPairInformative getWordPairInformative(int pairID) {
+        WordPair pair = wordPairDao.getWordPairByID(pairID);
+        String nWord = wordDao.getWordByID(pair.getNativeWordID()).getWord();
+        String fWord = wordDao.getWordByID(pair.getForeignWordID()).getWord();
+        return new WordPairInformative(pair, nWord, fWord);
+    }
+
     public List<WordPairInformative> getAllWordPairsInformative() {
         List<WordPair> pairs = wordPairDao.getAll();
 

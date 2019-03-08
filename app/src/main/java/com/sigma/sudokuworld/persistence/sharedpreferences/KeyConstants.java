@@ -40,6 +40,7 @@ public final class KeyConstants {
 
     public static final String SAVE_ID_KEY = "saveID";
     public static final String SET_ID_KEY = "setID";
+    public static final String PAIR_ID_KEY = "pairID";
 
     public static final char CELL_LOCKED_FLAG = '~';
 }

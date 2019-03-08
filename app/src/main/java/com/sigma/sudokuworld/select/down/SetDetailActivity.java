@@ -1,30 +1,18 @@
-package com.sigma.sudokuworld.select;
+package com.sigma.sudokuworld.select.down;
 
-import android.graphics.drawable.AnimatedVectorDrawable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import android.support.design.widget.Snackbar;
 import android.view.View;
 
-import com.sigma.sudokuworld.R;
 import com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants;
 
-public class SetDetailActivity extends AppCompatActivity {
+public class SetDetailActivity extends AbstractDrillDownActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_set_detail);
 
-        Toolbar toolbar = findViewById(R.id.detail_toolbar);
-        setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        mFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own detail action", Snackbar.LENGTH_LONG)
@@ -32,8 +20,6 @@ public class SetDetailActivity extends AppCompatActivity {
             }
         });
 
-        // Show the Up button in the action bar.
-        ActionBar actionBar = getSupportActionBar();
 
         if (savedInstanceState == null) {
             // Create the detail fragment and add it to the activity
@@ -45,7 +31,7 @@ public class SetDetailActivity extends AppCompatActivity {
             SetDetailFragment fragment = new SetDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.set_detail_container, fragment)
+                    .add(mFragmentContainerID, fragment)
                     .commit();
         }
     }

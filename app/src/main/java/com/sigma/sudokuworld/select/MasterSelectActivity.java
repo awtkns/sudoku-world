@@ -22,8 +22,10 @@ import com.sigma.sudokuworld.persistence.WordSetRepository;
 import com.sigma.sudokuworld.persistence.db.entities.Set;
 import com.sigma.sudokuworld.persistence.db.entities.WordPair;
 import com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants;
+import com.sigma.sudokuworld.select.down.PairDetailActivity;
+import com.sigma.sudokuworld.select.down.SetDetailActivity;
 
-public class SetSelectActivity extends AppCompatActivity implements SetListFragment.OnFragmentInteractionListener, PairListFragment.OnPairListFragmentInteractionListener {
+public class MasterSelectActivity extends AppCompatActivity implements SetListFragment.OnFragmentInteractionListener, PairListFragment.OnFragmentInteractionListener {
 
     WordSetRepository mWordSetRepository;
     ViewPager mViewPager;
@@ -32,7 +34,7 @@ public class SetSelectActivity extends AppCompatActivity implements SetListFragm
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_set_select);
+        setContentView(R.layout.activity_master_select);
 
         mWordSetRepository = new WordSetRepository(getApplication());
 
@@ -53,22 +55,31 @@ public class SetSelectActivity extends AppCompatActivity implements SetListFragm
         mTabLayout.setupWithViewPager(mViewPager);
     }
 
+    //Set fragment listeners
     @Override
-    public void onClickFragmentInteraction(Set set) {
+    public void onClickSetFragmentInteraction(Set set) {
         Intent intent = new Intent(this, SetDetailActivity.class);
         intent.putExtra(KeyConstants.SET_ID_KEY, set.getSetID());
         startActivity(intent);
     }
 
     @Override
-    public void onLongClickFragmentInteraction(View view, Set set) {
+    public void onLongClickSetFragmentInteraction(View view, Set set) {
         String msg = "Delete the '" + set.getName() + "' word set?";
         Snackbar.make(view, msg, Snackbar.LENGTH_LONG)
                 .setAction("Delete", new DeleteSnackBarListener(set)).show();
     }
 
+    //Pair fragment listeners
     @Override
-    public void onPairListFragmentInteraction(WordPairRepository.WordPairInformative wordPair) {
+    public void onClickPairFragmentInteraction(WordPairRepository.WordPairInformative wordPair) {
+        Intent intent = new Intent(this, PairDetailActivity.class);
+        intent.putExtra(KeyConstants.PAIR_ID_KEY, wordPair.getWordPair().getWordPairID());
+        startActivity(intent);
+    }
+
+    @Override
+    public void onLongPairClickFragmentInteraction(Set set) {
         //Stub
     }
 

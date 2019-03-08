@@ -67,7 +67,7 @@ public class SetListFragment extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        void onClickFragmentInteraction(Set set);
-        void onLongClickFragmentInteraction(View view, Set set);
+        void onClickSetFragmentInteraction(Set set);
+        void onLongClickSetFragmentInteraction(View view, Set set);
     }
 }
