@@ -37,6 +37,7 @@ public class SetSelectActivity extends AppCompatActivity implements SetListFragm
         mWordSetRepository = new WordSetRepository(getApplication());
 
         final ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Set Builder");
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             AnimatedVectorDrawable avd = (AnimatedVectorDrawable) ContextCompat.getDrawable(this, R.drawable.avd_menu);

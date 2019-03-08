@@ -34,7 +34,10 @@ public class SetDetailFragment extends Fragment {
         Activity activity = this.getActivity();
         CollapsingToolbarLayout appBarLayout = activity.findViewById(R.id.toolbar_layout);
         if (appBarLayout != null) {
-            if (mSet != null) appBarLayout.setTitle(mSet.getName());
+            if (mSet != null) {
+                appBarLayout.setTitle(mSet.getName());
+                appBarLayout.setExpandedTitleColor(getResources().getColor(R.color.colorBlack));
+            }
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 AnimatedVectorDrawable avd = (AnimatedVectorDrawable) ContextCompat.getDrawable(getContext(), R.drawable.avd_menu);
