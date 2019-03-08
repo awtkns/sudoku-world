@@ -13,6 +13,7 @@ import android.widget.Button;
 
 import android.widget.Toast;
 
+import com.sigma.sudokuworld.persistence.sharedpreferences.PersistenceService;
 import com.sigma.sudokuworld.viewmodels.SudokuViewModel;
 import com.sigma.sudokuworld.viewmodels.SudokuViewModelFactory;
 import com.sigma.sudokuworld.R;
@@ -62,6 +63,7 @@ public abstract class SudokuActivity extends AppCompatActivity {
         mSudokuGridView = findViewById(R.id.sudokuGrid_view);
         mSudokuGridView.setOnTouchListener(onSudokuGridTouchListener);
         mSudokuGridView.setCellLabels(this, mViewModel.getCellLabels());
+        mSudokuGridView.setRectangleMode(PersistenceService.loadRectagleModeEnabledSetting(this));
 
         mSoundPlayer = new SoundPlayer(this);
     }

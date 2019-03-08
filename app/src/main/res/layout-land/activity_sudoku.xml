@@ -7,10 +7,8 @@
     tools:context=".sudoku.SudokuActivity">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="8dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,8 +20,8 @@
         <view
             android:id="@+id/sudokuGrid_view"
             class="com.sigma.sudokuworld.sudoku.SudokuGridView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="531dp"
+            android:layout_height="match_parent"
             android:layout_gravity="start"
             android:padding="8dp"
             app:boldGridPaintColor="@color/colorGrid"
@@ -42,8 +40,8 @@
 
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <FrameLayout
@@ -71,8 +69,8 @@
 
             <LinearLayout
                 android:id="@+id/inputLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="bottom"
                 android:orientation="horizontal">
 

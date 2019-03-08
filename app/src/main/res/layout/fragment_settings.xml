@@ -52,6 +52,12 @@
                 android:checked="true"
                 android:text="@string/hintsMode" />
 
+            <Switch
+                android:id="@+id/rectangleMode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Switch" />
+
         </LinearLayout>
     </ScrollView>
 </android.support.constraint.ConstraintLayout>
