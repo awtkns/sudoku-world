@@ -34,4 +34,6 @@
     <string name="WordSetName">Set Name</string>
     <string name="WordSetDescription">Set Description</string>
     <string name="ChangeSet">Change Set</string>
+    <string name="title_wordset_list">Word Sets</string>
+    <string name="title_wordset_detail">Word Set Detail</string>
 </resources>

@@ -78,7 +78,7 @@ public class SelectGameFragment extends Fragment implements View.OnClickListener
             args.putString(KeyConstants.DIFFICULTY_KEY, gameSaves.get(position).getDifficulty().toString());
             args.putString(KeyConstants.MODE_KEY, gameSaves.get(position).getGameMode().toString());
             fragment.setArguments(args);
-            
+
             return fragment;
         }
 
