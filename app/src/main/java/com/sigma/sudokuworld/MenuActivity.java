@@ -1,5 +1,6 @@
 package com.sigma.sudokuworld;
 
+import android.os.Build;
 import android.support.v4.app.FragmentManager;
 import android.content.Intent;
 import android.graphics.drawable.AnimatedVectorDrawable;
@@ -35,8 +36,11 @@ public class MenuActivity extends AppCompatActivity {
 
         mSoundPlayer = new SoundPlayer(this);
         ImageView imageView = findViewById(R.id.menuAVD);
-        AnimatedVectorDrawable animatedVectorDrawable = (AnimatedVectorDrawable) imageView.getDrawable();
-        animatedVectorDrawable.start();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            AnimatedVectorDrawable animatedVectorDrawable = (AnimatedVectorDrawable) imageView.getDrawable();
+            animatedVectorDrawable.start();
+        }
     }
 
     /**

@@ -2,6 +2,7 @@ package com.sigma.sudokuworld.select;
 
 import android.app.Activity;
 import android.graphics.drawable.AnimatedVectorDrawable;
+import android.os.Build;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -35,9 +36,11 @@ public class SetDetailFragment extends Fragment {
         if (appBarLayout != null) {
             if (mSet != null) appBarLayout.setTitle(mSet.getName());
 
-            AnimatedVectorDrawable avd = (AnimatedVectorDrawable) ContextCompat.getDrawable(getContext(), R.drawable.avd_menu);
-            avd.start();
-            appBarLayout.setBackground(avd);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                AnimatedVectorDrawable avd = (AnimatedVectorDrawable) ContextCompat.getDrawable(getContext(), R.drawable.avd_menu);
+                avd.start();
+                appBarLayout.setBackground(avd);
+            }
         }
     }
 

@@ -2,6 +2,7 @@ package com.sigma.sudokuworld.select;
 
 import android.content.Intent;
 import android.graphics.drawable.AnimatedVectorDrawable;
+import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -36,9 +37,12 @@ public class SetSelectActivity extends AppCompatActivity implements SetListFragm
         mWordSetRepository = new WordSetRepository(getApplication());
 
         final ActionBar actionBar = getSupportActionBar();
-        AnimatedVectorDrawable avd = (AnimatedVectorDrawable) ContextCompat.getDrawable(this, R.drawable.avd_menu);
-        avd.start();
-        actionBar.setBackgroundDrawable(avd);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            AnimatedVectorDrawable avd = (AnimatedVectorDrawable) ContextCompat.getDrawable(this, R.drawable.avd_menu);
+            avd.start();
+            actionBar.setBackgroundDrawable(avd);
+        }
 
         FloatingActionButton fab = findViewById(R.id.fab);
 

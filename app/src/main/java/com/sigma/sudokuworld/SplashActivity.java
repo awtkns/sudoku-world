@@ -2,7 +2,9 @@ package com.sigma.sudokuworld;
 
 import android.content.Intent;
 import android.graphics.drawable.AnimatedVectorDrawable;
+import android.os.Build;
 import android.support.constraint.ConstraintLayout;
+import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +15,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class SplashActivity extends AppCompatActivity {
+    private static final int START_ANIM_DELAY = 500;
+    private int exit_delay;
+
     private ConstraintLayout animationLayout;
     private Timer timer = new Timer();
 
@@ -33,15 +38,22 @@ public class SplashActivity extends AppCompatActivity {
         });
 
         ImageView imageView = findViewById(R.id.sigmaAnimation);
-        final AnimatedVectorDrawable animatedVectorDrawable = (AnimatedVectorDrawable) imageView.getDrawable();
 
-        //Timer starts animation on launch and exits splash screen
-        TimerTask animationStartTask = new TimerTask() {
-            @Override
-            public void run() {
-                animatedVectorDrawable.start();
-            }
-        };
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            final AnimatedVectorDrawable animatedVectorDrawable = (AnimatedVectorDrawable) imageView.getDrawable();
+
+            //Timer starts animation on launch and exits splash screen
+            TimerTask animationStartTask = new TimerTask() {
+                @Override
+                public void run() {
+                    animatedVectorDrawable.start();
+                }
+            };
+
+            timer.schedule(animationStartTask, 500);
+        } else {
+            exit_delay = 1000;
+        }
 
         final TimerTask exitSplashTask = new TimerTask() {
             @Override
@@ -52,8 +64,7 @@ public class SplashActivity extends AppCompatActivity {
             }
         };
 
-        timer.schedule(animationStartTask, 500);
-        timer.schedule(exitSplashTask, 4000);
+        timer.schedule(exitSplashTask, exit_delay);
     }
 
 
