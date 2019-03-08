@@ -42,7 +42,6 @@ abstract class AppDatabase : RoomDatabase() {
         fun getInstance(context: Context): AppDatabase {
             if (instance == null) {
                 instance = buildDB(context)
-                instance = buildDB(context)
 
                 DatabaseInitializer.populateDatabase(instance!!)
             }

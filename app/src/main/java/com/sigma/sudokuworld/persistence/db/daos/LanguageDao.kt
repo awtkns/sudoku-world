@@ -9,8 +9,11 @@ interface LanguageDao {
     @Query("SELECT * FROM languages")
     fun getAll(): List<Language>
 
-    @Query("SELECT * FROM languages WHERE code = :languageCode LIMIT 1")
+    @Query("SELECT * FROM languages WHERE code = :languageCode")
     fun getLanguageByCode(languageCode: String): Language
+
+    @Query("SELECT * FROM languages WHERE languageID = :languageID")
+    fun getLanguageByID(languageID: Int): Language
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(vararg languages: Language)

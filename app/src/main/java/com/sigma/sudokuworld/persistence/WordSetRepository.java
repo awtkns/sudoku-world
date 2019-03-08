@@ -29,6 +29,9 @@ public class WordSetRepository {
         return setDao.getSetByID(setId);
     }
 
+    public void deleteSet(Set set) {
+        setDao.delete(set);
+    }
 
     public Word[] getNativeWordsInSet(int setID) {
         return (Word[]) wordSetDao.getAllNativeWordsInSet(setID).toArray();
