@@ -1,12 +1,12 @@
 package com.sigma.sudokuworld;
 
+import android.os.Build;
 import android.support.v4.app.FragmentManager;
 import android.content.Intent;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.sigma.sudokuworld.game.GameDifficulty;
@@ -21,7 +21,7 @@ import com.sigma.sudokuworld.sudoku.AudioSudokuActivity;
 import com.sigma.sudokuworld.sudoku.VocabSudokuActivity;
 
 import static com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants.HINTS_KEY;
-import static com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants.SAVE_KEY;
+import static com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants.SAVE_ID_KEY;
 import static com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants.SOUND_KEY;
 
 public class MenuActivity extends AppCompatActivity {
@@ -34,13 +34,13 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        //HIDE STATUS BAR
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         mSoundPlayer = new SoundPlayer(this);
         ImageView imageView = findViewById(R.id.menuAVD);
-        AnimatedVectorDrawable animatedVectorDrawable = (AnimatedVectorDrawable) imageView.getDrawable();
-        animatedVectorDrawable.start();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            AnimatedVectorDrawable animatedVectorDrawable = (AnimatedVectorDrawable) imageView.getDrawable();
+            animatedVectorDrawable.start();
+        }
     }
 
     /**
@@ -112,7 +112,7 @@ public class MenuActivity extends AppCompatActivity {
             intent = new Intent(getBaseContext(), VocabSudokuActivity.class);
         }
 
-        intent.putExtra(SAVE_KEY, saveID);
+        intent.putExtra(SAVE_ID_KEY, saveID);
         intent.putExtra(SOUND_KEY, isSoundOn);
         intent.putExtra(HINTS_KEY, isHintsOn);
         mSoundPlayer.playPlaceCellSound();

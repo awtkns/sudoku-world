@@ -9,6 +9,7 @@ import com.sigma.sudokuworld.persistence.db.daos.*
 import com.sigma.sudokuworld.persistence.db.entities.*
 import com.sigma.sudokuworld.persistence.db.entities.Set
 import com.sigma.sudokuworld.persistence.db.utils.Converters
+import com.sigma.sudokuworld.persistence.db.utils.DatabaseInitializer
 
 /**
  * Creates the builds the database and ensure that only one is present
@@ -41,6 +42,8 @@ abstract class AppDatabase : RoomDatabase() {
         fun getInstance(context: Context): AppDatabase {
             if (instance == null) {
                 instance = buildDB(context)
+
+                DatabaseInitializer.populateDatabase(instance!!)
             }
 
             return instance!!

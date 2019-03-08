@@ -2,6 +2,7 @@ package com.sigma.sudokuworld;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,13 +15,13 @@ import android.widget.SeekBar;
 import com.sigma.sudokuworld.game.GameDifficulty;
 import com.sigma.sudokuworld.game.GameMode;
 import com.sigma.sudokuworld.persistence.sharedpreferences.PersistenceService;
+import com.sigma.sudokuworld.select.SetSelectActivity;
 
 public class NewGameFragment extends Fragment {
     private View mView;
     private SeekBar mDifficultySeekBar;
     private RadioGroup mGameModeRadioGroup;
     private View mSetLayout;
-    private Button mPlayButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -30,8 +31,11 @@ public class NewGameFragment extends Fragment {
         mDifficultySeekBar = mView.findViewById(R.id.difficultyBar);
         mSetLayout = mView.findViewById(R.id.setViewLayout);
 
-        mPlayButton = mView.findViewById(R.id.playNewGameButton);
-        mPlayButton.setOnClickListener(playButtonListener);
+        Button setButton = mView.findViewById(R.id.setBuilderButton);
+        setButton.setOnClickListener(setButtonListener);
+
+        Button playButton = mView.findViewById(R.id.playNewGameButton);
+        playButton.setOnClickListener(playButtonListener);
 
         initStoredSettings();
         return mView;
@@ -69,6 +73,15 @@ public class NewGameFragment extends Fragment {
             }
 
             ((MenuActivity) getActivity()).startNewGame(gameMode, gameDifficulty);
+        }
+    };
+
+    View.OnClickListener setButtonListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            //Checking GameMode
+            Intent intent = new Intent(getActivity().getBaseContext(), SetSelectActivity.class);
+            startActivity(intent);
         }
     };
 

@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#ffffff</color>
     <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#f04a57</color>
+    <color name="colorAccent">#F04A57</color>
     <color name="colorGrid">#000000</color>
     <color name="colorLockedCell">#50aed6f1</color>
     <color name="colorHighlight">#503498db</color>
@@ -33,7 +33,7 @@
     <color name="colorLogo_sudoku_text_outline">#ecc110</color>
     <color name="colorLogo_banner_text">#ffffff</color>
     <color name="colorLogo_banner">#e03523</color>
-    <color name="colorLogo_banner_outline">#ecc110</color>
+    <color name="colorLogo_banner_outline">#ECC110</color>
     <color name="colorLogo_banner_shadow">#9a2216</color>
 
 </resources>
