@@ -1,4 +1,4 @@
-package com.sigma.sudokuworld;
+package com.sigma.sudokuworld.select;
 
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.support.design.widget.FloatingActionButton;
@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.sigma.sudokuworld.R;
 import com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants;
 
 public class SetDetailActivity extends AppCompatActivity {

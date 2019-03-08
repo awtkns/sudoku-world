@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:textIsSelectable="true"
-    tools:context=".SetDetailActivity">
+    tools:context=".select.SetDetailActivity">
 
     <TextView
         android:id="@+id/setName"

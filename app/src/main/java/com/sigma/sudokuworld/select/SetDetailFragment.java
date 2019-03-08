@@ -1,4 +1,4 @@
-package com.sigma.sudokuworld;
+package com.sigma.sudokuworld.select;
 
 import android.app.Activity;
 import android.graphics.drawable.AnimatedVectorDrawable;
@@ -6,12 +6,12 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.sigma.sudokuworld.R;
 import com.sigma.sudokuworld.persistence.WordSetRepository;
 import com.sigma.sudokuworld.persistence.db.entities.Set;
 import com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants;

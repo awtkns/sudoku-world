@@ -11,9 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".SetDetailActivity"></activity>
+        <activity android:name=".select.SetDetailActivity"></activity>
         <activity
-            android:name=".SetSelectActivity"
+            android:name=".select.SetSelectActivity"
             android:theme="@style/AppTheme" />
         <activity android:name=".SplashActivity">
             <intent-filter>

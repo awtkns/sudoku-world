@@ -1,4 +1,4 @@
-package com.sigma.sudokuworld;
+package com.sigma.sudokuworld.select;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -9,20 +9,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.sigma.sudokuworld.adapters.SetRecyclerViewAdapter;
+import com.sigma.sudokuworld.R;
+import com.sigma.sudokuworld.select.adapters.SetRecyclerViewAdapter;
 import com.sigma.sudokuworld.persistence.WordSetRepository;
 import com.sigma.sudokuworld.persistence.db.entities.Set;
 
 import java.util.List;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
- */
+
 public class SetListFragment extends Fragment {
-    private OnListFragmentInteractionListener mListener;
+    private OnFragmentInteractionListener mListener;
     private List<Set> mSetList;
 
     public static SetListFragment newInstance() {
@@ -41,7 +37,6 @@ public class SetListFragment extends Fragment {
         WordSetRepository repository = new WordSetRepository(getActivity().getApplication());
         mSetList = repository.getAllSets();
 
-
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
@@ -57,11 +52,11 @@ public class SetListFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
+                    + " must implement OnSetListFragmentInteractionListener");
         }
     }
 
@@ -71,17 +66,8 @@ public class SetListFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnListFragmentInteractionListener {
-        void onListFragmentInteraction(Set set);
+    public interface OnFragmentInteractionListener {
+        void onClickFragmentInteraction(Set set);
+        void onLongClickFragmentInteraction(View view, Set set);
     }
 }
