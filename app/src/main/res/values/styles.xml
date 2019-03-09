@@ -20,11 +20,15 @@
 
     <style name="AppTheme.MenuText" parent="AppTheme.NoActionBar">
         <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:buttonStyle">?android:attr/borderlessButtonStyle</item>
 
     </style>
 
-    <style name="TextAppearance.AppCompat.Title">
-        <item name="android:textColor">@color/colorWhite</item>
+    <style name="MySwitch" parent="@style/Widget.AppCompat.CompoundButton.Switch">
+        <item name="android:textColorPrimaryDisableOnly">#b71c1c</item>
+        <item name="android:colorControlActivated">#1b5e20</item>
+        <item name="android:colorForeground">#f57f17</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
