@@ -7,7 +7,8 @@
     android:background="@drawable/settings_background"
     tools:context=".SelectGameFragment"
     android:clickable="true"
-    android:focusable="true">
+    android:focusable="true"
+    android:layout_gravity="center">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
