@@ -5,7 +5,7 @@
     <item android:state_pressed="false">
         <shape android:shape="rectangle">
 
-            <solid android:color="@color/colorButtonBackground" />
+            <solid android:color="@color/colorBlueButtonBackground" />
 
 
             <!-- How round the corners are -->
@@ -17,11 +17,11 @@
     <!-- Button when it is PRESSED -->
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
-            <solid android:color="@color/colorButtonPressed" />
+            <solid android:color="@color/colorBlueButtonBackground" />
 
 
             <!-- The outline colour and width -->
-            <stroke android:width="3dp" android:color="@color/colorButtonBorder" />
+            <stroke android:width="3dp" android:color="@color/colorBlueButtonBackground" />
 
             <!-- How round the corners are -->
             <corners android:radius="50dp" />
