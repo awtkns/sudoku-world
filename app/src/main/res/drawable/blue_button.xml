@@ -3,7 +3,7 @@
     <!-- Andriod buttons have some padding so this is required -->
     <item
         android:bottom="6dp"
-        android:drawable="@drawable/outlined"
+        android:drawable="@drawable/blue_outline"
         android:top="6dp"
         />
 

@@ -18,18 +18,22 @@
 
 
     <!-- Buttons -->
-    <color name="colorButtonBorder">#803498db</color>
     <color name="colorButtonText">#ffffff</color>
-    <color name="colorButtonBackground">#ccaed6f1</color>
-    <color name="colorButtonPressed">#aed6f1</color>
+
+    <color name="colorBlueButtonBackground">#ccaed6f1</color>
+    <color name="colorBlueButtonPressedBackground">#aed6f1</color>
+    <color name="colorBlueButtonStroke">#803498db</color>
+
+    <color name="colorRedButtonBackground">#ee4956</color>
+    <color name="colorRedButtonPressedBackground">#ee4956</color>
+    <color name="colorRedButtonStroke">#b63449</color>
 
     <!-- Settings Fragment -->
     <color name="colorSettingsHeader">#ee4956</color>
 
     <color name="colorSettingsText">#ffffff</color>
-    <color name="colorSettingsBackground">#3498db</color>
+    <color name="colorSettingsBackground">#aed6f1</color>
     <color name="colorSettingsStroke">#3498db</color>
-
     <!--Logo-->
     <color name="colorLogo_stroke">#000000</color>
     <color name="colorLogo_water">#1447ae</color>
