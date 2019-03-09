@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Button when it is NOT pressed -->
+    <item android:state_pressed="false">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/colorButtonBackground" />
+
+
+            <!-- The outline colour and width -->
+            <!--<stroke android:width="3dp" android:color="@color/colorButtonBackground" />-->
+
+            <!-- How round the corners are -->
+            <corners android:radius="50dp" />
+        </shape>
+    </item>
+
+
+    <!-- Button when it is PRESSED -->
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/colorButtonPressed" />
+
+
+            <!-- The outline colour and width -->
+            <stroke android:width="3dp" android:color="@color/colorButtonBorder" />
+
+            <!-- How round the corners are -->
+            <corners android:radius="50dp" />
+        </shape>
+    </item>
+</selector>

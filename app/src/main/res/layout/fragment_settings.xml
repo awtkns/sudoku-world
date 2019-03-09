@@ -1,14 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/settings_background"
     android:focusableInTouchMode="true"
-    android:paddingStart="15dp"
-    android:paddingEnd="15dp"
     tools:context=".MenuActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:background="@drawable/settings_header"
+        android:text="@string/settingsTitle"
+        android:textColor="@color/colorSettingsText"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
     <ScrollView
         android:id="@+id/scrollView2"
@@ -21,15 +34,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textView11"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/settingsTitle"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
             <Switch
                 android:id="@+id/audioModeSwitch"
@@ -58,6 +66,33 @@
                 android:layout_height="wrap_content"
                 android:text="@string/RectangleMode" />
 
+
+            <Button
+                android:id="@+id/cancelButton"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_height="0dp"
+                android:layout_width="fill_parent"
+                android:layout_weight="1"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/red_button"
+                android:elevation="0dp"
+                android:text="@string/cancel_button"
+                android:textColor="@color/colorButtonText"
+                android:textSize="21sp" />
+
+            <Button
+                android:id="@+id/saveButton"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_height="0dp"
+                android:layout_width="fill_parent"
+                android:layout_weight="1"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/red_button"
+                android:elevation="0dp"
+                android:text="@string/save_button"
+                android:textColor="@color/colorButtonText"
+                android:textSize="21sp" />
         </LinearLayout>
     </ScrollView>
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

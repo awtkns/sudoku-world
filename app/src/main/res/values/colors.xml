@@ -16,13 +16,18 @@
     <color name="colorLogoLightBlue">#aed6f1</color>
     <color name="colorLogoMiddleBlue">#3498db</color>
 
+
+    <!-- Buttons -->
     <color name="colorButtonBorder">#803498db</color>
     <color name="colorButtonText">#ffffff</color>
     <color name="colorButtonBackground">#ccaed6f1</color>
     <color name="colorButtonPressed">#aed6f1</color>
 
     <!-- Settings Fragment -->
-    <color name="colorSettingsBackground">#e7F1F5FF</color>
+    <color name="colorSettingsHeader">#ee4956</color>
+
+    <color name="colorSettingsText">#ffffff</color>
+    <color name="colorSettingsBackground">#3498db</color>
     <color name="colorSettingsStroke">#3498db</color>
 
     <!--Logo-->

@@ -3,6 +3,9 @@
     <string name="splash_group_name">SIGMA</string>
     <string name="splash_group_literal">GROUP</string>
     <string name="play_button">Play</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="save_button">Save</string>
+    <string name="load_button">Load</string>
     <string name="continue_button">Continue</string>
     <string name="clear_button">Clear</string>
     <string name="enter_button">Enter</string>
