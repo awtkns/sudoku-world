@@ -48,7 +48,6 @@ public class SettingsFragment extends Fragment {
         return mView;
     }
 
-
     private void loadSettings(){
         mAudioModeSwitch = mView.findViewById(R.id.audioModeSwitch);
         mSoundSwitch = mView.findViewById(R.id.soundSwitch);

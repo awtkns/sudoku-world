@@ -123,6 +123,7 @@ public class MenuActivity extends AppCompatActivity {
 
     public void closeFragment(){
         getSupportFragmentManager().popBackStack();
+        mSoundPlayer.playPlaceCellSound();
     }
 }
 

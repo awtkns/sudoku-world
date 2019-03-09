@@ -167,7 +167,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/cancelButton"
+                    android:id="@+id/newGameCancelButton"
                     android:layout_height="wrap_content"
                     android:layout_width="fill_parent"
                     android:layout_weight="1"

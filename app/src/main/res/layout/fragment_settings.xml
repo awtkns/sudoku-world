@@ -49,7 +49,8 @@
                 android:layout_height="wrap_content"
                 android:checked="false"
                 android:text="@string/audioMode"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorWhite"/>
 
             <Switch
                 android:id="@+id/soundSwitch"
@@ -57,7 +58,8 @@
                 android:layout_height="wrap_content"
                 android:checked="true"
                 android:text="@string/soundMode"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorWhite"/>
 
             <Switch
                 android:id="@+id/hintsSwitch"
@@ -65,14 +67,16 @@
                 android:layout_height="wrap_content"
                 android:checked="true"
                 android:text="@string/hintsMode"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorWhite"/>
 
             <Switch
                 android:id="@+id/rectangleMode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/RectangleMode"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorWhite"/>
 
 
 
@@ -87,7 +91,6 @@
 
             <Button
                 android:id="@+id/settingsCancelButton"
-                style="?android:attr/borderlessButtonStyle"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
                 android:layout_weight="1"
@@ -100,7 +103,6 @@
 
             <Button
                 android:id="@+id/settingsSaveButton"
-                style="?android:attr/borderlessButtonStyle"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
                 android:layout_weight="1"
