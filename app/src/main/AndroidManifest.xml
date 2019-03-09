@@ -12,10 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".select.SetDetailActivity"></activity>
-        <activity
-            android:name=".select.SetSelectActivity"
-            android:theme="@style/AppTheme" />
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,6 +23,17 @@
             android:theme="@style/AppTheme.MenuText"/>
         <activity android:name=".sudoku.VocabSudokuActivity" />
         <activity android:name=".sudoku.AudioSudokuActivity" />
+
+        <!--Set builder-->
+        <activity
+                android:name=".select.MasterSelectActivity"
+                android:theme="@style/AppTheme"
+        />
+        <activity android:name=".select.down.PairDetailActivity"/>
+        <activity android:name=".select.down.SetDetailActivity"/>
+        <activity android:name=".select.down.AddPairActivity"/>
+        <activity android:name=".select.down.AddSetActivity"/>
+
     </application>
 
 </manifest>

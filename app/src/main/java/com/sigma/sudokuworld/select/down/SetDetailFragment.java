@@ -1,12 +1,7 @@
-package com.sigma.sudokuworld.select;
+package com.sigma.sudokuworld.select.down;
 
-import android.app.Activity;
-import android.graphics.drawable.AnimatedVectorDrawable;
-import android.os.Build;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,33 +13,16 @@ import com.sigma.sudokuworld.persistence.db.entities.Set;
 import com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants;
 
 
-public class SetDetailFragment extends Fragment {
+public class SetDetailFragment extends AbstractDrillDownFragment {
     private Set mSet;
-    private CollapsingToolbarLayout mAppBarLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         WordSetRepository wordSetRepository = new WordSetRepository(getActivity().getApplication());
-
         int setID = getArguments().getInt(KeyConstants.SET_ID_KEY);
         mSet = wordSetRepository.getSet(setID);
-
-        Activity activity = this.getActivity();
-        CollapsingToolbarLayout appBarLayout = activity.findViewById(R.id.toolbar_layout);
-        if (appBarLayout != null) {
-            if (mSet != null) {
-                appBarLayout.setTitle(mSet.getName());
-                appBarLayout.setExpandedTitleColor(getResources().getColor(R.color.colorBlack));
-            }
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                AnimatedVectorDrawable avd = (AnimatedVectorDrawable) ContextCompat.getDrawable(getContext(), R.drawable.avd_menu);
-                avd.start();
-                appBarLayout.setBackground(avd);
-            }
-        }
     }
 
     @Override

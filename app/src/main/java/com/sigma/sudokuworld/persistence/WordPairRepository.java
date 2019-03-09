@@ -6,6 +6,7 @@ import com.sigma.sudokuworld.persistence.db.AppDatabase;
 import com.sigma.sudokuworld.persistence.db.daos.LanguageDao;
 import com.sigma.sudokuworld.persistence.db.daos.WordDao;
 import com.sigma.sudokuworld.persistence.db.daos.WordPairDao;
+import com.sigma.sudokuworld.persistence.db.entities.Word;
 import com.sigma.sudokuworld.persistence.db.entities.WordPair;
 
 import android.support.annotation.NonNull;
@@ -24,6 +25,13 @@ public class WordPairRepository {
         languageDao = AppDatabase.Companion.getInstance(application).getLanguageDao();
     }
 
+    public WordPairInformative getWordPairInformative(int pairID) {
+        WordPair pair = wordPairDao.getWordPairByID(pairID);
+        String nWord = wordDao.getWordByID(pair.getNativeWordID()).getWord();
+        String fWord = wordDao.getWordByID(pair.getForeignWordID()).getWord();
+        return new WordPairInformative(pair, nWord, fWord);
+    }
+
     public List<WordPairInformative> getAllWordPairsInformative() {
         List<WordPair> pairs = wordPairDao.getAll();
 
@@ -35,6 +43,15 @@ public class WordPairRepository {
         }
 
         return wordPairsInfo;
+    }
+
+    public void saveWordPair(String nativeWord, String foreignWord) {
+        Word nWord = new Word(0, 1, nativeWord);    //TODO: save lang
+        Word fWord = new Word(0, 1, foreignWord);
+
+        int nID = (int) wordDao.insert(nWord);
+        int fID = (int) wordDao.insert(fWord);
+        wordPairDao.insert(new WordPair(0, nID, fID));
     }
 
     public class WordPairInformative {

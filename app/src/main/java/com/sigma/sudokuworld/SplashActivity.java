@@ -50,7 +50,8 @@ public class SplashActivity extends AppCompatActivity {
                 }
             };
 
-            timer.schedule(animationStartTask, 500);
+            timer.schedule(animationStartTask, START_ANIM_DELAY);
+            exit_delay = 0;
         } else {
             exit_delay = 1000;
         }

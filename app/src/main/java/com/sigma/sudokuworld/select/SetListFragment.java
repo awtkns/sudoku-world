@@ -32,7 +32,7 @@ public class SetListFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_set_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_list, container, false);
 
         WordSetRepository repository = new WordSetRepository(getActivity().getApplication());
         mSetList = repository.getAllSets();
@@ -67,7 +67,7 @@ public class SetListFragment extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        void onClickFragmentInteraction(Set set);
-        void onLongClickFragmentInteraction(View view, Set set);
+        void onClickSetFragmentInteraction(Set set);
+        void onLongClickSetFragmentInteraction(View view, Set set);
     }
 }

@@ -15,7 +15,7 @@ import android.widget.SeekBar;
 import com.sigma.sudokuworld.game.GameDifficulty;
 import com.sigma.sudokuworld.game.GameMode;
 import com.sigma.sudokuworld.persistence.sharedpreferences.PersistenceService;
-import com.sigma.sudokuworld.select.SetSelectActivity;
+import com.sigma.sudokuworld.select.MasterSelectActivity;
 
 public class NewGameFragment extends Fragment {
     private View mView;
@@ -82,7 +82,7 @@ public class NewGameFragment extends Fragment {
         @Override
         public void onClick(View v) {
             //Checking GameMode
-            Intent intent = new Intent(getActivity().getBaseContext(), SetSelectActivity.class);
+            Intent intent = new Intent(getActivity().getBaseContext(), MasterSelectActivity.class);
             startActivity(intent);
         }
     };

@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.sigma.sudokuworld.R;
@@ -14,27 +15,27 @@ import com.sigma.sudokuworld.select.PairListFragment.OnFragmentInteractionListen
 import java.util.List;
 
 
-public class PairRecyclerViewAdapter extends RecyclerView.Adapter<PairRecyclerViewAdapter.ViewHolder> {
+public class CheckedPairRecyclerViewAdapter extends RecyclerView.Adapter<CheckedPairRecyclerViewAdapter.ViewHolder> {
 
     private final List<WordPairRepository.WordPairInformative> mWordPairs;
     private final OnFragmentInteractionListener mListener;
 
-    public PairRecyclerViewAdapter(List<WordPairRepository.WordPairInformative> wordPair, PairListFragment.OnFragmentInteractionListener listener) {
+    public CheckedPairRecyclerViewAdapter(List<WordPairRepository.WordPairInformative> wordPair, PairListFragment.OnFragmentInteractionListener listener) {
         mWordPairs = wordPair;
         mListener = listener;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.set_list_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.checked_set_list_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mWordPair = mWordPairs.get(position);
-        holder.mIdView.setText(mWordPairs.get(position).getNativeWordString());
-        holder.mContentView.setText(mWordPairs.get(position).getForeignWordString());
+        holder.mNativeWord.setText(mWordPairs.get(position).getNativeWordString());
+        holder.mForeignWord.setText(mWordPairs.get(position).getForeignWordString());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,20 +56,22 @@ public class PairRecyclerViewAdapter extends RecyclerView.Adapter<PairRecyclerVi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
+        public final TextView mNativeWord;
+        public final TextView mForeignWord;
+        public final CheckBox mCheckBox;
         public WordPairRepository.WordPairInformative mWordPair;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = view.findViewById(R.id.item_number);
-            mContentView = view.findViewById(R.id.content);
+            mCheckBox = view.findViewById(R.id.checkBox);
+            mNativeWord = view.findViewById(R.id.nWord);
+            mForeignWord = view.findViewById(R.id.fWord);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + mNativeWord.getText() + "'";
         }
     }
 }
