@@ -153,6 +153,5 @@
                 android:background="@drawable/red_button"
                 android:textColor="@color/colorWhite"/>
         </LinearLayout>
-        </LinearLayout>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
