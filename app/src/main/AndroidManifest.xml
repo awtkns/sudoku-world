@@ -31,6 +31,7 @@
         <activity android:name=".select.down.PairDetailActivity"/>
         <activity android:name=".select.down.SetDetailActivity"/>
         <activity android:name=".select.down.AddPairActivity"/>
+        <activity android:name=".select.down.AddSetActivity"/>
 
     </application>
 

@@ -23,6 +23,7 @@ import com.sigma.sudokuworld.persistence.db.entities.Set;
 import com.sigma.sudokuworld.persistence.db.entities.WordPair;
 import com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants;
 import com.sigma.sudokuworld.select.down.AddPairActivity;
+import com.sigma.sudokuworld.select.down.AddSetActivity;
 import com.sigma.sudokuworld.select.down.PairDetailActivity;
 import com.sigma.sudokuworld.select.down.SetDetailActivity;
 
@@ -91,7 +92,15 @@ public class MasterSelectActivity extends AppCompatActivity implements SetListFr
     public class FloatingActionButtonListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(getBaseContext(), AddPairActivity.class);
+
+            Intent intent;
+            if (mTabLayout.getSelectedTabPosition() == 0) {
+                intent = new Intent(getBaseContext(), AddSetActivity.class);
+            } else {
+                intent = new Intent(getBaseContext(), AddPairActivity.class);
+
+            }
+
             startActivity(intent);
         }
     }

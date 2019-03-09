@@ -50,4 +50,6 @@
     <string name="ForeignLanguage">Foreign Language</string>
     <string name="NativeWordHint">Native Word</string>
     <string name="ForeignWordHint">Foreign Word</string>
+    <string name="SetName">Set Name</string>
+    <string name="SetDescription">Description</string>
 </resources>

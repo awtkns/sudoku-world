@@ -20,6 +20,8 @@ import java.util.List;
 public class PairListFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private List<WordPairRepository.WordPairInformative> mWordPairs;
+    private PairRecyclerViewAdapter mPairRecyclerViewAdapter;
+    WordPairRepository mWordPairRepository;
 
     public static PairListFragment newInstance() {
         return new PairListFragment();
@@ -34,20 +36,27 @@ public class PairListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_set_list, container, false);
 
-        WordPairRepository repository = new WordPairRepository(getActivity().getApplication());
-        mWordPairs = repository.getAllWordPairsInformative();
+        mWordPairRepository= new WordPairRepository(getActivity().getApplication());
+        mWordPairs = mWordPairRepository.getAllWordPairsInformative();
+        mPairRecyclerViewAdapter = new PairRecyclerViewAdapter(mWordPairs, mListener);
 
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            recyclerView.setAdapter(new PairRecyclerViewAdapter(mWordPairs, mListener));
+            recyclerView.setAdapter(mPairRecyclerViewAdapter);
         }
 
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mWordPairs = mWordPairRepository.getAllWordPairsInformative();
+        mPairRecyclerViewAdapter.notifyDataSetChanged();
+    }
 
     @Override
     public void onAttach(Context context) {
