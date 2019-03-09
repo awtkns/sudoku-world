@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class AddSetActivity extends AbstractDrillDownActivity implements CheckedPairListFragment.OnFragmentInteractionListener {
+public class AddSetActivity extends AbstractDrillDownActivity implements AddSetFragment.OnFragmentInteractionListener {
     private WordSetRepository mWordSetRepository;
     private AddSetFragment mAddSetFragment;
     private List<WordPair> mCheckedPairs;

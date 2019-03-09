@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.sigma.sudokuworld.R;
 import com.sigma.sudokuworld.persistence.WordPairRepository;
-import com.sigma.sudokuworld.select.down.CheckedPairListFragment;
+import com.sigma.sudokuworld.select.down.AddSetFragment;
 
 import java.util.List;
 
@@ -17,9 +17,9 @@ import java.util.List;
 public class CheckedPairRecyclerViewAdapter extends RecyclerView.Adapter<CheckedPairRecyclerViewAdapter.ViewHolder> {
 
     private final List<WordPairRepository.WordPairInformative> mWordPairs;
-    private final CheckedPairListFragment.OnFragmentInteractionListener mListener;
+    private final AddSetFragment.OnFragmentInteractionListener mListener;
 
-    public CheckedPairRecyclerViewAdapter(List<WordPairRepository.WordPairInformative> wordPair, CheckedPairListFragment.OnFragmentInteractionListener listener) {
+    public CheckedPairRecyclerViewAdapter(List<WordPairRepository.WordPairInformative> wordPair, AddSetFragment.OnFragmentInteractionListener listener) {
         mWordPairs = wordPair;
         mListener = listener;
     }
