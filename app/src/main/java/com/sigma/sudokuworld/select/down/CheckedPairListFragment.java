@@ -17,7 +17,7 @@ import com.sigma.sudokuworld.select.adapters.CheckedPairRecyclerViewAdapter;
 import java.util.List;
 
 public class CheckedPairListFragment extends Fragment {
-    private PairListFragment.OnFragmentInteractionListener mListener;
+    private CheckedPairListFragment.OnFragmentInteractionListener mListener;
     private List<WordPairRepository.WordPairInformative> mWordPairs;
     private CheckedPairRecyclerViewAdapter mCheckedPairRecyclerViewAdapter;
     WordPairRepository mWordPairRepository;
@@ -57,15 +57,15 @@ public class CheckedPairListFragment extends Fragment {
         mCheckedPairRecyclerViewAdapter.notifyDataSetChanged();
     }
 
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        if (context instanceof PairListFragment.OnFragmentInteractionListener) {
-//            mListener = (PairListFragment.OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString() + " must implement OnFragmentInteractionListener");
-//        }
-//    }
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof CheckedPairListFragment.OnFragmentInteractionListener) {
+            mListener = (CheckedPairListFragment.OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString() + " must implement OnFragmentInteractionListener");
+        }
+    }
 
     @Override
     public void onDetach() {
@@ -74,8 +74,7 @@ public class CheckedPairListFragment extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        void onClickPairFragmentInteraction(WordPairRepository.WordPairInformative wordPair);
-        void onLongPairClickFragmentInteraction(Set set);
+        void onCheckChangedFragmentInteraction(WordPairRepository.WordPairInformative wordPair, Boolean isChecked);
     }
 }
 

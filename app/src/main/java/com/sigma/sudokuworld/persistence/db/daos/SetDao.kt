@@ -13,7 +13,7 @@ interface SetDao {
     fun getSetByID(setID:Int): Set
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(vararg set: Set)
+    fun insert(set: Set): Long
 
     @Delete
     fun delete(vararg set: Set)

@@ -9,8 +9,7 @@ import android.widget.TextView;
 
 import com.sigma.sudokuworld.R;
 import com.sigma.sudokuworld.persistence.WordPairRepository;
-import com.sigma.sudokuworld.select.PairListFragment;
-import com.sigma.sudokuworld.select.PairListFragment.OnFragmentInteractionListener;
+import com.sigma.sudokuworld.select.down.CheckedPairListFragment;
 
 import java.util.List;
 
@@ -18,9 +17,9 @@ import java.util.List;
 public class CheckedPairRecyclerViewAdapter extends RecyclerView.Adapter<CheckedPairRecyclerViewAdapter.ViewHolder> {
 
     private final List<WordPairRepository.WordPairInformative> mWordPairs;
-    private final OnFragmentInteractionListener mListener;
+    private final CheckedPairListFragment.OnFragmentInteractionListener mListener;
 
-    public CheckedPairRecyclerViewAdapter(List<WordPairRepository.WordPairInformative> wordPair, PairListFragment.OnFragmentInteractionListener listener) {
+    public CheckedPairRecyclerViewAdapter(List<WordPairRepository.WordPairInformative> wordPair, CheckedPairListFragment.OnFragmentInteractionListener listener) {
         mWordPairs = wordPair;
         mListener = listener;
     }
@@ -37,13 +36,13 @@ public class CheckedPairRecyclerViewAdapter extends RecyclerView.Adapter<Checked
         holder.mNativeWord.setText(mWordPairs.get(position).getNativeWordString());
         holder.mForeignWord.setText(mWordPairs.get(position).getForeignWordString());
 
-        holder.mView.setOnClickListener(new View.OnClickListener() {
+        holder.mCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onClickPairFragmentInteraction(holder.mWordPair);
+                    mListener.onCheckChangedFragmentInteraction(holder.mWordPair, ((CheckBox) v).isChecked());
                 }
             }
         });

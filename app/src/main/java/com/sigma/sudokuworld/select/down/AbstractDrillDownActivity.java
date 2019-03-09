@@ -1,5 +1,6 @@
 package com.sigma.sudokuworld.select.down;
 
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import com.sigma.sudokuworld.R;
 
 public abstract class AbstractDrillDownActivity extends AppCompatActivity {
 
+    CoordinatorLayout mCoordinatorLayout;
     FloatingActionButton mFAB;
     Toolbar mToolbar;
     int mFragmentContainerID;
@@ -21,6 +23,7 @@ public abstract class AbstractDrillDownActivity extends AppCompatActivity {
 
         mFragmentContainerID = R.id.detail_container;
 
+        mCoordinatorLayout = findViewById(R.id.clayout);
         mToolbar = findViewById(R.id.detail_toolbar);
         setSupportActionBar(mToolbar);
 
