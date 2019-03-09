@@ -2,38 +2,41 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@drawable/settings_background"
     android:focusableInTouchMode="true"
-    tools:context=".MenuActivity">
+    tools:context=".MenuActivity"
+    android:clickable="true"
+    android:focusable="true">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/settingsHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:background="@drawable/settings_header"
-        android:text="@string/settingsTitle"
+        android:text="@string/settingsHeader"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         android:textSize="22sp"
         android:textStyle="bold"/>
 
     <ScrollView
-        android:id="@+id/scrollView2"
+        android:id="@+id/settingsScrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:scrollbars="none"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:paddingTop="10dp"
             android:paddingStart="15dp"
             android:paddingEnd="15dp"
@@ -45,62 +48,70 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:checked="false"
-                android:text="@string/audioMode" />
+                android:text="@string/audioMode"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorWhite"/>
 
             <Switch
                 android:id="@+id/soundSwitch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:text="@string/soundMode" />
+                android:text="@string/soundMode"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorWhite"/>
 
             <Switch
                 android:id="@+id/hintsSwitch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:text="@string/hintsMode" />
+                android:text="@string/hintsMode"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorWhite"/>
 
             <Switch
                 android:id="@+id/rectangleMode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/RectangleMode" />
+                android:text="@string/RectangleMode"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorWhite"/>
 
 
 
-            <LinearLayout
+        </LinearLayout>
+    </ScrollView>
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/cancelButton"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_height="wrap_content"
-                    android:layout_width="fill_parent"
-                    android:layout_weight="1"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/red_button"
-                    android:elevation="0dp"
-                    android:text="@string/cancel_button"
-                    android:textSize="15sp" />
-
             <Button
-                android:id="@+id/saveButton"
-                style="?android:attr/borderlessButtonStyle"
+                android:id="@+id/settingsCancelButton"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
                 android:layout_weight="1"
-                android:layout_marginLeft="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/red_button"
+                android:elevation="0dp"
+                android:text="@string/cancel_button"
+                android:textSize="15sp" />
+
+            <Button
+                android:id="@+id/settingsSaveButton"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:layout_weight="1"
+                android:layout_marginStart="5dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/red_button"
                 android:elevation="0dp"
                 android:text="@string/save_button"
                 android:textSize="15sp" />
         </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

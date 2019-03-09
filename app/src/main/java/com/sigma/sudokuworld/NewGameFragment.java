@@ -37,6 +37,8 @@ public class NewGameFragment extends Fragment {
         Button playButton = mView.findViewById(R.id.playNewGameButton);
         playButton.setOnClickListener(playButtonListener);
 
+        Button cancelButton = mView.findViewById(R.id.newGameCancelButton);
+        cancelButton.setOnClickListener(cancelButtonListener);
         initStoredSettings();
         return mView;
     }
@@ -82,6 +84,13 @@ public class NewGameFragment extends Fragment {
             //Checking GameMode
             Intent intent = new Intent(getActivity().getBaseContext(), MasterSelectActivity.class);
             startActivity(intent);
+        }
+    };
+
+    View.OnClickListener cancelButtonListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            ((MenuActivity) getActivity()).closeFragment();
         }
     };
 

@@ -12,8 +12,10 @@
     <string name="check_answer_button">Check\nAnswer</string>
     <string name="clear_cell_button">Clear\nCell</string>
 
-    <!--Settings Menu-->
-    <string name="settingsTitle">Settings</string>
+    <!-- Menu -->
+    <string name="settingsHeader">Settings</string>
+    <string name="newGameHeader">New Game</string>
+
     <string name="wordListHeader">Word List</string>
     <string name="nativeWords">Native Words</string>
     <string name="foreignWords">Foreign Words</string>

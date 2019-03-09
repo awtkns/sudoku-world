@@ -120,5 +120,10 @@ public class MenuActivity extends AppCompatActivity {
 
         getSupportFragmentManager().popBackStack();
     }
+
+    public void closeFragment(){
+        getSupportFragmentManager().popBackStack();
+        mSoundPlayer.playPlaceCellSound();
+    }
 }
 
