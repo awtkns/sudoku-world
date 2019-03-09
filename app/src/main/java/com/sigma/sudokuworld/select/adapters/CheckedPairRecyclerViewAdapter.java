@@ -26,7 +26,7 @@ public class CheckedPairRecyclerViewAdapter extends RecyclerView.Adapter<Checked
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.checked_set_list_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_checked_pair_list, parent, false);
         return new ViewHolder(view);
     }
 
