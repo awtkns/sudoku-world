@@ -1,13 +1,12 @@
 package com.sigma.sudokuworld.select.down;
 
 import android.os.Bundle;
-import android.view.View;
 import com.sigma.sudokuworld.R;
+import com.sigma.sudokuworld.persistence.WordPairRepository;
 import com.sigma.sudokuworld.persistence.WordSetRepository;
 import com.sigma.sudokuworld.persistence.db.entities.Set;
-import com.sigma.sudokuworld.select.SetListFragment;
 
-public class AddSetActivity extends AbstractDrillDownActivity implements SetListFragment.OnFragmentInteractionListener {
+public class AddSetActivity extends AbstractDrillDownActivity implements CheckedPairListFragment.OnFragmentInteractionListener {
     private WordSetRepository mWordSetRepository;
     private AddSetFragment mAddSetFragment;
 
@@ -16,9 +15,8 @@ public class AddSetActivity extends AbstractDrillDownActivity implements SetList
         super.onCreate(savedInstanceState);
 
         mAddSetFragment = new AddSetFragment();
-
         getSupportFragmentManager().beginTransaction()
-                .add(mFragmentContainerID, SetListFragment.newInstance())
+                .add(mFragmentContainerID, mAddSetFragment)
                 .commit();
 
         mFAB.setImageResource(R.drawable.ic_save_black_24dp);
@@ -36,16 +34,15 @@ public class AddSetActivity extends AbstractDrillDownActivity implements SetList
 //                }
 //            }
 //        });
+    }
+
+    @Override
+    public void onClickPairFragmentInteraction(WordPairRepository.WordPairInformative wordPair) {
 
     }
 
     @Override
-    public void onClickSetFragmentInteraction(Set set) {
-
-    }
-
-    @Override
-    public void onLongClickSetFragmentInteraction(View view, Set set) {
+    public void onLongPairClickFragmentInteraction(Set set) {
 
     }
 }

@@ -36,11 +36,10 @@ public class PairDetailFragment extends AbstractDrillDownFragment {
 
 
         if (mWordPair != null) {
+            mAppBarLayout.setTitle(mWordPair.getNativeWordString() + " - " + mWordPair.getForeignWordString());
+
             mNativeWord.setText(mWordPair.getNativeWordString());
             mNativeLanguage.setText(mWordPair.getNativeWordString()); //TODO: JOIN IN REPO TO GET LANG
-
-            mForeignWord.setText(mWordPair.getForeignWordString());
-            mForeignLanguage.setText(mWordPair.getForeignWordString());
         }
 
         return view;

@@ -31,4 +31,11 @@
                 android:id="@+id/foreignInput"/>
     </android.support.design.widget.TextInputLayout>
 
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/listContainer">
+
+    </FrameLayout>
+
 </LinearLayout>

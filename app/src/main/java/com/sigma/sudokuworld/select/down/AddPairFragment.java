@@ -20,6 +20,7 @@ public class AddPairFragment extends AbstractDrillDownFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_pair, container, false);
 
+        mAppBarLayout.setTitle("Add Word Pair");
         mNativeWordInput = view.findViewById(R.id.nativeInput);
         mForeignWordInput = view.findViewById(R.id.foreignInput);
 

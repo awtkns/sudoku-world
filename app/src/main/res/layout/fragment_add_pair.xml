@@ -6,19 +6,6 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <TextView
-            android:text="@string/NativeLanguage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView5"/>
-
-    <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/nativeLangSpinner"
-            android:dropDownWidth="match_parent"
-            android:spinnerMode="dropdown"/>
-
     <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -32,20 +19,6 @@
                 />
 
     </android.support.design.widget.TextInputLayout>
-
-    <TextView
-            android:text="@string/ForeignLanguage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView10"
-            />
-
-    <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/foreignLangSpinner"
-            android:dropDownWidth="match_parent"
-            android:spinnerMode="dropdown"/>
 
     <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"

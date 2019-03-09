@@ -95,13 +95,13 @@ public class MasterSelectActivity extends AppCompatActivity implements SetListFr
 
             Intent intent;
             if (mTabLayout.getSelectedTabPosition() == 0) {
-                intent = new Intent(getBaseContext(), AddSetActivity.class);
+                //intent = new Intent(getBaseContext(), AddSetActivity.class);
+                String msg = "Under development. You can add a word pair though";
+                Snackbar.make(v, msg, Snackbar.LENGTH_SHORT).show();
             } else {
                 intent = new Intent(getBaseContext(), AddPairActivity.class);
-
+                startActivity(intent);
             }
-
-            startActivity(intent);
         }
     }
 
