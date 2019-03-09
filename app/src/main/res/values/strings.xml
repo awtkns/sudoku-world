@@ -39,13 +39,15 @@
     <string name="RectangleMode">Display Sudoku Cells as Rectangles \n (WIP)</string>
 
     <!--Set Builder-->
-    <string name="WordSetName">Set Name</string>
-    <string name="WordSetDescription">Set Description</string>
+    <string name="WordSetName">Default set</string>
+    <string name="WordSetDescription">The default set</string>
     <string name="ChangeSet">Change Set</string>
     <string name="SetTabTitle">Sets</string>
     <string name="WordPairTabTitle">Pairs</string>
     <string name="title_wordset_list">Word Sets</string>
     <string name="title_wordset_detail">Word Set Detail</string>
+    <string name="title_default_set">Default se</string>
+    <string name="title_default_description">The default set</string>
 
     <!--Add word dialog-->
     <string name="NativeLanguage">Native Language</string>

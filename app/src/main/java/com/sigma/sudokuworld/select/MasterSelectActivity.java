@@ -42,7 +42,7 @@ public class MasterSelectActivity extends AppCompatActivity implements SetListFr
         mWordSetRepository = new WordSetRepository(getApplication());
 
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Set Builder");
+        actionBar.setTitle("Set Builder (Under development");
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             AnimatedVectorDrawable avd = (AnimatedVectorDrawable) ContextCompat.getDrawable(this, R.drawable.avd_menu);
