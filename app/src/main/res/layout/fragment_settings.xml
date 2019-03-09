@@ -2,7 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@drawable/settings_background"
     android:focusableInTouchMode="true"
     tools:context=".MenuActivity"
@@ -36,7 +36,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:paddingTop="10dp"
             android:paddingStart="15dp"
             android:paddingEnd="15dp"
@@ -48,27 +48,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:checked="false"
-                android:text="@string/audioMode" />
+                android:text="@string/audioMode"
+                android:layout_marginTop="10dp"/>
 
             <Switch
                 android:id="@+id/soundSwitch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:text="@string/soundMode" />
+                android:text="@string/soundMode"
+                android:layout_marginTop="10dp"/>
 
             <Switch
                 android:id="@+id/hintsSwitch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:text="@string/hintsMode" />
+                android:text="@string/hintsMode"
+                android:layout_marginTop="10dp"/>
 
             <Switch
                 android:id="@+id/rectangleMode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/RectangleMode" />
+                android:text="@string/RectangleMode"
+                android:layout_marginTop="10dp"/>
 
 
 
@@ -76,7 +80,7 @@
     </ScrollView>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:orientation="horizontal">
