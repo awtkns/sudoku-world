@@ -26,6 +26,7 @@ public class SelectGameFragment extends Fragment implements View.OnClickListener
     private List<Game> gameSaves;
     private ViewPager mViewPager;
     private Button mPlayButton;
+    private Button mCancelButton;
 
 
     @Override
@@ -41,6 +42,14 @@ public class SelectGameFragment extends Fragment implements View.OnClickListener
         View view = inflater.inflate(R.layout.fragment_select_game, container, false);
         mPlayButton = view.findViewById(R.id.playButtonSelectGameFragment);
         mPlayButton.setOnClickListener(this);
+
+        mCancelButton = view.findViewById(R.id.selectGameCancelButton);
+        mCancelButton.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MenuActivity) getActivity()).closeFragment();
+            }
+        });
 
         PagerAdapter pagerAdapter = new GamePagerAdapter(getFragmentManager());
         mViewPager = view.findViewById(R.id.gameSavePager);
