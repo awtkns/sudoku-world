@@ -133,8 +133,12 @@ public class SudokuViewModel extends AndroidViewModel {
         GameMode gameMode = mGame.getGameMode();
         for (int i = 0; i < SUDOKU_SIZE; i++) {
             String label = "";
-            if (mGame.isLocked(i)) label += KeyConstants.CELL_LOCKED_FLAG;
-            label += valueToMappedLabel(mGame.getCellValue(i), gameMode);
+            if (mGame.isLocked(i)) {
+                label += KeyConstants.CELL_LOCKED_FLAG;
+                label += valueToMappedLabel(mGame.getCellValue(i), GameMode.opposite(gameMode));
+            } else {
+                label += valueToMappedLabel(mGame.getCellValue(i), gameMode);
+            }
 
             labels.add(i, label);
         }
@@ -151,7 +155,7 @@ public class SudokuViewModel extends AndroidViewModel {
 
         for (int i = 0; i < 9; i++) {
             String label = "";
-            label += valueToMappedLabel(i + 1, gameMode);
+            label += valueToMappedLabel(i + 1, GameMode.opposite(gameMode));
 
             buttonLabels.add(i, label);
         }

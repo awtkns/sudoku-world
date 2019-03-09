@@ -167,16 +167,16 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/newGameCancelButton"
-                    android:layout_height="wrap_content"
-                    android:layout_width="fill_parent"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/red_button"
-                    android:elevation="0dp"
-                    android:text="@string/cancel_button"
-                    android:textSize="15sp" />
+                        android:id="@+id/cancelButton"
+                        android:layout_height="wrap_content"
+                        android:layout_width="fill_parent"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/red_button"
+                        android:elevation="0dp"
+                        android:text="@string/cancel_button"
+                        android:textSize="15sp"/>
 
                 <Button
                     android:id="@+id/playNewGameButton"

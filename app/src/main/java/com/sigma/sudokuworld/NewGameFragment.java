@@ -37,7 +37,7 @@ public class NewGameFragment extends Fragment {
         Button playButton = mView.findViewById(R.id.playNewGameButton);
         playButton.setOnClickListener(playButtonListener);
 
-        Button cancelButton = mView.findViewById(R.id.newGameCancelButton);
+        Button cancelButton = mView.findViewById(R.id.cancelButton);
         cancelButton.setOnClickListener(cancelButtonListener);
         initStoredSettings();
         return mView;
