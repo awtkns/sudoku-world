@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Switch;
 
 public class SettingsFragment extends Fragment {
@@ -15,26 +16,45 @@ public class SettingsFragment extends Fragment {
     private Switch mSoundSwitch;
     private Switch mHintsSwitch;
     private Switch mRectangleSwitch;
+
+    private Button mCancelButton;
+    private Button mSaveButton;
     private View mView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceStace) {
         mView = inflater.inflate(R.layout.fragment_settings, container, false);
         loadSettings();
+
+        mCancelButton = mView.findViewById(R.id.settingsCancelButton);
+        mSaveButton = mView.findViewById(R.id.settingsSaveButton);
+
+        mCancelButton.setOnClickListener( new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((MenuActivity) getActivity()).closeFragment();
+                }
+        });
+
+        mSaveButton.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveSettings();
+                ((MenuActivity) getActivity()).closeFragment();
+            }
+        });
+
+
         return mView;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        saveSettings();
-    }
 
     private void loadSettings(){
         mAudioModeSwitch = mView.findViewById(R.id.audioModeSwitch);
         mSoundSwitch = mView.findViewById(R.id.soundSwitch);
         mHintsSwitch = mView.findViewById(R.id.hintsSwitch);
         mRectangleSwitch = mView.findViewById(R.id.rectangleMode);
+
 
         Context context = getActivity();
         mAudioModeSwitch.setChecked(PersistenceService.loadAudioModeSetting(context));

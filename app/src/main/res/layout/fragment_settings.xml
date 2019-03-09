@@ -27,7 +27,7 @@
         android:textStyle="bold"/>
 
     <ScrollView
-        android:id="@+id/scrollView2"
+        android:id="@+id/settingsScrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="none"
@@ -82,7 +82,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/cancelButton"
+                android:id="@+id/settingsCancelButton"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
@@ -95,7 +95,7 @@
                 android:textSize="15sp" />
 
             <Button
-                android:id="@+id/saveButton"
+                android:id="@+id/settingsSaveButton"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
