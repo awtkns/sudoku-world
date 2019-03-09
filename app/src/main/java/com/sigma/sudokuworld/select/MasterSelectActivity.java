@@ -22,6 +22,7 @@ import com.sigma.sudokuworld.persistence.WordSetRepository;
 import com.sigma.sudokuworld.persistence.db.entities.Set;
 import com.sigma.sudokuworld.persistence.db.entities.WordPair;
 import com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants;
+import com.sigma.sudokuworld.select.down.AddPairActivity;
 import com.sigma.sudokuworld.select.down.PairDetailActivity;
 import com.sigma.sudokuworld.select.down.SetDetailActivity;
 
@@ -30,6 +31,7 @@ public class MasterSelectActivity extends AppCompatActivity implements SetListFr
     WordSetRepository mWordSetRepository;
     ViewPager mViewPager;
     TabLayout mTabLayout;
+    FloatingActionButton mFloatingActionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +49,15 @@ public class MasterSelectActivity extends AppCompatActivity implements SetListFr
             actionBar.setBackgroundDrawable(avd);
         }
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-
+        mFloatingActionButton = findViewById(R.id.fab);
         mTabLayout = findViewById(R.id.tabs);
         mViewPager = findViewById(R.id.tabPager);
         mViewPager.setAdapter(new TabPagerAdapter(getSupportFragmentManager()));
         mTabLayout.setupWithViewPager(mViewPager);
+
+        mFloatingActionButton.setOnClickListener(new FloatingActionButtonListener());
+        mFloatingActionButton.setImageResource(R.drawable.ic_add_black_24dp);
+
     }
 
     //Set fragment listeners
@@ -81,6 +86,14 @@ public class MasterSelectActivity extends AppCompatActivity implements SetListFr
     @Override
     public void onLongPairClickFragmentInteraction(Set set) {
         //Stub
+    }
+
+    public class FloatingActionButtonListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(getBaseContext(), AddPairActivity.class);
+            startActivity(intent);
+        }
     }
 
     public class DeleteSnackBarListener implements View.OnClickListener {

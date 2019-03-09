@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 
+import com.sigma.sudokuworld.R;
 import com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants;
-import com.sigma.sudokuworld.select.PairListFragment;
 
 public class PairDetailActivity extends AbstractDrillDownActivity {
 
@@ -13,6 +13,7 @@ public class PairDetailActivity extends AbstractDrillDownActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        mFAB.setImageResource(R.drawable.ic_check_black_24dp);
         mFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

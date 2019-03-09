@@ -42,13 +42,15 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical|start"
-        android:layout_margin="@dimen/fab_margin"
-        app:layout_anchor="@+id/detail_container"
-        app:layout_anchorGravity="top|end"
-        app:srcCompat="@android:drawable/stat_notify_call_mute" />
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|start"
+            android:layout_margin="@dimen/fab_margin"
+            app:layout_anchor="@+id/detail_container"
+            app:layout_anchorGravity="top|end"
+            app:srcCompat="@drawable/ic_add_black_24dp"
+            app:useCompatPadding="false"
+            app:fabSize="auto"/>
 
 </android.support.design.widget.CoordinatorLayout>
