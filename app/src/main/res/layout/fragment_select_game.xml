@@ -16,12 +16,8 @@
 
         <android.support.v4.view.ViewPager
             android:id="@+id/gameSavePager"
-            android:layout_width="307dp"
-            android:layout_height="296dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
