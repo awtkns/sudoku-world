@@ -9,5 +9,5 @@
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
-    tools:context=".select.SetListFragment"
+    tools:context=".masterdetail.SetListFragment"
     tools:listitem="@layout/item_set_list" />

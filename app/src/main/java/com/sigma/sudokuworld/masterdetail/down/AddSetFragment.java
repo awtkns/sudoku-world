@@ -1,4 +1,4 @@
-package com.sigma.sudokuworld.select.down;
+package com.sigma.sudokuworld.masterdetail.down;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import com.sigma.sudokuworld.R;
 import com.sigma.sudokuworld.persistence.WordPairRepository;
 import com.sigma.sudokuworld.persistence.db.views.WordPair;
-import com.sigma.sudokuworld.select.adapters.CheckedPairRecyclerViewAdapter;
+import com.sigma.sudokuworld.masterdetail.adapters.CheckedPairRecyclerViewAdapter;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.sigma.sudokuworld.select.down;
+package com.sigma.sudokuworld.masterdetail.down;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.support.design.widget.CoordinatorLayout;
@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
 import com.sigma.sudokuworld.R;
-import com.sigma.sudokuworld.select.MasterSelectViewModel;
+import com.sigma.sudokuworld.masterdetail.MasterSelectViewModel;
 
 public abstract class AbstractDrillDownActivity extends AppCompatActivity {
 

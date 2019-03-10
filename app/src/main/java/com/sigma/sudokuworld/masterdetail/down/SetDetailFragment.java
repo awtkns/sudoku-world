@@ -1,6 +1,5 @@
-package com.sigma.sudokuworld.select.down;
+package com.sigma.sudokuworld.masterdetail.down;
 
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;

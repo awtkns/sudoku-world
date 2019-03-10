@@ -1,4 +1,4 @@
-package com.sigma.sudokuworld.select;
+package com.sigma.sudokuworld.masterdetail;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -18,15 +18,14 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.sigma.sudokuworld.R;
-import com.sigma.sudokuworld.persistence.WordPairRepository;
 import com.sigma.sudokuworld.persistence.db.entities.Set;
 import com.sigma.sudokuworld.persistence.db.entities.Pair;
 import com.sigma.sudokuworld.persistence.db.views.WordPair;
 import com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants;
-import com.sigma.sudokuworld.select.down.AddPairActivity;
-import com.sigma.sudokuworld.select.down.AddSetActivity;
-import com.sigma.sudokuworld.select.down.PairDetailActivity;
-import com.sigma.sudokuworld.select.down.SetDetailActivity;
+import com.sigma.sudokuworld.masterdetail.down.AddPairActivity;
+import com.sigma.sudokuworld.masterdetail.down.AddSetActivity;
+import com.sigma.sudokuworld.masterdetail.down.PairDetailActivity;
+import com.sigma.sudokuworld.masterdetail.down.SetDetailActivity;
 
 public class MasterSelectActivity extends AppCompatActivity implements SetListFragment.OnFragmentInteractionListener, PairListFragment.OnFragmentInteractionListener {
 

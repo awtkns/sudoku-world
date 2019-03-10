@@ -1,4 +1,4 @@
-package com.sigma.sudokuworld.select.down;
+package com.sigma.sudokuworld.masterdetail.down;
 
 import android.app.Activity;
 import android.graphics.drawable.AnimatedVectorDrawable;

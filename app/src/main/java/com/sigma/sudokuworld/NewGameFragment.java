@@ -15,7 +15,7 @@ import android.widget.SeekBar;
 import com.sigma.sudokuworld.game.GameDifficulty;
 import com.sigma.sudokuworld.game.GameMode;
 import com.sigma.sudokuworld.persistence.sharedpreferences.PersistenceService;
-import com.sigma.sudokuworld.select.MasterSelectActivity;
+import com.sigma.sudokuworld.masterdetail.MasterSelectActivity;
 
 public class NewGameFragment extends Fragment {
     private View mView;

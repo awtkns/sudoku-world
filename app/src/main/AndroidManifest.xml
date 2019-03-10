@@ -26,13 +26,13 @@
 
         <!--Set builder-->
         <activity
-                android:name=".select.MasterSelectActivity"
+                android:name=".masterdetail.MasterSelectActivity"
                 android:theme="@style/AppTheme"
         />
-        <activity android:name=".select.down.PairDetailActivity"/>
-        <activity android:name=".select.down.SetDetailActivity"/>
-        <activity android:name=".select.down.AddPairActivity"/>
-        <activity android:name=".select.down.AddSetActivity"/>
+        <activity android:name=".masterdetail.down.PairDetailActivity"/>
+        <activity android:name=".masterdetail.down.SetDetailActivity"/>
+        <activity android:name=".masterdetail.down.AddPairActivity"/>
+        <activity android:name=".masterdetail.down.AddSetActivity"/>
 
     </application>
 

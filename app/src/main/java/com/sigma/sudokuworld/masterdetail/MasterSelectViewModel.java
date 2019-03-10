@@ -1,4 +1,4 @@
-package com.sigma.sudokuworld.select;
+package com.sigma.sudokuworld.masterdetail;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;

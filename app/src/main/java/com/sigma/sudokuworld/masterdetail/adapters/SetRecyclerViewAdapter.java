@@ -1,4 +1,4 @@
-package com.sigma.sudokuworld.select.adapters;
+package com.sigma.sudokuworld.masterdetail.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,20 +7,21 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.sigma.sudokuworld.R;
-import com.sigma.sudokuworld.persistence.db.views.WordPair;
-import com.sigma.sudokuworld.select.PairListFragment;
-import com.sigma.sudokuworld.select.PairListFragment.OnFragmentInteractionListener;
+import com.sigma.sudokuworld.masterdetail.SetListFragment;
+import com.sigma.sudokuworld.masterdetail.SetListFragment.OnFragmentInteractionListener;
+import com.sigma.sudokuworld.persistence.db.entities.Set;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
-public class PairRecyclerViewAdapter extends RecyclerView.Adapter<PairRecyclerViewAdapter.ViewHolder> {
+public class SetRecyclerViewAdapter extends RecyclerView.Adapter<SetRecyclerViewAdapter.ViewHolder> {
 
-    private final List<WordPair> mWordPairs;
-    private final OnFragmentInteractionListener mListener;
+    private List<Set> mSets;
+    private final SetListFragment.OnFragmentInteractionListener mListener;
 
-    public PairRecyclerViewAdapter(List<WordPair> wordPair, PairListFragment.OnFragmentInteractionListener listener) {
-        mWordPairs = wordPair;
+    public SetRecyclerViewAdapter(OnFragmentInteractionListener listener) {
+        mSets = new ArrayList<>();
         mListener = listener;
     }
 
@@ -32,9 +33,9 @@ public class PairRecyclerViewAdapter extends RecyclerView.Adapter<PairRecyclerVi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mWordPair = mWordPairs.get(position);
-        holder.mIdView.setText(mWordPairs.get(position).getForeignWord().getWord());
-        holder.mContentView.setText(mWordPairs.get(position).getForeignWord().getWord());
+        holder.mSetItem = mSets.get(position);
+        holder.mIdView.setText(mSets.get(position).getName());
+        holder.mContentView.setText(mSets.get(position).getDescription());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,22 +43,40 @@ public class PairRecyclerViewAdapter extends RecyclerView.Adapter<PairRecyclerVi
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onClickPairFragmentInteraction(holder.mWordPair);
+                    mListener.onClickSetFragmentInteraction(holder.mSetItem);
                 }
+            }
+        });
+
+        holder.mView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (null != mListener) {
+                    // Notify the active callbacks interface (the activity, if the
+                    // fragment is attached to one) that an item has been selected.
+                    mListener.onLongClickSetFragmentInteraction(holder.mView, holder.mSetItem);
+                }
+
+                return true;
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return mWordPairs.size();
+        return mSets.size();
+    }
+
+    public void setListItems(List<Set> sets) {
+        mSets = sets;
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public WordPair mWordPair;
+        public Set mSetItem;
 
         public ViewHolder(View view) {
             super(view);

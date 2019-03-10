@@ -1,4 +1,4 @@
-package com.sigma.sudokuworld.select;
+package com.sigma.sudokuworld.masterdetail;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
@@ -14,8 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.sigma.sudokuworld.R;
-import com.sigma.sudokuworld.select.adapters.SetRecyclerViewAdapter;
-import com.sigma.sudokuworld.persistence.WordSetRepository;
+import com.sigma.sudokuworld.masterdetail.adapters.SetRecyclerViewAdapter;
 import com.sigma.sudokuworld.persistence.db.entities.Set;
 
 import java.util.List;
