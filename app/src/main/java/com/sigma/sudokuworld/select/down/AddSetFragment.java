@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.sigma.sudokuworld.R;
 import com.sigma.sudokuworld.persistence.WordPairRepository;
+import com.sigma.sudokuworld.persistence.db.views.WordPair;
 import com.sigma.sudokuworld.select.adapters.CheckedPairRecyclerViewAdapter;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public class AddSetFragment extends AbstractDrillDownFragment {
     private TextInputEditText mNameInput;
     private TextInputEditText mDescriptionInput;
     private WordPairRepository mWordPairRepository;
-    private List<WordPairRepository.WordPairInformative> mWordPairInformatives;
+    private List<WordPair> mWordPairInformatives;
     private CheckedPairRecyclerViewAdapter mCheckedPairRecyclerViewAdapter;
 
     @Override
@@ -28,7 +29,7 @@ public class AddSetFragment extends AbstractDrillDownFragment {
         super.onCreate(savedInstanceState);
 
         mWordPairRepository = new WordPairRepository(getActivity().getApplication());
-        mWordPairInformatives = mWordPairRepository.getAllWordPairsInformative();
+        mWordPairInformatives = mWordPairRepository.getAllWordPairs();
         mCheckedPairRecyclerViewAdapter = new CheckedPairRecyclerViewAdapter(mWordPairInformatives, mListener);
     }
 
@@ -48,7 +49,7 @@ public class AddSetFragment extends AbstractDrillDownFragment {
     @Override
     public void onResume() {
         super.onResume();
-        mWordPairInformatives = mWordPairRepository.getAllWordPairsInformative();
+        mWordPairInformatives = mWordPairRepository.getAllWordPairs();
         mCheckedPairRecyclerViewAdapter.notifyDataSetChanged();
     }
 
@@ -77,6 +78,6 @@ public class AddSetFragment extends AbstractDrillDownFragment {
     }
 
     public interface OnFragmentInteractionListener {
-        void onCheckChangedFragmentInteraction(WordPairRepository.WordPairInformative wordPair, Boolean isChecked);
+        void onCheckChangedFragmentInteraction(WordPair wordPair, Boolean isChecked);
     }
 }

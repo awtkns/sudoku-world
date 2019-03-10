@@ -4,17 +4,12 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 import com.sigma.sudokuworld.R;
-import com.sigma.sudokuworld.persistence.WordPairRepository;
-import com.sigma.sudokuworld.persistence.WordSetRepository;
-import com.sigma.sudokuworld.persistence.db.entities.Set;
-import com.sigma.sudokuworld.persistence.db.entities.WordPair;
+import com.sigma.sudokuworld.persistence.db.views.WordPair;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 public class AddSetActivity extends AbstractDrillDownActivity implements AddSetFragment.OnFragmentInteractionListener {
-    private WordSetRepository mWordSetRepository;
     private AddSetFragment mAddSetFragment;
     private List<WordPair> mCheckedPairs;
 
@@ -22,7 +17,6 @@ public class AddSetActivity extends AbstractDrillDownActivity implements AddSetF
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mWordSetRepository = new WordSetRepository(getApplication());
         mCheckedPairs = new LinkedList<>();
 
         mAddSetFragment = new AddSetFragment();
@@ -40,12 +34,11 @@ public class AddSetActivity extends AbstractDrillDownActivity implements AddSetF
     }
 
     @Override
-    public void onCheckChangedFragmentInteraction(WordPairRepository.WordPairInformative wordPairInformative, Boolean isChecked) {
-        WordPair wp = wordPairInformative.getWordPair();
-        boolean isInList = mCheckedPairs.contains(wp);
+    public void onCheckChangedFragmentInteraction(WordPair wordPair, Boolean isChecked) {
+        boolean isInList = mCheckedPairs.contains(wordPair);
 
-        if (isChecked && !isInList) mCheckedPairs.add(wp);
-        else if (!isChecked && isInList) mCheckedPairs.remove(wp);
+        if (isChecked && !isInList) mCheckedPairs.add(wordPair);
+        else if (!isChecked && isInList) mCheckedPairs.remove(wordPair);
     }
 
     private void saveWordSet() {
@@ -71,7 +64,7 @@ public class AddSetActivity extends AbstractDrillDownActivity implements AddSetF
         }
 
         if (isValidSet) {
-            mWordSetRepository.newWordSet(name, description , mCheckedPairs);
+            mMasterSelectViewModel.saveSet(name, description, mCheckedPairs);
             finish();
         } else {
             Snackbar.make(mCoordinatorLayout, errorMsg, Snackbar.LENGTH_SHORT).show();

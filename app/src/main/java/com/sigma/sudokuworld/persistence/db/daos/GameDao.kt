@@ -4,7 +4,7 @@ import android.arch.persistence.room.*
 import com.sigma.sudokuworld.persistence.db.entities.Game
 
 @Dao
-interface GameSaveDao {
+interface GameDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(game: Game): Long

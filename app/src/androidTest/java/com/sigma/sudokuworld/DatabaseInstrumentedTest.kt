@@ -23,9 +23,9 @@ class DatabaseInstrumentedTest {
     private lateinit var db: AppDatabase
     private lateinit var languageList: List<Language>
     private lateinit var wordList: List<Word>
-    private lateinit var wordPairList: List<WordPair>
+    private lateinit var wordPairList: List<Pair>
     private lateinit var setList: List<Set>
-    private lateinit var wordSetList: List<WordSet>
+    private lateinit var mPairWithSetList: List<PairWithSet>
 
     @Before
     fun createDb() {
@@ -82,13 +82,13 @@ class DatabaseInstrumentedTest {
     @Throws(Exception::class)
     fun readWordPair() {
         val storedWordPairs = db.getWordPairDao().getAll()
-        assertEquals(wordPairList[0].wordPairID, storedWordPairs[0].wordPairID)
+        assertEquals(wordPairList[0].pairID, storedWordPairs[0].pairID)
         assertEquals(wordPairList[0].nativeWordID, storedWordPairs[0].nativeWordID)
         assertEquals(wordPairList[0].foreignWordID, storedWordPairs[0].foreignWordID)
-        assertEquals(wordPairList[1].wordPairID, storedWordPairs[1].wordPairID)
+        assertEquals(wordPairList[1].pairID, storedWordPairs[1].pairID)
         assertEquals(wordPairList[1].nativeWordID, storedWordPairs[1].nativeWordID)
         assertEquals(wordPairList[1].foreignWordID, storedWordPairs[1].foreignWordID)
-        assertNotEquals(wordPairList[1].wordPairID, storedWordPairs[0].wordPairID)
+        assertNotEquals(wordPairList[1].pairID, storedWordPairs[0].pairID)
     }
 
     @Test
@@ -181,8 +181,8 @@ class DatabaseInstrumentedTest {
         wordList = listOf(word1, word2)
         db.getWordDao().insert(word1, word2)
 
-        val wordPair1 = WordPair(1, 1, 2)
-        val wordPair2 = WordPair(2, 2, 1)
+        val wordPair1 = Pair(1, 1, 2)
+        val wordPair2 = Pair(2, 2, 1)
         wordPairList = listOf(wordPair1, wordPair2)
         db.getWordPairDao().insert(wordPair1, wordPair2)
 
@@ -190,9 +190,9 @@ class DatabaseInstrumentedTest {
         setList = listOf(set1)
         db.getSetDao().insert(set1)
 
-        val wordSet1 = WordSet(1, 1)
-        val wordSet2 = WordSet(1, 2)
-        wordSetList = listOf(wordSet1, wordSet2)
+        val wordSet1 = PairWithSet(1, 1)
+        val wordSet2 = PairWithSet(1, 2)
+        mPairWithSetList = listOf(wordSet1, wordSet2)
         db.getWordSetDao().insert(wordSet1, wordSet2)
     }
 }

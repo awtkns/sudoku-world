@@ -1,5 +1,6 @@
 package com.sigma.sudokuworld.select;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.os.Build;
@@ -18,9 +19,9 @@ import android.view.View;
 
 import com.sigma.sudokuworld.R;
 import com.sigma.sudokuworld.persistence.WordPairRepository;
-import com.sigma.sudokuworld.persistence.WordSetRepository;
 import com.sigma.sudokuworld.persistence.db.entities.Set;
-import com.sigma.sudokuworld.persistence.db.entities.WordPair;
+import com.sigma.sudokuworld.persistence.db.entities.Pair;
+import com.sigma.sudokuworld.persistence.db.views.WordPair;
 import com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants;
 import com.sigma.sudokuworld.select.down.AddPairActivity;
 import com.sigma.sudokuworld.select.down.AddSetActivity;
@@ -29,17 +30,15 @@ import com.sigma.sudokuworld.select.down.SetDetailActivity;
 
 public class MasterSelectActivity extends AppCompatActivity implements SetListFragment.OnFragmentInteractionListener, PairListFragment.OnFragmentInteractionListener {
 
-    WordSetRepository mWordSetRepository;
     ViewPager mViewPager;
     TabLayout mTabLayout;
     FloatingActionButton mFloatingActionButton;
+    MasterSelectViewModel mMasterSelectViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_master_select);
-
-        mWordSetRepository = new WordSetRepository(getApplication());
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Set Builder (Under development");
@@ -49,6 +48,8 @@ public class MasterSelectActivity extends AppCompatActivity implements SetListFr
             avd.start();
             actionBar.setBackgroundDrawable(avd);
         }
+
+        mMasterSelectViewModel = ViewModelProviders.of(this).get(MasterSelectViewModel.class);
 
         mFloatingActionButton = findViewById(R.id.fab);
         mTabLayout = findViewById(R.id.tabs);
@@ -78,9 +79,9 @@ public class MasterSelectActivity extends AppCompatActivity implements SetListFr
 
     //Pair fragment listeners
     @Override
-    public void onClickPairFragmentInteraction(WordPairRepository.WordPairInformative wordPair) {
+    public void onClickPairFragmentInteraction(WordPair wordPair) {
         Intent intent = new Intent(this, PairDetailActivity.class);
-        intent.putExtra(KeyConstants.PAIR_ID_KEY, wordPair.getWordPair().getWordPairID());
+        intent.putExtra(KeyConstants.PAIR_ID_KEY, wordPair.getPairID());
         startActivity(intent);
     }
 
@@ -106,21 +107,21 @@ public class MasterSelectActivity extends AppCompatActivity implements SetListFr
 
     public class DeleteSnackBarListener implements View.OnClickListener {
         private Set set;
-        private WordPair pair;
+        private Pair pair;
 
         public DeleteSnackBarListener(Set set) {
             super();
             this.set = set;
         }
 
-        public DeleteSnackBarListener(WordPair wordPair) {
+        public DeleteSnackBarListener(Pair wordPair) {
             super();
             this.pair = wordPair;
         }
 
         @Override
         public void onClick(View v) {
-            if (set != null) mWordSetRepository.deleteSet(set);
+            //if (set != null) mWordSetRepository.deleteSet(set);
         }
     }
 

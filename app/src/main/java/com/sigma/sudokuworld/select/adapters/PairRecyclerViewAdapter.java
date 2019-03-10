@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.sigma.sudokuworld.R;
-import com.sigma.sudokuworld.persistence.WordPairRepository;
+import com.sigma.sudokuworld.persistence.db.views.WordPair;
 import com.sigma.sudokuworld.select.PairListFragment;
 import com.sigma.sudokuworld.select.PairListFragment.OnFragmentInteractionListener;
 
@@ -16,10 +16,10 @@ import java.util.List;
 
 public class PairRecyclerViewAdapter extends RecyclerView.Adapter<PairRecyclerViewAdapter.ViewHolder> {
 
-    private final List<WordPairRepository.WordPairInformative> mWordPairs;
+    private final List<WordPair> mWordPairs;
     private final OnFragmentInteractionListener mListener;
 
-    public PairRecyclerViewAdapter(List<WordPairRepository.WordPairInformative> wordPair, PairListFragment.OnFragmentInteractionListener listener) {
+    public PairRecyclerViewAdapter(List<WordPair> wordPair, PairListFragment.OnFragmentInteractionListener listener) {
         mWordPairs = wordPair;
         mListener = listener;
     }
@@ -33,8 +33,8 @@ public class PairRecyclerViewAdapter extends RecyclerView.Adapter<PairRecyclerVi
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mWordPair = mWordPairs.get(position);
-        holder.mIdView.setText(mWordPairs.get(position).getNativeWordString());
-        holder.mContentView.setText(mWordPairs.get(position).getForeignWordString());
+        holder.mIdView.setText(mWordPairs.get(position).getForeignWord().getWord());
+        holder.mContentView.setText(mWordPairs.get(position).getForeignWord().getWord());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,7 +57,7 @@ public class PairRecyclerViewAdapter extends RecyclerView.Adapter<PairRecyclerVi
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public WordPairRepository.WordPairInformative mWordPair;
+        public WordPair mWordPair;
 
         public ViewHolder(View view) {
             super(view);

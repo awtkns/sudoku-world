@@ -11,16 +11,17 @@ import com.sigma.sudokuworld.select.SetListFragment;
 import com.sigma.sudokuworld.select.SetListFragment.OnFragmentInteractionListener;
 import com.sigma.sudokuworld.persistence.db.entities.Set;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class SetRecyclerViewAdapter extends RecyclerView.Adapter<SetRecyclerViewAdapter.ViewHolder> {
 
-    private final List<Set> mSets;
+    private List<Set> mSets;
     private final SetListFragment.OnFragmentInteractionListener mListener;
 
-    public SetRecyclerViewAdapter(List<Set> sets, OnFragmentInteractionListener listener) {
-        mSets = sets;
+    public SetRecyclerViewAdapter(OnFragmentInteractionListener listener) {
+        mSets = new ArrayList<>();
         mListener = listener;
     }
 
@@ -64,6 +65,11 @@ public class SetRecyclerViewAdapter extends RecyclerView.Adapter<SetRecyclerView
     @Override
     public int getItemCount() {
         return mSets.size();
+    }
+
+    public void setListItems(List<Set> sets) {
+        mSets = sets;
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

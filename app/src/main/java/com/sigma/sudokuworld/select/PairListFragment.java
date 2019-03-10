@@ -12,14 +12,14 @@ import android.view.ViewGroup;
 import com.sigma.sudokuworld.R;
 import com.sigma.sudokuworld.persistence.WordPairRepository;
 import com.sigma.sudokuworld.persistence.db.entities.Set;
+import com.sigma.sudokuworld.persistence.db.views.WordPair;
 import com.sigma.sudokuworld.select.adapters.PairRecyclerViewAdapter;
 
 import java.util.List;
 
-
 public class PairListFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
-    private List<WordPairRepository.WordPairInformative> mWordPairs;
+    private List<WordPair> mWordPairs;
     private PairRecyclerViewAdapter mPairRecyclerViewAdapter;
     WordPairRepository mWordPairRepository;
 
@@ -37,7 +37,7 @@ public class PairListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
 
         mWordPairRepository= new WordPairRepository(getActivity().getApplication());
-        mWordPairs = mWordPairRepository.getAllWordPairsInformative();
+        mWordPairs = mWordPairRepository.getAllWordPairs();
         mPairRecyclerViewAdapter = new PairRecyclerViewAdapter(mWordPairs, mListener);
 
         // Set the adapter
@@ -54,7 +54,7 @@ public class PairListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        mWordPairs = mWordPairRepository.getAllWordPairsInformative();
+        mWordPairs = mWordPairRepository.getAllWordPairs();
         mPairRecyclerViewAdapter.notifyDataSetChanged();
     }
 
@@ -75,7 +75,7 @@ public class PairListFragment extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        void onClickPairFragmentInteraction(WordPairRepository.WordPairInformative wordPair);
+        void onClickPairFragmentInteraction(WordPair wordPair);
         void onLongPairClickFragmentInteraction(Set set);
     }
 }

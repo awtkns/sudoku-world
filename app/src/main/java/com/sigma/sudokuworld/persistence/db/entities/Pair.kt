@@ -21,7 +21,7 @@ import android.arch.persistence.room.PrimaryKey
     indices = [Index(value = ["foreignWordID"]), Index(value = ["nativeWordID"])]
 )
 data class Pair (
-    @PrimaryKey(autoGenerate = true) var wordPairID: Int,
+    @PrimaryKey(autoGenerate = true) var pairID: Int,
     var nativeWordID: Int,
     var foreignWordID: Int
 )
