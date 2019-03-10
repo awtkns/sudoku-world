@@ -13,16 +13,32 @@ import com.sigma.sudokuworld.persistence.db.entities.Set;
 import com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants;
 import com.sigma.sudokuworld.persistence.sharedpreferences.PersistenceService;
 
-public class MenuViewModel extends SettingsViewModel {
+public class MenuViewModel extends BaseSettingsViewModel {
     private GameRepository mGameRepository;
     private WordSetRepository mWordSetRepository;
 
+    public GameDifficulty difficultySetting;
+    public GameMode gameModeSetting;
+    public Set setSetting;
 
     public MenuViewModel(@NonNull Application application) {
         super(application);
 
         mGameRepository = new GameRepository(application);
         mWordSetRepository = new WordSetRepository(application);
+
+        difficultySetting = PersistenceService.loadDifficultySetting(mApplication);
+        gameModeSetting = PersistenceService.loadGameModeSetting(mApplication);
+        setSetting = mWordSetRepository.getSet(PersistenceService.loadSetSettingSetting(mApplication));
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+
+        PersistenceService.saveDifficultySetting(mApplication, difficultySetting);
+        PersistenceService.saveGameModeSetting(mApplication, gameModeSetting);
+        PersistenceService.saveSetSetting(mApplication, setSetting.getSetID());
     }
 
     //Generates a new game based on stored settings
@@ -32,9 +48,9 @@ public class MenuViewModel extends SettingsViewModel {
 
         Game game = new Game(
                 0,
-                getSetID(),
-                getGameDifficulty(),
-                getGameMode(),
+                setSetting.getSetID(),
+                difficultySetting,
+                gameModeSetting,
                 puzzle.getIntArray(KeyConstants.CELL_VALUES_KEY),
                 puzzle.getIntArray(KeyConstants.SOLUTION_VALUES_KEY),
                 puzzle.getBooleanArray(KeyConstants.LOCKED_CELLS_KEY)
@@ -42,36 +58,5 @@ public class MenuViewModel extends SettingsViewModel {
 
         //Returns the saveID
         return mGameRepository.newGame(game);
-    }
-
-    /*
-        Game Settings
-     */
-    public void setGameMode(GameMode gameMode) {
-        PersistenceService.saveGameModeSetting(mApplication, gameMode);
-    }
-
-    public void setGameDifficulty(GameDifficulty difficulty) {
-        PersistenceService.saveDifficultySetting(mApplication, difficulty);
-    }
-
-    public GameMode getGameMode() {
-        return PersistenceService.loadGameModeSetting(mApplication);
-    }
-
-    public GameDifficulty getGameDifficulty() {
-        return PersistenceService.loadDifficultySetting(mApplication);
-    }
-
-    public void setSet(Set set) {
-        PersistenceService.saveSetSetting(mApplication, set.getSetID());
-    }
-
-    public Set getSet() {
-        return mWordSetRepository.getSet(getSetID());
-    }
-
-    private long getSetID() {
-        return PersistenceService.loadSetSettingSetting(mApplication);
     }
 }

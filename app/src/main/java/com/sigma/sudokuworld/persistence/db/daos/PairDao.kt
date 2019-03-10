@@ -21,7 +21,7 @@ interface PairDao {
         flang.name as f_lang_name
         FROM word_pairs
         INNER JOIN words as n on nativeWordID == n.wordID
-        INNER JOIN words as f on nativeWordID == f.wordID
+        INNER JOIN words as f on foreignWordID == f.wordID
         INNER JOIN languages as nlang on n.languageID == nlang.languageID
         INNER JOIN languages as flang on f.languageID == flang.languageID
     """)
@@ -35,7 +35,7 @@ interface PairDao {
         flang.name as f_lang_name
         FROM word_pairs
         INNER JOIN words as n on nativeWordID == n.wordID
-        INNER JOIN words as f on nativeWordID == f.wordID
+        INNER JOIN words as f on foreignWordID == f.wordID
         INNER JOIN languages as nlang on n.languageID == nlang.languageID
         INNER JOIN languages as flang on f.languageID == flang.languageID
         WHERE pairID == :wordPairID

@@ -29,7 +29,7 @@ public class GameRepository {
         mGameDao.update(game);
     }
 
-    public Game getGameSaveByID(int saveID) {
+    public Game getGameSaveByID(long saveID) {
         return mGameDao.getGameSaveByID(saveID);
     }
 

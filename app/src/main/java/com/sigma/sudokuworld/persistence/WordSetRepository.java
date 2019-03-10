@@ -8,8 +8,6 @@ import com.sigma.sudokuworld.persistence.db.AppDatabase;
 import com.sigma.sudokuworld.persistence.db.daos.SetDao;
 import com.sigma.sudokuworld.persistence.db.daos.PairWithSetDao;
 import com.sigma.sudokuworld.persistence.db.entities.Set;
-import com.sigma.sudokuworld.persistence.db.entities.Word;
-import com.sigma.sudokuworld.persistence.db.entities.Pair;
 import com.sigma.sudokuworld.persistence.db.entities.PairWithSet;
 import com.sigma.sudokuworld.persistence.db.views.WordPair;
 
@@ -35,7 +33,6 @@ public class WordSetRepository {
         return setDao.getSetByID(setId);
     }
 
-
     public void deleteSet(Set set) {
         setDao.delete(set);
     }
@@ -49,11 +46,7 @@ public class WordSetRepository {
 
     }
 
-    public Word[] getNativeWordsInSet(int setID) {
-        return (Word[]) mPairWithSetDao.getAllNativeWordsInSet(setID).toArray();
-    }
-
-    public Word[] getForeignWordsInSet(int setID) {
-        return (Word[]) mPairWithSetDao.getAllForeignWordsInSet(setID).toArray();
+    public List<WordPair> getAllWordPairsInSet(long setID) {
+        return mPairWithSetDao.getAllWordPairsInSet(setID);
     }
 }

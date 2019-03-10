@@ -15,7 +15,6 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import com.sigma.sudokuworld.game.GameDifficulty;
 import com.sigma.sudokuworld.game.GameMode;
-import com.sigma.sudokuworld.persistence.db.entities.Set;
 import com.sigma.sudokuworld.masterdetail.MasterSelectActivity;
 import com.sigma.sudokuworld.viewmodels.MenuViewModel;
 
@@ -75,6 +74,7 @@ public class NewGameFragment extends Fragment {
     View.OnClickListener playButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            saveSettings();
             ((MenuActivity) getActivity()).startGame(mMenuViewModel.generateNewGameWithStoredSettings());
         }
     };
@@ -97,54 +97,49 @@ public class NewGameFragment extends Fragment {
 
     private void initStoredSettings() {
 
-        Set set = mMenuViewModel.getSet();
-        mSetTitle.setText(set.getName());
+        mSetTitle.setText(mMenuViewModel.setSetting.getName());
 
-        GameDifficulty gameDifficulty = mMenuViewModel.getGameDifficulty();
-        if (gameDifficulty == GameDifficulty.EASY) {
+        if (mMenuViewModel.difficultySetting == GameDifficulty.EASY) {
             mDifficultySeekBar.setProgress(0);
-        } else if (gameDifficulty == GameDifficulty.MEDIUM) {
+        } else if (mMenuViewModel.difficultySetting == GameDifficulty.MEDIUM) {
             mDifficultySeekBar.setProgress(1);
-        } else  if (gameDifficulty == GameDifficulty.HARD) {
+        } else  if (mMenuViewModel.difficultySetting == GameDifficulty.HARD) {
             mDifficultySeekBar.setProgress(2);
         }
 
-        GameMode gameMode = mMenuViewModel.getGameMode();
-        if (gameMode == GameMode.NATIVE) {
+        if (mMenuViewModel.gameModeSetting == GameMode.NATIVE) {
             mGameModeRadioGroup.check(R.id.nativeModeRadioButton);
-        } else if (gameMode == GameMode.FOREIGN) {
+        } else if (mMenuViewModel.gameModeSetting == GameMode.FOREIGN) {
             mGameModeRadioGroup.check(R.id.foreignModeRadioButton);
         } else {
             mGameModeRadioGroup.check(R.id.numbersModeRadioButton);
+
+            //Numbers mode selected hide set layout
             mSetLayout.setVisibility(View.GONE);
         }
     }
 
     private void saveSettings(){
-        //Saving Data
+
         //Checking GameMode
-        GameMode gameMode;
         int checkedRadioButtonID = mGameModeRadioGroup.getCheckedRadioButtonId();
         if (checkedRadioButtonID == R.id.nativeModeRadioButton) {
-            gameMode = GameMode.NATIVE;
+            mMenuViewModel.gameModeSetting = GameMode.NATIVE;
         } else if (checkedRadioButtonID == R.id.foreignModeRadioButton) {
-            gameMode = GameMode.FOREIGN;
+            mMenuViewModel.gameModeSetting = GameMode.FOREIGN;
         } else {
-            gameMode = GameMode.NUMBERS;
+            mMenuViewModel.gameModeSetting = GameMode.NUMBERS;
         }
 
         //Checking Difficulty
-        GameDifficulty gameDifficulty;
         int pos = mDifficultySeekBar.getProgress();
         if (pos == 1) {
-            gameDifficulty = GameDifficulty.MEDIUM;
+            mMenuViewModel.difficultySetting = GameDifficulty.MEDIUM;
         } else if (pos == 2) {
-            gameDifficulty = GameDifficulty.HARD;
+            mMenuViewModel.difficultySetting = GameDifficulty.HARD;
         } else {
-            gameDifficulty = GameDifficulty.EASY;
+            mMenuViewModel.difficultySetting = GameDifficulty.EASY;
         }
 
-        mMenuViewModel.setGameDifficulty(gameDifficulty);
-        mMenuViewModel.setGameMode(gameMode);
     }
 }

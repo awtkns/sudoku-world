@@ -11,13 +11,10 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.sigma.sudokuworld.audio.SoundPlayer;
+import com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants;
 import com.sigma.sudokuworld.sudoku.AudioSudokuActivity;
 import com.sigma.sudokuworld.sudoku.VocabSudokuActivity;
 import com.sigma.sudokuworld.viewmodels.MenuViewModel;
-
-import static com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants.HINTS_KEY;
-import static com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants.SAVE_ID_KEY;
-import static com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants.SOUND_KEY;
 
 public class MenuActivity extends AppCompatActivity {
     private MenuViewModel mMenuViewModel;
@@ -78,16 +75,16 @@ public class MenuActivity extends AppCompatActivity {
     public void startGame(long saveID) {
 
         Intent intent;
-        boolean isAudioMode = mMenuViewModel.isAudioModeEnabled();
-        if (isAudioMode) {
+        if (mMenuViewModel.isAudioModeEnabled) {
             intent = new Intent(getBaseContext(), AudioSudokuActivity.class);
         } else {
             intent = new Intent(getBaseContext(), VocabSudokuActivity.class);
         }
 
+        intent.putExtra(KeyConstants.SAVE_ID_KEY, saveID);
+
         mSoundPlayer.playPlaceCellSound();
         startActivity(intent);
-
         getSupportFragmentManager().popBackStack();
     }
 

@@ -1,7 +1,6 @@
 package com.sigma.sudokuworld.viewmodels;
 
 import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
@@ -13,12 +12,13 @@ import com.sigma.sudokuworld.persistence.GameRepository;
 import com.sigma.sudokuworld.persistence.WordSetRepository;
 import com.sigma.sudokuworld.persistence.db.entities.Game;
 import com.sigma.sudokuworld.persistence.db.entities.Word;
+import com.sigma.sudokuworld.persistence.db.views.WordPair;
 import com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SudokuViewModel extends SettingsViewModel {
+public class SudokuViewModel extends BaseSettingsViewModel {
     private final int SUDOKU_SIZE;
     private GameRepository mGameRepository;
     private Game mGame;
@@ -28,10 +28,6 @@ public class SudokuViewModel extends SettingsViewModel {
 
     private List<String> labels;
     private List<String> buttonLabels;
-    private Word[] foreignWords;
-    private Word[] nativeWords;
-    private String[] nWords;
-    private String[] fWords;
 
     private SparseArray<String> nativeWordsMap;
     private SparseArray<String> foreignWordsMap;
@@ -39,7 +35,7 @@ public class SudokuViewModel extends SettingsViewModel {
     private String TAG = "SudokuViewModel";
 
     //Constructor loads a saved game
-    SudokuViewModel(@NonNull Application application, int saveID) {
+    SudokuViewModel(@NonNull Application application, long saveID) {
         super(application);
         mGameRepository = new GameRepository(application);
 
@@ -83,7 +79,6 @@ public class SudokuViewModel extends SettingsViewModel {
 
         // Locked cell
         if (mGame.getLockedCells()[cellNumber]) return;
-
 
         mGame.setCellValue(cellNumber, value);
         updateCellLabel(cellNumber, value);
@@ -165,46 +160,17 @@ public class SudokuViewModel extends SettingsViewModel {
 
     private void initializeWordMaps() {
         WordSetRepository wordSetRepository = new WordSetRepository(getApplication());
-        //foreignWords = wordSetRepository.getForeignWordsInSet(mGame.getSetID());        //TODO: SET BUILDER
-        //nativeWords = wordSetRepository.getNativeWordsInSet(mGame.getSetID());
-        nWords = new String[] {
-                "Red",
-                "Pink",
-                "Green",
-                "Purple",
-                "Yellow",
-                "White",
-                "Black",
-                "Brown",
-                "Blue"};
-        fWords = new String[] {
-                "Rouge",
-                "Rose",
-                "Vert",
-                "Violet",
-                "Jaune",
-                "Blanc",
-                "Noir",
-                "Marron",
-                "Bleu"
-        };
+        List<WordPair> wordPairs = wordSetRepository.getAllWordPairsInSet(mGame.getSetID());
 
         nativeWordsMap = new SparseArray<>();
         nativeWordsMap.append(0, "");
-//        for(int i = 0; i < nativeWords.length; i++) {
-//            nativeWordsMap.append(i + 1, nativeWords[i].getWord());
-//        }
-        for(int i = 0; i < nWords.length; i++) {
-            nativeWordsMap.append(i + 1, nWords[i]);
-        }
 
         foreignWordsMap = new SparseArray<>();
         foreignWordsMap.append(0, "");
-//        for(int i = 0; i < foreignWords.length; i++) {
-//            foreignWordsMap.append(i + 1, foreignWords[i].getWord());
-//        }
-        for(int i = 0; i < fWords.length; i++) {
-            foreignWordsMap.append(i + 1, fWords[i]);
+
+        for(int i = 0; i < wordPairs.size(); i++) {
+            nativeWordsMap.append(i + 1, wordPairs.get(i).getNativeWord().getWord());
+            foreignWordsMap.append(i + 1, wordPairs.get(i).getForeignWord().getWord());
         }
     }
 

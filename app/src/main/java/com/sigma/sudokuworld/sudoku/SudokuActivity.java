@@ -29,7 +29,7 @@ public abstract class SudokuActivity extends AppCompatActivity {
     protected SudokuViewModel mSudokuViewModel;
     protected Button[] mInputButtons;
     private SoundPlayer mSoundPlayer;
-    private int mSaveID = 0;
+    private long mSaveID = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +37,10 @@ public abstract class SudokuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sudoku);
 
         if (savedInstanceState != null) {
-            mSaveID = savedInstanceState.getInt(KeyConstants.SAVE_ID_KEY);
+            mSaveID = savedInstanceState.getLong(KeyConstants.SAVE_ID_KEY);
         } else {
             Intent intent = getIntent();
-            mSaveID = intent.getIntExtra(KeyConstants.SAVE_ID_KEY, 1);
+            mSaveID = intent.getLongExtra(KeyConstants.SAVE_ID_KEY, 0);
         }
 
         SudokuViewModelFactory sudokuViewModelFactory = new SudokuViewModelFactory(getApplication(), mSaveID);
@@ -70,7 +70,7 @@ public abstract class SudokuActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
 
         //Save the current state of the Sudoku board
-        outState.putInt(KeyConstants.SAVE_ID_KEY, mSaveID);
+        outState.putLong(KeyConstants.SAVE_ID_KEY, mSaveID);
     }
 
     @Override
@@ -148,7 +148,7 @@ public abstract class SudokuActivity extends AppCompatActivity {
             if (cellNumber == -1){
                 mSoundPlayer.playEmptyButtonSound();
             } else {
-                if (mSudokuViewModel.isCorrectValue(cellNumber, buttonValue) || !mSudokuViewModel.isHintsEnabled()) {
+                if (mSudokuViewModel.isCorrectValue(cellNumber, buttonValue) || !mSudokuViewModel.isHintsEnabled) {
                     //Correct number is placed in cell
                     mSudokuGridView.clearHighlightedCell();
                     mSudokuGridView.clearIncorrectCell();

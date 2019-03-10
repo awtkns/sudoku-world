@@ -19,5 +19,5 @@ interface GameDao {
     fun getAll(): List<Game>
 
     @Query("SELECT * FROM game_saves WHERE saveID == :saveID LIMIT 1")
-    fun getGameSaveByID(saveID: Int): Game
+    fun getGameSaveByID(saveID: Long): Game
 }
