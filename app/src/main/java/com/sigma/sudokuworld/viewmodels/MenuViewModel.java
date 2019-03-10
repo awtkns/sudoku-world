@@ -1,7 +1,6 @@
 package com.sigma.sudokuworld.viewmodels;
 
 import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import com.sigma.sudokuworld.game.GameDifficulty;
@@ -14,15 +13,13 @@ import com.sigma.sudokuworld.persistence.db.entities.Set;
 import com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants;
 import com.sigma.sudokuworld.persistence.sharedpreferences.PersistenceService;
 
-public class MenuViewModel extends AndroidViewModel {
-    private Application mApplication;
+public class MenuViewModel extends SettingsViewModel {
     private GameRepository mGameRepository;
     private WordSetRepository mWordSetRepository;
 
 
     public MenuViewModel(@NonNull Application application) {
         super(application);
-        mApplication = application;
 
         mGameRepository = new GameRepository(application);
         mWordSetRepository = new WordSetRepository(application);
@@ -47,6 +44,9 @@ public class MenuViewModel extends AndroidViewModel {
         return mGameRepository.newGame(game);
     }
 
+    /*
+        Game Settings
+     */
     public void setGameMode(GameMode gameMode) {
         PersistenceService.saveGameModeSetting(mApplication, gameMode);
     }

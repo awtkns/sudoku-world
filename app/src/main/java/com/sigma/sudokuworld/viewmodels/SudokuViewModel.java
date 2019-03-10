@@ -18,7 +18,7 @@ import com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SudokuViewModel extends AndroidViewModel {
+public class SudokuViewModel extends SettingsViewModel {
     private final int SUDOKU_SIZE;
     private GameRepository mGameRepository;
     private Game mGame;

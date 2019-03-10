@@ -1,7 +1,6 @@
 package com.sigma.sudokuworld;
-import com.sigma.sudokuworld.persistence.sharedpreferences.PersistenceService;
 
-import android.content.Context;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,8 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Switch;
+import com.sigma.sudokuworld.viewmodels.MenuViewModel;
 
 public class SettingsFragment extends Fragment {
+    private MenuViewModel mMenuViewModel;
+
     private Switch mAudioModeSwitch;
     private Switch mSoundSwitch;
     private Switch mHintsSwitch;
@@ -22,10 +24,18 @@ public class SettingsFragment extends Fragment {
     private View mView;
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mMenuViewModel = ViewModelProviders.of(this).get(MenuViewModel.class);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceStace) {
         mView = inflater.inflate(R.layout.fragment_settings, container, false);
-        loadSettings();
-
+        mAudioModeSwitch = mView.findViewById(R.id.audioModeSwitch);
+        mSoundSwitch = mView.findViewById(R.id.soundSwitch);
+        mHintsSwitch = mView.findViewById(R.id.hintsSwitch);
+        mRectangleSwitch = mView.findViewById(R.id.rectangleMode);
         mCancelButton = mView.findViewById(R.id.settingsCancelButton);
         mSaveButton = mView.findViewById(R.id.settingsSaveButton);
 
@@ -44,30 +54,21 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-
+        loadSettings();
         return mView;
     }
 
-    private void loadSettings(){
-        mAudioModeSwitch = mView.findViewById(R.id.audioModeSwitch);
-        mSoundSwitch = mView.findViewById(R.id.soundSwitch);
-        mHintsSwitch = mView.findViewById(R.id.hintsSwitch);
-        mRectangleSwitch = mView.findViewById(R.id.rectangleMode);
-
-
-        Context context = getActivity();
-        mAudioModeSwitch.setChecked(PersistenceService.loadAudioModeSetting(context));
-        mSoundSwitch.setChecked(PersistenceService.loadSoundEnabledSetting(context));
-        mHintsSwitch.setChecked(PersistenceService.loadHintsEnabledSetting(context));
-        mRectangleSwitch.setChecked(PersistenceService.loadRectangleModeEnabledSetting(context));
+    private void loadSettings() {
+        mAudioModeSwitch.setChecked(mMenuViewModel.isAudioModeEnabled());
+        mSoundSwitch.setChecked(mMenuViewModel.isSoundEnabled());
+        mHintsSwitch.setChecked(mMenuViewModel.isHintsEnabled());
+        mRectangleSwitch.setChecked(mMenuViewModel.isRectangleModeEnabled());
     }
 
     private void saveSettings() {
-        //Saving Data
-        Context context = getActivity();
-        PersistenceService.saveAudioModeEnableSetting(context, mAudioModeSwitch.isChecked());
-        PersistenceService.saveSoundEnabledSetting(context, mSoundSwitch.isChecked());
-        PersistenceService.saveHintsEnabledSetting(context, mHintsSwitch.isChecked());
-        PersistenceService.saveRectangleModeEnabledSetting(context, mRectangleSwitch.isChecked());
+        mMenuViewModel.setAudioModeEnabled(mAudioModeSwitch.isChecked());
+        mMenuViewModel.setSoundEnabled(mSoundSwitch.isChecked());
+        mMenuViewModel.setHintsEnabled(mHintsSwitch.isChecked());
+        mMenuViewModel.setRectangleModeEnabled(mRectangleSwitch.isChecked());
     }
 }

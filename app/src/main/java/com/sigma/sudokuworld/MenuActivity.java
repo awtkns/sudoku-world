@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.sigma.sudokuworld.persistence.sharedpreferences.PersistenceService;
 import com.sigma.sudokuworld.audio.SoundPlayer;
 import com.sigma.sudokuworld.sudoku.AudioSudokuActivity;
 import com.sigma.sudokuworld.sudoku.VocabSudokuActivity;
@@ -77,21 +76,15 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     public void startGame(long saveID) {
-        //Settings bundle
-        boolean isAudioMode = PersistenceService.loadAudioModeSetting(this);
-        boolean isSoundOn = PersistenceService.loadSoundEnabledSetting(this);
-        boolean isHintsOn = PersistenceService.loadHintsEnabledSetting(this);
 
         Intent intent;
+        boolean isAudioMode = mMenuViewModel.isAudioModeEnabled();
         if (isAudioMode) {
             intent = new Intent(getBaseContext(), AudioSudokuActivity.class);
         } else {
             intent = new Intent(getBaseContext(), VocabSudokuActivity.class);
         }
 
-        intent.putExtra(SAVE_ID_KEY, saveID);
-        intent.putExtra(SOUND_KEY, isSoundOn);
-        intent.putExtra(HINTS_KEY, isHintsOn);
         mSoundPlayer.playPlaceCellSound();
         startActivity(intent);
 
