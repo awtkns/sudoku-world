@@ -18,6 +18,6 @@ import android.arch.persistence.room.ForeignKey.CASCADE
     primaryKeys = ["setID", "pairID"],
     tableName = "word_set_cross_reference")
 data class PairWithSet (
-        var setID: Int,
-        var pairID: Int
+        var setID: Long,
+        var pairID: Long
 )

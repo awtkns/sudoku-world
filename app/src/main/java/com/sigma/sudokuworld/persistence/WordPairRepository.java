@@ -37,8 +37,8 @@ public class WordPairRepository {
         Word nWord = new Word(0, 1, nativeWord);    //TODO: save lang
         Word fWord = new Word(0, 1, foreignWord);
 
-        int nID = (int) wordDao.insert(nWord);
-        int fID = (int) wordDao.insert(fWord);
+        long nID = wordDao.insert(nWord);
+        long fID = wordDao.insert(fWord);
         mPairDao.insert(new Pair(0, nID, fID));
     }
 }

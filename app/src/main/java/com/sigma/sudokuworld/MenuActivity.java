@@ -94,12 +94,12 @@ public class MenuActivity extends AppCompatActivity {
         );
 
         GameRepository repository = new GameRepository(getApplication());
-        int saveID = repository.newGame(game);
+        long saveID = repository.newGame(game);
 
         startGame(saveID);
     }
 
-    public void startGame(int saveID) {
+    public void startGame(long saveID) {
         //Settings bundle
         boolean isAudioMode = PersistenceService.loadAudioModeSetting(this);
         boolean isSoundOn = PersistenceService.loadSoundEnabledSetting(this);

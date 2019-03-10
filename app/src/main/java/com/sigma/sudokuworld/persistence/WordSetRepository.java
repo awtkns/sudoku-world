@@ -41,7 +41,7 @@ public class WordSetRepository {
     }
 
     public void saveSet(String name, String description, List<WordPair> wordPairs) {
-        int setId = (int) setDao.insert(new Set(0, name, description));
+        long setId = setDao.insert(new Set(0, name, description));
 
         for (WordPair wp : wordPairs) {
             mPairWithSetDao.insert(new PairWithSet(setId, wp.getForeignWord().getLanguageID())); //TODO fix

@@ -17,7 +17,7 @@ data class Game (
                 parentColumns = ["setID"],
                 childColumns = ["setID"],
                 onDelete = CASCADE)
-        var setID: Int,
+        var setID: Long,
         var difficulty: GameDifficulty,
         var gameMode: GameMode,
         var cellValues: IntArray,
@@ -61,7 +61,7 @@ data class Game (
 
     override fun hashCode(): Int {
         var result = saveID
-        result = 31 * result + setID
+        result = 31 * result + setID.hashCode()
         result = 31 * result + difficulty.hashCode()
         result = 31 * result + gameMode.hashCode()
         result = 31 * result + cellValues.contentHashCode()
@@ -69,5 +69,4 @@ data class Game (
         result = 31 * result + lockedCells.contentHashCode()
         return result
     }
-
 }

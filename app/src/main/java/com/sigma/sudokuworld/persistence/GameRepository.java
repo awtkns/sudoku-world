@@ -17,12 +17,12 @@ public class GameRepository {
         mGameDao = AppDatabase.Companion.getInstance(application).getGameSaveDao();
     }
 
-    public int newGame(Game game) {
+    public long newGame(Game game) {
 
         //Auto value save id
         game.setSaveID(0);
 
-        return (int) mGameDao.insert(game);
+        return mGameDao.insert(game);
     }
 
     public void saveGame(Game game) {
