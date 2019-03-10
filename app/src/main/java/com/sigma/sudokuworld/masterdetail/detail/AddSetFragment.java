@@ -21,7 +21,7 @@ public class AddSetFragment extends AbstractDrillDownFragment {
     private TextInputEditText mNameInput;
     private TextInputEditText mDescriptionInput;
     private WordPairRepository mWordPairRepository;
-    private List<WordPair> mWordPairInformatives;
+    private List<WordPair> mWordPairs;
     private CheckedPairRecyclerViewAdapter mCheckedPairRecyclerViewAdapter;
 
     @Override
@@ -29,8 +29,8 @@ public class AddSetFragment extends AbstractDrillDownFragment {
         super.onCreate(savedInstanceState);
 
         mWordPairRepository = new WordPairRepository(getActivity().getApplication());
-        mWordPairInformatives = mWordPairRepository.getAllWordPairs();
-        mCheckedPairRecyclerViewAdapter = new CheckedPairRecyclerViewAdapter(mWordPairInformatives, mListener);
+        mWordPairs = mWordPairRepository.getAllWordPairs();
+        mCheckedPairRecyclerViewAdapter = new CheckedPairRecyclerViewAdapter(mWordPairs, mListener);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class AddSetFragment extends AbstractDrillDownFragment {
     @Override
     public void onResume() {
         super.onResume();
-        mWordPairInformatives = mWordPairRepository.getAllWordPairs();
+        mWordPairs = mWordPairRepository.getAllWordPairs();
         mCheckedPairRecyclerViewAdapter.notifyDataSetChanged();
     }
 

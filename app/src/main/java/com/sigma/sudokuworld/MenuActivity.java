@@ -1,5 +1,6 @@
 package com.sigma.sudokuworld;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Build;
 import android.support.v4.app.FragmentManager;
 import android.content.Intent;
@@ -9,24 +10,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.sigma.sudokuworld.game.GameDifficulty;
-import com.sigma.sudokuworld.game.GameMode;
-import com.sigma.sudokuworld.game.gen.PuzzleGenerator;
-import com.sigma.sudokuworld.persistence.GameRepository;
-import com.sigma.sudokuworld.persistence.db.entities.Game;
-import com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants;
 import com.sigma.sudokuworld.persistence.sharedpreferences.PersistenceService;
 import com.sigma.sudokuworld.audio.SoundPlayer;
 import com.sigma.sudokuworld.sudoku.AudioSudokuActivity;
 import com.sigma.sudokuworld.sudoku.VocabSudokuActivity;
+import com.sigma.sudokuworld.viewmodels.MenuViewModel;
 
 import static com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants.HINTS_KEY;
 import static com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants.SAVE_ID_KEY;
 import static com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants.SOUND_KEY;
 
 public class MenuActivity extends AppCompatActivity {
-
-    private static final String TAG = "MENU";
+    private MenuViewModel mMenuViewModel;
     private SoundPlayer mSoundPlayer;
 
     @Override
@@ -41,6 +36,8 @@ public class MenuActivity extends AppCompatActivity {
             AnimatedVectorDrawable animatedVectorDrawable = (AnimatedVectorDrawable) imageView.getDrawable();
             animatedVectorDrawable.start();
         }
+
+        mMenuViewModel = ViewModelProviders.of(this).get(MenuViewModel.class);
     }
 
     /**
@@ -77,26 +74,6 @@ public class MenuActivity extends AppCompatActivity {
                 .replace(R.id.fragmentContainer, new SettingsFragment())
                 .addToBackStack(null)
                 .commit();
-    }
-
-    public void startNewGame(GameMode gameMode, GameDifficulty difficulty) {
-        PuzzleGenerator robot = new PuzzleGenerator(3);
-        Bundle puzzle = robot.generatePuzzle(difficulty);
-
-        Game game = new Game(
-                //SaveID 0 = auto generate
-                0, 0,
-                difficulty,
-                gameMode,
-                puzzle.getIntArray(KeyConstants.CELL_VALUES_KEY),
-                puzzle.getIntArray(KeyConstants.SOLUTION_VALUES_KEY),
-                puzzle.getBooleanArray(KeyConstants.LOCKED_CELLS_KEY)
-        );
-
-        GameRepository repository = new GameRepository(getApplication());
-        long saveID = repository.newGame(game);
-
-        startGame(saveID);
     }
 
     public void startGame(long saveID) {

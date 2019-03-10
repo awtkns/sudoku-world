@@ -31,7 +31,7 @@ public class WordSetRepository {
         return mAllSets;
     }
 
-    public Set getSet(int setId) {
+    public Set getSet(long setId) {
         return setDao.getSetByID(setId);
     }
 
