@@ -40,7 +40,7 @@ public class MasterSelectActivity extends AppCompatActivity implements SetListFr
         setContentView(R.layout.activity_master_select);
 
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Set Builder (Under development");
+        actionBar.setTitle("Set Builder");
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             AnimatedVectorDrawable avd = (AnimatedVectorDrawable) ContextCompat.getDrawable(this, R.drawable.avd_menu);
