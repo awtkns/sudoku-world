@@ -20,7 +20,7 @@ import android.arch.persistence.room.PrimaryKey
     tableName = "word_pairs",
     indices = [Index(value = ["foreignWordID"]), Index(value = ["nativeWordID"])]
 )
-data class WordPair (
+data class Pair (
     @PrimaryKey(autoGenerate = true) var wordPairID: Int,
     var nativeWordID: Int,
     var foreignWordID: Int

@@ -20,9 +20,9 @@ import com.sigma.sudokuworld.persistence.db.utils.DatabaseInitializer
         entities = [
             Language::class,
             Word::class,
-            WordPair::class,
+            Pair::class,
             Set::class,
-            WordSet::class,
+            PairWithSet::class,
             Game::class
         ])
 @TypeConverters(Converters::class)

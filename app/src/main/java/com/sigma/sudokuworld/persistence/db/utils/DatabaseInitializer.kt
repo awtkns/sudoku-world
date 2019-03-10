@@ -1,11 +1,10 @@
 package com.sigma.sudokuworld.persistence.db.utils
 
 import com.sigma.sudokuworld.persistence.db.AppDatabase
-import com.sigma.sudokuworld.persistence.db.daos.WordDao
 import com.sigma.sudokuworld.persistence.db.entities.Language
 import com.sigma.sudokuworld.persistence.db.entities.Set
 import com.sigma.sudokuworld.persistence.db.entities.Word
-import com.sigma.sudokuworld.persistence.db.entities.WordPair
+import com.sigma.sudokuworld.persistence.db.entities.Pair
 
 abstract class DatabaseInitializer {
 
@@ -45,7 +44,7 @@ abstract class DatabaseInitializer {
 
             val wordDao= db.getWordDao()
 
-            val pair = WordPair(0, wordDao.insert(nWord).toInt(), wordDao.insert(fWord).toInt())
+            val pair = Pair(0, wordDao.insert(nWord).toInt(), wordDao.insert(fWord).toInt())
             db.getWordPairDao().insert(pair)
         }
     }
