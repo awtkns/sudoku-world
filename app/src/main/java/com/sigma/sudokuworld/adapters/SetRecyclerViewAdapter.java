@@ -1,4 +1,4 @@
-package com.sigma.sudokuworld.masterdetail.adapters;
+package com.sigma.sudokuworld.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -67,7 +67,7 @@ public class SetRecyclerViewAdapter extends RecyclerView.Adapter<SetRecyclerView
         return mSets.size();
     }
 
-    public void setListItems(List<Set> sets) {
+    public void setItems(List<Set> sets) {
         mSets = sets;
         notifyDataSetChanged();
     }

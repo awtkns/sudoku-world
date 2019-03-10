@@ -13,7 +13,7 @@ import com.sigma.sudokuworld.R;
 import com.sigma.sudokuworld.persistence.WordPairRepository;
 import com.sigma.sudokuworld.persistence.db.entities.Set;
 import com.sigma.sudokuworld.persistence.db.views.WordPair;
-import com.sigma.sudokuworld.masterdetail.adapters.PairRecyclerViewAdapter;
+import com.sigma.sudokuworld.adapters.PairRecyclerViewAdapter;
 
 import java.util.List;
 

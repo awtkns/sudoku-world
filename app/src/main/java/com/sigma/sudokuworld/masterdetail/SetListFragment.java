@@ -14,7 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.sigma.sudokuworld.R;
-import com.sigma.sudokuworld.masterdetail.adapters.SetRecyclerViewAdapter;
+import com.sigma.sudokuworld.adapters.SetRecyclerViewAdapter;
 import com.sigma.sudokuworld.persistence.db.entities.Set;
 
 import java.util.List;
@@ -40,7 +40,7 @@ public class SetListFragment extends Fragment {
         allSets.observe(this, new Observer<List<Set>>() {
             @Override
             public void onChanged(@Nullable List<Set> sets) {
-                mAdapter.setListItems(sets);
+                mAdapter.setItems(sets);
             }
         });
     }

@@ -1,6 +1,7 @@
 package com.sigma.sudokuworld.viewmodels;
 
 import android.app.Application;
+import android.arch.lifecycle.LiveData;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import com.sigma.sudokuworld.game.GameDifficulty;
@@ -13,6 +14,8 @@ import com.sigma.sudokuworld.persistence.db.entities.Set;
 import com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants;
 import com.sigma.sudokuworld.persistence.sharedpreferences.PersistenceService;
 
+import java.util.List;
+
 public class MenuViewModel extends BaseSettingsViewModel {
     private GameRepository mGameRepository;
     private WordSetRepository mWordSetRepository;
@@ -20,6 +23,8 @@ public class MenuViewModel extends BaseSettingsViewModel {
     public GameDifficulty difficultySetting;
     public GameMode gameModeSetting;
     public Set setSetting;
+
+    private LiveData<List<Game>> mGames;
 
     public MenuViewModel(@NonNull Application application) {
         super(application);
@@ -30,6 +35,8 @@ public class MenuViewModel extends BaseSettingsViewModel {
         difficultySetting = PersistenceService.loadDifficultySetting(mApplication);
         gameModeSetting = PersistenceService.loadGameModeSetting(mApplication);
         setSetting = mWordSetRepository.getSet(PersistenceService.loadSetSettingSetting(mApplication));
+
+        mGames = mGameRepository.getAllGames();
     }
 
     @Override
@@ -58,5 +65,13 @@ public class MenuViewModel extends BaseSettingsViewModel {
 
         //Returns the saveID
         return mGameRepository.newGame(game);
+    }
+
+    public LiveData<List<Game>> getAllGameSaves() {
+        return mGames;
+    }
+
+    public void deleteGame(Game game) {
+        mGameRepository.deleteGame(game);
     }
 }

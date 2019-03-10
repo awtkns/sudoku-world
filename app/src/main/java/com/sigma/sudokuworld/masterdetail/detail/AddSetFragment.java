@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import com.sigma.sudokuworld.R;
 import com.sigma.sudokuworld.persistence.WordPairRepository;
 import com.sigma.sudokuworld.persistence.db.views.WordPair;
-import com.sigma.sudokuworld.masterdetail.adapters.CheckedPairRecyclerViewAdapter;
+import com.sigma.sudokuworld.adapters.CheckedPairRecyclerViewAdapter;
 
 import java.util.List;
 

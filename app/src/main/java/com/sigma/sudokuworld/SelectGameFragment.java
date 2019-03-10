@@ -1,10 +1,11 @@
 package com.sigma.sudokuworld;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -13,9 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.sigma.sudokuworld.persistence.GameRepository;
+import com.sigma.sudokuworld.adapters.GamePagerAdapter;
 import com.sigma.sudokuworld.persistence.db.entities.Game;
-import com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants;
+import com.sigma.sudokuworld.viewmodels.MenuViewModel;
 
 import java.util.List;
 
@@ -23,18 +24,29 @@ public class SelectGameFragment extends Fragment implements View.OnClickListener
 
     private static final int PAGER_PADDING = 128;
 
-    private List<Game> gameSaves;
+    private MenuViewModel mMenuViewModel;
+    private LiveData<List<Game>> mGameSaves;
     private ViewPager mViewPager;
     private Button mPlayButton;
     private Button mCancelButton;
+    private Button mDeleteButton;
+    private GamePagerAdapter mGamePagerAdapter;
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        GameRepository gameRepository = new GameRepository(getActivity().getApplication());
-        gameSaves = gameRepository.getAllGames();
+        mMenuViewModel = ViewModelProviders.of(this).get(MenuViewModel.class);
+        mGamePagerAdapter = new GamePagerAdapter(getFragmentManager());
+
+        mGameSaves = mMenuViewModel.getAllGameSaves();
+        mGameSaves.observe(this, new Observer<List<Game>>() {
+            @Override
+            public void onChanged(@Nullable List<Game> games) {
+                mGamePagerAdapter.setItems(games);
+            }
+        });
     }
 
     @Override
@@ -42,6 +54,16 @@ public class SelectGameFragment extends Fragment implements View.OnClickListener
         View view = inflater.inflate(R.layout.fragment_select_game, container, false);
         mPlayButton = view.findViewById(R.id.playButtonSelectGameFragment);
         mPlayButton.setOnClickListener(this);
+
+
+
+        mDeleteButton = view.findViewById(R.id.deleteButtonSelectGameFragment);
+        mDeleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMenuViewModel.deleteGame(mGameSaves.getValue().get(mViewPager.getCurrentItem()));
+            }
+        });
 
         mCancelButton = view.findViewById(R.id.selectGameCancelButton);
         mCancelButton.setOnClickListener( new View.OnClickListener() {
@@ -51,9 +73,9 @@ public class SelectGameFragment extends Fragment implements View.OnClickListener
             }
         });
 
-        PagerAdapter pagerAdapter = new GamePagerAdapter(getFragmentManager());
+
         mViewPager = view.findViewById(R.id.gameSavePager);
-        mViewPager.setAdapter(pagerAdapter);
+        mViewPager.setAdapter(mGamePagerAdapter);
         mViewPager.setClipToPadding(false);
         mViewPager.setPageMargin(PAGER_PADDING); //TODO convert to dp
 
@@ -63,37 +85,13 @@ public class SelectGameFragment extends Fragment implements View.OnClickListener
 
     public void onClick(View v) {
         if (v.getId() == mPlayButton.getId()) {
-            if (!gameSaves.isEmpty()) {
+            if (!mGameSaves.getValue().isEmpty()) {
                 try {
-                    ((MenuActivity) getActivity()).startGame(gameSaves.get(mViewPager.getCurrentItem()).getSaveID());
+                    ((MenuActivity) getActivity()).startGame(mGameSaves.getValue().get(mViewPager.getCurrentItem()).getSaveID());
                 } catch (NullPointerException e) {
                     Log.d("Frag", "onPlayPressed: bad stuff happened");
                 }
             }
-        }
-    }
-
-    private class GamePagerAdapter extends FragmentStatePagerAdapter {
-        public GamePagerAdapter(FragmentManager fragmentManager) {
-            super(fragmentManager);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            GamePageFragment fragment = new GamePageFragment();
-
-            Bundle args = new Bundle();
-            args.putBooleanArray(KeyConstants.LOCKED_CELLS_KEY, gameSaves.get(position).getLockedCells());
-            args.putString(KeyConstants.DIFFICULTY_KEY, gameSaves.get(position).getDifficulty().toString());
-            args.putString(KeyConstants.MODE_KEY, gameSaves.get(position).getGameMode().toString());
-            fragment.setArguments(args);
-
-            return fragment;
-        }
-
-        @Override
-        public int getCount() {
-            return gameSaves.size();
         }
     }
 }

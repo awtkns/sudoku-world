@@ -1,48 +1,48 @@
-package com.sigma.sudokuworld.masterdetail.adapters;
+package com.sigma.sudokuworld.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.sigma.sudokuworld.R;
 import com.sigma.sudokuworld.persistence.db.views.WordPair;
-import com.sigma.sudokuworld.masterdetail.PairListFragment;
-import com.sigma.sudokuworld.masterdetail.PairListFragment.OnFragmentInteractionListener;
+import com.sigma.sudokuworld.masterdetail.detail.AddSetFragment;
 
 import java.util.List;
 
 
-public class PairRecyclerViewAdapter extends RecyclerView.Adapter<PairRecyclerViewAdapter.ViewHolder> {
+public class CheckedPairRecyclerViewAdapter extends RecyclerView.Adapter<CheckedPairRecyclerViewAdapter.ViewHolder> {
 
     private final List<WordPair> mWordPairs;
-    private final OnFragmentInteractionListener mListener;
+    private final AddSetFragment.OnFragmentInteractionListener mListener;
 
-    public PairRecyclerViewAdapter(List<WordPair> wordPair, PairListFragment.OnFragmentInteractionListener listener) {
+    public CheckedPairRecyclerViewAdapter(List<WordPair> wordPair, AddSetFragment.OnFragmentInteractionListener listener) {
         mWordPairs = wordPair;
         mListener = listener;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_set_list, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_checked_pair_list, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mWordPair = mWordPairs.get(position);
-        holder.mIdView.setText(mWordPairs.get(position).getForeignWord().getWord());
-        holder.mContentView.setText(mWordPairs.get(position).getForeignWord().getWord());
+        holder.mNativeWord.setText(mWordPairs.get(position).getNativeWord().getWord());
+        holder.mForeignWord.setText(mWordPairs.get(position).getForeignWord().getWord());
 
-        holder.mView.setOnClickListener(new View.OnClickListener() {
+        holder.mCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onClickPairFragmentInteraction(holder.mWordPair);
+                    mListener.onCheckChangedFragmentInteraction(holder.mWordPair, ((CheckBox) v).isChecked());
                 }
             }
         });
@@ -55,20 +55,22 @@ public class PairRecyclerViewAdapter extends RecyclerView.Adapter<PairRecyclerVi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
+        public final TextView mNativeWord;
+        public final TextView mForeignWord;
+        public final CheckBox mCheckBox;
         public WordPair mWordPair;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = view.findViewById(R.id.item_number);
-            mContentView = view.findViewById(R.id.content);
+            mCheckBox = view.findViewById(R.id.checkBox);
+            mNativeWord = view.findViewById(R.id.nWord);
+            mForeignWord = view.findViewById(R.id.fWord);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + mNativeWord.getText() + "'";
         }
     }
 }

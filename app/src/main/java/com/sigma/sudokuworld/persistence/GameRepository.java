@@ -2,6 +2,7 @@ package com.sigma.sudokuworld.persistence;
 
 import android.app.Application;
 ;
+import android.arch.lifecycle.LiveData;
 import com.sigma.sudokuworld.persistence.db.AppDatabase;
 import com.sigma.sudokuworld.persistence.db.daos.GameDao;
 import com.sigma.sudokuworld.persistence.db.entities.Game;
@@ -33,7 +34,11 @@ public class GameRepository {
         return mGameDao.getGameSaveByID(saveID);
     }
 
-    public List<Game> getAllGames() {
+    public LiveData<List<Game>> getAllGames() {
         return mGameDao.getAll();
+    }
+
+    public void deleteGame(Game game) {
+        mGameDao.delete(game);
     }
 }

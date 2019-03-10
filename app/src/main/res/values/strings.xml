@@ -37,6 +37,7 @@
     <string name="loadWordListString">Load</string>
     <string name="playButton">Play</string>
     <string name="RectangleMode">Display Sudoku Cells as Rectangles \n (WIP)</string>
+    <string name="deleteButton">Delete</string>
 
     <!--Set Builder-->
     <string name="WordSetName">Default set</string>

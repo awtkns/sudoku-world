@@ -1,5 +1,6 @@
 package com.sigma.sudokuworld.persistence.db.daos
 
+import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.*
 import com.sigma.sudokuworld.persistence.db.entities.Game
 
@@ -15,8 +16,11 @@ interface GameDao {
     @Query("DELETE FROM game_saves")
     fun deleteAll()
 
+    @Delete
+    fun delete(game: Game)
+
     @Query("SELECT * FROM game_saves")
-    fun getAll(): List<Game>
+    fun getAll(): LiveData<List<Game>>
 
     @Query("SELECT * FROM game_saves WHERE saveID == :saveID LIMIT 1")
     fun getGameSaveByID(saveID: Long): Game
