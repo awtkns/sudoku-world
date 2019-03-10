@@ -1,4 +1,4 @@
-package com.sigma.sudokuworld.masterdetail.down;
+package com.sigma.sudokuworld.masterdetail.detail;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.support.design.widget.CoordinatorLayout;

@@ -29,10 +29,10 @@
                 android:name=".masterdetail.MasterSelectActivity"
                 android:theme="@style/AppTheme"
         />
-        <activity android:name=".masterdetail.down.PairDetailActivity"/>
-        <activity android:name=".masterdetail.down.SetDetailActivity"/>
-        <activity android:name=".masterdetail.down.AddPairActivity"/>
-        <activity android:name=".masterdetail.down.AddSetActivity"/>
+        <activity android:name=".masterdetail.detail.PairDetailActivity"/>
+        <activity android:name=".masterdetail.detail.SetDetailActivity"/>
+        <activity android:name=".masterdetail.detail.AddPairActivity"/>
+        <activity android:name=".masterdetail.detail.AddSetActivity"/>
 
     </application>
 

@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.sigma.sudokuworld.R;
 import com.sigma.sudokuworld.persistence.db.views.WordPair;
-import com.sigma.sudokuworld.masterdetail.down.AddSetFragment;
+import com.sigma.sudokuworld.masterdetail.detail.AddSetFragment;
 
 import java.util.List;
 

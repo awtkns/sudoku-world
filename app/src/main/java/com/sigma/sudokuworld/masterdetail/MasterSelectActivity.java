@@ -22,10 +22,10 @@ import com.sigma.sudokuworld.persistence.db.entities.Set;
 import com.sigma.sudokuworld.persistence.db.entities.Pair;
 import com.sigma.sudokuworld.persistence.db.views.WordPair;
 import com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants;
-import com.sigma.sudokuworld.masterdetail.down.AddPairActivity;
-import com.sigma.sudokuworld.masterdetail.down.AddSetActivity;
-import com.sigma.sudokuworld.masterdetail.down.PairDetailActivity;
-import com.sigma.sudokuworld.masterdetail.down.SetDetailActivity;
+import com.sigma.sudokuworld.masterdetail.detail.AddPairActivity;
+import com.sigma.sudokuworld.masterdetail.detail.AddSetActivity;
+import com.sigma.sudokuworld.masterdetail.detail.PairDetailActivity;
+import com.sigma.sudokuworld.masterdetail.detail.SetDetailActivity;
 
 public class MasterSelectActivity extends AppCompatActivity implements SetListFragment.OnFragmentInteractionListener, PairListFragment.OnFragmentInteractionListener {
 

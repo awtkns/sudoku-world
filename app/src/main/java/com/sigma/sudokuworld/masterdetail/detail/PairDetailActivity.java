@@ -1,4 +1,4 @@
-package com.sigma.sudokuworld.masterdetail.down;
+package com.sigma.sudokuworld.masterdetail.detail;
 
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -7,7 +7,7 @@ import android.view.View;
 import com.sigma.sudokuworld.R;
 import com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants;
 
-public class SetDetailActivity extends AbstractDrillDownActivity {
+public class PairDetailActivity extends AbstractDrillDownActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -22,15 +22,16 @@ public class SetDetailActivity extends AbstractDrillDownActivity {
             }
         });
 
-
         if (savedInstanceState == null) {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putInt(KeyConstants.SET_ID_KEY, getIntent().getIntExtra(KeyConstants.SET_ID_KEY, 0));
+
+            int pairID = getIntent().getIntExtra(KeyConstants.PAIR_ID_KEY, 0);
+            arguments.putInt(KeyConstants.PAIR_ID_KEY, pairID);
 
             //Creating the detail view fragment
-            SetDetailFragment fragment = new SetDetailFragment();
+            PairDetailFragment fragment = new PairDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
                     .add(mFragmentContainerID, fragment)
