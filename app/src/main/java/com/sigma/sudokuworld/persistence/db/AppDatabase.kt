@@ -43,7 +43,7 @@ abstract class AppDatabase : RoomDatabase() {
             if (instance == null) {
                 instance = buildDB(context)
 
-                DatabaseInitializer.populateDatabase(instance!!)
+                //DatabaseInitializer.populateDatabase(instance!!)
             }
 
             return instance!!
