@@ -1,18 +1,17 @@
-package com.sigma.sudokuworld.select.down;
+package com.sigma.sudokuworld.masterdetail.detail;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.sigma.sudokuworld.R;
-import com.sigma.sudokuworld.persistence.WordPairRepository;
+import com.sigma.sudokuworld.persistence.db.views.WordPair;
 import com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants;
 
 public class PairDetailFragment extends AbstractDrillDownFragment {
-    private WordPairRepository.WordPairInformative mWordPair;
+    private WordPair mWordPair;
     private TextView mNativeWord;
     private TextView mNativeLanguage;
     private TextView mForeignWord;
@@ -22,8 +21,7 @@ public class PairDetailFragment extends AbstractDrillDownFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        WordPairRepository wordPairRepository = new WordPairRepository(getActivity().getApplication());
-        mWordPair = wordPairRepository.getWordPairInformative(getArguments().getInt(KeyConstants.PAIR_ID_KEY));
+        mWordPair = mMasterDetailViewModel.getWordPair(getArguments().getInt(KeyConstants.PAIR_ID_KEY));
     }
 
     @Override
@@ -36,10 +34,10 @@ public class PairDetailFragment extends AbstractDrillDownFragment {
 
 
         if (mWordPair != null) {
-            mAppBarLayout.setTitle(mWordPair.getNativeWordString() + " - " + mWordPair.getForeignWordString());
+            mAppBarLayout.setTitle(mWordPair.getNativeWord() + " - " + mWordPair.getForeignWord());
 
-            mNativeWord.setText(mWordPair.getNativeWordString());
-            mNativeLanguage.setText(mWordPair.getNativeWordString()); //TODO: JOIN IN REPO TO GET LANG
+            mNativeWord.setText(mWordPair.getNativeWord().getWord());
+            mNativeLanguage.setText(mWordPair.getForeignWord().getWord()); //TODO: JOIN IN REPO TO GET LANG
         }
 
         return view;

@@ -1,4 +1,4 @@
-package com.sigma.sudokuworld.select.down;
+package com.sigma.sudokuworld.masterdetail.detail;
 
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -13,12 +13,14 @@ public class SetDetailActivity extends AbstractDrillDownActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+       final long setID = getIntent().getLongExtra(KeyConstants.SET_ID_KEY, 1);
+
         mFAB.setImageResource(R.drawable.ic_check_black_24dp);
         mFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own detail action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Snackbar.make(view, "Set Selected", Snackbar.LENGTH_LONG).show();
+                mMasterDetailViewModel.setSelectedSet(setID);
             }
         });
 
@@ -27,7 +29,7 @@ public class SetDetailActivity extends AbstractDrillDownActivity {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putInt(KeyConstants.SET_ID_KEY, getIntent().getIntExtra(KeyConstants.SET_ID_KEY, 0));
+            arguments.putLong(KeyConstants.SET_ID_KEY, setID);
 
             //Creating the detail view fragment
             SetDetailFragment fragment = new SetDetailFragment();

@@ -1,4 +1,4 @@
-package com.sigma.sudokuworld.select.adapters;
+package com.sigma.sudokuworld.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,26 +7,27 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.sigma.sudokuworld.R;
-import com.sigma.sudokuworld.select.SetListFragment;
-import com.sigma.sudokuworld.select.SetListFragment.OnFragmentInteractionListener;
+import com.sigma.sudokuworld.masterdetail.SetListFragment;
+import com.sigma.sudokuworld.masterdetail.SetListFragment.OnFragmentInteractionListener;
 import com.sigma.sudokuworld.persistence.db.entities.Set;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class SetRecyclerViewAdapter extends RecyclerView.Adapter<SetRecyclerViewAdapter.ViewHolder> {
 
-    private final List<Set> mSets;
+    private List<Set> mSets;
     private final SetListFragment.OnFragmentInteractionListener mListener;
 
-    public SetRecyclerViewAdapter(List<Set> sets, OnFragmentInteractionListener listener) {
-        mSets = sets;
+    public SetRecyclerViewAdapter(OnFragmentInteractionListener listener) {
+        mSets = new ArrayList<>();
         mListener = listener;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.set_list_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_set_list, parent, false);
         return new ViewHolder(view);
     }
 
@@ -64,6 +65,11 @@ public class SetRecyclerViewAdapter extends RecyclerView.Adapter<SetRecyclerView
     @Override
     public int getItemCount() {
         return mSets.size();
+    }
+
+    public void setItems(List<Set> sets) {
+        mSets = sets;
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

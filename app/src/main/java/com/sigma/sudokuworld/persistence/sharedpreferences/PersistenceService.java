@@ -38,6 +38,10 @@ public abstract class PersistenceService {
         getEditor(context).putBoolean(RECTANGLE_KEY, rectangleModeEnabled).apply();
     }
 
+    public static void saveSetSetting(Context context, long setID) {
+        getEditor(context).putLong(SET_ID_KEY, setID).apply();
+    }
+
     /* --- Loading --- */
 
     public static GameDifficulty loadDifficultySetting(Context context) {
@@ -64,12 +68,16 @@ public abstract class PersistenceService {
         return getSettings(context).getBoolean(RECTANGLE_KEY, false);
     }
 
+    public static long loadSetSettingSetting(Context context) {
+        return getSettings(context).getLong(SET_ID_KEY, 1);
+    }
+
     /*Private Helpers**/
     private static SharedPreferences.Editor getEditor(Context context) {
         return context.getSharedPreferences(SAVE_SETTINGS_FILE, Context.MODE_PRIVATE).edit();
     }
 
     private static SharedPreferences getSettings(Context context) {
-        return  context.getSharedPreferences(SAVE_SETTINGS_FILE, Context.MODE_PRIVATE);
+        return context.getSharedPreferences(SAVE_SETTINGS_FILE, Context.MODE_PRIVATE);
     }
 }

@@ -1,6 +1,5 @@
 package com.sigma.sudokuworld.sudoku;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.view.View;
@@ -37,10 +36,10 @@ public class AudioSudokuActivity extends SudokuActivity {
     View.OnLongClickListener longClickListener = new View.OnLongClickListener() {
         @Override
         public boolean onLongClick(View v) {
-            if (mViewModel.isLockedCell(cellTouched)) {
-                String text = mViewModel.getMappedString(
-                        mViewModel.getCellValue(cellTouched),
-                        GameMode.opposite(mViewModel.getGameMode())
+            if (mSudokuViewModel.isLockedCell(cellTouched)) {
+                String text = mSudokuViewModel.getMappedString(
+                        mSudokuViewModel.getCellValue(cellTouched),
+                        GameMode.opposite(mSudokuViewModel.getGameMode())
                 );
                 mTTS.speak(text,TextToSpeech.QUEUE_FLUSH,null,null);
             }
@@ -66,7 +65,7 @@ public class AudioSudokuActivity extends SudokuActivity {
                 if (status == TextToSpeech.SUCCESS){
 
                     //Set Lang
-                    if (mViewModel.getGameMode() == GameMode.NATIVE) {
+                    if (mSudokuViewModel.getGameMode() == GameMode.NATIVE) {
                         mTTS.setLanguage(new Locale("fr"));
                     } else {
                         mTTS.setLanguage(new Locale("en"));

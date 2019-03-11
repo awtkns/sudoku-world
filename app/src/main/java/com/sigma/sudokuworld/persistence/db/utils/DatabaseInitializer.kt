@@ -1,11 +1,8 @@
 package com.sigma.sudokuworld.persistence.db.utils
 
 import com.sigma.sudokuworld.persistence.db.AppDatabase
-import com.sigma.sudokuworld.persistence.db.daos.WordDao
-import com.sigma.sudokuworld.persistence.db.entities.Language
+import com.sigma.sudokuworld.persistence.db.entities.*
 import com.sigma.sudokuworld.persistence.db.entities.Set
-import com.sigma.sudokuworld.persistence.db.entities.Word
-import com.sigma.sudokuworld.persistence.db.entities.WordPair
 
 abstract class DatabaseInitializer {
 
@@ -13,40 +10,64 @@ abstract class DatabaseInitializer {
     companion object {
 
         fun populateDatabase(db: AppDatabase) {
-            addLanguage(db, "English", "en")
-//            addLanguage(db, "French", "fr")
-//            addLanguage(db, "Spanish", "es")
-//            addLanguage(db, "Russian", "run")
-            addSet(db,"Default Set", "The default set")
-            addWordPair(db, "English", 1, "French", 1)
-            addWordPair(db, "English", 1, "French", 1)
-        }
 
-        //Caution
-        private fun deleteAll(db: AppDatabase) {
-            db.getLanguageDao().deleteAll()
-        }
+            val languages = arrayOf(
+                    Language(1, "English", "en"),
+                    Language(2, "French", "fr")
+            )
 
-        private fun addLanguage(db: AppDatabase, languageName: String, code: String) {
-            val lang = Language(1, languageName, code)
+            val words = arrayOf(
+                    Word(1, 1, "Red"),
+                    Word(2, 1, "Pink"),
+                    Word(3, 1, "Green"),
+                    Word(4, 1, "Purple"),
+                    Word(5, 1, "Yellow"),
+                    Word(6, 1, "White"),
+                    Word(7, 1, "Black"),
+                    Word(8, 1, "Brown"),
+                    Word(9, 1, "Blue"),
+                    Word(10, 2, "Rouge"),
+                    Word(11, 2, "Rose"),
+                    Word(12, 2, "Vert"),
+                    Word(13, 2, "Violet"),
+                    Word(14, 2, "Jaune"),
+                    Word(15, 2, "Blanc"),
+                    Word(16, 2, "Noir"),
+                    Word(17, 2, "Marron"),
+                    Word(18, 2, "Bleu")
+            )
 
-            db.getLanguageDao().insert(lang)
-        }
+            val pairs = arrayOf(
+                    Pair(1, 1, 10),
+                    Pair(2, 2, 11),
+                    Pair(3, 3, 12),
+                    Pair(4, 4, 13),
+                    Pair(5, 5, 14),
+                    Pair(6, 6, 15),
+                    Pair(7, 7, 16),
+                    Pair(8, 8, 17),
+                    Pair(9, 9, 18)
+            )
 
-        private fun addSet(db: AppDatabase, setName: String, description: String) {
-            val set = Set(1, setName, description)
+            val set = Set(1, "French Colours", "Learn your french colours")
 
+            val pairsWithSet = arrayOf(
+                    PairWithSet(1, 1),
+                    PairWithSet(1, 2),
+                    PairWithSet(1, 3),
+                    PairWithSet(1, 4),
+                    PairWithSet(1, 5),
+                    PairWithSet(1, 6),
+                    PairWithSet(1, 7),
+                    PairWithSet(1, 8),
+                    PairWithSet(1, 9)
+            )
+
+            db.getLanguageDao().insert(*languages)
+            db.getWordDao().insert(*words)
+            db.getWordPairDao().insert(*pairs)
             db.getSetDao().insert(set)
-        }
-
-        private fun addWordPair(db: AppDatabase, nativeWord: String, nativeLanguageID: Int, foreignWord: String, foreignLanguageID: Int) {
-            val nWord = Word(0, nativeLanguageID, nativeWord)
-            val fWord = Word(0, foreignLanguageID, foreignWord)
-
-            val wordDao= db.getWordDao()
-
-            val pair = WordPair(0, wordDao.insert(nWord).toInt(), wordDao.insert(fWord).toInt())
-            db.getWordPairDao().insert(pair)
+            db.getWordSetDao().insert(*pairsWithSet)
         }
     }
 }

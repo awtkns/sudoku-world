@@ -16,23 +16,23 @@ import com.sigma.sudokuworld.persistence.db.utils.DatabaseInitializer
  * Written in kotlin
  */
 @Database(
-        version = 7,
+        version = 8,
         entities = [
             Language::class,
             Word::class,
-            WordPair::class,
+            Pair::class,
             Set::class,
-            WordSet::class,
+            PairWithSet::class,
             Game::class
         ])
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun getLanguageDao(): LanguageDao
     abstract fun getWordDao(): WordDao
-    abstract fun getWordPairDao(): WordPairDao
+    abstract fun getWordPairDao(): PairDao
     abstract fun getSetDao(): SetDao
-    abstract fun getWordSetDao(): WordSetDao
-    abstract fun getGameSaveDao(): GameSaveDao
+    abstract fun getWordSetDao(): PairWithSetDao
+    abstract fun getGameSaveDao(): GameDao
 
     //Singleton
     companion object {

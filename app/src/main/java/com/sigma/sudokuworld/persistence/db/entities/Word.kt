@@ -23,7 +23,7 @@ import android.arch.persistence.room.PrimaryKey
     indices = [Index(value = ["languageID"])]
 )
 data class Word (
-    @PrimaryKey(autoGenerate = true) var wordID: Int,
-    var languageID: Int,
+    @PrimaryKey(autoGenerate = true) var wordID: Long,
+    var languageID: Long,
     var word:String
 )

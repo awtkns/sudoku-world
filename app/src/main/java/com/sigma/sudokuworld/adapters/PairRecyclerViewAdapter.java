@@ -1,4 +1,4 @@
-package com.sigma.sudokuworld.select.adapters;
+package com.sigma.sudokuworld.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,34 +7,36 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.sigma.sudokuworld.R;
-import com.sigma.sudokuworld.persistence.WordPairRepository;
-import com.sigma.sudokuworld.select.PairListFragment;
-import com.sigma.sudokuworld.select.PairListFragment.OnFragmentInteractionListener;
+import com.sigma.sudokuworld.persistence.db.views.WordPair;
+import com.sigma.sudokuworld.masterdetail.PairListFragment;
+import com.sigma.sudokuworld.masterdetail.PairListFragment.OnFragmentInteractionListener;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 
 public class PairRecyclerViewAdapter extends RecyclerView.Adapter<PairRecyclerViewAdapter.ViewHolder> {
 
-    private final List<WordPairRepository.WordPairInformative> mWordPairs;
     private final OnFragmentInteractionListener mListener;
+    private List<WordPair> mWordPairs;
 
-    public PairRecyclerViewAdapter(List<WordPairRepository.WordPairInformative> wordPair, PairListFragment.OnFragmentInteractionListener listener) {
-        mWordPairs = wordPair;
+    public PairRecyclerViewAdapter(PairListFragment.OnFragmentInteractionListener listener) {
+        mWordPairs = new ArrayList<>();
         mListener = listener;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.set_list_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_set_list, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mWordPair = mWordPairs.get(position);
-        holder.mIdView.setText(mWordPairs.get(position).getNativeWordString());
-        holder.mContentView.setText(mWordPairs.get(position).getForeignWordString());
+        holder.mIdView.setText(mWordPairs.get(position).getNativeWord().getWord());
+        holder.mContentView.setText(mWordPairs.get(position).getForeignWord().getWord());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,11 +55,17 @@ public class PairRecyclerViewAdapter extends RecyclerView.Adapter<PairRecyclerVi
         return mWordPairs.size();
     }
 
+    public void setItems(List<WordPair> wordPairs) {
+        mWordPairs = wordPairs;
+        notifyDataSetChanged();
+    }
+
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public WordPairRepository.WordPairInformative mWordPair;
+        public WordPair mWordPair;
 
         public ViewHolder(View view) {
             super(view);

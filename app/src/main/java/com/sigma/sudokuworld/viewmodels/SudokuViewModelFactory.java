@@ -10,9 +10,9 @@ import com.sigma.sudokuworld.viewmodels.SudokuViewModel;
 public class SudokuViewModelFactory implements ViewModelProvider.Factory {
 
     private final Application application;
-    private final int saveId;
+    private final long saveId;
 
-    public SudokuViewModelFactory(Application application, int saveId) {
+    public SudokuViewModelFactory(Application application, long saveId) {
         this.saveId = saveId;
         this.application = application;
     }

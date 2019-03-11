@@ -1,4 +1,4 @@
-package com.sigma.sudokuworld.select.down;
+package com.sigma.sudokuworld.masterdetail.detail;
 
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;

@@ -12,7 +12,7 @@ public class VocabSudokuActivity extends SudokuActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (mViewModel.getGameMode() != GameMode.NUMBERS) {
+        if (mSudokuViewModel.getGameMode() != GameMode.NUMBERS) {
             super.mSudokuGridView.setOnLongClickListener(onLongClickListener);
         }
     }
@@ -20,10 +20,10 @@ public class VocabSudokuActivity extends SudokuActivity {
     View.OnLongClickListener onLongClickListener = new View.OnLongClickListener() {
         @Override
         public boolean onLongClick(View v) {
-            if (mViewModel.isLockedCell(cellTouched)) {
-                String text = mViewModel.getMappedString(
-                        mViewModel.getCellValue(cellTouched),
-                        GameMode.opposite(mViewModel.getGameMode())
+            if (mSudokuViewModel.isLockedCell(cellTouched)) {
+                String text = mSudokuViewModel.getMappedString(
+                        mSudokuViewModel.getCellValue(cellTouched),
+                        GameMode.opposite(mSudokuViewModel.getGameMode())
                 );
                 Toast.makeText(getBaseContext(), text, Toast.LENGTH_SHORT).show();
                 return true;

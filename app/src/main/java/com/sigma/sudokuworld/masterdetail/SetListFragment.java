@@ -1,7 +1,11 @@
-package com.sigma.sudokuworld.select;
+package com.sigma.sudokuworld.masterdetail;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,52 +14,50 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.sigma.sudokuworld.R;
-import com.sigma.sudokuworld.persistence.WordPairRepository;
+import com.sigma.sudokuworld.adapters.SetRecyclerViewAdapter;
 import com.sigma.sudokuworld.persistence.db.entities.Set;
-import com.sigma.sudokuworld.select.adapters.PairRecyclerViewAdapter;
+import com.sigma.sudokuworld.viewmodels.MasterDetailViewModel;
 
 import java.util.List;
 
 
-public class PairListFragment extends Fragment {
+public class SetListFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
-    private List<WordPairRepository.WordPairInformative> mWordPairs;
-    private PairRecyclerViewAdapter mPairRecyclerViewAdapter;
-    WordPairRepository mWordPairRepository;
+    private MasterDetailViewModel mMasterDetailViewModel;
+    private SetRecyclerViewAdapter mAdapter;
 
-    public static PairListFragment newInstance() {
-        return new PairListFragment();
+    public static SetListFragment newInstance() {
+        return new SetListFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mMasterDetailViewModel = ViewModelProviders.of(this).get(MasterDetailViewModel.class);
+        mAdapter = new SetRecyclerViewAdapter(mListener);
+
+        LiveData<List<Set>> allSets = mMasterDetailViewModel.getAllSets();
+        allSets.observe(this, new Observer<List<Set>>() {
+            @Override
+            public void onChanged(@Nullable List<Set> sets) {
+                mAdapter.setItems(sets);
+            }
+        });
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
 
-        mWordPairRepository= new WordPairRepository(getActivity().getApplication());
-        mWordPairs = mWordPairRepository.getAllWordPairsInformative();
-        mPairRecyclerViewAdapter = new PairRecyclerViewAdapter(mWordPairs, mListener);
-
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            recyclerView.setAdapter(mPairRecyclerViewAdapter);
+            recyclerView.setAdapter(mAdapter);
         }
 
         return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mWordPairs = mWordPairRepository.getAllWordPairsInformative();
-        mPairRecyclerViewAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -64,7 +66,8 @@ public class PairListFragment extends Fragment {
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
-            throw new RuntimeException(context.toString() + " must implement OnFragmentInteractionListener");
+            throw new RuntimeException(context.toString()
+                    + " must implement OnSetListFragmentInteractionListener");
         }
     }
 
@@ -75,8 +78,7 @@ public class PairListFragment extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        void onClickPairFragmentInteraction(WordPairRepository.WordPairInformative wordPair);
-        void onLongPairClickFragmentInteraction(Set set);
+        void onClickSetFragmentInteraction(Set set);
+        void onLongClickSetFragmentInteraction(View view, Set set);
     }
 }
-

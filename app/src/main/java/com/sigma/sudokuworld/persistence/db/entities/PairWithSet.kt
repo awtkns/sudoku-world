@@ -6,18 +6,18 @@ import android.arch.persistence.room.ForeignKey.CASCADE
 
 @Entity(foreignKeys = [
     ForeignKey(
-            entity = WordPair::class,
-            parentColumns = ["wordPairID"],
-            childColumns = ["wordPairID"],
+            entity = Pair::class,
+            parentColumns = ["pairID"],
+            childColumns = ["pairID"],
             onDelete = CASCADE),
     ForeignKey(
             entity = Set::class,
             parentColumns = ["setID"],
             childColumns = ["setID"],
             onDelete = CASCADE)],
-    primaryKeys = ["setID", "wordPairID"],
+    primaryKeys = ["setID", "pairID"],
     tableName = "word_set_cross_reference")
-data class WordSet (
-        var setID: Int,
-        var wordPairID: Int
+data class PairWithSet (
+        var setID: Long,
+        var pairID: Long
 )

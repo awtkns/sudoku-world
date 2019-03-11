@@ -1,6 +1,9 @@
 package com.sigma.sudokuworld;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Build;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.content.Intent;
 import android.graphics.drawable.AnimatedVectorDrawable;
@@ -9,30 +12,44 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.sigma.sudokuworld.game.GameDifficulty;
-import com.sigma.sudokuworld.game.GameMode;
-import com.sigma.sudokuworld.game.gen.PuzzleGenerator;
-import com.sigma.sudokuworld.persistence.GameRepository;
+import com.sigma.sudokuworld.audio.SoundPlayer;
 import com.sigma.sudokuworld.persistence.db.entities.Game;
 import com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants;
-import com.sigma.sudokuworld.persistence.sharedpreferences.PersistenceService;
-import com.sigma.sudokuworld.audio.SoundPlayer;
 import com.sigma.sudokuworld.sudoku.AudioSudokuActivity;
 import com.sigma.sudokuworld.sudoku.VocabSudokuActivity;
+import com.sigma.sudokuworld.viewmodels.MenuViewModel;
 
-import static com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants.HINTS_KEY;
-import static com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants.SAVE_ID_KEY;
-import static com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants.SOUND_KEY;
+import java.util.List;
 
 public class MenuActivity extends AppCompatActivity {
-
-    private static final String TAG = "MENU";
+    private MenuViewModel mMenuViewModel;
     private SoundPlayer mSoundPlayer;
+    private FragmentManager mFragmentManager;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
+        mMenuViewModel = ViewModelProviders.of(this).get(MenuViewModel.class);
+        mFragmentManager = getSupportFragmentManager();
+
+        //Play a sound every time the fragment is opened
+        mFragmentManager.addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+            @Override
+            public void onBackStackChanged() {
+                mSoundPlayer.playPlaceCellSound();
+            }
+        });
+
+        mMenuViewModel.getAllGameSaves().observe(this, new Observer<List<Game>>() {
+            @Override
+            public void onChanged(@Nullable List<Game> games) {
+                if (games.isEmpty()) findViewById(R.id.continueButton).setVisibility(View.GONE);
+                else findViewById(R.id.continueButton).setVisibility(View.VISIBLE);
+            }
+        });
+
 
         mSoundPlayer = new SoundPlayer(this);
         ImageView imageView = findViewById(R.id.menuAVD);
@@ -47,9 +64,7 @@ public class MenuActivity extends AppCompatActivity {
      * Called when play button is pressed. (Action defined in xml onClick)
      */
     public void onPlayPressed(View v) {
-        mSoundPlayer.playPlaceCellSound();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
+        mFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainer, new NewGameFragment())
                 .addToBackStack(null)
                 .commit();
@@ -59,9 +74,7 @@ public class MenuActivity extends AppCompatActivity {
      * Called when Continue button is pressed. (Action defined in xml onClick)
      */
     public void onContinuePressed(View v) {
-        mSoundPlayer.playPlaceCellSound();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
+        mFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainer, new SelectGameFragment())
                 .addToBackStack(null)
                 .commit();
@@ -71,59 +84,29 @@ public class MenuActivity extends AppCompatActivity {
      * Called when Settings button is pressed. (Action defined in xml onClick)
      */
     public void onSettingsPressed(View v) {
-        mSoundPlayer.playPlaceCellSound();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
+        mFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainer, new SettingsFragment())
                 .addToBackStack(null)
                 .commit();
     }
 
-    public void startNewGame(GameMode gameMode, GameDifficulty difficulty) {
-        PuzzleGenerator robot = new PuzzleGenerator(3);
-        Bundle puzzle = robot.generatePuzzle(difficulty);
-
-        Game game = new Game(
-                //SaveID 0 = auto generate
-                0, 0,
-                difficulty,
-                gameMode,
-                puzzle.getIntArray(KeyConstants.CELL_VALUES_KEY),
-                puzzle.getIntArray(KeyConstants.SOLUTION_VALUES_KEY),
-                puzzle.getBooleanArray(KeyConstants.LOCKED_CELLS_KEY)
-        );
-
-        GameRepository repository = new GameRepository(getApplication());
-        int saveID = repository.newGame(game);
-
-        startGame(saveID);
-    }
-
-    public void startGame(int saveID) {
-        //Settings bundle
-        boolean isAudioMode = PersistenceService.loadAudioModeSetting(this);
-        boolean isSoundOn = PersistenceService.loadSoundEnabledSetting(this);
-        boolean isHintsOn = PersistenceService.loadHintsEnabledSetting(this);
+    public void startGame(long saveID) {
 
         Intent intent;
-        if (isAudioMode) {
+        if (mMenuViewModel.isAudioModeEnabled()) {
             intent = new Intent(getBaseContext(), AudioSudokuActivity.class);
         } else {
             intent = new Intent(getBaseContext(), VocabSudokuActivity.class);
         }
 
-        intent.putExtra(SAVE_ID_KEY, saveID);
-        intent.putExtra(SOUND_KEY, isSoundOn);
-        intent.putExtra(HINTS_KEY, isHintsOn);
-        mSoundPlayer.playPlaceCellSound();
-        startActivity(intent);
+        intent.putExtra(KeyConstants.SAVE_ID_KEY, saveID);
 
-        getSupportFragmentManager().popBackStack();
+        startActivity(intent);
+        mFragmentManager.popBackStack();
     }
 
     public void closeFragment(){
-        getSupportFragmentManager().popBackStack();
-        mSoundPlayer.playPlaceCellSound();
+        mFragmentManager.popBackStack();
     }
 }
 

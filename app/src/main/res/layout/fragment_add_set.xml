@@ -15,7 +15,7 @@
         <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/nativeInput"
+                android:id="@+id/nameInput"
                 />
 
     </android.support.design.widget.TextInputLayout>
@@ -28,14 +28,12 @@
         <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/foreignInput"/>
+                android:id="@+id/descriptionInput"/>
     </android.support.design.widget.TextInputLayout>
 
-    <FrameLayout
+    <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/listContainer">
-
-    </FrameLayout>
+            android:id="@+id/recyclerView"/>
 
 </LinearLayout>

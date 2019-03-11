@@ -1,28 +1,33 @@
-package com.sigma.sudokuworld.select.down;
+package com.sigma.sudokuworld.masterdetail.detail;
 
-import android.support.design.widget.CollapsingToolbarLayout;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.sigma.sudokuworld.R;
-import com.sigma.sudokuworld.persistence.WordSetRepository;
+import com.sigma.sudokuworld.adapters.PairRecyclerViewAdapter;
 import com.sigma.sudokuworld.persistence.db.entities.Set;
+import com.sigma.sudokuworld.persistence.db.views.WordPair;
 import com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants;
+
+import java.util.List;
 
 
 public class SetDetailFragment extends AbstractDrillDownFragment {
     private Set mSet;
+    private List<WordPair> mWordPairs;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        WordSetRepository wordSetRepository = new WordSetRepository(getActivity().getApplication());
-        int setID = getArguments().getInt(KeyConstants.SET_ID_KEY);
-        mSet = wordSetRepository.getSet(setID);
+        mSet = mMasterDetailViewModel.getSet(getArguments().getLong(KeyConstants.SET_ID_KEY));
+        mWordPairs = mMasterDetailViewModel.getWordsInSet(mSet);
     }
 
     @Override
@@ -35,6 +40,13 @@ public class SetDetailFragment extends AbstractDrillDownFragment {
             nameTextView.setText(mSet.getName());
             descriptionTextView.setText(mSet.getDescription());
         }
+
+        PairRecyclerViewAdapter adapter = new PairRecyclerViewAdapter(null);
+        adapter.setItems(mWordPairs);
+
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
+        recyclerView.setAdapter(adapter);
 
         return view;
     }

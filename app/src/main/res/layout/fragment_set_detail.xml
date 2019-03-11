@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:textIsSelectable="true"
-    tools:context=".select.down.AbstractDrillDownActivity">
+    tools:context=".masterdetail.detail.AbstractDrillDownActivity">
 
     <TextView
         android:id="@+id/setName"
@@ -26,4 +26,13 @@
         android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/setName" />
+
+    <android.support.v7.widget.RecyclerView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/setDescription"
+            android:id="@+id/recyclerView"/>
+
 </android.support.constraint.ConstraintLayout>
