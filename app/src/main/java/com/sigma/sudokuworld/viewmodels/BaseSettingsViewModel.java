@@ -8,7 +8,7 @@ import com.sigma.sudokuworld.persistence.sharedpreferences.PersistenceService;
 public abstract class BaseSettingsViewModel extends AndroidViewModel {
     Application mApplication;
 
-    public BaseSettingsViewModel(@NonNull Application application) {
+    BaseSettingsViewModel(@NonNull Application application) {
         super(application);
         mApplication = application;
     }

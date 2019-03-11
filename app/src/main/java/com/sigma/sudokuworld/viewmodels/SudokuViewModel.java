@@ -11,7 +11,6 @@ import com.sigma.sudokuworld.game.GameMode;
 import com.sigma.sudokuworld.persistence.GameRepository;
 import com.sigma.sudokuworld.persistence.WordSetRepository;
 import com.sigma.sudokuworld.persistence.db.entities.Game;
-import com.sigma.sudokuworld.persistence.db.entities.Word;
 import com.sigma.sudokuworld.persistence.db.views.WordPair;
 import com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants;
 

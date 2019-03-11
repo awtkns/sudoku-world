@@ -8,7 +8,6 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.sigma.sudokuworld.R;
-import com.sigma.sudokuworld.persistence.db.entities.Pair;
 import com.sigma.sudokuworld.persistence.db.views.WordPair;
 import com.sigma.sudokuworld.masterdetail.detail.AddSetFragment;
 
@@ -61,13 +60,13 @@ public class CheckedPairRecyclerViewAdapter extends RecyclerView.Adapter<Checked
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
-        public final TextView mNativeWord;
-        public final TextView mForeignWord;
-        public final CheckBox mCheckBox;
-        public WordPair mWordPair;
+        final View mView;
+        final TextView mNativeWord;
+        final TextView mForeignWord;
+        final CheckBox mCheckBox;
+        WordPair mWordPair;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             super(view);
             mView = view;
             mCheckBox = view.findViewById(R.id.checkBox);

@@ -1,7 +1,6 @@
 package com.sigma.sudokuworld.persistence.db.utils
 
 import android.arch.persistence.room.TypeConverter
-import android.renderscript.Sampler
 import com.sigma.sudokuworld.game.GameDifficulty
 import com.sigma.sudokuworld.game.GameMode
 
@@ -60,7 +59,7 @@ class Converters {
             arrString = arrString.substringAfter(ARRAY_DELIMITER)
         }
 
-        return intArray;
+        return intArray
     }
 
     @TypeConverter

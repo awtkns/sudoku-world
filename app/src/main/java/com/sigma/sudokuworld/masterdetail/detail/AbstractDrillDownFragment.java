@@ -13,8 +13,8 @@ import com.sigma.sudokuworld.R;
 import com.sigma.sudokuworld.viewmodels.MasterDetailViewModel;
 
 public abstract class AbstractDrillDownFragment extends Fragment {
-    protected CollapsingToolbarLayout mAppBarLayout;
-    protected MasterDetailViewModel mMasterDetailViewModel;
+    CollapsingToolbarLayout mAppBarLayout;
+    MasterDetailViewModel mMasterDetailViewModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

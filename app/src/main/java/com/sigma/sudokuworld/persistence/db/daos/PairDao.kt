@@ -8,12 +8,14 @@ import android.arch.persistence.room.Query
 import com.sigma.sudokuworld.persistence.db.entities.Pair
 import com.sigma.sudokuworld.persistence.db.views.WordPair
 
+@Suppress("SpellCheckingInspection", "SpellCheckingInspection", "SpellCheckingInspection", "SpellCheckingInspection", "SpellCheckingInspection", "SpellCheckingInspection", "SpellCheckingInspection", "SpellCheckingInspection")
 @Dao
 interface PairDao {
 
     @Query("SELECT * FROM word_pairs")
     fun getAll(): List<Pair>
 
+    @Suppress("SpellCheckingInspection", "SpellCheckingInspection", "SpellCheckingInspection", "SpellCheckingInspection", "SpellCheckingInspection", "SpellCheckingInspection", "SpellCheckingInspection", "SpellCheckingInspection")
     @Query("""
         SELECT pairID,
         n.wordID as n_wordID, n.word as n_word, n.languageID as n_languageID,

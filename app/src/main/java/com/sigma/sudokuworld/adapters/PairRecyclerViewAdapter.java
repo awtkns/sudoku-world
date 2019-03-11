@@ -12,7 +12,6 @@ import com.sigma.sudokuworld.masterdetail.PairListFragment;
 import com.sigma.sudokuworld.masterdetail.PairListFragment.OnFragmentInteractionListener;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 

@@ -43,7 +43,7 @@ public class AddSetActivity extends AbstractDrillDownActivity implements AddSetF
 
     private void saveWordSet() {
         String name = mAddSetFragment.getSetName();
-        String description = mAddSetFragment.getSetDescription();;
+        String description = mAddSetFragment.getSetDescription();
 
         boolean isValidSet = true;
         String errorMsg = "";

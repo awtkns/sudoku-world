@@ -4,11 +4,9 @@ import android.content.Intent;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.os.Build;
 import android.support.constraint.ConstraintLayout;
-import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 
 import java.util.Timer;
@@ -51,7 +49,7 @@ public class SplashActivity extends AppCompatActivity {
             };
 
             timer.schedule(animationStartTask, START_ANIM_DELAY);
-            exit_delay = 0;
+            exit_delay = 4000;
         } else {
             exit_delay = 1000;
         }
