@@ -22,6 +22,9 @@ interface GameDao {
     @Query("SELECT * FROM game_saves")
     fun getAll(): LiveData<List<Game>>
 
+    @Query("SELECT * FROM game_saves")
+    fun getAllStatic(): List<Game>
+
     @Query("SELECT * FROM game_saves WHERE saveID == :saveID LIMIT 1")
     fun getGameSaveByID(saveID: Long): Game
 }

@@ -106,9 +106,9 @@ class DatabaseInstrumentedTest {
     @Test
     @Throws(Exception::class)
     fun readWordSet() {
-        val wordPairsInSet = db.getWordSetDao().getAllWordsInSet(1)
+        val wordPairsInSet = db.getWordSetDao().getAllWordPairsInSet(1)
         assertEquals(2, wordPairsInSet.size)
-        assertEquals(1, wordPairsInSet[0].nativeWordID)
+        assertEquals(1, wordPairsInSet[0].nativeWord.wordID)
     }
 
     @Test
@@ -137,7 +137,7 @@ class DatabaseInstrumentedTest {
         db.getGameSaveDao().insert(save1)
         db.getGameSaveDao().insert(save2)
 
-        val gameSaves = db.getGameSaveDao().getAll()
+        val gameSaves = db.getGameSaveDao().getAllStatic()
         assertEquals(gameList[0].saveID, gameSaves[0].saveID)
         assertEquals(gameList[0].difficulty, gameSaves[0].difficulty)
         assertEquals(gameList[0].gameMode, gameSaves[0].gameMode)
