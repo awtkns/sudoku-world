@@ -6,7 +6,6 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.annotation.Nullable;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,7 +43,11 @@ public class SelectGameFragment extends Fragment implements View.OnClickListener
         mGameSaves.observe(this, new Observer<List<Game>>() {
             @Override
             public void onChanged(@Nullable List<Game> games) {
-                mGamePagerAdapter.setItems(games);
+                if (games.isEmpty()) {
+                    getActivity().getSupportFragmentManager().popBackStack();
+                } else {
+                    mGamePagerAdapter.setItems(games);
+                }
             }
         });
     }
@@ -54,7 +57,6 @@ public class SelectGameFragment extends Fragment implements View.OnClickListener
         View view = inflater.inflate(R.layout.fragment_select_game, container, false);
         mPlayButton = view.findViewById(R.id.playButtonSelectGameFragment);
         mPlayButton.setOnClickListener(this);
-
 
 
         mDeleteButton = view.findViewById(R.id.deleteButtonSelectGameFragment);
@@ -72,7 +74,6 @@ public class SelectGameFragment extends Fragment implements View.OnClickListener
                 ((MenuActivity) getActivity()).closeFragment();
             }
         });
-
 
         mViewPager = view.findViewById(R.id.gameSavePager);
         mViewPager.setAdapter(mGamePagerAdapter);

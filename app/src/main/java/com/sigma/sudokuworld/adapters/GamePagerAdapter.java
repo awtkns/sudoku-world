@@ -1,9 +1,11 @@
 package com.sigma.sudokuworld.adapters;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
 import com.sigma.sudokuworld.GamePageFragment;
 import com.sigma.sudokuworld.persistence.db.entities.Game;
 import com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants;
@@ -11,7 +13,7 @@ import com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants;
 import java.util.LinkedList;
 import java.util.List;
 
-public class GamePagerAdapter extends FragmentStatePagerAdapter {
+public class GamePagerAdapter extends FragmentStatePagerAdapter {   //TODO turn into a view pager
     private List<Game> mGames;
 
     public GamePagerAdapter(FragmentManager fragmentManager) {
@@ -35,6 +37,11 @@ public class GamePagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public int getCount() {
         return mGames.size();
+    }
+
+    @Override
+    public int getItemPosition(@NonNull Object object) {
+        return PagerAdapter.POSITION_NONE;
     }
 
     public void setItems(List<Game> games) {
