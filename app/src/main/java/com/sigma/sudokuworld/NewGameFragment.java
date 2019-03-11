@@ -97,19 +97,21 @@ public class NewGameFragment extends Fragment {
 
     private void initStoredSettings() {
 
-        mSetTitle.setText(mMenuViewModel.setSetting.getName());
+        mSetTitle.setText(mMenuViewModel.getSelectedSet().getName());
 
-        if (mMenuViewModel.difficultySetting == GameDifficulty.EASY) {
+        GameDifficulty difficulty = mMenuViewModel.getSelectedGameDifficulty();
+        if (difficulty == GameDifficulty.EASY) {
             mDifficultySeekBar.setProgress(0);
-        } else if (mMenuViewModel.difficultySetting == GameDifficulty.MEDIUM) {
+        } else if (difficulty == GameDifficulty.MEDIUM) {
             mDifficultySeekBar.setProgress(1);
-        } else  if (mMenuViewModel.difficultySetting == GameDifficulty.HARD) {
+        } else {
             mDifficultySeekBar.setProgress(2);
         }
 
-        if (mMenuViewModel.gameModeSetting == GameMode.NATIVE) {
+        GameMode mode = mMenuViewModel.getSelectedGameMode();
+        if (mode == GameMode.NATIVE) {
             mGameModeRadioGroup.check(R.id.nativeModeRadioButton);
-        } else if (mMenuViewModel.gameModeSetting == GameMode.FOREIGN) {
+        } else if (mode == GameMode.FOREIGN) {
             mGameModeRadioGroup.check(R.id.foreignModeRadioButton);
         } else {
             mGameModeRadioGroup.check(R.id.numbersModeRadioButton);
@@ -124,22 +126,21 @@ public class NewGameFragment extends Fragment {
         //Checking GameMode
         int checkedRadioButtonID = mGameModeRadioGroup.getCheckedRadioButtonId();
         if (checkedRadioButtonID == R.id.nativeModeRadioButton) {
-            mMenuViewModel.gameModeSetting = GameMode.NATIVE;
+            mMenuViewModel.setSelectedGameMode(GameMode.NATIVE);
         } else if (checkedRadioButtonID == R.id.foreignModeRadioButton) {
-            mMenuViewModel.gameModeSetting = GameMode.FOREIGN;
+            mMenuViewModel.setSelectedGameMode(GameMode.FOREIGN);
         } else {
-            mMenuViewModel.gameModeSetting = GameMode.NUMBERS;
+            mMenuViewModel.setSelectedGameMode(GameMode.NUMBERS);
         }
 
         //Checking Difficulty
         int pos = mDifficultySeekBar.getProgress();
-        if (pos == 1) {
-            mMenuViewModel.difficultySetting = GameDifficulty.MEDIUM;
-        } else if (pos == 2) {
-            mMenuViewModel.difficultySetting = GameDifficulty.HARD;
+        if (pos == 0) {
+            mMenuViewModel.setSelectedGameDifficulty(GameDifficulty.EASY);
+        } else if (pos == 1) {
+            mMenuViewModel.setSelectedGameDifficulty(GameDifficulty.MEDIUM);
         } else {
-            mMenuViewModel.difficultySetting = GameDifficulty.EASY;
+            mMenuViewModel.setSelectedGameDifficulty(GameDifficulty.HARD);
         }
-
     }
 }

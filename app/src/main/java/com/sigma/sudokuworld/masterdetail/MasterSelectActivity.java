@@ -26,6 +26,7 @@ import com.sigma.sudokuworld.masterdetail.detail.AddPairActivity;
 import com.sigma.sudokuworld.masterdetail.detail.AddSetActivity;
 import com.sigma.sudokuworld.masterdetail.detail.PairDetailActivity;
 import com.sigma.sudokuworld.masterdetail.detail.SetDetailActivity;
+import com.sigma.sudokuworld.viewmodels.MasterSelectViewModel;
 
 public class MasterSelectActivity extends AppCompatActivity implements SetListFragment.OnFragmentInteractionListener, PairListFragment.OnFragmentInteractionListener {
 
@@ -59,6 +60,12 @@ public class MasterSelectActivity extends AppCompatActivity implements SetListFr
         mFloatingActionButton.setOnClickListener(new FloatingActionButtonListener());
         mFloatingActionButton.setImageResource(R.drawable.ic_add_black_24dp);
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 
     //Set fragment listeners

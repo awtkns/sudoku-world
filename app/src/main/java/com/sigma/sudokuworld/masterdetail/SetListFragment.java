@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import com.sigma.sudokuworld.R;
 import com.sigma.sudokuworld.adapters.SetRecyclerViewAdapter;
 import com.sigma.sudokuworld.persistence.db.entities.Set;
+import com.sigma.sudokuworld.viewmodels.MasterSelectViewModel;
 
 import java.util.List;
 

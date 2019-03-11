@@ -59,16 +59,16 @@ public class SettingsFragment extends Fragment {
     }
 
     private void loadSettings() {
-        mAudioModeSwitch.setChecked(mMenuViewModel.isAudioModeEnabled);
-        mSoundSwitch.setChecked(mMenuViewModel.isSoundEnabled);
-        mHintsSwitch.setChecked(mMenuViewModel.isHintsEnabled);
-        mRectangleSwitch.setChecked(mMenuViewModel.isRectangleModeEnabled);
+        mAudioModeSwitch.setChecked(mMenuViewModel.isAudioModeEnabled());
+        mSoundSwitch.setChecked(mMenuViewModel.isSoundEnabled());
+        mHintsSwitch.setChecked(mMenuViewModel.isHintsEnabled());
+        mRectangleSwitch.setChecked(mMenuViewModel.isRectangleModeEnabled());
     }
 
     private void saveSettings() {
-        mMenuViewModel.isAudioModeEnabled = mAudioModeSwitch.isChecked();
-        mMenuViewModel.isSoundEnabled = mSoundSwitch.isChecked();
-        mMenuViewModel.isHintsEnabled = mHintsSwitch.isChecked();
-        mMenuViewModel.isRectangleModeEnabled = mRectangleSwitch.isChecked();
+        mMenuViewModel.setAudioModeEnabled(mAudioModeSwitch.isChecked());
+        mMenuViewModel.setSoundEnabled(mSoundSwitch.isChecked());
+        mMenuViewModel.setHintsEnabled(mHintsSwitch.isChecked());
+        mMenuViewModel.setRectangleModeEnabled(mRectangleSwitch.isChecked());
     }
 }

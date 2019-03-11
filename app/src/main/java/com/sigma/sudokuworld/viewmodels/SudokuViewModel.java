@@ -35,7 +35,7 @@ public class SudokuViewModel extends BaseSettingsViewModel {
     private String TAG = "SudokuViewModel";
 
     //Constructor loads a saved game
-    SudokuViewModel(@NonNull Application application, long saveID) {
+    public SudokuViewModel(@NonNull Application application, long saveID) {
         super(application);
         mGameRepository = new GameRepository(application);
 

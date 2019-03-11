@@ -19,33 +19,15 @@ import java.util.List;
 public class MenuViewModel extends BaseSettingsViewModel {
     private GameRepository mGameRepository;
     private WordSetRepository mWordSetRepository;
-
-    public GameDifficulty difficultySetting;
-    public GameMode gameModeSetting;
-    public Set setSetting;
-
     private LiveData<List<Game>> mGames;
 
     public MenuViewModel(@NonNull Application application) {
         super(application);
 
-        mGameRepository = new GameRepository(application);
-        mWordSetRepository = new WordSetRepository(application);
-
-        difficultySetting = PersistenceService.loadDifficultySetting(mApplication);
-        gameModeSetting = PersistenceService.loadGameModeSetting(mApplication);
-        setSetting = mWordSetRepository.getSet(PersistenceService.loadSetSettingSetting(mApplication));
+        mGameRepository = new GameRepository(mApplication);
+        mWordSetRepository = new WordSetRepository(mApplication);
 
         mGames = mGameRepository.getAllGames();
-    }
-
-    @Override
-    protected void onCleared() {
-        super.onCleared();
-
-        PersistenceService.saveDifficultySetting(mApplication, difficultySetting);
-        PersistenceService.saveGameModeSetting(mApplication, gameModeSetting);
-        PersistenceService.saveSetSetting(mApplication, setSetting.getSetID());
     }
 
     //Generates a new game based on stored settings
@@ -55,9 +37,9 @@ public class MenuViewModel extends BaseSettingsViewModel {
 
         Game game = new Game(
                 0,
-                setSetting.getSetID(),
-                difficultySetting,
-                gameModeSetting,
+                getSelectedSetID(),
+                getSelectedGameDifficulty(),
+                getSelectedGameMode(),
                 puzzle.getIntArray(KeyConstants.CELL_VALUES_KEY),
                 puzzle.getIntArray(KeyConstants.SOLUTION_VALUES_KEY),
                 puzzle.getBooleanArray(KeyConstants.LOCKED_CELLS_KEY)
@@ -73,5 +55,36 @@ public class MenuViewModel extends BaseSettingsViewModel {
 
     public void deleteGame(Game game) {
         mGameRepository.deleteGame(game);
+    }
+
+    /*
+        Game Settings
+     */
+    public void setSelectedGameMode(GameMode gameMode) {
+        PersistenceService.saveGameModeSetting(mApplication, gameMode);
+    }
+
+    public void setSelectedGameDifficulty(GameDifficulty difficulty) {
+        PersistenceService.saveDifficultySetting(mApplication, difficulty);
+    }
+
+    public GameMode getSelectedGameMode() {
+        return PersistenceService.loadGameModeSetting(mApplication);
+    }
+
+    public GameDifficulty getSelectedGameDifficulty() {
+        return PersistenceService.loadDifficultySetting(mApplication);
+    }
+
+    public void setSelectedSet(Set set) {
+        PersistenceService.saveSetSetting(mApplication, set.getSetID());
+    }
+
+    public Set getSelectedSet() {
+        return mWordSetRepository.getSet(getSelectedSetID());
+    }
+
+    public long getSelectedSetID() {
+        return PersistenceService.loadSetSettingSetting(mApplication);
     }
 }

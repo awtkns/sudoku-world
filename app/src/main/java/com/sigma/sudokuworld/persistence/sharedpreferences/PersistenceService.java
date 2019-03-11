@@ -78,6 +78,6 @@ public abstract class PersistenceService {
     }
 
     private static SharedPreferences getSettings(Context context) {
-        return  context.getSharedPreferences(SAVE_SETTINGS_FILE, Context.MODE_PRIVATE);
+        return context.getSharedPreferences(SAVE_SETTINGS_FILE, Context.MODE_PRIVATE);
     }
 }

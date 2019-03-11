@@ -7,28 +7,41 @@ import com.sigma.sudokuworld.persistence.sharedpreferences.PersistenceService;
 
 public abstract class BaseSettingsViewModel extends AndroidViewModel {
     Application mApplication;
-    public boolean isAudioModeEnabled;
-    public boolean isHintsEnabled;
-    public boolean isSoundEnabled;
-    public boolean isRectangleModeEnabled;
 
     public BaseSettingsViewModel(@NonNull Application application) {
         super(application);
         mApplication = application;
-
-        isAudioModeEnabled = PersistenceService.loadAudioModeSetting(mApplication);
-        isSoundEnabled = PersistenceService.loadSoundEnabledSetting(mApplication);
-        isHintsEnabled = PersistenceService.loadHintsEnabledSetting(mApplication);
-        isRectangleModeEnabled = PersistenceService.loadRectangleModeEnabledSetting(mApplication);
     }
 
-    @Override
-    protected void onCleared() {
-        super.onCleared();
+    public void setAudioModeEnabled(boolean isEnabled) {
+        PersistenceService.saveAudioModeEnableSetting(mApplication, isEnabled);
+    }
 
-        PersistenceService.saveAudioModeEnableSetting(mApplication, isAudioModeEnabled);
-        PersistenceService.saveSoundEnabledSetting(mApplication, isSoundEnabled);
-        PersistenceService.saveHintsEnabledSetting(mApplication, isHintsEnabled);
-        PersistenceService.saveRectangleModeEnabledSetting(mApplication, isRectangleModeEnabled);
+    public void setSoundEnabled(boolean isEnabled) {
+        PersistenceService.saveSoundEnabledSetting(mApplication, isEnabled);
+    }
+
+    public void setHintsEnabled(boolean isEnabled) {
+        PersistenceService.saveHintsEnabledSetting(mApplication, isEnabled);
+    }
+
+    public void setRectangleModeEnabled(boolean isEnabled) {
+        PersistenceService.saveRectangleModeEnabledSetting(mApplication, isEnabled);
+    }
+
+    public boolean isAudioModeEnabled() {
+        return PersistenceService.loadAudioModeSetting(mApplication);
+    }
+
+    public boolean isSoundEnabled() {
+        return PersistenceService.loadSoundEnabledSetting(mApplication);
+    }
+
+    public boolean isHintsEnabled() {
+        return PersistenceService.loadHintsEnabledSetting(mApplication);
+    }
+
+    public boolean isRectangleModeEnabled() {
+        return PersistenceService.loadRectangleModeEnabledSetting(mApplication);
     }
 }

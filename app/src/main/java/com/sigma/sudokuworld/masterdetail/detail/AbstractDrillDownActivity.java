@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
 import com.sigma.sudokuworld.R;
-import com.sigma.sudokuworld.masterdetail.MasterSelectViewModel;
+import com.sigma.sudokuworld.viewmodels.MasterSelectViewModel;
 
 public abstract class AbstractDrillDownActivity extends AppCompatActivity {
 
@@ -36,5 +36,11 @@ public abstract class AbstractDrillDownActivity extends AppCompatActivity {
 
         // Show the Up button in the action bar.
         ActionBar actionBar = getSupportActionBar(); //TODO: back btn
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }

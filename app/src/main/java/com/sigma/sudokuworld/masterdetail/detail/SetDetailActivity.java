@@ -21,7 +21,7 @@ public class SetDetailActivity extends AbstractDrillDownActivity {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Set Selected", Snackbar.LENGTH_LONG).show();
-                PersistenceService.saveSetSetting(getBaseContext(), setID);
+                mMasterSelectViewModel.setSelectedSet(setID);
             }
         });
 

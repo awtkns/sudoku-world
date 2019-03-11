@@ -148,7 +148,7 @@ public abstract class SudokuActivity extends AppCompatActivity {
             if (cellNumber == -1){
                 mSoundPlayer.playEmptyButtonSound();
             } else {
-                if (mSudokuViewModel.isCorrectValue(cellNumber, buttonValue) || !mSudokuViewModel.isHintsEnabled) {
+                if (mSudokuViewModel.isCorrectValue(cellNumber, buttonValue) || !mSudokuViewModel.isHintsEnabled()) {
                     //Correct number is placed in cell
                     mSudokuGridView.clearHighlightedCell();
                     mSudokuGridView.clearIncorrectCell();
