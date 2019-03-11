@@ -11,16 +11,18 @@ import com.sigma.sudokuworld.persistence.db.views.WordPair;
 import com.sigma.sudokuworld.masterdetail.PairListFragment;
 import com.sigma.sudokuworld.masterdetail.PairListFragment.OnFragmentInteractionListener;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 
 public class PairRecyclerViewAdapter extends RecyclerView.Adapter<PairRecyclerViewAdapter.ViewHolder> {
 
-    private final List<WordPair> mWordPairs;
     private final OnFragmentInteractionListener mListener;
+    private List<WordPair> mWordPairs;
 
-    public PairRecyclerViewAdapter(List<WordPair> wordPair, PairListFragment.OnFragmentInteractionListener listener) {
-        mWordPairs = wordPair;
+    public PairRecyclerViewAdapter(PairListFragment.OnFragmentInteractionListener listener) {
+        mWordPairs = new ArrayList<>();
         mListener = listener;
     }
 
@@ -33,7 +35,7 @@ public class PairRecyclerViewAdapter extends RecyclerView.Adapter<PairRecyclerVi
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mWordPair = mWordPairs.get(position);
-        holder.mIdView.setText(mWordPairs.get(position).getForeignWord().getWord());
+        holder.mIdView.setText(mWordPairs.get(position).getNativeWord().getWord());
         holder.mContentView.setText(mWordPairs.get(position).getForeignWord().getWord());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -52,6 +54,12 @@ public class PairRecyclerViewAdapter extends RecyclerView.Adapter<PairRecyclerVi
     public int getItemCount() {
         return mWordPairs.size();
     }
+
+    public void setItems(List<WordPair> wordPairs) {
+        mWordPairs = wordPairs;
+        notifyDataSetChanged();
+    }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;

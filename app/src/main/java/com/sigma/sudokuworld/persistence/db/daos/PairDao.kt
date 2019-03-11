@@ -1,5 +1,6 @@
 package com.sigma.sudokuworld.persistence.db.daos
 
+import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
@@ -25,7 +26,7 @@ interface PairDao {
         INNER JOIN languages as nlang on n.languageID == nlang.languageID
         INNER JOIN languages as flang on f.languageID == flang.languageID
     """)
-    fun getAllWordPairs(): List<WordPair>
+    fun getAllWordPairs(): LiveData<List<WordPair>>
 
     @Query("""
         SELECT pairID,
@@ -40,7 +41,7 @@ interface PairDao {
         INNER JOIN languages as flang on f.languageID == flang.languageID
         WHERE pairID == :wordPairID
     """)
-    fun getWordPair(wordPairID: Int): WordPair
+    fun getWordPair(wordPairID: Long): WordPair
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(vararg wordPairs: Pair)

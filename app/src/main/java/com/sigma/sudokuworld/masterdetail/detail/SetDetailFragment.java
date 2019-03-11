@@ -32,7 +32,6 @@ public class SetDetailFragment extends AbstractDrillDownFragment {
         mMasterSelectViewModel = ViewModelProviders.of(this).get(MasterSelectViewModel.class);
         mSet = mMasterSelectViewModel.getSet(getArguments().getLong(KeyConstants.SET_ID_KEY));
         mWordPairs = mMasterSelectViewModel.getWordsInSet(mSet);
-
     }
 
     @Override
@@ -46,7 +45,8 @@ public class SetDetailFragment extends AbstractDrillDownFragment {
             descriptionTextView.setText(mSet.getDescription());
         }
 
-        PairRecyclerViewAdapter adapter = new PairRecyclerViewAdapter(mWordPairs, null);
+        PairRecyclerViewAdapter adapter = new PairRecyclerViewAdapter(null);
+        adapter.setItems(mWordPairs);
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));

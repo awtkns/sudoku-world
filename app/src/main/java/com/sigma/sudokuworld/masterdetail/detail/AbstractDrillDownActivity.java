@@ -32,9 +32,6 @@ public abstract class AbstractDrillDownActivity extends AppCompatActivity {
         mToolbar = findViewById(R.id.detail_toolbar);
         setSupportActionBar(mToolbar);
 
-        mFAB = findViewById(R.id.fab);
-
-        // Show the Up button in the action bar.
-        ActionBar actionBar = getSupportActionBar(); //TODO: back btn
+        mFAB = findViewById(R.id.fab); //TODO add back button
     }
 }

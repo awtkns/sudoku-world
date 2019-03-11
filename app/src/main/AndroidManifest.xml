@@ -12,12 +12,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
+
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity android:name=".MenuActivity"
             android:theme="@style/AppTheme.MenuText"/>
@@ -28,12 +30,18 @@
         <activity
                 android:name=".masterdetail.MasterSelectActivity"
                 android:theme="@style/AppTheme"
-        />
-        <activity android:name=".masterdetail.detail.PairDetailActivity"/>
-        <activity android:name=".masterdetail.detail.SetDetailActivity"/>
-        <activity android:name=".masterdetail.detail.AddPairActivity"/>
-        <activity android:name=".masterdetail.detail.AddSetActivity"/>
-
+                android:parentActivityName=".MenuActivity"/>
+        <activity
+                android:name=".masterdetail.detail.PairDetailActivity"
+                android:parentActivityName=".masterdetail.MasterSelectActivity"/>
+        <activity
+                android:name=".masterdetail.detail.SetDetailActivity"
+                android:parentActivityName=".masterdetail.MasterSelectActivity"/>
+        <activity
+                android:name=".masterdetail.detail.AddPairActivity"
+                android:parentActivityName=".masterdetail.MasterSelectActivity"/>
+        <activity
+                android:name=".masterdetail.detail.AddSetActivity"
+                android:parentActivityName=".masterdetail.MasterSelectActivity"/>
     </application>
-
 </manifest>

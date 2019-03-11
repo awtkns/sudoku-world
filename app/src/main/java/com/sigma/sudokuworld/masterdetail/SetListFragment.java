@@ -24,7 +24,6 @@ import java.util.List;
 public class SetListFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private MasterSelectViewModel mMasterSelectViewModel;
-    private List<Set> mSetList;
     private SetRecyclerViewAdapter mAdapter;
 
     public static SetListFragment newInstance() {
@@ -60,7 +59,6 @@ public class SetListFragment extends Fragment {
 
         return view;
     }
-
 
     @Override
     public void onAttach(Context context) {

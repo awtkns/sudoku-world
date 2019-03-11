@@ -8,19 +8,21 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.sigma.sudokuworld.R;
+import com.sigma.sudokuworld.persistence.db.entities.Pair;
 import com.sigma.sudokuworld.persistence.db.views.WordPair;
 import com.sigma.sudokuworld.masterdetail.detail.AddSetFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class CheckedPairRecyclerViewAdapter extends RecyclerView.Adapter<CheckedPairRecyclerViewAdapter.ViewHolder> {
 
-    private final List<WordPair> mWordPairs;
     private final AddSetFragment.OnFragmentInteractionListener mListener;
+    private List<WordPair> mWordPairs;
 
-    public CheckedPairRecyclerViewAdapter(List<WordPair> wordPair, AddSetFragment.OnFragmentInteractionListener listener) {
-        mWordPairs = wordPair;
+    public CheckedPairRecyclerViewAdapter(AddSetFragment.OnFragmentInteractionListener listener) {
+        mWordPairs = new ArrayList<>();
         mListener = listener;
     }
 
@@ -51,6 +53,11 @@ public class CheckedPairRecyclerViewAdapter extends RecyclerView.Adapter<Checked
     @Override
     public int getItemCount() {
         return mWordPairs.size();
+    }
+
+    public void setItems(List<WordPair> wordPairs) {
+        mWordPairs = wordPairs;
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

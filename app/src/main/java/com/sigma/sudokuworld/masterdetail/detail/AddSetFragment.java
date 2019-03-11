@@ -1,7 +1,10 @@
 package com.sigma.sudokuworld.masterdetail.detail;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,28 +12,32 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.sigma.sudokuworld.R;
-import com.sigma.sudokuworld.persistence.WordPairRepository;
 import com.sigma.sudokuworld.persistence.db.views.WordPair;
 import com.sigma.sudokuworld.adapters.CheckedPairRecyclerViewAdapter;
+import com.sigma.sudokuworld.viewmodels.MasterSelectViewModel;
 
 import java.util.List;
 
-
 public class AddSetFragment extends AbstractDrillDownFragment {
     private OnFragmentInteractionListener mListener;
+    private MasterSelectViewModel mMasterSelectViewModel;
+
     private TextInputEditText mNameInput;
     private TextInputEditText mDescriptionInput;
-    private WordPairRepository mWordPairRepository;
-    private List<WordPair> mWordPairs;
     private CheckedPairRecyclerViewAdapter mCheckedPairRecyclerViewAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mWordPairRepository = new WordPairRepository(getActivity().getApplication());
-        mWordPairs = mWordPairRepository.getAllWordPairs();
-        mCheckedPairRecyclerViewAdapter = new CheckedPairRecyclerViewAdapter(mWordPairs, mListener);
+        mMasterSelectViewModel = ViewModelProviders.of(this).get(MasterSelectViewModel.class);
+        mCheckedPairRecyclerViewAdapter = new CheckedPairRecyclerViewAdapter(mListener);
+        mMasterSelectViewModel.getAllWordPairs().observe(this, new Observer<List<WordPair>>() {
+            @Override
+            public void onChanged(@Nullable List<WordPair> wordPairs) {
+                mCheckedPairRecyclerViewAdapter.setItems(wordPairs);
+            }
+        });
     }
 
     @Override
@@ -44,13 +51,6 @@ public class AddSetFragment extends AbstractDrillDownFragment {
         recyclerView.setAdapter(mCheckedPairRecyclerViewAdapter);
 
         return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mWordPairs = mWordPairRepository.getAllWordPairs();
-        mCheckedPairRecyclerViewAdapter.notifyDataSetChanged();
     }
 
     @Override

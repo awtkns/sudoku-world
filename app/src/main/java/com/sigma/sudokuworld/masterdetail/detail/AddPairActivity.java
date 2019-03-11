@@ -3,18 +3,14 @@ package com.sigma.sudokuworld.masterdetail.detail;
 import android.os.Bundle;
 import android.view.View;
 import com.sigma.sudokuworld.R;
-import com.sigma.sudokuworld.persistence.WordPairRepository;
+import com.sigma.sudokuworld.persistence.db.entities.Word;
 
 public class AddPairActivity extends AbstractDrillDownActivity {
-    private WordPairRepository mWordPairRepository;
     private AddPairFragment mAddPairFragment;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        mWordPairRepository = new WordPairRepository(getApplication());
 
         mAddPairFragment = new AddPairFragment();
         getSupportFragmentManager().beginTransaction()
@@ -30,12 +26,15 @@ public class AddPairActivity extends AbstractDrillDownActivity {
 
                 if (nWord != null && fWord != null) {
                     if (!nWord.isEmpty() && !fWord.isEmpty()) {
-                        mWordPairRepository.saveWordPair(nWord, fWord);
+
+                        Word nativeWord = new Word(0, 1, nWord);
+                        Word foreignWord = new Word(0, 1, fWord);
+
+                        mMasterSelectViewModel.saveWordPair(nativeWord, foreignWord);
                         finish();
                     }
                 }
             }
         });
-
     }
 }
