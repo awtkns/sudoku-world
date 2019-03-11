@@ -1,7 +1,6 @@
 package com.sigma.sudokuworld.masterdetail.detail;
 
 import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,13 +13,11 @@ import android.view.ViewGroup;
 import com.sigma.sudokuworld.R;
 import com.sigma.sudokuworld.persistence.db.views.WordPair;
 import com.sigma.sudokuworld.adapters.CheckedPairRecyclerViewAdapter;
-import com.sigma.sudokuworld.viewmodels.MasterSelectViewModel;
 
 import java.util.List;
 
 public class AddSetFragment extends AbstractDrillDownFragment {
     private OnFragmentInteractionListener mListener;
-    private MasterSelectViewModel mMasterSelectViewModel;
 
     private TextInputEditText mNameInput;
     private TextInputEditText mDescriptionInput;
@@ -30,9 +27,8 @@ public class AddSetFragment extends AbstractDrillDownFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mMasterSelectViewModel = ViewModelProviders.of(this).get(MasterSelectViewModel.class);
         mCheckedPairRecyclerViewAdapter = new CheckedPairRecyclerViewAdapter(mListener);
-        mMasterSelectViewModel.getAllWordPairs().observe(this, new Observer<List<WordPair>>() {
+        mMasterDetailViewModel.getAllWordPairs().observe(this, new Observer<List<WordPair>>() {
             @Override
             public void onChanged(@Nullable List<WordPair> wordPairs) {
                 mCheckedPairRecyclerViewAdapter.setItems(wordPairs);

@@ -64,7 +64,7 @@ public class AddSetActivity extends AbstractDrillDownActivity implements AddSetF
         }
 
         if (isValidSet) {
-            mMasterSelectViewModel.saveSet(name, description, mCheckedPairs);
+            mMasterDetailViewModel.saveSet(name, description, mCheckedPairs);
             finish();
         } else {
             Snackbar.make(mCoordinatorLayout, errorMsg, Snackbar.LENGTH_SHORT).show();

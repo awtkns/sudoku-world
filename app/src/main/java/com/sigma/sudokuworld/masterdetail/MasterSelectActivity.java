@@ -26,14 +26,14 @@ import com.sigma.sudokuworld.masterdetail.detail.AddPairActivity;
 import com.sigma.sudokuworld.masterdetail.detail.AddSetActivity;
 import com.sigma.sudokuworld.masterdetail.detail.PairDetailActivity;
 import com.sigma.sudokuworld.masterdetail.detail.SetDetailActivity;
-import com.sigma.sudokuworld.viewmodels.MasterSelectViewModel;
+import com.sigma.sudokuworld.viewmodels.MasterDetailViewModel;
 
 public class MasterSelectActivity extends AppCompatActivity implements SetListFragment.OnFragmentInteractionListener, PairListFragment.OnFragmentInteractionListener {
 
     ViewPager mViewPager;
     TabLayout mTabLayout;
     FloatingActionButton mFloatingActionButton;
-    MasterSelectViewModel mMasterSelectViewModel;
+    MasterDetailViewModel mMasterDetailViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +49,7 @@ public class MasterSelectActivity extends AppCompatActivity implements SetListFr
             actionBar.setBackgroundDrawable(avd);
         }
 
-        mMasterSelectViewModel = ViewModelProviders.of(this).get(MasterSelectViewModel.class);
+        mMasterDetailViewModel = ViewModelProviders.of(this).get(MasterDetailViewModel.class);
 
         mFloatingActionButton = findViewById(R.id.fab);
         mTabLayout = findViewById(R.id.tabs);
@@ -121,7 +121,7 @@ public class MasterSelectActivity extends AppCompatActivity implements SetListFr
 
         @Override
         public void onClick(View v) {
-            if (set != null) mMasterSelectViewModel.deleteSet(set);
+            if (set != null) mMasterDetailViewModel.deleteSet(set);
         }
     }
 

@@ -3,20 +3,19 @@ package com.sigma.sudokuworld.masterdetail.detail;
 import android.arch.lifecycle.ViewModelProviders;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
 import com.sigma.sudokuworld.R;
-import com.sigma.sudokuworld.viewmodels.MasterSelectViewModel;
+import com.sigma.sudokuworld.viewmodels.MasterDetailViewModel;
 
 public abstract class AbstractDrillDownActivity extends AppCompatActivity {
 
     CoordinatorLayout mCoordinatorLayout;
     FloatingActionButton mFAB;
     Toolbar mToolbar;
-    MasterSelectViewModel mMasterSelectViewModel;
+    MasterDetailViewModel mMasterDetailViewModel;
     int mFragmentContainerID;
 
     @Override
@@ -24,7 +23,7 @@ public abstract class AbstractDrillDownActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drill_down);
 
-        mMasterSelectViewModel = ViewModelProviders.of(this).get(MasterSelectViewModel.class);
+        mMasterDetailViewModel = ViewModelProviders.of(this).get(MasterDetailViewModel.class);
 
         mFragmentContainerID = R.id.detail_container;
 

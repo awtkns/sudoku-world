@@ -30,7 +30,7 @@ public class AddPairActivity extends AbstractDrillDownActivity {
                         Word nativeWord = new Word(0, 1, nWord);
                         Word foreignWord = new Word(0, 1, fWord);
 
-                        mMasterSelectViewModel.saveWordPair(nativeWord, foreignWord);
+                        mMasterDetailViewModel.saveWordPair(nativeWord, foreignWord);
                         finish();
                     }
                 }

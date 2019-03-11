@@ -1,6 +1,5 @@
 package com.sigma.sudokuworld.masterdetail;
 
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
@@ -17,13 +16,13 @@ import com.sigma.sudokuworld.R;
 import com.sigma.sudokuworld.persistence.db.entities.Set;
 import com.sigma.sudokuworld.persistence.db.views.WordPair;
 import com.sigma.sudokuworld.adapters.PairRecyclerViewAdapter;
-import com.sigma.sudokuworld.viewmodels.MasterSelectViewModel;
+import com.sigma.sudokuworld.viewmodels.MasterDetailViewModel;
 
 import java.util.List;
 
 public class PairListFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
-    private MasterSelectViewModel mMasterSelectViewModel;
+    private MasterDetailViewModel mMasterDetailViewModel;
     private PairRecyclerViewAdapter mPairRecyclerViewAdapter;
 
     public static PairListFragment newInstance() {
@@ -33,9 +32,9 @@ public class PairListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mMasterSelectViewModel = ViewModelProviders.of(this).get(MasterSelectViewModel.class);
+        mMasterDetailViewModel = ViewModelProviders.of(this).get(MasterDetailViewModel.class);
         mPairRecyclerViewAdapter = new PairRecyclerViewAdapter(mListener);
-        mMasterSelectViewModel.getAllWordPairs().observe(this, new Observer<List<WordPair>>() {
+        mMasterDetailViewModel.getAllWordPairs().observe(this, new Observer<List<WordPair>>() {
             @Override
             public void onChanged(@Nullable List<WordPair> wordPairs) {
                 mPairRecyclerViewAdapter.setItems(wordPairs);

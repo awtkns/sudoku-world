@@ -6,7 +6,6 @@ import android.view.View;
 
 import com.sigma.sudokuworld.R;
 import com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants;
-import com.sigma.sudokuworld.persistence.sharedpreferences.PersistenceService;
 
 public class SetDetailActivity extends AbstractDrillDownActivity {
 
@@ -21,7 +20,7 @@ public class SetDetailActivity extends AbstractDrillDownActivity {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Set Selected", Snackbar.LENGTH_LONG).show();
-                mMasterSelectViewModel.setSelectedSet(setID);
+                mMasterDetailViewModel.setSelectedSet(setID);
             }
         });
 

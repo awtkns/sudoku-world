@@ -12,14 +12,14 @@ import com.sigma.sudokuworld.persistence.sharedpreferences.PersistenceService;
 
 import java.util.List;
 
-public class MasterSelectViewModel extends BaseSettingsViewModel {
+public class MasterDetailViewModel extends BaseSettingsViewModel {
 
     private WordSetRepository mWordSetRepository;
     private WordPairRepository mWordPairRepository;
     private LiveData<List<Set>> mAllSets;
     private LiveData<List<WordPair>> mAllWordPairs;
 
-    public MasterSelectViewModel(@NonNull Application application) {
+    public MasterDetailViewModel(@NonNull Application application) {
         super(application);
         mWordSetRepository = new WordSetRepository(mApplication);
         mWordPairRepository = new WordPairRepository(mApplication);

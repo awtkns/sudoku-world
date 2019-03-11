@@ -16,14 +16,14 @@ import android.view.ViewGroup;
 import com.sigma.sudokuworld.R;
 import com.sigma.sudokuworld.adapters.SetRecyclerViewAdapter;
 import com.sigma.sudokuworld.persistence.db.entities.Set;
-import com.sigma.sudokuworld.viewmodels.MasterSelectViewModel;
+import com.sigma.sudokuworld.viewmodels.MasterDetailViewModel;
 
 import java.util.List;
 
 
 public class SetListFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
-    private MasterSelectViewModel mMasterSelectViewModel;
+    private MasterDetailViewModel mMasterDetailViewModel;
     private SetRecyclerViewAdapter mAdapter;
 
     public static SetListFragment newInstance() {
@@ -33,10 +33,10 @@ public class SetListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mMasterSelectViewModel = ViewModelProviders.of(this).get(MasterSelectViewModel.class);
+        mMasterDetailViewModel = ViewModelProviders.of(this).get(MasterDetailViewModel.class);
         mAdapter = new SetRecyclerViewAdapter(mListener);
 
-        LiveData<List<Set>> allSets = mMasterSelectViewModel.getAllSets();
+        LiveData<List<Set>> allSets = mMasterDetailViewModel.getAllSets();
         allSets.observe(this, new Observer<List<Set>>() {
             @Override
             public void onChanged(@Nullable List<Set> sets) {

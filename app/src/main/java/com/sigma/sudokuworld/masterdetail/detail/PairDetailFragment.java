@@ -1,6 +1,5 @@
 package com.sigma.sudokuworld.masterdetail.detail;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,10 +9,8 @@ import android.widget.TextView;
 import com.sigma.sudokuworld.R;
 import com.sigma.sudokuworld.persistence.db.views.WordPair;
 import com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants;
-import com.sigma.sudokuworld.viewmodels.MasterSelectViewModel;
 
 public class PairDetailFragment extends AbstractDrillDownFragment {
-    private MasterSelectViewModel mMasterSelectViewModel;
     private WordPair mWordPair;
     private TextView mNativeWord;
     private TextView mNativeLanguage;
@@ -24,8 +21,7 @@ public class PairDetailFragment extends AbstractDrillDownFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mMasterSelectViewModel = ViewModelProviders.of(this).get(MasterSelectViewModel.class);
-        mWordPair = mMasterSelectViewModel.getWordPair(getArguments().getInt(KeyConstants.PAIR_ID_KEY));
+        mWordPair = mMasterDetailViewModel.getWordPair(getArguments().getInt(KeyConstants.PAIR_ID_KEY));
     }
 
     @Override
