@@ -69,7 +69,7 @@ public abstract class PersistenceService {
     }
 
     public static long loadSetSettingSetting(Context context) {
-        return getSettings(context).getLong(SET_ID_KEY, 0);
+        return getSettings(context).getLong(SET_ID_KEY, 1);
     }
 
     /*Private Helpers**/

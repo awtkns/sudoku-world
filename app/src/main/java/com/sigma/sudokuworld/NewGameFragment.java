@@ -2,12 +2,15 @@ package com.sigma.sudokuworld;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.graphics.drawable.Animatable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
@@ -16,6 +19,7 @@ import android.widget.TextView;
 import com.sigma.sudokuworld.game.GameDifficulty;
 import com.sigma.sudokuworld.game.GameMode;
 import com.sigma.sudokuworld.masterdetail.MasterSelectActivity;
+import com.sigma.sudokuworld.persistence.db.entities.Set;
 import com.sigma.sudokuworld.viewmodels.MenuViewModel;
 
 public class NewGameFragment extends Fragment {
@@ -25,6 +29,9 @@ public class NewGameFragment extends Fragment {
     private RadioGroup mGameModeRadioGroup;
     private View mSetLayout;
     private TextView mSetTitle;
+    private Button mPlayButton;
+    private Button mSetButton;
+    private Button mCancelButton;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,14 +50,14 @@ public class NewGameFragment extends Fragment {
         mSetLayout = mView.findViewById(R.id.setViewLayout);
         mSetTitle = mView.findViewById(R.id.setTitle);
 
-        Button setButton = mView.findViewById(R.id.setBuilderButton);
-        setButton.setOnClickListener(setButtonListener);
+        mSetButton = mView.findViewById(R.id.setBuilderButton);
+        mSetButton.setOnClickListener(setButtonListener);
 
-        Button playButton = mView.findViewById(R.id.playNewGameButton);
-        playButton.setOnClickListener(playButtonListener);
+        mPlayButton = mView.findViewById(R.id.playNewGameButton);
+        mPlayButton.setOnClickListener(playButtonListener);
 
-        Button cancelButton = mView.findViewById(R.id.cancelButton);
-        cancelButton.setOnClickListener(cancelButtonListener);
+        mCancelButton = mView.findViewById(R.id.cancelButton);
+        mCancelButton.setOnClickListener(cancelButtonListener);
 
         mGameModeRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -69,7 +76,18 @@ public class NewGameFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        mSetTitle.setText(mMenuViewModel.getSelectedSet().getName());
+        Set set = mMenuViewModel.getSelectedSet(); //TODO make buttons disappear better
+        if (set == null) {
+            mSetTitle.setVisibility(View.GONE);
+            mPlayButton.setVisibility(View.GONE);
+
+            Animation shake = AnimationUtils.loadAnimation(getContext(), R.anim.shake);
+            mSetButton.startAnimation(shake);
+        } else {
+            mSetTitle.setVisibility(View.VISIBLE);
+            mPlayButton.setVisibility(View.VISIBLE);
+            mSetTitle.setText(set.getName());
+        }
     }
 
     @Override
