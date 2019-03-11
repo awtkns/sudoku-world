@@ -50,4 +50,7 @@ public class MasterSelectViewModel extends BaseSettingsViewModel {
         mWordSetRepository.deleteSet(set);
     }
 
+    public List<WordPair> getWordsInSet(Set set) {
+        return mWordSetRepository.getAllWordPairsInSet(set.getSetID());
+    }
 }

@@ -36,7 +36,7 @@ public class PairListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
 
-        mWordPairRepository= new WordPairRepository(getActivity().getApplication());
+        mWordPairRepository = new WordPairRepository(getActivity().getApplication());
         mWordPairs = mWordPairRepository.getAllWordPairs();
         mPairRecyclerViewAdapter = new PairRecyclerViewAdapter(mWordPairs, mListener);
 
