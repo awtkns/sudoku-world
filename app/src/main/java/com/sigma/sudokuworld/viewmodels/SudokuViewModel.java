@@ -121,6 +121,22 @@ public class SudokuViewModel extends BaseSettingsViewModel {
         initButtonLabelsLiveData();
     }
 
+    private void initializeWordMaps() {
+        WordSetRepository wordSetRepository = new WordSetRepository(getApplication());
+        List<WordPair> wordPairs = wordSetRepository.getAllWordPairsInSet(mGame.getSetID());
+
+        nativeWordsMap = new SparseArray<>();
+        nativeWordsMap.append(0, "");
+
+        foreignWordsMap = new SparseArray<>();
+        foreignWordsMap.append(0, "");
+
+        for(int i = 0; i < wordPairs.size(); i++) {
+            nativeWordsMap.append(i + 1, wordPairs.get(i).getNativeWord().getWord());
+            foreignWordsMap.append(i + 1, wordPairs.get(i).getForeignWord().getWord());
+        }
+    }
+
     private void initCellLabelsLiveData() {
         cellLabelsLiveData = new MutableLiveData<>();
         labels = new ArrayList<>();
@@ -156,22 +172,6 @@ public class SudokuViewModel extends BaseSettingsViewModel {
         }
 
         buttonLabelsLiveData.setValue(buttonLabels); //TODO: Don't run on main thread
-    }
-
-    private void initializeWordMaps() {
-        WordSetRepository wordSetRepository = new WordSetRepository(getApplication());
-        List<WordPair> wordPairs = wordSetRepository.getAllWordPairsInSet(mGame.getSetID());
-
-        nativeWordsMap = new SparseArray<>();
-        nativeWordsMap.append(0, "");
-
-        foreignWordsMap = new SparseArray<>();
-        foreignWordsMap.append(0, "");
-
-        for(int i = 0; i < wordPairs.size(); i++) {
-            nativeWordsMap.append(i + 1, wordPairs.get(i).getNativeWord().getWord());
-            foreignWordsMap.append(i + 1, wordPairs.get(i).getForeignWord().getWord());
-        }
     }
 
     private String valueToMappedLabel(int value, GameMode gameMode) {

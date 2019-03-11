@@ -46,4 +46,8 @@ public class MasterSelectViewModel extends BaseSettingsViewModel {
         mWordSetRepository.saveSet(name, description, wordPairs);
     }
 
+    public void deleteSet(Set set) {
+        mWordSetRepository.deleteSet(set);
+    }
+
 }

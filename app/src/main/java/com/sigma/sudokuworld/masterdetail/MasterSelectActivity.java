@@ -62,12 +62,6 @@ public class MasterSelectActivity extends AppCompatActivity implements SetListFr
 
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
-    }
-
     //Set fragment listeners
     @Override
     public void onClickSetFragmentInteraction(Set set) {
@@ -127,7 +121,7 @@ public class MasterSelectActivity extends AppCompatActivity implements SetListFr
 
         @Override
         public void onClick(View v) {
-            //if (set != null) mWordSetRepository.deleteSet(set);
+            if (set != null) mMasterSelectViewModel.deleteSet(set);
         }
     }
 

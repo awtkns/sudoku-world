@@ -66,6 +66,13 @@ public class NewGameFragment extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+
+        mSetTitle.setText(mMenuViewModel.getSelectedSet().getName());
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         saveSettings();
@@ -96,8 +103,6 @@ public class NewGameFragment extends Fragment {
     };
 
     private void initStoredSettings() {
-
-        mSetTitle.setText(mMenuViewModel.getSelectedSet().getName());
 
         GameDifficulty difficulty = mMenuViewModel.getSelectedGameDifficulty();
         if (difficulty == GameDifficulty.EASY) {
