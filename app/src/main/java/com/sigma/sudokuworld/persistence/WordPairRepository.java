@@ -34,10 +34,19 @@ public class WordPairRepository {
     }
 
     public long saveWordPair(Word nativeWord, Word foreignWord) {       //TODO: language code
-        long nID = mWordRepository.saveWordPair(nativeWord);
-        long fID = mWordRepository.saveWordPair(foreignWord);
+        long nID = mWordRepository.saveWord(nativeWord);
+        long fID = mWordRepository.saveWord(foreignWord);
 
-        return mPairDao.insert(new Pair(0, nID, fID));
+        Pair pair = mPairDao.getPair(nID, fID);
+
+        long pID;
+        if (pair == null) {
+            pID = mPairDao.insert(new Pair(0, nID, fID));
+        } else {
+            pID = pair.getPairID();
+        }
+
+        return pID;
     }
 }
 

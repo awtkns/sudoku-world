@@ -15,7 +15,9 @@ import com.sigma.sudokuworld.persistence.db.entities.Set;
 import com.sigma.sudokuworld.persistence.db.entities.PairWithSet;
 import com.sigma.sudokuworld.persistence.db.entities.Word;
 import com.sigma.sudokuworld.persistence.db.views.WordPair;
-import com.sigma.sudokuworld.persistence.db.views.WordSet;
+import com.sigma.sudokuworld.persistence.firebase.FireBaseSet;
+import com.sigma.sudokuworld.persistence.firebase.FireBaseWordPair;
+import com.sigma.sudokuworld.persistence.firebase.FireBaseWordSet;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -25,7 +27,7 @@ public class WordSetRepository {
     private FirebaseDatabase mFireBase;
     private SetDao setDao;
     private LiveData<List<Set>> mAllSets;
-    private MutableLiveData<List<Set>> mOnlineSets;
+    private MutableLiveData<List<FireBaseSet>> mOnlineSets;
     private LanguageRepository mLanguageRepository;
     private WordPairRepository mWordPairRepository;
 
@@ -46,14 +48,13 @@ public class WordSetRepository {
         mFireBase.getReference().child("sets").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                FireBaseSet newSet = dataSnapshot.getValue(FireBaseSet.class);
+                String key = dataSnapshot.getKey();
 
-                WordSet newWordSet = dataSnapshot.getValue(WordSet.class);
+                if (newSet != null && key != null) {
+                    newSet.setKey(dataSnapshot.getKey());
 
-                if (newWordSet != null) {
-                    Set newSet = newWordSet.getSet();
-                    newSet.setDescription(dataSnapshot.getKey());
-
-                    List<Set> sets = mOnlineSets.getValue();
+                    List<FireBaseSet> sets = mOnlineSets.getValue();
                     if (sets == null) sets = new LinkedList<>();
                     sets.add(newSet);
 
@@ -68,9 +69,9 @@ public class WordSetRepository {
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-                Set removedSet = dataSnapshot.getValue(Set.class);
+                FireBaseSet removedSet = dataSnapshot.getValue(FireBaseSet.class);
 
-                List<Set> sets = mOnlineSets.getValue();
+                List<FireBaseSet> sets = mOnlineSets.getValue();
                 if (sets != null) {
                     if (sets.contains(removedSet)) {
                         sets.remove(removedSet);
@@ -93,25 +94,26 @@ public class WordSetRepository {
 
     public void downloadSet(String key) {
         mFireBase.getReference().child("sets").child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                WordSet wordSet = dataSnapshot.getValue(WordSet.class);
+                FireBaseWordSet fireBaseWordSet = dataSnapshot.getValue(FireBaseWordSet.class);
 
-                Set set = new Set(0, "[Downloaded] " + wordSet.getSet().getName(), wordSet.getSet().getDescription());
-                long setID = setDao.insert(set);
+                if (fireBaseWordSet != null) {
 
-                long nLangId = mLanguageRepository.insertLanguage("Test lang", wordSet.getNativeLanguageCode()); //TODO: FIX LANG
-                long fLangId = mLanguageRepository.insertLanguage("Test lang", wordSet.getForeignLanguageCode()); //TODO: FIX LANG
+                    Set set = new Set(0, "[Downloaded] " + fireBaseWordSet.getName(), fireBaseWordSet.getDescription());
+                    long setID = setDao.insert(set);
 
-                for (WordPair wp : wordSet.getWordPairs()) {
-                    Word nativeWord = wp.getNativeWord();
-                    Word foreignWord = wp.getForeignWord();
+                    long nLangId = mLanguageRepository.insertLanguage("Test lang", fireBaseWordSet.getNativeLanguageCode()); //TODO: FIX LANG
+                    long fLangId = mLanguageRepository.insertLanguage("Test lang", fireBaseWordSet.getForeignLanguageCode()); //TODO: FIX LANG
 
-                    nativeWord.setLanguageID(nLangId);
-                    foreignWord.setLanguageID(fLangId);
+                    for (FireBaseWordPair wp : fireBaseWordSet.getWordPairs()) {
+                        Word nWord = new Word(0, nLangId, wp.getNativeWord());
+                        Word fWord = new Word(0, fLangId, wp.getForeignWord());
 
-                    long pairID = mWordPairRepository.saveWordPair(nativeWord, foreignWord);
-                    mPairWithSetDao.insert(new PairWithSet(setID, pairID));
+                        long pairID = mWordPairRepository.saveWordPair(nWord, fWord);
+                        mPairWithSetDao.insert(new PairWithSet(setID, pairID));
+                    }
                 }
             }
 
@@ -122,7 +124,7 @@ public class WordSetRepository {
         });
     }
 
-    public LiveData<List<Set>> getOnlineSets() {
+    public LiveData<List<FireBaseSet>> getOnlineSets() {
         return mOnlineSets;
     }
 
@@ -130,10 +132,26 @@ public class WordSetRepository {
         return mAllSets;
     }
 
-    public void uploadSet(Set set) {
-        WordSet wordSet = new WordSet(set, getAllWordPairsInSet(set.getSetID()), "en", "fr");
+    public void uploadSetToFireBase(Set set) {
+
+        List<FireBaseWordPair> fireBaseWordPairs = new LinkedList<>();
+        for (WordPair wp: getAllWordPairsInSet(set.getSetID())) {
+            fireBaseWordPairs.add(new FireBaseWordPair(wp.getNativeWord().getWord(), wp.getForeignWord().getWord()));
+        }
+
+        FireBaseWordSet wordSet = new FireBaseWordSet(
+                "parent",
+                set.getName(),
+                set.getDescription(),
+                "en",
+                "fr",   //TODO: fix lang
+                fireBaseWordPairs);
 
         mFireBase.getReference().child("sets").push().setValue(wordSet);
+    }
+
+    public void deleteFireBaseSet(FireBaseSet fireBaseSet) {
+        mFireBase.getReference().child("sets").child(fireBaseSet.getKey()).removeValue();
     }
 
     public Set getSet(long setId) {
@@ -156,4 +174,5 @@ public class WordSetRepository {
     public List<WordPair> getAllWordPairsInSet(long setID) {
         return mPairWithSetDao.getAllWordPairsInSet(setID);
     }
+
 }

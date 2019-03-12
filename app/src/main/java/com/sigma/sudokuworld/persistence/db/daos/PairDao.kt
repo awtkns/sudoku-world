@@ -45,6 +45,9 @@ interface PairDao {
     """)
     fun getWordPair(wordPairID: Long): WordPair?
 
+    @Query("SELECT * FROM word_pairs WHERE nativeWordID = :nativeWordID AND foreignWordID = :foreignWordID")
+    fun getPair(nativeWordID: Long, foreignWordID: Long): Pair?
+
     @Insert(onConflict = OnConflictStrategy.FAIL)
     fun insert(vararg wordPairs: Pair)
 

@@ -13,7 +13,7 @@ public class WordRepository {
         mWordDao = AppDatabase.Companion.getInstance(application).getWordDao();
     }
 
-    public long saveWordPair(Word word) {
+    public long saveWord(Word word) {
 
         //Making Sure its not already in the db
         Word w = mWordDao.getWord(word.getWord(), word.getLanguageID());
