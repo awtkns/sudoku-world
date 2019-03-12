@@ -22,6 +22,9 @@ abstract class DatabaseInitializer {
 
         fun populateDatabase(db: AppDatabase) {
 
+            val english = Language(1, "English", "en")
+            val french = Language(2, "French", "fr")
+
             val words = arrayOf(
                     Word(1, 1, "Red"),
                     Word(2, 1, "Pink"),
@@ -55,7 +58,7 @@ abstract class DatabaseInitializer {
                     Pair(9, 9, 18)
             )
 
-            val set = Set(1, false,"French Colours", "Learn your french colours")
+            val set = Set(1, false,"Default Word Set", "Learn your french colours")
 
             val pairsWithSet = arrayOf(
                     PairWithSet(1, 1),
@@ -69,6 +72,7 @@ abstract class DatabaseInitializer {
                     PairWithSet(1, 9)
             )
 
+            db.getLanguageDao().insert(english, french)
             db.getWordDao().insert(*words)
             db.getPairDao().insert(*pairs)
             db.getSetDao().insert(set)

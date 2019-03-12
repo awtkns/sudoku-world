@@ -39,6 +39,7 @@ public class SetRecyclerViewAdapter extends RecyclerView.Adapter<SetRecyclerView
         holder.mContentView.setText(mSets.get(position).getDescription());
 
         if (mSets.get(position).isADownload()) holder.mDownloadIcon.setVisibility(View.VISIBLE);
+        else holder.mDownloadIcon.setVisibility(View.INVISIBLE);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override

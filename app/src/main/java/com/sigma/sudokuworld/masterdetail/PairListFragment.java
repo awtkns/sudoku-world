@@ -77,7 +77,7 @@ public class PairListFragment extends Fragment {
 
     public interface OnFragmentInteractionListener {
         void onClickPairFragmentInteraction(WordPair wordPair);
-        void onLongPairClickFragmentInteraction(Set set);
+        void onLongPairClickFragmentInteraction(WordPair wordPair);
     }
 }
 

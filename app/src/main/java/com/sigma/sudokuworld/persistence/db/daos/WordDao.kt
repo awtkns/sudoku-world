@@ -1,9 +1,6 @@
 package com.sigma.sudokuworld.persistence.db.daos
 
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Insert
-import android.arch.persistence.room.OnConflictStrategy
-import android.arch.persistence.room.Query
+import android.arch.persistence.room.*
 import com.sigma.sudokuworld.persistence.db.entities.Word
 
 @Dao
@@ -26,5 +23,9 @@ interface WordDao {
 
     @Query("DELETE FROM words")
     fun deleteAll()
+
+    @Query("DELETE FROM words WHERE wordID == :wordID")
+    fun delete(wordID: Long)
+
 
 }

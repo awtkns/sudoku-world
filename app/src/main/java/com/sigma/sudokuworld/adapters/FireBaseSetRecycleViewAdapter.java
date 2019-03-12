@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sigma.sudokuworld.R;
@@ -36,6 +37,8 @@ public class FireBaseSetRecycleViewAdapter extends RecyclerView.Adapter<FireBase
         holder.mSetItem = mSets.get(position);
         holder.mIdView.setText(mSets.get(position).getName());
         holder.mContentView.setText(mSets.get(position).getDescription());
+
+        holder.mIcon.setVisibility(View.GONE);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +79,7 @@ public class FireBaseSetRecycleViewAdapter extends RecyclerView.Adapter<FireBase
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
+        public final ImageView mIcon;
         public FireBaseSet mSetItem;
 
         public ViewHolder(View view) {
@@ -83,6 +87,7 @@ public class FireBaseSetRecycleViewAdapter extends RecyclerView.Adapter<FireBase
             mView = view;
             mIdView = view.findViewById(R.id.item_number);
             mContentView = view.findViewById(R.id.content);
+            mIcon = view.findViewById(R.id.downloadICON);
         }
 
         @Override

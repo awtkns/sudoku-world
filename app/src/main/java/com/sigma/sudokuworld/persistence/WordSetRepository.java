@@ -92,8 +92,8 @@ public class WordSetRepository {
         });
     }
 
-    public void downloadSet(String key) {
-        mFireBase.getReference().child("sets").child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+    public void downloadSet(FireBaseSet fireBaseSet) {
+        mFireBase.getReference().child("sets").child(fireBaseSet.getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

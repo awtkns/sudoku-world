@@ -62,7 +62,6 @@ public class MasterSelectActivity extends AppCompatActivity implements SetListFr
 
         mFloatingActionButton.setOnClickListener(new FloatingActionButtonListener());
         mFloatingActionButton.setImageResource(R.drawable.ic_add_black_24dp);
-
     }
 
 
@@ -76,7 +75,7 @@ public class MasterSelectActivity extends AppCompatActivity implements SetListFr
     public void onFireBaseLongClick(View view, final FireBaseSet set) {
         new AlertDialog.Builder(this)
                 .setTitle(set.getName())
-                .setPositiveButton("Upload", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Download", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         mMasterDetailViewModel.downLoadSet(set);
@@ -131,14 +130,23 @@ public class MasterSelectActivity extends AppCompatActivity implements SetListFr
     //Pair fragment listeners
     @Override
     public void onClickPairFragmentInteraction(WordPair wordPair) {
-        Intent intent = new Intent(this, PairDetailActivity.class);
-        intent.putExtra(KeyConstants.PAIR_ID_KEY, wordPair.getPairID());
-        startActivity(intent);
+        //TODO disabled for demo
+//        Intent intent = new Intent(this, PairDetailActivity.class);
+//        intent.putExtra(KeyConstants.PAIR_ID_KEY, wordPair.getPairID());
+//        startActivity(intent);
     }
 
     @Override
-    public void onLongPairClickFragmentInteraction(Set set) {
-        //Stub
+    public void onLongPairClickFragmentInteraction(final WordPair wordPair) {
+        String msg = wordPair.getNativeWord().getWord() + " " + wordPair.getForeignWord().getWord();
+
+        Snackbar.make(findViewById(R.id.tabPager), msg, Snackbar.LENGTH_LONG)
+                .setAction("Delete", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mMasterDetailViewModel.deletePair(wordPair);
+                    }
+                }).show();
     }
 
     public class FloatingActionButtonListener implements View.OnClickListener {

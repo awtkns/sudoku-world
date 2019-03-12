@@ -58,9 +58,9 @@ public class AddSetActivity extends AbstractDrillDownActivity implements AddSetF
             errorMsg = "The set needs a description.";
         }
 
-        else if (mCheckedPairs.isEmpty()) {
+        else if (mCheckedPairs.size() < 9) {
             isValidSet = false;
-            errorMsg = "The set needs a needs nine words.";
+            errorMsg = "The set needs at least nine words.";
         }
 
         if (isValidSet) {

@@ -5,6 +5,7 @@ import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
 import com.sigma.sudokuworld.persistence.db.entities.PairWithSet
+import com.sigma.sudokuworld.persistence.db.entities.Set
 import com.sigma.sudokuworld.persistence.db.views.WordPair
 
 @Dao
@@ -25,6 +26,14 @@ interface PairWithSetDao {
         WHERE wscr.setID == :setID
     """)
     fun getAllWordPairsInSet(setID: Long): List<WordPair>
+
+    @Query("""
+        SELECT s.* FROM sets as s
+        INNER JOIN word_set_cross_reference as wscr
+        ON wscr.setID == s.setID
+        WHERE wscr.pairID == :pairID
+    """)
+    fun getAllSetsForPair(pairID: Long): List<Set>
 
     @Insert(onConflict = OnConflictStrategy.FAIL)
     fun insert(vararg pairWithSets: PairWithSet)
