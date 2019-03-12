@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "202154014754",
+    "firebase_url": "https://sudokuworld-sigma.firebaseio.com",
+    "project_id": "sudokuworld-sigma",
+    "storage_bucket": "sudokuworld-sigma.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:202154014754:android:2e9d2b48365faf65",
+        "android_client_info": {
+          "package_name": "com.sigma.sudokuworld"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "202154014754-1i2fc647fd2rqhc7fsernitokccnbbb4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sigma.sudokuworld",
+            "certificate_hash": "b0d9dd20c11352b57937372fd9336aef9437ef9a"
+          }
+        },
+        {
+          "client_id": "202154014754-pfaojak55g0gehb4nlp1ecjsqqoecscl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSM5c_iS2B4qAtDTAkf3hF49D5E8fu9hY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "202154014754-pfaojak55g0gehb4nlp1ecjsqqoecscl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

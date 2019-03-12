@@ -1,6 +1,7 @@
 package com.sigma.sudokuworld.masterdetail;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.os.Build;
@@ -13,6 +14,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -21,6 +23,7 @@ import com.sigma.sudokuworld.R;
 import com.sigma.sudokuworld.persistence.db.entities.Set;
 import com.sigma.sudokuworld.persistence.db.entities.Pair;
 import com.sigma.sudokuworld.persistence.db.views.WordPair;
+import com.sigma.sudokuworld.persistence.firebase.FireBaseSet;
 import com.sigma.sudokuworld.persistence.sharedpreferences.KeyConstants;
 import com.sigma.sudokuworld.masterdetail.detail.AddPairActivity;
 import com.sigma.sudokuworld.masterdetail.detail.AddSetActivity;
@@ -62,7 +65,38 @@ public class MasterSelectActivity extends AppCompatActivity implements SetListFr
 
     }
 
-    //Set fragment listeners
+
+    //Fire base listeners
+    @Override
+    public void onFireBaseClick(FireBaseSet set) {
+          //Stub
+    }
+
+    @Override
+    public void onFireBaseLongClick(View view, final FireBaseSet set) {
+        new AlertDialog.Builder(this)
+                .setTitle(set.getName())
+                .setPositiveButton("Upload", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mMasterDetailViewModel.downLoadSet(set);
+                    }
+                })
+                .setNegativeButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mMasterDetailViewModel.deleteSet(set);
+                    }
+                })
+                .setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                }).show();
+    }
+
+    //Set fragment listener
     @Override
     public void onClickSetFragmentInteraction(Set set) {
         Intent intent = new Intent(this, SetDetailActivity.class);
@@ -71,10 +105,27 @@ public class MasterSelectActivity extends AppCompatActivity implements SetListFr
     }
 
     @Override
-    public void onLongClickSetFragmentInteraction(View view, Set set) {
-        String msg = "Delete the '" + set.getName() + "' word set?";
-        Snackbar.make(view, msg, Snackbar.LENGTH_LONG)
-                .setAction("Delete", new DeleteSnackBarListener(set)).show();
+    public void onLongClickSetFragmentInteraction(View view, final Set set) {
+        new AlertDialog.Builder(this)
+                .setTitle(set.getName())
+                .setPositiveButton("Upload", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mMasterDetailViewModel.uploadSet(set);
+                    }
+                })
+                .setNegativeButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mMasterDetailViewModel.deleteSet(set);
+                    }
+                })
+                .setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                }).show();
     }
 
     //Pair fragment listeners
@@ -102,26 +153,6 @@ public class MasterSelectActivity extends AppCompatActivity implements SetListFr
             }
 
             startActivity(intent);
-        }
-    }
-
-    public class DeleteSnackBarListener implements View.OnClickListener {
-        private Set set;
-        private Pair pair;
-
-        public DeleteSnackBarListener(Set set) {
-            super();
-            this.set = set;
-        }
-
-        public DeleteSnackBarListener(Pair wordPair) {
-            super();
-            this.pair = wordPair;
-        }
-
-        @Override
-        public void onClick(View v) {
-            if (set != null) mMasterDetailViewModel.deleteSet(set);
         }
     }
 

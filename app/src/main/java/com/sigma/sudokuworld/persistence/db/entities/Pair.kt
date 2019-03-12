@@ -18,7 +18,10 @@ import android.arch.persistence.room.PrimaryKey
         childColumns = ["foreignWordID"],
         onDelete = CASCADE)],
     tableName = "word_pairs",
-    indices = [Index(value = ["foreignWordID"]), Index(value = ["nativeWordID"])]
+    indices = [
+        Index(value = ["foreignWordID"]),
+        Index(value = ["nativeWordID"]),
+        Index(value = ["nativeWordID", "foreignWordID"], unique = true)]
 )
 data class Pair (
     @PrimaryKey(autoGenerate = true) var pairID: Long,

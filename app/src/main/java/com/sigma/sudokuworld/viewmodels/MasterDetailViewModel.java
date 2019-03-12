@@ -8,6 +8,7 @@ import com.sigma.sudokuworld.persistence.WordSetRepository;
 import com.sigma.sudokuworld.persistence.db.entities.Set;
 import com.sigma.sudokuworld.persistence.db.entities.Word;
 import com.sigma.sudokuworld.persistence.db.views.WordPair;
+import com.sigma.sudokuworld.persistence.firebase.FireBaseSet;
 import com.sigma.sudokuworld.persistence.sharedpreferences.PersistenceService;
 
 import java.util.List;
@@ -17,7 +18,9 @@ public class MasterDetailViewModel extends BaseSettingsViewModel {
     private WordSetRepository mWordSetRepository;
     private WordPairRepository mWordPairRepository;
     private LiveData<List<Set>> mAllSets;
+    private LiveData<List<FireBaseSet>> mOnlineSets;
     private LiveData<List<WordPair>> mAllWordPairs;
+
 
     public MasterDetailViewModel(@NonNull Application application) {
         super(application);
@@ -26,6 +29,11 @@ public class MasterDetailViewModel extends BaseSettingsViewModel {
 
         mAllSets = mWordSetRepository.getAllSets();
         mAllWordPairs = mWordPairRepository.getAllWordPairs();
+        mOnlineSets = mWordSetRepository.getOnlineSets();
+    }
+
+    public LiveData<List<FireBaseSet>> getOnlineSets() {
+        return mOnlineSets;
     }
 
     public LiveData<List<Set>> getAllSets() {
@@ -70,5 +78,19 @@ public class MasterDetailViewModel extends BaseSettingsViewModel {
 
     public void saveWordPair(Word nativeWord, Word foreignWord) {
         mWordPairRepository.saveWordPair(nativeWord, foreignWord);
+    }
+
+
+    //FIRE BASE
+    public void downLoadSet(FireBaseSet fireBaseSet) {
+        mWordSetRepository.downloadSet(fireBaseSet.getKey());
+    }
+
+    public void uploadSet(Set set) {
+        mWordSetRepository.uploadSetToFireBase(set);
+    }
+
+    public void deleteSet(FireBaseSet fireBaseSet){
+        mWordSetRepository.deleteFireBaseSet(fireBaseSet);
     }
 }

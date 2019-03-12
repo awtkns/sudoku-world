@@ -13,12 +13,15 @@ interface WordDao {
     fun getAll(): List<Word>
 
     @Query("SELECT * FROM words where wordID = :wordID")
-    fun getWordByID(wordID: Int): Word
+    fun getWordByID(wordID: Long): Word?
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Query("SELECT * FROM words where word = :word AND languageID = :languageID")
+    fun getWord(word: String, languageID: Long): Word?
+
+    @Insert(onConflict = OnConflictStrategy.FAIL)
     fun insert(vararg words: Word)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.FAIL)
     fun insert(word: Word): Long
 
     @Query("DELETE FROM words")

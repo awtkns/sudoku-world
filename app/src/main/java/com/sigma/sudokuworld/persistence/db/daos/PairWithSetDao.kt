@@ -26,7 +26,7 @@ interface PairWithSetDao {
     """)
     fun getAllWordPairsInSet(setID: Long): List<WordPair>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.FAIL)
     fun insert(vararg pairWithSets: PairWithSet)
 
     @Query("DELETE FROM word_set_cross_reference")

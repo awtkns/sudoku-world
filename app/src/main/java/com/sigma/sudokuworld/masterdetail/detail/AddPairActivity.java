@@ -28,7 +28,7 @@ public class AddPairActivity extends AbstractDrillDownActivity {
                     if (!nWord.isEmpty() && !fWord.isEmpty()) {
 
                         Word nativeWord = new Word(0, 1, nWord);
-                        Word foreignWord = new Word(0, 1, fWord);
+                        Word foreignWord = new Word(0, 2, fWord);   //TODO fix lang
 
                         mMasterDetailViewModel.saveWordPair(nativeWord, foreignWord);
                         finish();

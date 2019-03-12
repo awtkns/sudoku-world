@@ -4,24 +4,23 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sigma.sudokuworld.R;
 import com.sigma.sudokuworld.masterdetail.SetListFragment;
 import com.sigma.sudokuworld.masterdetail.SetListFragment.OnFragmentInteractionListener;
-import com.sigma.sudokuworld.persistence.db.entities.Set;
+import com.sigma.sudokuworld.persistence.firebase.FireBaseSet;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class SetRecyclerViewAdapter extends RecyclerView.Adapter<SetRecyclerViewAdapter.ViewHolder> {
+public class FireBaseSetRecycleViewAdapter extends RecyclerView.Adapter<FireBaseSetRecycleViewAdapter.ViewHolder> {
 
-    private List<Set> mSets;
+    private List<FireBaseSet> mSets;
     private final SetListFragment.OnFragmentInteractionListener mListener;
 
-    public SetRecyclerViewAdapter(OnFragmentInteractionListener listener) {
+    public FireBaseSetRecycleViewAdapter(OnFragmentInteractionListener listener) {
         mSets = new ArrayList<>();
         mListener = listener;
     }
@@ -38,15 +37,13 @@ public class SetRecyclerViewAdapter extends RecyclerView.Adapter<SetRecyclerView
         holder.mIdView.setText(mSets.get(position).getName());
         holder.mContentView.setText(mSets.get(position).getDescription());
 
-        if (mSets.get(position).isADownload()) holder.mDownloadIcon.setVisibility(View.VISIBLE);
-
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onClickSetFragmentInteraction(holder.mSetItem);
+                    mListener.onFireBaseClick(holder.mSetItem);
                 }
             }
         });
@@ -57,7 +54,7 @@ public class SetRecyclerViewAdapter extends RecyclerView.Adapter<SetRecyclerView
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onLongClickSetFragmentInteraction(holder.mView, holder.mSetItem);
+                    mListener.onFireBaseLongClick(holder.mView, holder.mSetItem);
                 }
 
                 return true;
@@ -70,7 +67,7 @@ public class SetRecyclerViewAdapter extends RecyclerView.Adapter<SetRecyclerView
         return mSets.size();
     }
 
-    public void setItems(List<Set> sets) {
+    public void setItems(List<FireBaseSet> sets) {
         mSets = sets;
         notifyDataSetChanged();
     }
@@ -79,15 +76,13 @@ public class SetRecyclerViewAdapter extends RecyclerView.Adapter<SetRecyclerView
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public final ImageView mDownloadIcon;
-        public Set mSetItem;
+        public FireBaseSet mSetItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
             mIdView = view.findViewById(R.id.item_number);
             mContentView = view.findViewById(R.id.content);
-            mDownloadIcon = view.findViewById(R.id.downloadICON);
         }
 
         @Override

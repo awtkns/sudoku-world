@@ -7,8 +7,8 @@ import com.sigma.sudokuworld.persistence.db.entities.Game
 @Dao
 interface GameDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(game: Game): Long
+    @Insert(onConflict = OnConflictStrategy.FAIL)
+    fun insert(game: Game): Long?
 
     @Update
     fun update(game: Game)

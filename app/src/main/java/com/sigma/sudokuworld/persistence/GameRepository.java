@@ -14,7 +14,7 @@ public class GameRepository {
     private GameDao mGameDao;
 
     public GameRepository(@NonNull Application application) {
-        mGameDao = AppDatabase.Companion.getInstance(application).getGameSaveDao();
+        mGameDao = AppDatabase.Companion.getInstance(application).getGameDao();
     }
 
     public long newGame(Game game) {

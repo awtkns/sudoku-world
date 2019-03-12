@@ -43,10 +43,16 @@ interface PairDao {
         INNER JOIN languages as flang on f.languageID == flang.languageID
         WHERE pairID == :wordPairID
     """)
-    fun getWordPair(wordPairID: Long): WordPair
+    fun getWordPair(wordPairID: Long): WordPair?
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Query("SELECT * FROM word_pairs WHERE nativeWordID = :nativeWordID AND foreignWordID = :foreignWordID")
+    fun getPair(nativeWordID: Long, foreignWordID: Long): Pair?
+
+    @Insert(onConflict = OnConflictStrategy.FAIL)
     fun insert(vararg wordPairs: Pair)
+
+    @Insert(onConflict = OnConflictStrategy.FAIL)
+    fun insert(wordPair: Pair): Long
 
     @Query("DELETE FROM word_pairs")
     fun deleteAll()

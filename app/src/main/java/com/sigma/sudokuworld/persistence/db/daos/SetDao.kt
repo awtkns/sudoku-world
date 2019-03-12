@@ -14,9 +14,9 @@ interface SetDao {
     fun getAllLiveData(): LiveData<List<Set>>
 
     @Query("SELECT * FROM sets where setID = :setID")
-    fun getSetByID(setID: Long): Set
+    fun getSetByID(setID: Long): Set?
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.FAIL)
     fun insert(set: Set): Long
 
     @Delete

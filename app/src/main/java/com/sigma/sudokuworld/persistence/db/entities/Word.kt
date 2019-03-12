@@ -20,10 +20,12 @@ import android.arch.persistence.room.PrimaryKey
         childColumns = ["languageID"],
         onDelete = CASCADE)],
     tableName = "words",
-    indices = [Index(value = ["languageID"])]
+    indices = [
+        Index(value = ["languageID"]),
+        Index(value = ["languageID", "word"], unique = true)]
 )
 data class Word (
-    @PrimaryKey(autoGenerate = true) var wordID: Long,
-    var languageID: Long,
-    var word:String
+    @PrimaryKey(autoGenerate = true) var wordID: Long = -1,
+    var languageID: Long = -1,
+    var word:String = ""
 )
