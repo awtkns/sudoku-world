@@ -17,7 +17,9 @@ public class MasterDetailViewModel extends BaseSettingsViewModel {
     private WordSetRepository mWordSetRepository;
     private WordPairRepository mWordPairRepository;
     private LiveData<List<Set>> mAllSets;
+    private LiveData<List<Set>> mOnlineSets;
     private LiveData<List<WordPair>> mAllWordPairs;
+
 
     public MasterDetailViewModel(@NonNull Application application) {
         super(application);
@@ -26,6 +28,11 @@ public class MasterDetailViewModel extends BaseSettingsViewModel {
 
         mAllSets = mWordSetRepository.getAllSets();
         mAllWordPairs = mWordPairRepository.getAllWordPairs();
+        mOnlineSets = mWordSetRepository.getOnlineSets();
+    }
+
+    public LiveData<List<Set>> getOnlineSets() {
+        return mOnlineSets;
     }
 
     public LiveData<List<Set>> getAllSets() {
@@ -70,5 +77,9 @@ public class MasterDetailViewModel extends BaseSettingsViewModel {
 
     public void saveWordPair(Word nativeWord, Word foreignWord) {
         mWordPairRepository.saveWordPair(nativeWord, foreignWord);
+    }
+
+    public void uploadSet(Set set) {
+        mWordSetRepository.uploadSet(set);
     }
 }

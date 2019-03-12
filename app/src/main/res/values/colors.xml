@@ -21,7 +21,7 @@
     <color name="colorButtonText">#ffffff</color>
 
     <color name="colorBlueButtonBackground">#ccaed6f1</color>
-    <color name="colorBlueButtonPressedBackground">#aed6f1</color>
+    <color name="colorBlueButtonPressedBackground">#AED6F1</color>
     <color name="colorBlueButtonStroke">#803498db</color>
 
     <color name="colorRedButtonBackground">#ee4956</color>

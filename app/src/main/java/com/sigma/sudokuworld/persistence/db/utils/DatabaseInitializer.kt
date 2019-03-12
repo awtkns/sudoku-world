@@ -65,9 +65,17 @@ abstract class DatabaseInitializer {
 
             db.getLanguageDao().insert(*languages)
             db.getWordDao().insert(*words)
-            db.getWordPairDao().insert(*pairs)
+            db.getPairDao().insert(*pairs)
             db.getSetDao().insert(set)
-            db.getWordSetDao().insert(*pairsWithSet)
+            db.getPairWithSetDao().insert(*pairsWithSet)
+        }
+
+        fun deleteAll(db: AppDatabase) {
+            db.getLanguageDao().deleteAll()
+            db.getWordDao().deleteAll()
+            db.getPairDao().deleteAll()
+            db.getSetDao().deleteAll()
+            db.getPairWithSetDao().deleteAll()
         }
     }
 }

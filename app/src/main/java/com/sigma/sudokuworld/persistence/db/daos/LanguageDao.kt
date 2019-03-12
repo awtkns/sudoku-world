@@ -10,13 +10,16 @@ interface LanguageDao {
     fun getAll(): List<Language>
 
     @Query("SELECT * FROM languages WHERE code = :languageCode")
-    fun getLanguageByCode(languageCode: String): Language
+    fun getLanguageByCode(languageCode: String): Language?
 
     @Query("SELECT * FROM languages WHERE languageID = :languageID")
-    fun getLanguageByID(languageID: Int): Language
+    fun getLanguageByID(languageID: Int): Language?
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.FAIL)
     fun insert(vararg languages: Language)
+
+    @Insert(onConflict = OnConflictStrategy.FAIL)
+    fun insert(language: Language): Long
 
     @Query("DELETE FROM languages")
     fun deleteAll()

@@ -81,7 +81,7 @@ class DatabaseInstrumentedTest {
     @Test
     @Throws(Exception::class)
     fun readWordPair() {
-        val storedWordPairs = db.getWordPairDao().getAll()
+        val storedWordPairs = db.getPairDao().getAll()
         assertEquals(wordPairList[0].pairID, storedWordPairs[0].pairID)
         assertEquals(wordPairList[0].nativeWordID, storedWordPairs[0].nativeWordID)
         assertEquals(wordPairList[0].foreignWordID, storedWordPairs[0].foreignWordID)
@@ -106,7 +106,7 @@ class DatabaseInstrumentedTest {
     @Test
     @Throws(Exception::class)
     fun readWordSet() {
-        val wordPairsInSet = db.getWordSetDao().getAllWordPairsInSet(1)
+        val wordPairsInSet = db.getPairWithSetDao().getAllWordPairsInSet(1)
         assertEquals(2, wordPairsInSet.size)
         assertEquals(1, wordPairsInSet[0].nativeWord.wordID)
     }
@@ -134,10 +134,10 @@ class DatabaseInstrumentedTest {
 
         val gameList = listOf(save1, save2)
 
-        db.getGameSaveDao().insert(save1)
-        db.getGameSaveDao().insert(save2)
+        db.getGameDao().insert(save1)
+        db.getGameDao().insert(save2)
 
-        val gameSaves = db.getGameSaveDao().getAllStatic()
+        val gameSaves = db.getGameDao().getAllStatic()
         assertEquals(gameList[0].saveID, gameSaves[0].saveID)
         assertEquals(gameList[0].difficulty, gameSaves[0].difficulty)
         assertEquals(gameList[0].gameMode, gameSaves[0].gameMode)
@@ -184,7 +184,7 @@ class DatabaseInstrumentedTest {
         val wordPair1 = Pair(1, 1, 2)
         val wordPair2 = Pair(2, 2, 1)
         wordPairList = listOf(wordPair1, wordPair2)
-        db.getWordPairDao().insert(wordPair1, wordPair2)
+        db.getPairDao().insert(wordPair1, wordPair2)
 
         val set1 = Set(1, "test_set_name", "test_set_description")
         setList = listOf(set1)
@@ -193,6 +193,6 @@ class DatabaseInstrumentedTest {
         val wordSet1 = PairWithSet(1, 1)
         val wordSet2 = PairWithSet(1, 2)
         mPairWithSetList = listOf(wordSet1, wordSet2)
-        db.getWordSetDao().insert(wordSet1, wordSet2)
+        db.getPairWithSetDao().insert(wordSet1, wordSet2)
     }
 }

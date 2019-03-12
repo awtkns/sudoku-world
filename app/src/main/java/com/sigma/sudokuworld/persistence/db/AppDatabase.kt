@@ -5,6 +5,7 @@ import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.arch.persistence.room.TypeConverters
 import android.content.Context
+import com.google.firebase.FirebaseApp
 import com.sigma.sudokuworld.persistence.db.daos.*
 import com.sigma.sudokuworld.persistence.db.entities.*
 import com.sigma.sudokuworld.persistence.db.entities.Set
@@ -16,7 +17,7 @@ import com.sigma.sudokuworld.persistence.db.utils.DatabaseInitializer
  * Written in kotlin
  */
 @Database(
-        version = 8,
+        version = 9,
         entities = [
             Language::class,
             Word::class,
@@ -29,10 +30,10 @@ import com.sigma.sudokuworld.persistence.db.utils.DatabaseInitializer
 abstract class AppDatabase : RoomDatabase() {
     abstract fun getLanguageDao(): LanguageDao
     abstract fun getWordDao(): WordDao
-    abstract fun getWordPairDao(): PairDao
+    abstract fun getPairDao(): PairDao
     abstract fun getSetDao(): SetDao
-    abstract fun getWordSetDao(): PairWithSetDao
-    abstract fun getGameSaveDao(): GameDao
+    abstract fun getPairWithSetDao(): PairWithSetDao
+    abstract fun getGameDao(): GameDao
 
     //Singleton
     companion object {

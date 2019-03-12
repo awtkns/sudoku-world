@@ -7,6 +7,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -25,6 +26,7 @@ public class SetListFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private MasterDetailViewModel mMasterDetailViewModel;
     private SetRecyclerViewAdapter mAdapter;
+    private SetRecyclerViewAdapter mOnlineAdapter;
 
     public static SetListFragment newInstance() {
         return new SetListFragment();
@@ -35,6 +37,7 @@ public class SetListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mMasterDetailViewModel = ViewModelProviders.of(this).get(MasterDetailViewModel.class);
         mAdapter = new SetRecyclerViewAdapter(mListener);
+        mOnlineAdapter = new SetRecyclerViewAdapter(mListener);
 
         LiveData<List<Set>> allSets = mMasterDetailViewModel.getAllSets();
         allSets.observe(this, new Observer<List<Set>>() {
@@ -43,19 +46,28 @@ public class SetListFragment extends Fragment {
                 mAdapter.setItems(sets);
             }
         });
+
+        LiveData<List<Set>> onlineSets = mMasterDetailViewModel.getOnlineSets();
+        onlineSets.observe(this, new Observer<List<Set>>() {
+            @Override
+            public void onChanged(@Nullable List<Set> sets) {
+                mOnlineAdapter.setItems(sets);
+            }
+        });
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_set_master, container, false);
 
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            recyclerView.setAdapter(mAdapter);
-        }
+        RecyclerView localView = view.findViewById(R.id.localRecycler);
+        RecyclerView onlineView = view.findViewById(R.id.onlineRecycler);
+
+        localView.setLayoutManager(new LinearLayoutManager(localView.getContext()));
+        localView.setAdapter(mAdapter);
+
+        onlineView.setLayoutManager(new LinearLayoutManager(localView.getContext()));
+        onlineView.setAdapter(mOnlineAdapter);
 
         return view;
     }

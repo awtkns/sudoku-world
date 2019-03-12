@@ -3,8 +3,6 @@ package com.sigma.sudokuworld.persistence;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import com.sigma.sudokuworld.persistence.db.AppDatabase;
-import com.sigma.sudokuworld.persistence.db.daos.LanguageDao;
-import com.sigma.sudokuworld.persistence.db.daos.WordDao;
 import com.sigma.sudokuworld.persistence.db.daos.PairDao;
 import com.sigma.sudokuworld.persistence.db.entities.Word;
 import com.sigma.sudokuworld.persistence.db.entities.Pair;
@@ -16,16 +14,14 @@ import java.util.List;
 
 public class WordPairRepository {
     private PairDao mPairDao;
-    private WordDao mWordDao;
-    private LanguageDao mLanguageDao;
+    private WordRepository mWordRepository;
 
     private LiveData<List<WordPair>> mAllWordPairs;
 
     public WordPairRepository(@NonNull Application application) {
-        mPairDao = AppDatabase.Companion.getInstance(application).getWordPairDao();
-        mWordDao = AppDatabase.Companion.getInstance(application).getWordDao();
-        mLanguageDao = AppDatabase.Companion.getInstance(application).getLanguageDao();
+        mWordRepository = new WordRepository(application);
 
+        mPairDao = AppDatabase.Companion.getInstance(application).getPairDao();
         mAllWordPairs = mPairDao.getAllWordPairs();
     }
 
@@ -37,10 +33,11 @@ public class WordPairRepository {
         return mAllWordPairs;
     }
 
-    public void saveWordPair(Word nativeWord, Word foreignWord) {
-        long nID = mWordDao.insert(nativeWord);
-        long fID = mWordDao.insert(foreignWord);
-        mPairDao.insert(new Pair(0, nID, fID));
+    public long saveWordPair(Word nativeWord, Word foreignWord) {       //TODO: language code
+        long nID = mWordRepository.saveWordPair(nativeWord);
+        long fID = mWordRepository.saveWordPair(foreignWord);
+
+        return mPairDao.insert(new Pair(0, nID, fID));
     }
 }
 

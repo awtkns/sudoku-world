@@ -65,16 +65,18 @@ public class MasterSelectActivity extends AppCompatActivity implements SetListFr
     //Set fragment listeners
     @Override
     public void onClickSetFragmentInteraction(Set set) {
-        Intent intent = new Intent(this, SetDetailActivity.class);
-        intent.putExtra(KeyConstants.SET_ID_KEY, set.getSetID());
-        startActivity(intent);
+        mMasterDetailViewModel.uploadSet(set);
+
+
+//        Intent intent = new Intent(this, SetDetailActivity.class);
+//        intent.putExtra(KeyConstants.SET_ID_KEY, set.getSetID());
+//        startActivity(intent);
     }
 
     @Override
     public void onLongClickSetFragmentInteraction(View view, Set set) {
-        String msg = "Delete the '" + set.getName() + "' word set?";
-        Snackbar.make(view, msg, Snackbar.LENGTH_LONG)
-                .setAction("Delete", new DeleteSnackBarListener(set)).show();
+        Snackbar.make(view, set.getName(), Snackbar.LENGTH_LONG)
+                .setAction("Delete", new DeleteSnackBarListener(set));
     }
 
     //Pair fragment listeners
