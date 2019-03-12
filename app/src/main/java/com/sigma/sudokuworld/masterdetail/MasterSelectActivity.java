@@ -76,7 +76,7 @@ public class MasterSelectActivity extends AppCompatActivity implements SetListFr
     public void onFireBaseLongClick(View view, final FireBaseSet set) {
         new AlertDialog.Builder(this)
                 .setTitle(set.getName())
-                .setPositiveButton("Upload", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Download", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         mMasterDetailViewModel.downLoadSet(set);
