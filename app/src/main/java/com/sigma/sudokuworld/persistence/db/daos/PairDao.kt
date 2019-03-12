@@ -1,10 +1,7 @@
 package com.sigma.sudokuworld.persistence.db.daos
 
 import android.arch.lifecycle.LiveData
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Insert
-import android.arch.persistence.room.OnConflictStrategy
-import android.arch.persistence.room.Query
+import android.arch.persistence.room.*
 import com.sigma.sudokuworld.persistence.db.entities.Pair
 import com.sigma.sudokuworld.persistence.db.views.WordPair
 
@@ -53,6 +50,12 @@ interface PairDao {
 
     @Insert(onConflict = OnConflictStrategy.FAIL)
     fun insert(wordPair: Pair): Long
+
+    @Delete
+    fun delete(vararg pair: Pair)
+
+    @Query("DELETE FROM word_pairs WHERE pairID == :pairID")
+    fun delete(pairID: Long)
 
     @Query("DELETE FROM word_pairs")
     fun deleteAll()

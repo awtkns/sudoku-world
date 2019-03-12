@@ -46,6 +46,8 @@ public class AddSetFragment extends AbstractDrillDownFragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         recyclerView.setAdapter(mCheckedPairRecyclerViewAdapter);
 
+        mAppBarLayout.setTitle("Create Word Set");
+
         return view;
     }
 

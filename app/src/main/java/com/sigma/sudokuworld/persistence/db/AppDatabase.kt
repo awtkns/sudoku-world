@@ -43,6 +43,7 @@ abstract class AppDatabase : RoomDatabase() {
         fun getInstance(context: Context): AppDatabase {
             if (instance == null) {
                 instance = buildDB(context)
+
                 DatabaseInitializer.initLanguages(instance!!)
             }
 

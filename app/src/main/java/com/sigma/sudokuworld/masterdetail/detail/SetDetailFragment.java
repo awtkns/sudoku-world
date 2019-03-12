@@ -38,6 +38,7 @@ public class SetDetailFragment extends AbstractDrillDownFragment {
         if (mSet != null) {
             nameTextView.setText(mSet.getName());
             descriptionTextView.setText(mSet.getDescription());
+            mAppBarLayout.setTitle(mSet.getName());
         }
 
         PairRecyclerViewAdapter adapter = new PairRecyclerViewAdapter(null);
@@ -46,6 +47,8 @@ public class SetDetailFragment extends AbstractDrillDownFragment {
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         recyclerView.setAdapter(adapter);
+
+        ;
 
         return view;
     }

@@ -5,6 +5,7 @@ import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 import com.sigma.sudokuworld.persistence.WordPairRepository;
 import com.sigma.sudokuworld.persistence.WordSetRepository;
+import com.sigma.sudokuworld.persistence.db.entities.Pair;
 import com.sigma.sudokuworld.persistence.db.entities.Set;
 import com.sigma.sudokuworld.persistence.db.entities.Word;
 import com.sigma.sudokuworld.persistence.db.views.WordPair;
@@ -70,6 +71,10 @@ public class MasterDetailViewModel extends BaseSettingsViewModel {
 
     public List<WordPair> getWordsInSet(Set set) {
         return mWordSetRepository.getAllWordPairsInSet(set.getSetID());
+    }
+
+    public boolean deletePair(WordPair wordPair) {
+        return mWordPairRepository.deletePair(wordPair.getPairID());
     }
 
     public WordPair getWordPair(long pairID) {
