@@ -88,7 +88,7 @@ public class MasterDetailViewModel extends BaseSettingsViewModel {
 
     //FIRE BASE
     public void downLoadSet(FireBaseSet fireBaseSet) {
-        mWordSetRepository.downloadSet(fireBaseSet.getKey());
+        mWordSetRepository.downloadSet(fireBaseSet);
     }
 
     public void uploadSet(Set set) {
