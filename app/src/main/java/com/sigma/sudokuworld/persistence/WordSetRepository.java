@@ -101,7 +101,7 @@ public class WordSetRepository {
 
                 if (fireBaseWordSet != null) {
 
-                    Set set = new Set(0, "[Downloaded] " + fireBaseWordSet.getName(), fireBaseWordSet.getDescription());
+                    Set set = new Set(0, true, fireBaseWordSet.getName(), fireBaseWordSet.getDescription());
                     long setID = setDao.insert(set);
 
                     long nLangId = mLanguageRepository.insertLanguage("Test lang", fireBaseWordSet.getNativeLanguageCode()); //TODO: FIX LANG
@@ -163,7 +163,7 @@ public class WordSetRepository {
     }
 
     public void saveSet(String name, String description, List<WordPair> wordPairs) {
-        Set set = new Set(0, name, description);
+        Set set = new Set(0, false, name, description);
         long setId = setDao.insert(set);
 
         for (WordPair wp : wordPairs) {

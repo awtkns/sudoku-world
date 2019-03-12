@@ -9,12 +9,18 @@ abstract class DatabaseInitializer {
     //Kotlin equivalent to static
     companion object {
 
-        fun populateDatabase(db: AppDatabase) {
+        fun initLanguages(db: AppDatabase) {
+            val english = Language(0, "English", "en")
+            val french = Language(0, "French", "fr")
 
-            val languages = arrayOf(
-                    Language(1, "English", "en"),
-                    Language(2, "French", "fr")
-            )
+            val languageDao = db.getLanguageDao()
+
+            if (languageDao.getLanguageByCode("en") == null) languageDao.insert(english)
+            if (languageDao.getLanguageByCode("fr") == null) languageDao.insert(french)
+
+        }
+
+        fun populateDatabase(db: AppDatabase) {
 
             val words = arrayOf(
                     Word(1, 1, "Red"),
@@ -49,7 +55,7 @@ abstract class DatabaseInitializer {
                     Pair(9, 9, 18)
             )
 
-            val set = Set(1, "French Colours", "Learn your french colours")
+            val set = Set(1, false,"French Colours", "Learn your french colours")
 
             val pairsWithSet = arrayOf(
                     PairWithSet(1, 1),
@@ -63,7 +69,6 @@ abstract class DatabaseInitializer {
                     PairWithSet(1, 9)
             )
 
-            db.getLanguageDao().insert(*languages)
             db.getWordDao().insert(*words)
             db.getPairDao().insert(*pairs)
             db.getSetDao().insert(set)

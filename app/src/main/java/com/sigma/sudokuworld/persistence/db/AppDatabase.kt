@@ -17,7 +17,7 @@ import com.sigma.sudokuworld.persistence.db.utils.DatabaseInitializer
  * Written in kotlin
  */
 @Database(
-        version = 9,
+        version = 10,
         entities = [
             Language::class,
             Word::class,
@@ -43,8 +43,7 @@ abstract class AppDatabase : RoomDatabase() {
         fun getInstance(context: Context): AppDatabase {
             if (instance == null) {
                 instance = buildDB(context)
-
-                //DatabaseInitializer.populateDatabase(instance!!)
+                DatabaseInitializer.initLanguages(instance!!)
             }
 
             return instance!!

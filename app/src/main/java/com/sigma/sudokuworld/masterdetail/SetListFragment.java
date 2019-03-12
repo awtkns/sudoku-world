@@ -29,7 +29,6 @@ public class SetListFragment extends Fragment {
     private MasterDetailViewModel mMasterDetailViewModel;
     private SetRecyclerViewAdapter mAdapter;
     private FireBaseSetRecycleViewAdapter mOnlineAdapter;
-
     public static SetListFragment newInstance() {
         return new SetListFragment();
     }
@@ -53,7 +52,9 @@ public class SetListFragment extends Fragment {
         onlineSets.observe(this, new Observer<List<FireBaseSet>>() {
             @Override
             public void onChanged(@Nullable List<FireBaseSet> sets) {
-                mOnlineAdapter.setItems(sets);
+                if (sets != null) {
+                    mOnlineAdapter.setItems(sets);
+                }
             }
         });
     }
@@ -70,6 +71,7 @@ public class SetListFragment extends Fragment {
 
         onlineView.setLayoutManager(new LinearLayoutManager(localView.getContext()));
         onlineView.setAdapter(mOnlineAdapter);
+
 
         return view;
     }
